@@ -1014,7 +1014,8 @@ class DocenteController extends Controller
                     'FK_EST_Id' => 2 , 
                     'FK_NPRY_IdMctr008' => $request['PK_NPRY_Id_Mctr008'],
                     'PYT_Fecha_Radicacion' => $fecha->FCH_Radicacion,
-                    'FK_NPRY_Director' => $anteproyecto->FK_NPRY_Pre_Director
+                    'FK_NPRY_Director' => $anteproyecto->FK_NPRY_Pre_Director,
+                    'NPRY_Pro_Estado' => 1
                 ]);
                 return AjaxResponse::success(
                     '¡Bien hecho!',
@@ -1108,7 +1109,11 @@ class DocenteController extends Controller
 
             if(($DesiciónJuradoUno=="APROBADO")&&($DesiciónJuradoDos=="APROBADO")){
                 $Proyecto -> FK_EST_Id = 4;
+                $Proyecto -> NPRY_Pro_Estado = 2;
                 $Proyecto -> save();
+                $anteproyecto -> NPRY_Ante_Estado = 2;
+                $anteproyecto -> save();
+
                 //aprobado
                 
                 return AjaxResponse::success(
@@ -1123,6 +1128,7 @@ class DocenteController extends Controller
                 //rechazado
                 $Proyecto -> save();
                 $anteproyecto -> FK_NPRY_Estado = 5;
+                $anteproyecto -> NPRY_Ante_Estado = 2;
                 $anteproyecto -> save();
                 
                 $desarrolladores= Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();

@@ -139,6 +139,7 @@
             </tbody>
 
     </table>
+    @if($REntrega == 1)
     <h1 class="features">Decisión Jurados</h1>
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>
@@ -161,6 +162,53 @@
             </tbody>
 
     </table>
+    @endif
+    @if($REntrega == 2)
+    <h1 class="features">1ra Decisión Jurados</h1>
+    <table border="0" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th class="line"><b>Jurado </b></th>
+            <th class="line"><b>Comentarios Anteriores</b></th>
+            <th class="line"><b>Decisión Anterior</b></th>
+           
+        </tr>
+        </thead>
+        @foreach($jurados as $jurado)
+            <tbody>
+            <tr>
+                <td class="line">{{$jurado->Jurado}}</td>
+                <td class="line">{{$jurado->Des1}}</td>
+                <td class="line">APLAZADO</td>
+                
+            </tr>
+        @endforeach
+            </tbody>
+
+    </table>
+    <h1 class="features">2da Decisión Jurados</h1>
+    <table border="0" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th class="line"><b>Jurado </b></th>
+            <th class="line"><b>Comentarios Actuales</b></th>
+            <th class="line"><b>Decisión Actual</b></th>
+           
+        </tr>
+        </thead>
+        @foreach($jurados as $jurado)
+            <tbody>
+            <tr>
+                <td class="line">{{$jurado->Jurado}}</td>
+                <td class="line">{{$jurado->Des2}}</td>
+                <td class="line">{{$jurado->Estado}}</td>
+                
+            </tr>
+        @endforeach
+            </tbody>
+
+    </table>
+    @endif
     <h1 class="features">Interacción De los estudiantes para con el Proyecto</h1>
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>

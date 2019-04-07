@@ -19,12 +19,25 @@
              
                    
                         <br><br>
-                        @if($Anteproyecto['FK_NPRY_Estado'] > 3)
+                        @if($Anteproyecto['FK_NPRY_Estado'] > 3 && $Anteproyecto['N_Radicacion']==1)
                         @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'ComentariosJurados'])
                         @slot('columns', [
                           
                             'Jurado',
-                            'Comentario'
+                            'Decisión Docente',
+                            'Comentarios'
+                        ])
+                    @endcomponent
+                    @endif
+          
+                    @if($Anteproyecto['FK_NPRY_Estado'] > 3 && $Anteproyecto['N_Radicacion']==2)
+                        @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'ComentariosJurados'])
+                        @slot('columns', [
+                          
+                            'Jurado',
+                            'Decisión Docente',
+                            'Comentarios Anteriores',
+                            'Comentarios Actuales'
                         ])
                     @endcomponent
                     @endif
@@ -72,7 +85,8 @@
         
         idp='{{  $Anteproyecto['PK_NPRY_IdMctr008']  }}';
 
-        var table, url, columns;
+if('{{$Anteproyecto['N_Radicacion']}}' == 1){
+    var table, url, columns;
         table = $('#ComentariosJurados');
         url = '{{ route('EstudianteGesap.ListComentariosJuradoAnteproyecto') }}'+ '/' + idp;
     
@@ -80,11 +94,32 @@
     
         columns = [
             {data: 'Nombre', name: 'Nombre'},
+            {data: 'Estado', name: 'Estado'},
             {data: 'JR_Comentario', name: 'JR_Comentario'}
         ];
 
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
+
+}else{
+    var table, url, columns;
+        table = $('#ComentariosJurados');
+        url = '{{ route('EstudianteGesap.ListComentariosJuradoAnteproyecto') }}'+ '/' + idp;
+    
+        
+    
+        columns = [
+            {data: 'Nombre', name: 'Nombre'},
+            {data: 'Estado', name: 'Estado'},
+            {data: 'JR_Comentario', name: 'JR_Comentario'},
+            {data: 'JR_Comentario_2', name: 'JR_Comentario_2'}
+        ];
+
+        dataTableServer.init(table, url, columns);
+        table = table.DataTable();
+
+}
+    
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();

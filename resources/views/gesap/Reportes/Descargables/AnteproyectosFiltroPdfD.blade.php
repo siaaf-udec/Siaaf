@@ -71,71 +71,13 @@
         <p class="line">(+57 1) 892 0706 | 892 0707 </p>
         <p class="line">unicundi@ucundinamarca.edu.co </p>
         <p class="line">Fecha : {{$fecha}} </p>
-        @if($n==1)
-        <a  href="{{ route('AnteproyectosGesap.ReportesAnteproyecto') }}/ 2">Descargar</a>
-        @endif
 	</div>
 
     <div id="features">
     <h1 class="features" >{{$title}}</h1>
        <br><br>
     
-    <table class="meta">
-          <tr>
-            <th><span contenteditable># Proyectos Registrados</span></th>
-            <td><span contenteditable>{{$cantidad}}</span></td>
-          </tr>
-          @if($CEsp > 0)
-       
-          <tr>
-            <th><span contenteditable># En Espera</span></th>
-            <td><span contenteditable>{{$CEsp}}</span></td>
-          </tr>
-          @endif
-          @if($CAsig > 0)
-       
-          <tr>
-            <th><span contenteditable># Asignados</span></th>
-            <td><span contenteditable>{{$CAsig}}</span></td>
-          </tr>
-          @endif
-          @if($CRad)
-       
-          <tr>
-            <th><span contenteditable># Radicados(En Evaluacion)</span></th>
-            <td><span contenteditable>{{$CRad}}</span></td>
-          </tr>
-          @endif
-          @if($CApr)
-       
-          <tr>
-            <th><span contenteditable># Aprobados</span></th>
-            <td><span contenteditable>{{$CApr}}</span></td>
-          </tr>
-          @endif
-          @if($CRepro)
-       
-          <tr>
-            <th><span contenteditable># Reprobados</span></th>
-            <td><span contenteditable>{{$CRepro}}</span></td>
-          </tr>
-          @endif
-          @if($CAplz)
-       
-          <tr>
-            <th><span contenteditable># Aplazados</span></th>
-            <td><span contenteditable>{{$CAplz}}</span></td>
-          </tr>
-          @endif
-       
-          @if($CCancel)
-          <tr>
-            <th><span contenteditable># Cancelados</span></th>
-            <td><span contenteditable>{{$CCancel}}</span></td>
-          </tr>
-          @endif
-        </table>
-
+  
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>
         <tr>

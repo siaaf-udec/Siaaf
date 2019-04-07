@@ -1035,7 +1035,20 @@ class CoordinatorController extends Controller
         }
         }
     }
+    //funcion que lleva a la vista de reportes en especifico
+    public function ReportesProyectoE(Request $request)
+    {
+	
+        if ($request->ajax() && $request->isMethod('GET')) {	
+            
+            return view($this->path .'ReportesPro');
+        }
+	
+			
+        
+    }
     
+    //funcion para agregar un anteproyecto//
 	public function store(Request $request)
     {
 	
@@ -1049,7 +1062,8 @@ class CoordinatorController extends Controller
 			 'FK_NPRY_Pre_Director' => $request['FK_NPRY_Pre_Director'],
              'FK_NPRY_Estado' => $request['FK_NPRY_Estado'],
              'NPRY_FCH_Radicacion' => $request['NPRY_FCH_Radicacion'],
-             'NPRY_Semillero' => $request['NPRY_Semillero'] 
+             'NPRY_Semillero' => $request['NPRY_Semillero'],
+             'NPRY_Ante_Estado' => 1
             ]);
 
             $user = Usuarios::where('PK_User_Codigo',$request['FK_NPRY_Pre_Director'])->first();
@@ -1243,6 +1257,20 @@ class CoordinatorController extends Controller
                 [
                     'infoAnte' => $infoAnte,
                 ]);
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+    //funcion que retorna la vista para reportes especificos de Anteproyecto//
+    public function ReportesAnteproyecto(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+           
+            return view($this->path .'Reportes');
         }
 
         return AjaxResponse::fail(

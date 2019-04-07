@@ -48,6 +48,11 @@
                                                        title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                             de Proyectos</a>
                             @endpermission
+                        @permission('GESAP_ADMIN_REPORT_LIBROS')<a href="javascript:;"
+                                                       class="btn btn-simple btn-success btn-icon reportsE"
+                                                       title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
+                            de Proyectos Especificos</a>
+                        @endpermission
                         <br>
                     </div>
 
@@ -206,6 +211,12 @@
             $.ajax({}).done(function () {
                 window.open('{{ route('AnteproyectosGesap.ReportesProyecto') }}'+'/'+ 1);
             });
+        });
+        $(".reportsE").on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('AnteproyectosGesap.ReportesProyectoE') }}';
+            $(".content-ajax").load(route);
+          
         });
         table.on('click', '.reporte', function (e) {
             e.preventDefault();

@@ -460,7 +460,7 @@ class StudentController extends Controller
             }              
         
     }
-    
+    //cargar la decision de los jurados a los estudiantes///
     public function ListComentariosJuradoAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -472,12 +472,20 @@ class StudentController extends Controller
                     $apellido = $jurado -> relacionUsuarios -> User_Apellido1 ;
                     $total = $nombre." ".$apellido;
                     $jurado ->offsetSet('Nombre',$total);
-
+                    $jurado ->offsetSet('Estado',$jurado->relacionEstado->EST_Estado );
+                  
                 }
                return DataTables::of($jurados)
                ->removeColumn('created_at')
 			   ->removeColumn('updated_at')
-			    
+               ->removeColumn('PK_Id_Jurados')
+               ->removeColumn('FK_NPRY_IdMctr008')
+               ->removeColumn('PK_Id_Jurados')
+               ->removeColumn('FK_User_Codigo')
+               ->removeColumn('FK_NPRY_Estado')
+               ->removeColumn('FK_NPRY_Estado_Proyecto')
+               ->removeColumn('JR_Comentario_Proyecto')
+               ->removeColumn('JR_Comentario_Proyecto_2')
 			   ->addIndexColumn()
                ->make(true);
         
@@ -489,6 +497,7 @@ class StudentController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+        //cargar la decision de los jurados a los estudiantes PROYECTO///
     public function ListComentariosJuradoProyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -499,11 +508,20 @@ class StudentController extends Controller
                     $apellido = $jurado -> relacionUsuarios -> User_Apellido1 ;
                     $total = $nombre." ".$apellido;
                     $jurado ->offsetSet('Nombre',$total);
+                    $jurado ->offsetSet('Estado',$jurado->relacionEstado->EST_Estado );
 
                 }
                return DataTables::of($jurados)
                ->removeColumn('created_at')
 			   ->removeColumn('updated_at')
+               ->removeColumn('PK_Id_Jurados')
+               ->removeColumn('FK_NPRY_IdMctr008')
+               ->removeColumn('PK_Id_Jurados')
+               ->removeColumn('FK_User_Codigo')
+               ->removeColumn('FK_NPRY_Estado')
+               ->removeColumn('FK_NPRY_Estado_Proyecto')
+               ->removeColumn('JR_Comentario')
+               ->removeColumn('JR_Comentario_2')
 			    
 			   ->addIndexColumn()
                ->make(true);
@@ -516,13 +534,20 @@ class StudentController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
+    ///envia informacion al formulario para ver la decisiond e los jurados///
     public function VerComentariosJuradoAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             
             $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
 
+            $jurados=Jurados::where('FK_NPRY_IdMctr008',$id)->first();
+            if($jurados->JR_Comentario_2 == 'inhabilitado'){
+                $Anteproyecto->offsetseT('N_Radicacion',1);
+            }else{
+                $Anteproyecto->offsetseT('N_Radicacion',2);
+            }
+            
             return view($this->path .'ComentariosJurados',
             [
                 'Anteproyecto' => $Anteproyecto,
@@ -536,6 +561,7 @@ class StudentController extends Controller
         }             
         
     }
+     ///envia informacion al formulario para ver la decisiond e los jurados PROYECTO///
     public function VerComentariosJuradoProyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -543,6 +569,13 @@ class StudentController extends Controller
             $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
             $estado = $Anteproyecto -> relacionProyecto -> FK_EST_Id ;
             $Anteproyecto -> offsetSet('Estado', $estado);
+
+            $jurados=Jurados::where('FK_NPRY_IdMctr008',$id)->first();
+            if($jurados->JR_Comentario_Proyecto_2 == 'inhabilitado'){
+                $Anteproyecto->offsetseT('N_Radicacion',1);
+            }else{
+                $Anteproyecto->offsetseT('N_Radicacion',2);
+            }
 
             return view($this->path .'.Proyecto.ComentariosJurados',
             [
