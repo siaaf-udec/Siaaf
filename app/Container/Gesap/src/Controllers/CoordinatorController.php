@@ -223,6 +223,7 @@ class CoordinatorController extends Controller
                 );
         }
     }
+    //funcion para redireccionar al formulario de agregar desarrollador///
     public function AsignarDesarrolladorstore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -790,7 +791,7 @@ class CoordinatorController extends Controller
                 );
         
     }
-    
+    //Funcion para ver la información del anteproyecto de grado como coordinador///
     public function VerAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -938,6 +939,7 @@ class CoordinatorController extends Controller
         );
 
     }
+    //funcion para agregar un desarrollador al anteproyecto de grado seleccionado previamente///
     public function desarrolladorstore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -960,6 +962,22 @@ class CoordinatorController extends Controller
                 'FK_IdEstado' => 1 ,
                
             ]);
+            $desarrollador = Usuarios::where('PK_User_Codigo',$request['PK_User_Codigo'])->first();
+            $proyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->first();    
+            $data = array(
+                'name'=>$desarrollador->User_Nombre1." ".$desarrollador->User_Apellido1,
+                'ante'=>$proyecto->NPRY_Titulo,
+                'correo'=>$proyecto->relacionPredirectores->User_Correo ,
+            );
+
+            Mail::send('gesap.Emails.AsigDesarrollador',$data, function($message) use ($data){
+                
+                $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+
+                $message->to($data['correo']);
+
+            });
+
             
 			return AjaxResponse::success(
 				'¡Esta Hecho!',
@@ -1027,6 +1045,38 @@ class CoordinatorController extends Controller
                 'JR_Comentario_Proyecto_2' => "inhabilitado",
                
             ]);
+            $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008' , $request['FK_NPRY_IdMctr008'])->get();
+            $jurado = Usuarios::where('PK_User_Codigo' , $request['PK_User_Codigo'])->first();
+            foreach($desarrolladores as $desarrollador){
+
+                $data = array(
+                    'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                    'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                    'Jurado'=>$jurado->User_Nombre1." ".$jurado->User_Apellido1,
+                );
+    
+                Mail::send('gesap.Emails.JuradosAsigEst',$data, function($message) use ($data){
+                    
+                    $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+    
+                    $message->to($data['correo']);
+    
+                });
+    
+            }
+            $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008' , $request['FK_NPRY_IdMctr008'])->first();
+            $data = array(
+                'correo'=>$jurado->User_Correo,
+                'Ante'=>$anteproyecto->NPRY_Titulo,
+            );
+            
+            Mail::send('gesap.Emails.JuradosAsig',$data, function($message) use ($data){
+                            
+                $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+            
+                $message->to($data['correo']);
+            
+            });
             
 			return AjaxResponse::success(
 				'¡Esta Hecho!',
@@ -1067,9 +1117,21 @@ class CoordinatorController extends Controller
             ]);
 
             $user = Usuarios::where('PK_User_Codigo',$request['FK_NPRY_Pre_Director'])->first();
-            $correo = $user->User_Correo;
-            $nombre = $user->User_Nombre1;
-            Mail::to($correo)->send(new EmailGesap($nombre));
+            $data = array(
+                'name'=>$user->User_Nombre1." ".$user->User_Apellido1,
+                'correo'=>$correo = $user->User_Correo,
+                'Ante'=>$request['NPRY_Titulo'],
+                'Fecha'=>$request['NPRY_FCH_Radicacion'],
+                'Semillero'=>$request['NPRY_Semillero']
+            );
+            
+            Mail::send('gesap.Emails.CreateAnte',$data, function($message) use ($data){
+                        
+                $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+
+                $message->to($data['correo']);
+
+            });
 
             return AjaxResponse::success(
 				'¡Esta Hecho!',
@@ -1225,6 +1287,20 @@ class CoordinatorController extends Controller
             $proyecto -> FK_NPRY_Director = $request['FK_NPRY_Director']; 
             $proyecto -> save();
 
+            $director = Usuarios::where('PK_User_Codigo', $request['FK_NPRY_Director'])->first();
+                $data = array(
+                    'correo'=>$director->User_Correo ,
+                    'Proy'=>$proyecto->relacionAnteproyecto->NPRY_Titulo,
+                );
+    
+                Mail::send('gesap.Emails.DirecProy',$data, function($message) use ($data){
+                    
+                    $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+    
+                    $message->to($data['correo']);
+    
+                });
+    
 
 
             return AjaxResponse::success(

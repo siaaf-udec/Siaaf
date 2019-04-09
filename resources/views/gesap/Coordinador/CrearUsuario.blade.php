@@ -12,14 +12,8 @@
           
 
                 <div class="form-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div>
-                                <span class="label label-primary">Ingrese los Datos</span>
-                                <br><br>
-                                <br><br> 
-                                
-                                {!! Field:: text('User_Codigo',null,['label'=>'Codigo Interno del Usuario:','class'=> 'form-control', 'autofocus', 'maxlength'=>'9','autocomplete'=>'off'],
+                 
+                        {!! Field:: text('User_Codigo',null,['label'=>'Codigo Interno del Usuario:','class'=> 'form-control', 'autofocus', 'maxlength'=>'9','autocomplete'=>'off'],
                                                              ['help' => 'Digite el codigo interno del usuario.','icon'=>'fa fa-credit-card']) !!}
                                 
                                 {!! Field::select('User_Tipo_Documento',['T.I'=>'T.I', 'C.C'=>'C.C'],null,['label'=>'Tipo Documento: ']) !!}
@@ -43,45 +37,8 @@
                                 
                                 {!! Field::select('FK_User_IdRol',['1'=>'Estudiante', '2'=>'Docente','3'=>'Administrador'],null,['label'=>'ROL: ']) !!}
                             
-                            
-                               
-                             
-                                     
-                               
-                            </div>
-                            
-                          
-                             <div class="form-group divcode">
-                                
-                            </div>
-                            
-                        <br><br>
-                        </div>
 
-
-                        <div class="col-md-6">
-                        <br><br>
-                            <br><br>
-                            <br><br>
-                        {!! Field::checkbox('acceptTeminos2', '1', ['label' => 'Acepta términos y condiciones de la resolución numero 050 de 2018.','required']) !!}
-                        <a href="https://www.ucundinamarca.edu.co/index.php/proteccion-de-datos-personales" target="_blank">- Ver la Resolución No. 050 de 2018 , tratamiento de datos personales</a>
-                      
-                            
-                            <br><br>
-                            <br><br>
-                            <br><br>
-                            <br><br>  <br><br>
-                            <br><br>
-                      
-                            <br><br>
-                            <br><br>
-                            <br><br>
-                            <br><br>
-                            <br><br>
-
-                            
-
-                        </div>
+                       
                     </div>
 
 

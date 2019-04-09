@@ -30,9 +30,8 @@ use App\Container\Gesap\src\Desarrolladores;
 use App\Container\Gesap\src\Estados;
 
 use App\Container\Gesap\src\Resultados;
-
+use Illuminate\Support\Facades\Mail;
 use App\Container\Gesap\src\Funciones;
-
 use App\Container\Gesap\src\RubroPersonal;
 use App\Container\Gesap\src\RubroEquipos;
 use App\Container\Gesap\src\RubroMaterial;
@@ -723,7 +722,7 @@ class DocenteController extends Controller
                 );
         }
     }
-
+//Función para asignar a los desarrolladores seleccionados como desarrolladores de dicho anteproyecto//
     public function Asignar(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -732,6 +731,24 @@ class DocenteController extends Controller
             $anteproyecto -> FK_NPRY_Estado = 2;
             
             $anteproyecto -> save();
+
+            $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$id)->get();
+            foreach($desarrolladores as $desarrollador){
+                $data = array(
+                    'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                    'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                );
+    
+                Mail::send('gesap.Emails.AsignacionNotificacion',$data, function($message) use ($data){
+                    
+                    $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+    
+                    $message->to($data['correo']);
+    
+                });
+    
+            }
+            
 
             $infoAnte = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->get();
             $infoAnteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
@@ -805,11 +822,12 @@ class DocenteController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    //esta funcion se utiliza para agregar un comentario a la actividad del anteproyecto///
     public function ComentarioStore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $user = Auth::user();
-		$id = $user->identity_no;
+		    $id = $user->identity_no;
             
                      ObservacionesMct::create([
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
@@ -819,6 +837,26 @@ class DocenteController extends Controller
                      'OBS_Limit' => $request['OBS_Limit']
 
                     ]);
+                    $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008', $request['FK_NPRY_IdMctr008'])->get();
+                    $commit = Mctr008::where('PK_MCT_IdMctr008',$request['FK_MCT_IdMctr008'])->first();
+                    foreach($desarrolladores as $desarrollador){
+
+                        $data = array(
+                            'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                            'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                            'Actividad'=>$commit->MCT_Actividad,
+                            'Fecha'=> $request['OBS_Limit'],
+                        );
+            
+                        Mail::send('gesap.Emails.ActComent',$data, function($message) use ($data){
+                            
+                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+            
+                            $message->to($data['correo']);
+            
+                        });
+            
+                    }
                 return AjaxResponse::success(
                     '¡Esta Hecho!',
                     'Comentario Hecho.'
@@ -1009,7 +1047,24 @@ class DocenteController extends Controller
                 //aprobado
                 $anteproyecto -> FK_NPRY_Estado = 4;
                 $anteproyecto -> save();
-                
+                $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+                foreach($desarrolladores as $desarrollador){
+
+                    $data = array(
+                        'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                        'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                    );
+        
+                    Mail::send('gesap.Emails.DecisionAnte',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+        
+                        $message->to($data['correo']);
+        
+                    });
+        
+                }
+
                 Proyecto::create([
                     'FK_EST_Id' => 2 , 
                     'FK_NPRY_IdMctr008' => $request['PK_NPRY_Id_Mctr008'],
@@ -1028,6 +1083,24 @@ class DocenteController extends Controller
                 //rechazado
                 $anteproyecto -> FK_NPRY_Estado = 5;
                 $anteproyecto -> save();
+                $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+                foreach($desarrolladores as $desarrollador){
+
+                    $data = array(
+                        'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                        'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                    );
+        
+                    Mail::send('gesap.Emails.DecisionAnte',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+        
+                        $message->to($data['correo']);
+        
+                    });
+        
+                }
+
                 
                 $desarrolladores= Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
                 foreach($desarrolladores as $desarrollador){
@@ -1046,6 +1119,24 @@ class DocenteController extends Controller
                 //aplazado
                 $anteproyecto -> FK_NPRY_Estado = 6;
                 $anteproyecto -> save();
+                $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+                foreach($desarrolladores as $desarrollador){
+
+                    $data = array(
+                        'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                        'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                    );
+        
+                    Mail::send('gesap.Emails.DecisionAnte',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+        
+                        $message->to($data['correo']);
+        
+                    });
+        
+                }
+
                 $actividades = Commits::Where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get(); 
                 foreach($actividades as $actividad){
                     $actividad->FK_CHK_Checklist = 1;
@@ -1113,6 +1204,24 @@ class DocenteController extends Controller
                 $Proyecto -> save();
                 $anteproyecto -> NPRY_Ante_Estado = 2;
                 $anteproyecto -> save();
+                
+                $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+                foreach($desarrolladores as $desarrollador){
+
+                    $data = array(
+                        'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                        'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                    );
+        
+                    Mail::send('gesap.Emails.DecisionAnte',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+        
+                        $message->to($data['correo']);
+        
+                    });
+        
+                }
 
                 //aprobado
                 
@@ -1137,6 +1246,23 @@ class DocenteController extends Controller
                     $desarrollador->save();
 
                 }
+                foreach($desarrolladores as $desarrollador){
+
+                    $data = array(
+                        'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                        'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                    );
+        
+                    Mail::send('gesap.Emails.DecisionAnte',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+        
+                        $message->to($data['correo']);
+        
+                    });
+        
+                }
+
                 return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Datos modificados correctamente.'
@@ -1149,6 +1275,24 @@ class DocenteController extends Controller
                  
                
                 $Proyecto -> save();
+                $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+                foreach($desarrolladores as $desarrollador){
+
+                    $data = array(
+                        'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                        'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                    );
+        
+                    Mail::send('gesap.Emails.DecisionAnte',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+        
+                        $message->to($data['correo']);
+        
+                    });
+        
+                }
+
                 $actividades = Commits::Where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->where('CMMT_Formato',3)->get(); 
                 foreach($actividades as $actividad){
                     $actividad->FK_CHK_Checklist = 1;
@@ -1439,6 +1583,7 @@ class DocenteController extends Controller
             }              
         
     }
+    //esta funcion se utiliza para avalar alsactividades subidas por el estudiante (Director)///
     public function Avalar(Request $request, $id,$idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {	
@@ -1451,6 +1596,25 @@ class DocenteController extends Controller
             $commit -> FK_CHK_Checklist = 2;
                 
             $commit -> save();
+            $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$idp)->get();
+            foreach($desarrolladores as $desarrollador){
+
+                $data = array(
+                    'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                    'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                    'Actividad'=>$commit->relacionActividad->MCT_Actividad,
+                );
+    
+                Mail::send('gesap.Emails.AprobarAct',$data, function($message) use ($data){
+                    
+                    $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+    
+                    $message->to($data['correo']);
+    
+                });
+    
+            }
+            
             
                 return AjaxResponse::success(
                     '¡Bien hecho!',
