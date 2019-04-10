@@ -31,7 +31,6 @@
 
 @section('content')
     @permission('GESAP_ADMIN')
-  
     <div class="col-md-12">
         @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Anteproyectos registrados:'])
             <br>
@@ -51,9 +50,9 @@
                             </i>Nuevo Anteproyecto
                         </a>@endpermission
                         @permission('GESAP_ADMIN_REPORT_ANTE_ALL')<a href="javascript:;"
-                                                       class="btn btn-simple btn-success btn-icon reports"
+                                                       class="btn btn-simple btn-success btn-icon reportsE"
                                                        title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
-                            de Anteproyectos</a>@endpermission
+                            Especificos Anteproyecto</a>@endpermission
                          
                         <br>
                     </div>
@@ -117,8 +116,7 @@
 
     jQuery(document).ready(function () {
 
-
-
+      
         var table, url, columns;
         table = $('#listaAnteproyecto');
         url = "{{ route('AnteproyectosGesap.List')}}";
@@ -152,7 +150,7 @@
         table = table.DataTable();
  
 
-
+        
         table.on('click', '.remove', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
@@ -232,9 +230,10 @@
             $(".content-ajax").load(route);
         });
       
-        $('.reports_est').on('click', function (e) {
-                e.preventDefault();
-                $('#modal-create-reporte_estado').modal('toggle');
+        $('.reportsE').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('AnteproyectosGesap.ReportesAnteproyectoESP') }}';
+            $(".content-ajax").load(route);
         });
         
         

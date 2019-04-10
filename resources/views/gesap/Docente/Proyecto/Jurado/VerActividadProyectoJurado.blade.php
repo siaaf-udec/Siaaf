@@ -147,7 +147,7 @@ $(document).ready(function(){
             var CrearComentario = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('DocenteGesap.ComentarioStoreJurado') }}';
+                        var route = '{{ route('DocenteGesap.ComentarioStoreJuradoProyecto') }}';
                         var type = 'POST';
                         var async = async || false;
 

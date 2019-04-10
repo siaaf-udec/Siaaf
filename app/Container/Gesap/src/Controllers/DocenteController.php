@@ -30,9 +30,8 @@ use App\Container\Gesap\src\Desarrolladores;
 use App\Container\Gesap\src\Estados;
 
 use App\Container\Gesap\src\Resultados;
-
+use Illuminate\Support\Facades\Mail;
 use App\Container\Gesap\src\Funciones;
-
 use App\Container\Gesap\src\RubroPersonal;
 use App\Container\Gesap\src\RubroEquipos;
 use App\Container\Gesap\src\RubroMaterial;
@@ -723,7 +722,7 @@ class DocenteController extends Controller
                 );
         }
     }
-
+//Función para asignar a los desarrolladores seleccionados como desarrolladores de dicho anteproyecto//
     public function Asignar(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -732,6 +731,24 @@ class DocenteController extends Controller
             $anteproyecto -> FK_NPRY_Estado = 2;
             
             $anteproyecto -> save();
+
+            $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$id)->get();
+            foreach($desarrolladores as $desarrollador){
+                $data = array(
+                    'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                    'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                );
+    
+                Mail::send('gesap.Emails.AsignacionNotificacion',$data, function($message) use ($data){
+                    
+                    $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+    
+                    $message->to($data['correo']);
+    
+                });
+    
+            }
+            
 
             $infoAnte = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->get();
             $infoAnteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
@@ -805,11 +822,12 @@ class DocenteController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    //esta funcion se utiliza para agregar un comentario a la actividad del anteproyecto///
     public function ComentarioStore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $user = Auth::user();
-		$id = $user->identity_no;
+		    $id = $user->identity_no;
             
                      ObservacionesMct::create([
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
@@ -819,6 +837,26 @@ class DocenteController extends Controller
                      'OBS_Limit' => $request['OBS_Limit']
 
                     ]);
+                    $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008', $request['FK_NPRY_IdMctr008'])->get();
+                    $commit = Mctr008::where('PK_MCT_IdMctr008',$request['FK_MCT_IdMctr008'])->first();
+                    foreach($desarrolladores as $desarrollador){
+
+                        $data = array(
+                            'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                            'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                            'Actividad'=>$commit->MCT_Actividad,
+                            'Fecha'=> $request['OBS_Limit'],
+                        );
+            
+                        Mail::send('gesap.Emails.ActComent',$data, function($message) use ($data){
+                            
+                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+            
+                            $message->to($data['correo']);
+            
+                        });
+            
+                    }
                 return AjaxResponse::success(
                     '¡Esta Hecho!',
                     'Comentario Hecho.'
@@ -827,17 +865,26 @@ class DocenteController extends Controller
             }              
         
     }
+    //funcion para guardar el comentaro del anteproyecto del jurado
     public function ComentarioStoreJurado(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $user = Auth::user();
-		$id = $user->identity_no;
+            $id = $user->identity_no;
+            
+            $desjurado = Jurados::where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_User_Codigo',$id)->first();
+            if($desjurado->JR_Comentario_2 == "inhabilitado"){
+                $entrega = 1;
+            }else{
+                $entrega = 2;
+            }
                      ObservacionesMctJurado::create([
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                      'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                      'FK_User_Codigo' => $id,
                      'OBS_Observacion' => $request['OBS_observacion'],
                      'OBS_Formato' => $request['OBS_Formato'],
+                     'OBS_Entrega' => $entrega,
                      
 
                     ]);
@@ -850,6 +897,38 @@ class DocenteController extends Controller
                        
         
     }
+      //funcion para guardar el comentaro del proyecto del jurado
+      public function ComentarioStoreJuradoProyecto(Request $request)
+      {
+          if ($request->ajax() && $request->isMethod('POST')) {
+              $user = Auth::user();
+              $id = $user->identity_no;
+              
+              $desjurado = Jurados::where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_User_Codigo',$id)->first();
+              if($desjurado->JR_Comentario_Proyecto_2 == "inhabilitado"){
+                  $entrega = 1;
+              }else{
+                  $entrega = 2;
+              }
+                       ObservacionesMctJurado::create([
+                      'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+                       'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
+                       'FK_User_Codigo' => $id,
+                       'OBS_Observacion' => $request['OBS_observacion'],
+                       'OBS_Formato' => $request['OBS_Formato'],
+                       'OBS_Entrega' => $entrega,
+                       
+  
+                      ]);
+                  return AjaxResponse::success(
+                      '¡Esta Hecho!',
+                      'Comentario Hecho.'
+                  );
+         
+              }   
+                         
+          
+      }
     public function DesicionJurados(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -936,7 +1015,7 @@ class DocenteController extends Controller
         );
 
     }
-   
+   //funcion que guarda la decision de los dos jurados y cambia a su respectivo estado el ANTEPROYECTO
     public function CambiarEstadoJurado(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -944,11 +1023,18 @@ class DocenteController extends Controller
 		    $id = $user->identity_no;
 
             $Jurado = Jurados::where('FK_User_Codigo',$id)->where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->first();
-
-            $Jurado -> FK_NPRY_Estado = $request['FK_NPRY_Estado'];
-            $Jurado ->  JR_Comentario =  $request['JR_Comentario'];
+            if($Jurado->JR_Comentario_2 == 'inhabilitado'){
+                $Jurado -> FK_NPRY_Estado = $request['FK_NPRY_Estado'];
+                $Jurado ->  JR_Comentario =  $request['JR_Comentario'];
             
-            $Jurado -> save();
+                $Jurado -> save();
+            
+            }else{
+                $Jurado -> FK_NPRY_Estado = $request['FK_NPRY_Estado'];
+                $Jurado ->  JR_Comentario_2 =  $request['JR_Comentario'];
+                $Jurado -> save();
+            }
+
             $Jurado = Jurados::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
             $DesiciónJuradoUno=$Jurado[0]->relacionEstado->EST_Estado ;
             $DesiciónJuradoDos=$Jurado[1]->relacionEstado->EST_Estado ;
@@ -961,12 +1047,30 @@ class DocenteController extends Controller
                 //aprobado
                 $anteproyecto -> FK_NPRY_Estado = 4;
                 $anteproyecto -> save();
-                
+                $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+                foreach($desarrolladores as $desarrollador){
+
+                    $data = array(
+                        'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                        'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                    );
+        
+                    Mail::send('gesap.Emails.DecisionAnte',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+        
+                        $message->to($data['correo']);
+        
+                    });
+        
+                }
+
                 Proyecto::create([
                     'FK_EST_Id' => 2 , 
                     'FK_NPRY_IdMctr008' => $request['PK_NPRY_Id_Mctr008'],
                     'PYT_Fecha_Radicacion' => $fecha->FCH_Radicacion,
-                    'FK_NPRY_Director' => $anteproyecto->FK_NPRY_Pre_Director
+                    'FK_NPRY_Director' => $anteproyecto->FK_NPRY_Pre_Director,
+                    'NPRY_Pro_Estado' => 1
                 ]);
                 return AjaxResponse::success(
                     '¡Bien hecho!',
@@ -979,6 +1083,24 @@ class DocenteController extends Controller
                 //rechazado
                 $anteproyecto -> FK_NPRY_Estado = 5;
                 $anteproyecto -> save();
+                $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+                foreach($desarrolladores as $desarrollador){
+
+                    $data = array(
+                        'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                        'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                    );
+        
+                    Mail::send('gesap.Emails.DecisionAnte',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+        
+                        $message->to($data['correo']);
+        
+                    });
+        
+                }
+
                 
                 $desarrolladores= Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
                 foreach($desarrolladores as $desarrollador){
@@ -995,13 +1117,35 @@ class DocenteController extends Controller
             }
             if(($DesiciónJuradoUno=="APLAZADO")&&($DesiciónJuradoDos=="APLAZADO")){
                 //aplazado
-                
                 $anteproyecto -> FK_NPRY_Estado = 6;
                 $anteproyecto -> save();
+                $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+                foreach($desarrolladores as $desarrollador){
+
+                    $data = array(
+                        'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                        'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                    );
+        
+                    Mail::send('gesap.Emails.DecisionAnte',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+        
+                        $message->to($data['correo']);
+        
+                    });
+        
+                }
+
                 $actividades = Commits::Where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get(); 
                 foreach($actividades as $actividad){
                     $actividad->FK_CHK_Checklist = 1;
                     $actividad->save();
+                }
+                $Juradod = Jurados::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+                foreach($Juradod as $Jura){
+                    $Jura ->  JR_Comentario_2 = 'habilitado';
+                    $Jura -> save();
                 }
                 
                 return AjaxResponse::success(
@@ -1023,6 +1167,7 @@ class DocenteController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    //funcion que toma la decision de los jurados y cambia el estado del PROYECTO
     public function CambiarEstadoJuradoproyecto(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -1031,11 +1176,20 @@ class DocenteController extends Controller
             $id = $user->identity_no;
 
             $Jurado = Jurados::where('FK_User_Codigo',$id)->where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->first();
+       
+            if($Jurado->JR_Comentario_Proyecto_2 == 'inhabilitado'){
+                $Jurado -> FK_NPRY_Estado_Proyecto = $request['FK_NPRY_Estado'];
+                $Jurado ->  JR_Comentario_Proyecto =  $request['JR_Comentario_Proyecto'];
+            
+                $Jurado -> save();
+            
+            }else{
+                $Jurado -> FK_NPRY_Estado_Proyecto = $request['FK_NPRY_Estado'];
+                $Jurado ->  JR_Comentario_Proyecto_2 =  $request['JR_Comentario_Proyecto'];
+                $Jurado -> save();
+            }
 
-            $Jurado -> FK_NPRY_Estado_Proyecto = $request['FK_NPRY_Estado'];
-            $Jurado ->  JR_Comentario_Proyecto =  $request['JR_Comentario_Proyecto'];
             $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->first();
-            $Jurado -> save();
             
             $Jurado = Jurados::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
             
@@ -1043,9 +1197,32 @@ class DocenteController extends Controller
             
             $DesiciónJuradoUno=$Jurado[0]->relacionEstadoJurado ->EST_Estado ;
             $DesiciónJuradoDos=$Jurado[1]->relacionEstadoJurado ->EST_Estado ;
+
             if(($DesiciónJuradoUno=="APROBADO")&&($DesiciónJuradoDos=="APROBADO")){
                 $Proyecto -> FK_EST_Id = 4;
+                $Proyecto -> NPRY_Pro_Estado = 2;
                 $Proyecto -> save();
+                $anteproyecto -> NPRY_Ante_Estado = 2;
+                $anteproyecto -> save();
+                
+                $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+                foreach($desarrolladores as $desarrollador){
+
+                    $data = array(
+                        'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                        'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                    );
+        
+                    Mail::send('gesap.Emails.DecisionAnte',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+        
+                        $message->to($data['correo']);
+        
+                    });
+        
+                }
+
                 //aprobado
                 
                 return AjaxResponse::success(
@@ -1060,6 +1237,7 @@ class DocenteController extends Controller
                 //rechazado
                 $Proyecto -> save();
                 $anteproyecto -> FK_NPRY_Estado = 5;
+                $anteproyecto -> NPRY_Ante_Estado = 2;
                 $anteproyecto -> save();
                 
                 $desarrolladores= Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
@@ -1068,6 +1246,23 @@ class DocenteController extends Controller
                     $desarrollador->save();
 
                 }
+                foreach($desarrolladores as $desarrollador){
+
+                    $data = array(
+                        'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                        'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                    );
+        
+                    Mail::send('gesap.Emails.DecisionAnte',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+        
+                        $message->to($data['correo']);
+        
+                    });
+        
+                }
+
                 return AjaxResponse::success(
                     '¡Bien hecho!',
                     'Datos modificados correctamente.'
@@ -1080,11 +1275,35 @@ class DocenteController extends Controller
                  
                
                 $Proyecto -> save();
+                $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+                foreach($desarrolladores as $desarrollador){
+
+                    $data = array(
+                        'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                        'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                    );
+        
+                    Mail::send('gesap.Emails.DecisionAnte',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+        
+                        $message->to($data['correo']);
+        
+                    });
+        
+                }
+
                 $actividades = Commits::Where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->where('CMMT_Formato',3)->get(); 
                 foreach($actividades as $actividad){
                     $actividad->FK_CHK_Checklist = 1;
                     $actividad->save();
                 }
+                $Juradod = Jurados::where('FK_NPRY_IdMctr008',$request['PK_NPRY_Id_Mctr008'])->get();
+                foreach($Juradod as $Jura){
+                    $Jura ->  JR_Comentario_Proyecto_2 = 'habilitado';
+                    $Jura -> save();
+                }
+               
 
                
                 return AjaxResponse::success(
@@ -1181,7 +1400,7 @@ class DocenteController extends Controller
             );              
         
     }
-    
+    //tomar la decision final del anteproyecto con la id del anteproyecto de grado///
     public function CalificarJurado(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1198,7 +1417,8 @@ class DocenteController extends Controller
             $cadena = " ";
             
             $i=0;
-            $Comentarios_Jurado = ObservacionesMctJurado::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',1)->get();
+
+
             $Comentarios_Juradof = ObservacionesMctJurado::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',1)->first();
             $Jurado = Jurados::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->first();
             if($Comentarios_Juradof == null){
@@ -1206,24 +1426,47 @@ class DocenteController extends Controller
                 $Anteproyecto -> offsetSet('Comentarios_Jurado', "Sin Comentarios En las Actividades");
                 
             }else{
-                if( $Jurado -> JR_Comentario == "Sin Comentarios."){
-                    foreach($Comentarios_Jurado as $Comentario_Jurado){
+                if($Jurado->JR_Comentario_2 != 'inhabilitado' ){
+                    if( $Jurado -> JR_Comentario_2 == "habilitado"){
+                        $Comentarios_Jurado = ObservacionesMctJurado::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',1)->where('OBS_Entrega',2)->get();                
+                        foreach($Comentarios_Jurado as $Comentario_Jurado){
+                            $actividadcomentario = Mctr008::find($Comentario_Jurado->FK_MCT_IdMctr008);
+                            if($i==0){
+                                $cadena = 'Observaciones de las actividades : '.$Comentario_Jurado->OBS_Observacion.'  Actividad : '.$actividadcomentario ->MCT_Actividad;
+                                $i = $i +1 ; 
+                            }else{
+                                $cadena = $cadena.', '.$Comentario_Jurado->OBS_Observacion.', Actividad : '.$actividadcomentario ->MCT_Actividad;
+                            }      
+                        }
+                        $Anteproyecto -> offsetSet('Comentarios_Jurado', $cadena);
                         
-                        $actividadcomentario = Mctr008::find($Comentario_Jurado->FK_MCT_IdMctr008);
-                        if($i==0){
-                            $cadena = 'Observaciones de las actividades : '.$Comentario_Jurado->OBS_Observacion.'  Actividad : '.$actividadcomentario ->MCT_Actividad;
-                            $i = $i +1 ; 
-                        }else{
-                            $cadena = $cadena.', '.$Comentario_Jurado->OBS_Observacion.', Actividad : '.$actividadcomentario ->MCT_Actividad;
-                        }      
+                    }else{
+                        
+                        $Anteproyecto -> offsetSet('Comentarios_Jurado', $Jurado->JR_Comentario_2);
                     }
-                    $Anteproyecto -> offsetSet('Comentarios_Jurado', $cadena);
-                    
+                    $Anteproyecto -> offsetSet('N_Radicado', 2);
                 }else{
-                    
-                    $Anteproyecto -> offsetSet('Comentarios_Jurado', $Jurado->JR_Comentario);
-                }
+                    if( $Jurado -> JR_Comentario == "Sin Comentarios."){
+                        $Comentarios_Jurado = ObservacionesMctJurado::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',1)->where('OBS_Entrega',1)->get();                
+                        foreach($Comentarios_Jurado as $Comentario_Jurado){
+                            $actividadcomentario = Mctr008::find($Comentario_Jurado->FK_MCT_IdMctr008);
+                            if($i==0){
+                                $cadena = 'Observaciones de las actividades : '.$Comentario_Jurado->OBS_Observacion.'  Actividad : '.$actividadcomentario ->MCT_Actividad;
+                                $i = $i +1 ; 
+                            }else{
+                                $cadena = $cadena.', '.$Comentario_Jurado->OBS_Observacion.', Actividad : '.$actividadcomentario ->MCT_Actividad;
+                            }      
+                        }
+                        $Anteproyecto -> offsetSet('Comentarios_Jurado', $cadena);
+                        
+                    }else{
+                        
+                        $Anteproyecto -> offsetSet('Comentarios_Jurado', $Jurado->JR_Comentario);
+                    }
+                    $Anteproyecto -> offsetSet('N_Radicado', 1);
+                } 
                 
+               
                 
             }
 
@@ -1237,12 +1480,7 @@ class DocenteController extends Controller
                
                 'datos' => $Anteproyecto,
             ]);
-     
-           
-    
-
-                  
-                return AjaxResponse::success(
+            return AjaxResponse::success(
                     '¡Esta Hecho!',
                     'Comentario Hecho.'
                 );
@@ -1250,7 +1488,8 @@ class DocenteController extends Controller
             }              
         
     }
-
+   //tomar la decision final del PROYECTO con la id del anteproyecto,PROYECTO de grado///
+ 
     public function CalificarProyectoJurado(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1264,33 +1503,59 @@ class DocenteController extends Controller
             $cadena = " ";
             
             $i=0;
-            $Comentarios_Jurado = ObservacionesMctJurado::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',2)->get();
-            $Comentarios_Juradof = ObservacionesMctJurado::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',2)->first();
             $Jurado = Jurados::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->first();
+            $Comentarios_Juradof = ObservacionesMctJurado::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',2)->first();
+         
             if($Comentarios_Juradof == null){
                
                 $Anteproyecto -> offsetSet('Comentarios_Jurado', "Sin Comentarios En las Actividades");
                 
             }else{
-                if( $Jurado -> JR_Comentario_Proyecto == "Sin Comentarios."){
-                    foreach($Comentarios_Jurado as $Comentario_Jurado){
+                if($Jurado->JR_Comentario_Proyecto_2 != 'inhabilitado' ){
+                    if( $Jurado -> JR_Comentario_Proyecto_2 == "habilitado"){
+                        $Comentarios_Jurado = ObservacionesMctJurado::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',2)->where('OBS_Entrega',2)->get(); 
+         
+                        foreach($Comentarios_Jurado as $Comentario_Jurado){
+                            
+                            $actividadcomentario = Mctr008::find($Comentario_Jurado->FK_MCT_IdMctr008);
+                            if($i==0){
+                                $cadena = 'Observaciones de las actividades : '.$Comentario_Jurado->OBS_Observacion.'  Actividad : '.$actividadcomentario ->MCT_Actividad;
+                                $i = $i +1 ; 
+                            }else{
+                                $cadena = $cadena.', '.$Comentario_Jurado->OBS_Observacion.', Actividad : '.$actividadcomentario ->MCT_Actividad;
+                            }      
+                        }
+                        $Anteproyecto -> offsetSet('Comentarios_Jurado', $cadena);
                         
-                        $actividadcomentario = Mctr008::find($Comentario_Jurado->FK_MCT_IdMctr008);
-                        if($i==0){
-                            $cadena = 'Observaciones de las actividades : '.$Comentario_Jurado->OBS_Observacion.'  Actividad : '.$actividadcomentario ->MCT_Actividad;
-                            $i = $i +1 ; 
-                        }else{
-                            $cadena = $cadena.', '.$Comentario_Jurado->OBS_Observacion.', Actividad : '.$actividadcomentario ->MCT_Actividad;
-                        }      
+                    }else{
+                        
+                        $Anteproyecto -> offsetSet('Comentarios_Jurado', $Jurado->JR_Comentario_Proyecto_2);
                     }
-                    $Anteproyecto -> offsetSet('Comentarios_Jurado', $cadena);
+                    $Anteproyecto -> offsetSet('N_Radicado', 2);
                     
                 }else{
-                    
-                    $Anteproyecto -> offsetSet('Comentarios_Jurado', $Jurado->JR_Comentario_Proyecto);
+                    if( $Jurado -> JR_Comentario_Proyecto == "Sin Comentarios."){
+                        $Comentarios_Jurado = ObservacionesMctJurado::where('FK_User_Codigo',$idu)->where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',2)->where('OBS_Entrega',1)->get(); 
+         
+                        foreach($Comentarios_Jurado as $Comentario_Jurado){
+                            
+                            $actividadcomentario = Mctr008::find($Comentario_Jurado->FK_MCT_IdMctr008);
+                            if($i==0){
+                                $cadena = 'Observaciones de las actividades : '.$Comentario_Jurado->OBS_Observacion.'  Actividad : '.$actividadcomentario ->MCT_Actividad;
+                                $i = $i +1 ; 
+                            }else{
+                                $cadena = $cadena.', '.$Comentario_Jurado->OBS_Observacion.', Actividad : '.$actividadcomentario ->MCT_Actividad;
+                            }      
+                        }
+                        $Anteproyecto -> offsetSet('Comentarios_Jurado', $cadena);
+                        
+                    }else{
+                        
+                        $Anteproyecto -> offsetSet('Comentarios_Jurado', $Jurado->JR_Comentario_Proyecto);
+                    }
+                    $Anteproyecto -> offsetSet('N_Radicado', 1);
                 }
-                
-                
+
             }
 
             
@@ -1318,6 +1583,7 @@ class DocenteController extends Controller
             }              
         
     }
+    //esta funcion se utiliza para avalar alsactividades subidas por el estudiante (Director)///
     public function Avalar(Request $request, $id,$idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {	
@@ -1330,6 +1596,25 @@ class DocenteController extends Controller
             $commit -> FK_CHK_Checklist = 2;
                 
             $commit -> save();
+            $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$idp)->get();
+            foreach($desarrolladores as $desarrollador){
+
+                $data = array(
+                    'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                    'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                    'Actividad'=>$commit->relacionActividad->MCT_Actividad,
+                );
+    
+                Mail::send('gesap.Emails.AprobarAct',$data, function($message) use ($data){
+                    
+                    $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+    
+                    $message->to($data['correo']);
+    
+                });
+    
+            }
+            
             
                 return AjaxResponse::success(
                     '¡Bien hecho!',
@@ -1832,7 +2117,8 @@ public function RequerimientosJurado(Request $request, $id, $idp)
                           ->make(true);
                    }
                }
-               
+
+    ///funcion que redirecciona a las actividades para calificar como jurado//
     public function navegacionActividades(Request $request, $id, $idp,$idn)
             {
                    if ($request->ajax() && $request->isMethod('GET')) {

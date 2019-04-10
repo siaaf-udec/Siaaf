@@ -23,6 +23,10 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller.'CoordinatorController@MctCreate',
 			'as' => 'AnteproyectosGesap.MctCreate'
 		]);
+		Route::get('ReportesAnteproyectoESP', [
+			'uses' => $controller.'CoordinatorController@ReportesAnteproyecto',
+			'as' => 'AnteproyectosGesap.ReportesAnteproyectoESP'
+		]);
 		Route::get('CANCELAR/{id?}', [
 			'uses' => $controller . 'CoordinatorController@CancelarAnte', 
 			'as' => 'Anteproyecto.Cancelar'
@@ -85,7 +89,51 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'PdfController@reporteProyecto',  
 			'as' => 'AnteproyectosGesap.ReporteProyecto'
 		]);
+		Route::get('ReportesEspAnteproyecto/{id?}', [
+			'uses' => $controller . 'PdfController@ReportesEspAnteproyecto',  
+			'as' => 'AnteproyectosGesap.ReportesEspAnteproyecto'
+		]);
+			
+		Route::get('ReportesEspAnteproyectoF/{id?}/{id2?}', [
+			'uses' => $controller . 'PdfController@ReportesEspAnteproyectoF',  
+			'as' => 'AnteproyectosGesap.ReportesEspAnteproyectoF'
+		]);
 		
+		Route::get('ReportesEspAnteproyectoPC/{id?}', [
+			'uses' => $controller . 'PdfController@ReportesEspAnteproyectoPC',  
+			'as' => 'AnteproyectosGesap.ReportesEspAnteproyectoPC'
+		]);
+		
+		Route::get('ReportesEspAnteproyectoPE/{id?}/{id2?}', [
+			'uses' => $controller . 'PdfController@ReportesEspAnteproyectoPE',  
+			'as' => 'AnteproyectosGesap.ReportesEspAnteproyectoPE'
+		]);
+
+		Route::get('ReportesProyectoE', [
+			'uses' => $controller . 'CoordinatorController@ReportesProyectoE',  
+			'as' => 'AnteproyectosGesap.ReportesProyectoE'
+		]);
+
+		Route::get('ReportesEspProyecto/{id?}', [
+			'uses' => $controller . 'PdfController@ReportesEspProyecto',  
+			'as' => 'AnteproyectosGesap.ReportesEspProyecto'
+		]);
+			
+		Route::get('ReportesEspProyectoF/{id?}/{id2?}', [
+			'uses' => $controller . 'PdfController@ReportesEspProyectoF',  
+			'as' => 'AnteproyectosGesap.ReportesEspProyectoF'
+		]);
+		
+		Route::get('ReportesEspProyectoPC/{id?}', [
+			'uses' => $controller . 'PdfController@ReportesEspProyectoPC',  
+			'as' => 'AnteproyectosGesap.ReportesEspProyectoPC'
+		]);
+		
+		Route::get('ReportesEspProyectoPE/{id?}/{id2?}', [
+			'uses' => $controller . 'PdfController@ReportesEspProyectoPE',  
+			'as' => 'AnteproyectosGesap.ReportesEspProyectoPE'
+		]);
+	
 	
 		Route::get('descargarReporteAnteproyectos', [
 			'uses' => $controller . 'PdfController@descargarReporteAnteproyectos',  
@@ -745,6 +793,10 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::post('ComentarioStoreJurado', [
 			'uses' => $controller . 'DocenteController@ComentarioStoreJurado',  
 			'as' => 'DocenteGesap.ComentarioStoreJurado'
+		]);
+		Route::post('ComentarioStoreJuradoProyecto', [
+			'uses' => $controller . 'DocenteController@ComentarioStoreJuradoProyecto',  
+			'as' => 'DocenteGesap.ComentarioStoreJuradoProyecto'
 		]);
 		Route::get('ActividadesList/{id?}', [
 			'uses' => $controller . 'DocenteController@VerActividadesList',  

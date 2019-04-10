@@ -30,7 +30,7 @@
 
                                 {!! Field:: textArea('NPRY_Descripcion',null,['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'1000','autocomplete'=>'off'],
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
-                                {!! Field:: text('NPRY_Semillero',null,['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
+                                {!! Field:: text('NPRY_Semillero',null,['label'=>'SEMILLERO:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
                                                                 ['help' => 'Digite acá el semillero al que pertenece.','icon'=>'fa fa-book'] ) !!}
 
                                 {!! Field:: text('NPRY_Duracion',null,['label'=>'DURACIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'2','autocomplete'=>'off'],

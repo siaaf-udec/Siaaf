@@ -223,6 +223,7 @@ class CoordinatorController extends Controller
                 );
         }
     }
+    //funcion para redireccionar al formulario de agregar desarrollador///
     public function AsignarDesarrolladorstore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -303,16 +304,15 @@ class CoordinatorController extends Controller
 		   
            $anteproyectos=Anteproyecto::all();
            
-           $desarrolladorP = "";
+           
            foreach($anteproyectos as $anteproyecto){
-
+            $desarrolladorP = "";
             $estado = $anteproyecto -> relacionEstado -> EST_Estado;
             $anteproyecto->offsetSet('Estado',  $estado );
 
             $Predirector = $anteproyecto-> relacionPredirectores-> User_Nombre1." ".$anteproyecto-> relacionPredirectores-> User_Apellido1;
             $anteproyecto->offsetSet('Nombre',  $Predirector );
             $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$anteproyecto->PK_NPRY_IdMctr008)->get();
-            $desarrolladoresv = Desarrolladores::where('FK_NPRY_IdMctr008',$anteproyecto->PK_NPRY_IdMctr008)->first();
             $i=0;
             if($desarrolladores->IsEmpty()){
                 $anteproyecto->offsetSet('Desarrolladores',  'Sin Asignar' );
@@ -791,7 +791,7 @@ class CoordinatorController extends Controller
                 );
         
     }
-    
+    //Funcion para ver la información del anteproyecto de grado como coordinador///
     public function VerAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -939,6 +939,7 @@ class CoordinatorController extends Controller
         );
 
     }
+    //funcion para agregar un desarrollador al anteproyecto de grado seleccionado previamente///
     public function desarrolladorstore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -961,6 +962,22 @@ class CoordinatorController extends Controller
                 'FK_IdEstado' => 1 ,
                
             ]);
+            $desarrollador = Usuarios::where('PK_User_Codigo',$request['PK_User_Codigo'])->first();
+            $proyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->first();    
+            $data = array(
+                'name'=>$desarrollador->User_Nombre1." ".$desarrollador->User_Apellido1,
+                'ante'=>$proyecto->NPRY_Titulo,
+                'correo'=>$proyecto->relacionPredirectores->User_Correo ,
+            );
+
+            Mail::send('gesap.Emails.AsigDesarrollador',$data, function($message) use ($data){
+                
+                $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+
+                $message->to($data['correo']);
+
+            });
+
             
 			return AjaxResponse::success(
 				'¡Esta Hecho!',
@@ -1000,6 +1017,7 @@ class CoordinatorController extends Controller
         }
         
     }
+    //funcion que crea os jurados de un anteproyecto o proyecto//
     public function juradostore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -1023,8 +1041,42 @@ class CoordinatorController extends Controller
                 'FK_NPRY_Estado_Proyecto' => 3,
                 'JR_Comentario' => "Sin Comentarios.",
                 'JR_Comentario_Proyecto' => "Sin Comentarios.",
+                'JR_Comentario_2' => "inhabilitado",
+                'JR_Comentario_Proyecto_2' => "inhabilitado",
                
             ]);
+            $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008' , $request['FK_NPRY_IdMctr008'])->get();
+            $jurado = Usuarios::where('PK_User_Codigo' , $request['PK_User_Codigo'])->first();
+            foreach($desarrolladores as $desarrollador){
+
+                $data = array(
+                    'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                    'Ante'=>$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                    'Jurado'=>$jurado->User_Nombre1." ".$jurado->User_Apellido1,
+                );
+    
+                Mail::send('gesap.Emails.JuradosAsigEst',$data, function($message) use ($data){
+                    
+                    $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+    
+                    $message->to($data['correo']);
+    
+                });
+    
+            }
+            $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008' , $request['FK_NPRY_IdMctr008'])->first();
+            $data = array(
+                'correo'=>$jurado->User_Correo,
+                'Ante'=>$anteproyecto->NPRY_Titulo,
+            );
+            
+            Mail::send('gesap.Emails.JuradosAsig',$data, function($message) use ($data){
+                            
+                $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+            
+                $message->to($data['correo']);
+            
+            });
             
 			return AjaxResponse::success(
 				'¡Esta Hecho!',
@@ -1033,7 +1085,20 @@ class CoordinatorController extends Controller
         }
         }
     }
+    //funcion que lleva a la vista de reportes en especifico
+    public function ReportesProyectoE(Request $request)
+    {
+	
+        if ($request->ajax() && $request->isMethod('GET')) {	
+            
+            return view($this->path .'ReportesPro');
+        }
+	
+			
+        
+    }
     
+    //funcion para agregar un anteproyecto//
 	public function store(Request $request)
     {
 	
@@ -1047,13 +1112,26 @@ class CoordinatorController extends Controller
 			 'FK_NPRY_Pre_Director' => $request['FK_NPRY_Pre_Director'],
              'FK_NPRY_Estado' => $request['FK_NPRY_Estado'],
              'NPRY_FCH_Radicacion' => $request['NPRY_FCH_Radicacion'],
-             'NPRY_Semillero' => $request['NPRY_Semillero'] 
+             'NPRY_Semillero' => $request['NPRY_Semillero'],
+             'NPRY_Ante_Estado' => 1
             ]);
 
             $user = Usuarios::where('PK_User_Codigo',$request['FK_NPRY_Pre_Director'])->first();
-            $correo = $user->User_Correo;
-            $nombre = $user->User_Nombre1;
-            Mail::to($correo)->send(new EmailGesap($nombre));
+            $data = array(
+                'name'=>$user->User_Nombre1." ".$user->User_Apellido1,
+                'correo'=>$correo = $user->User_Correo,
+                'Ante'=>$request['NPRY_Titulo'],
+                'Fecha'=>$request['NPRY_FCH_Radicacion'],
+                'Semillero'=>$request['NPRY_Semillero']
+            );
+            
+            Mail::send('gesap.Emails.CreateAnte',$data, function($message) use ($data){
+                        
+                $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+
+                $message->to($data['correo']);
+
+            });
 
             return AjaxResponse::success(
 				'¡Esta Hecho!',
@@ -1209,6 +1287,20 @@ class CoordinatorController extends Controller
             $proyecto -> FK_NPRY_Director = $request['FK_NPRY_Director']; 
             $proyecto -> save();
 
+            $director = Usuarios::where('PK_User_Codigo', $request['FK_NPRY_Director'])->first();
+                $data = array(
+                    'correo'=>$director->User_Correo ,
+                    'Proy'=>$proyecto->relacionAnteproyecto->NPRY_Titulo,
+                );
+    
+                Mail::send('gesap.Emails.DirecProy',$data, function($message) use ($data){
+                    
+                    $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+    
+                    $message->to($data['correo']);
+    
+                });
+    
 
 
             return AjaxResponse::success(
@@ -1241,6 +1333,20 @@ class CoordinatorController extends Controller
                 [
                     'infoAnte' => $infoAnte,
                 ]);
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }
+    //funcion que retorna la vista para reportes especificos de Anteproyecto//
+    public function ReportesAnteproyecto(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+           
+            return view($this->path .'Reportes');
         }
 
         return AjaxResponse::fail(

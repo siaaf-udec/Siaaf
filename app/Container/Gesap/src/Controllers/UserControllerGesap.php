@@ -17,6 +17,8 @@ use App\Container\Users\src\User;
 use App\Container\Gesap\src\Usuarios;
 use App\Container\Users\src\UsersUdec;
 use App\Container\Permissions\src\Role;
+use Illuminate\Support\Facades\Mail;
+use App\Container\Gesap\src\Mail\EmailGesap;
 
 class UserControllerGesap extends Controller
 {
@@ -225,6 +227,22 @@ class UserControllerGesap extends Controller
                     'FK_User_IdRol' => $request['rol_gesap'],
                     ]);
 
+                    $usuario = Usuarios::where('PK_User_Codigo', $request['identity_no'])->first();
+                    $data = array(
+                            'name'=>$usuario->User_Nombre1." ".$usuario->User_Apellido1,
+                            'correo'=>$usuario->User_Correo,
+                            'rol'=>$usuario->relacionUsuariosRol->Rol_Usuario,
+                            'Contra'=> $request['identity_no'],
+                    );
+
+                    Mail::send('gesap.Emails.EmailUsuario',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+
+                        $message->to($data['correo']);
+
+                    });
+
                     if($userudec = UsersUdec::where('number_document',$request['identity_no'])->first() == null){
                         UsersUdec::create([
 
@@ -313,6 +331,22 @@ class UserControllerGesap extends Controller
                     'FK_User_IdEstado' => 1,
                     'FK_User_IdRol' => $request['rol_gesap'],
                 ]);
+                $usuario = Usuarios::where('PK_User_Codigo', $request['identity_no'])->first();
+                    $data = array(
+                            'name'=>$usuario->User_Nombre1." ".$usuario->User_Apellido1,
+                            'correo'=>$usuario->User_Correo,
+                            'rol'=>$usuario->relacionUsuariosRol->Rol_Usuario,
+                            'Contra'=> $request['identity_no'],
+                    );
+
+                    Mail::send('gesap.Emails.EmailUsuario',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+
+                        $message->to($data['correo']);
+
+                    });
+
 
               
                 if($userudec = UsersUdec::where('number_document',$request['identity_no'])->first() == null){

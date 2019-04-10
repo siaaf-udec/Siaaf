@@ -72,7 +72,7 @@
                             'Observación',
                             'Realizada por',
                             'Fecha De realiación',
-                        
+                       
                             
                         ])
                     @endcomponent
@@ -134,6 +134,7 @@ $(document).ready(function(){
             {data: 'OBS_Observacion', name: 'OBS_Observacion'},
             {data: 'Usuario', name: 'Usuario'},
             {data: 'created_at', name: 'created_at'},
+         
           
         ];
 

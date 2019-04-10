@@ -72,11 +72,11 @@
 
     $(document).ready(function () {
         
-        idp='{{  $Anteproyecto[0]  }}';
+        idp='{{  $Anteproyecto  }}';
 
         var table, url, columns;
         table = $('#listaActividades');
-        url = '{{ route('DocenteGesap.VerActividadesList') }}' + '/' + '{{  $Anteproyecto[0]  }}';
+        url = '{{ route('DocenteGesap.VerActividadesList') }}' + '/' + '{{  $Anteproyecto  }}';
     
         
     
@@ -111,7 +111,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('DocenteGesap.VerActividad') }}' + '/' + dataTable.PK_MCT_IdMctr008 + '/'+ '{{  $Anteproyecto[0]  }}';
+            var route = '{{ route('DocenteGesap.VerActividad') }}' + '/' + dataTable.PK_MCT_IdMctr008 + '/'+ '{{  $Anteproyecto  }}';
             //location.href="{{route('AnteproyectosGesap.index')}}";
             $(".content-ajax").load(route);
 

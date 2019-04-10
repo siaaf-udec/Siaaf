@@ -4,13 +4,11 @@
   <meta charset="utf-8">
   <title>UDEC - GESAP(REPORTES)</title>
 	<style type="text/css">
-
-	/*Embeaded font :-)*/
   @font-face {
     font-family: 'Arial';
     font-style: normal;
     font-weight: 400;
-    
+  
   }
 
 
@@ -28,7 +26,7 @@
 	/*Head*/
 	#head{text-align:left; margin-bottom:5em;}
 	#head img{margin:1em 0; width:7cm;}
-	#head .line{font-size:1em; font-style: italic; color:#999;}
+	#head .line{font-size:1em; font-style: Arial; color:#999;}
 
 	/*Features*/
 	h1.features{text-align: center; border-bottom:1px solid #ccc; font-family:Arial; text-transform: uppercase;}
@@ -62,8 +60,9 @@
 <body>
 	<div id="head">
 		<!-- Embeaded image :-) --> 
-    <img src="{{ asset('css/LogoUDEC.png') }}">
-            <h1 class="features">REPORTE GENERADO POR</h1>
+    <img src="{{ base_path('public/css/LogoUDEC.png')}}">
+    
+        <h1 class="features">REPORTE GENEREADO POR</h1>
  
         <p class="line">Plataforma Web Para La Gestión De Proyectos y Proyectos De Grado (GESAP)</p>
         <p class="line">Calle 14 con Avenida 15</p>
@@ -71,54 +70,36 @@
         <p class="line">(+57 1) 892 0706 | 892 0707 </p>
         <p class="line">unicundi@ucundinamarca.edu.co </p>
         <p class="line">Fecha : {{$fecha}} </p>
-          @if($n==1)
-        <a  href="{{ route('AnteproyectosGesap.ReportesUsuarios') }}/ 2">Descargar</a>
-        @endif
+  
  		
 	</div>
 
     <div id="features">
     <h1 class="features" >{{$title}}</h1>
-       <br><br>
+     
     
-    <table class="meta">
-          <tr>
-            <th><span contenteditable># Usuarios Registrados</span></th>
-            <td><span contenteditable>{{$total}}</span></td>
-          </tr>
-          <tr>
-            <th><span contenteditable># De Estudiantes</span></th>
-            <td><span contenteditable>{{$estudiantes}}</span></td>
-           </tr>
-          <tr>
-            <th><span contenteditable># De Docentes</span></th>
-            <td><span contenteditable>{{$profesores}}</span></td>
-           </tr>
-          <tr>
-            <th><span contenteditable># Coor</span></th>
-            <td><span contenteditable>{{$admin}}</span></td>
-           </tr>
-          
-        </table>
 
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
-            <th class="line"><b>Codigo</b></th>
-            <th class="line"><b>Nombre</b></th>
-            <th class="line"><b>Apellido</b></th>
-            <th class="line"><b>Rol</b></th>
+            <th class="line"><b>Proyecto</b></th>
+            <th class="line"><b>Descripción</b></th>
+            <th class="line"><b>Director</b></th>
+            <th class="line"><b>Estudiantes</b></th>
+            <th class="line"><b>Fecha De Radicación</b></th>
             <th class="line"><b>Estado</b></th>
+           
         </tr>
         </thead>
-        @foreach($usuarios as $usuario)
+        @foreach($proyectos as $proyecto)
             <tbody>
             <tr>
-                <td class="line">{{$usuario->PK_User_Codigo}}</td>
-                <td class="line">{{$usuario->User_Nombre1}}</td>
-                <td class="line">{{$usuario->User_Apellido1}}</td>
-                <td class="line">{{$usuario->Rol}}</td>
-                <td class="line">{{$usuario->Estado}}</td>
+                <td class="line">{{$proyecto->Titulo}}</td>
+                <td class="line">{{$proyecto->Descripcion}}</td>
+                <td class="line">{{$proyecto->Director}}</td>
+                <td class="line">{{$proyecto->Desarrolladores}}</td>
+                <td class="line">{{$proyecto->PYT_Fecha_Radicacion}}</td>
+                <td class="line">{{$proyecto->Estado}}</td>
               
             </tr>
             @endforeach

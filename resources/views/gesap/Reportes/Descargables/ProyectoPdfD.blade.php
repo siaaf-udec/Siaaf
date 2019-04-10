@@ -9,7 +9,7 @@
     font-style: normal;
     font-weight: 400;
   }
-	body{font-family:Arial, sans-serif; color:#333; background:#fff; margin-left:auto; margin-right:auto; max-width:210mm; max-height:297mm;}
+	body{font-family:Arial; color:#333; background:#fff; margin-left:auto; margin-right:auto; max-width:210mm; max-height:297mm;}
 	.clear{clear:both;}
 	.blue{color:#045A16;}
 
@@ -21,15 +21,15 @@
 	/*Head*/
 	#head{text-align:left; margin-bottom:5em;}
 	#head img{margin:1em 0; width:7cm;}
-	#head .line{font-size:1em; font-style: italic; color:#999;}
+	#head .line{font-size:1em; font-style: Arial; color:#999;}
 
 	/*Features*/
-	h1.features{text-align: center; border-bottom:1px solid #ccc; font-family:Arial, sans-serif; text-transform: uppercase;}
+	h1.features{text-align: center; border-bottom:1px solid #ccc; font-family:Arial; text-transform: uppercase;}
 	.feature{float:center; width:100%;}
 	.feature h2{font-size:1.1em; text-transform: uppercase;}
     .feature p{color:#555;}
 	.feature:nth-child(even){float:right;}
-    .final{text-align: center; border-bottom:1px solid #ccc; font-family:Arial, sans-serif; text-transform: uppercase;}
+    .final{text-align: center; border-bottom:1px solid #ccc; font-family:Arial; text-transform: uppercase;}
      /* table */
 
      table { font-size: 75%; table-layout: fixed; width: 100%; }
@@ -57,7 +57,7 @@
 	<div id="head">
 		<!-- Embeaded image :-) --> 
     <img src="{{ base_path('public/css/LogoUDEC.png')}}">
-        <h1 class="features">REPORTE GENEREADO POR</h1>
+          <h1 class="features">REPORTE GENERADO POR</h1>
  
         <p class="line">Plataforma Web Para La Gestión De Proyectos y Proyectos De Grado (GESAP)</p>
         <p class="line">Calle 14 con Avenida 15</p>
@@ -139,6 +139,7 @@
             </tbody>
 
     </table>
+    @if($REntrega == 1)
     <h1 class="features">Decisión Jurados</h1>
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>
@@ -161,6 +162,53 @@
             </tbody>
 
     </table>
+    @endif
+    @if($REntrega == 2)
+    <h1 class="features">1ra Decisión Jurados</h1>
+    <table border="0" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th class="line"><b>Jurado </b></th>
+            <th class="line"><b>Comentarios Anteriores</b></th>
+            <th class="line"><b>Decisión Anterior</b></th>
+           
+        </tr>
+        </thead>
+        @foreach($jurados as $jurado)
+            <tbody>
+            <tr>
+                <td class="line">{{$jurado->Jurado}}</td>
+                <td class="line">{{$jurado->Des1}}</td>
+                <td class="line">APLAZADO</td>
+                
+            </tr>
+        @endforeach
+            </tbody>
+
+    </table>
+    <h1 class="features">2da Decisión Jurados</h1>
+    <table border="0" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th class="line"><b>Jurado </b></th>
+            <th class="line"><b>Comentarios Actuales</b></th>
+            <th class="line"><b>Decisión Actual</b></th>
+           
+        </tr>
+        </thead>
+        @foreach($jurados as $jurado)
+            <tbody>
+            <tr>
+                <td class="line">{{$jurado->Jurado}}</td>
+                <td class="line">{{$jurado->Des2}}</td>
+                <td class="line">{{$jurado->Estado}}</td>
+                
+            </tr>
+        @endforeach
+            </tbody>
+
+    </table>
+    @endif
     <h1 class="features">Interacción De los estudiantes para con el Proyecto</h1>
     <table border="0" cellspacing="0" cellpadding="0">
         <thead>

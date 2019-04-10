@@ -19,6 +19,7 @@ class Proyecto extends Model
         'FK_EST_Id',
         'PYT_Fecha_Radicacion',
         'FK_NPRY_Director',
+        'NPRY_Pro_Estado',
     ];
 
     public function relacionAnteproyecto()
