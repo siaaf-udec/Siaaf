@@ -722,6 +722,7 @@ class StudentController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
             $user = Auth::user();
             $id = $user->identity_no;
+            $id_name = $user->name." ".$user->lastname;
           
            // $commit = Commits::where('FK_NPRY_idmctr008',1)->where('FK_MCT_idMctr008',1)->where('FK_User_Codigo', 123456189)->first();
                $commit = Commits::where('FK_NPRY_idMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_MCT_idMctr008',$request['FK_MCT_IdMctr008'])->first(); 
@@ -735,7 +736,7 @@ class StudentController extends Controller
                      'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
                      'CMMT_Formato' => $request['CMMT_Formato']
                     ]);
-                    $id_name = $user->name." ".$user->lastname;
+                    
                     $predi = Anteproyecto::where('PK_NPRY_IdMctr008', $request['FK_NPRY_IdMctr008'])->first();
                     $commit = Mctr008::where('PK_MCT_IdMctr008',$request['FK_MCT_IdMctr008'])->first();
                         $data = array(
