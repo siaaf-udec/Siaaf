@@ -50,6 +50,10 @@
                             </i>Nuevo Anteproyecto
                         </a>@endpermission
                         @permission('GESAP_ADMIN_REPORT_ANTE_ALL')<a href="javascript:;"
+                                                       class="btn btn-simple btn-success btn-icon reports"
+                                                       title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
+                            Anteproyectos</a>@endpermission
+                        @permission('GESAP_ADMIN_REPORT_ANTE_ALL')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon reportsE"
                                                        title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
                             Especificos Anteproyecto</a>@endpermission

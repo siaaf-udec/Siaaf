@@ -966,6 +966,16 @@ Route::group(['middleware' => ['auth']], function () {
 			'as' => 'CoordinadorGesap.SolicitudesList'
 		]);
 
+		Route::get('Graficos', [
+			'uses' => $controller . 'GraficosController@Graficos',  
+			'as' => 'CoordinadorGesap.Graficos'
+		]);
+		
+		Route::get('GraficosP', [
+			'uses' => $controller . 'GraficosController@GraficosP',  
+			'as' => 'CoordinadorGesap.GraficosP'
+		]);
+
 		Route::get('CerrarSolicitud/{ids?}', [
 			'uses' => $controller . 'CoordinatorController@CerrarSolicitud',  
 			'as' => 'CoordinadorGesap.CerrarSolicitud'

@@ -49,7 +49,7 @@
 
 
 	<h1 class="features">NOTIFICACIÓN (GESAP)</h1>
-    <h2> Se le informa que el desarrolladore {{$usuario}} modificó la Actividad :</h2>
+    <h2> Se le informa que el desarrollador {{$usuario}} modificó la Actividad :</h2>
     <h1> {{$Actividad}}</h1>
     
   

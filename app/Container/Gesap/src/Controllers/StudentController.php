@@ -396,7 +396,7 @@ class StudentController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
+    //funcion para cambiar de estado el proyecto a radicado para asi poder asignar jurados//
     public function Radicar(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -433,6 +433,20 @@ class StudentController extends Controller
                         }else{
                         $Anteproyecto -> FK_NPRY_Estado = 3 ;
                         $Anteproyecto->save();
+
+                        $data = array(
+                            'correo'=>$anteproyecto->relacionPredirectores->User_Correo,
+                            'Proy'=>"Anteproyecto : ".$anteproyecto->NPRY_Titulo,
+                        );
+            
+                        Mail::send('gesap.Emails.Radicar',$data, function($message) use ($data){
+                            
+                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+            
+                            $message->to($data['correo']);
+            
+                        });
+            
                         return AjaxResponse::success(
                             '¡Esta Hecho!',
                             'Anteproyecto Radicado.'
@@ -667,6 +681,19 @@ class StudentController extends Controller
                                 }else{
                                     $proyecto -> FK_EST_Id = 3 ;
                                     $proyecto->save();
+                                    $data = array(
+                                        'correo'=>$proyecto->relacionAnteproyecto->relacionPredirectores->User_Correo,
+                                        'Proy'=>"Proyecto : ".$proyecto->relacionAnteproyecto->NPRY_Titulo,
+                                    );
+                        
+                                    Mail::send('gesap.Emails.Radicar',$data, function($message) use ($data){
+                                        
+                                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+                        
+                                        $message->to($data['correo']);
+                        
+                                    });
+                        
                                     return AjaxResponse::success(
                                         '¡Esta Hecho!',
                                         'Proyecto Radicado.'
