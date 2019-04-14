@@ -70,7 +70,7 @@
 		@permission('GESAP_ADMIN')
 		<li class="nav-item {{ active(['CoordinadorGesap.*'], 'start active open') }}">
     	   <a href="{{ route('CoordinadorGesap.indexSolicitudes') }}" class="nav-link nav-toggle">
-     			<i class="fa fa-search"></i>
+     			<i class="fa fa-folder"></i>
 				<span class="title">Solicitudes</span>
 			</a>
 		</li>
