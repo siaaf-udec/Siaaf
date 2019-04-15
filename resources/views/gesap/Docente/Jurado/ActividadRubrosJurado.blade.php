@@ -146,7 +146,7 @@
                            
                             'Observación',
                             'Realizada por',
-                            'Fecha De realización'
+                            'Fecha De Realización'
                             
                         ])
                     @endcomponent

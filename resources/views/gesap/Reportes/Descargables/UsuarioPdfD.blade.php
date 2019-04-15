@@ -100,6 +100,10 @@
             <td><span contenteditable>{{$usuario->PK_User_Codigo}}</span></td>
            </tr>
            <tr>
+            <th><span contenteditable>Correo</span></th>
+            <td><span contenteditable>{{$usuario->User_Correo}}</span></td>
+           </tr>
+           <tr>
             <th><span contenteditable>Estado</span></th>
             <td><span contenteditable>{{$usuario->Estado}}</span></td>
            </tr>

@@ -158,6 +158,7 @@ class GraficosController extends Controller
            
         
     }
+    //funcion que carga los datos para las graficas de proyectos
     public function GraficosP(Request $request)
     {
             

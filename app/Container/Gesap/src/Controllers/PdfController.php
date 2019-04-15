@@ -98,7 +98,11 @@ class PdfController extends Controller
                     $anteproyecto->offsetSet('Desarrolladores',  $desarrolladorP );
 
                 }
-              
+                if($anteproyecto->NPRY_Ante_Estado == 1){
+                    $anteproyecto->offsetSet('EstadoAnteAoI',  "Activo" );
+                }else{
+                    $anteproyecto->offsetSet('EstadoAnteAoI',  "Inactivo" );
+                }
                 $anteproyecto->offsetSet('Duracion',  $anteproyecto->NPRY_Duracion." Meses" );
                 $anteproyecto->offsetSet('Estado', $anteproyecto->relacionEstado->EST_Estado);
                 if( $anteproyecto->relacionEstado->EST_Estado == "EN ESPERA"){
@@ -227,7 +231,11 @@ class PdfController extends Controller
             $anteproyecto->offsetSet('Duracion',  $anteproyecto->NPRY_Duracion." Meses" );
             $anteproyecto->offsetSet('Estado', $anteproyecto->relacionEstado->EST_Estado);
             $anteproyecto->offsetSet('Director',$anteproyecto->relacionPredirectores->User_Nombre1." ".$anteproyecto->relacionPredirectores->User_Apellido1);
-            
+            if($anteproyecto->NPRY_Ante_Estado == 1){
+                $anteproyecto->offsetSet('EstadoAnteAoI',  "Activo" );
+            }else{
+                $anteproyecto->offsetSet('EstadoAnteAoI',  "Inactivo" );
+            } 
             setlocale(LC_TIME, 'es_ES'); 
             $fecha = Carbon::now()->formatlocalized('%A %d %B %Y');
 
@@ -289,6 +297,11 @@ class PdfController extends Controller
 
                 }
                 $proyecto->offsetSet('Estado',  $proyecto->relacionEstado->EST_Estado);
+                if($proyecto->NPRY_Pro_Estado == 1){
+                    $proyecto->offsetSet('EstadoAnteAoI',  "Activo" );
+                }else{
+                    $proyecto->offsetSet('EstadoAnteAoI',  "Inactivo" );
+                } 
 
                 if( $proyecto->relacionEstado->EST_Estado == "EN ESPERA"){
                     $CEsp = $CEsp + 1 ;
@@ -328,6 +341,7 @@ class PdfController extends Controller
              
         }
     }
+    //reporte de un usuario en especifico//
     public function reporteUsuario(Request $request,$id,$idd)
     {
         if ($request->isMethod('GET')) {
@@ -654,6 +668,11 @@ class PdfController extends Controller
             $proyecto->offsetSet('Duracion',  $proyecto->relacionAnteproyecto->NPRY_Duracion." Meses" );
             $proyecto->offsetSet('Estado', $proyecto->relacionEstado->EST_Estado);
             $proyecto->offsetSet('Semillero', $proyecto->relacionAnteproyecto->NPRY_Semillero);
+            if($proyecto->NPRY_Pro_Estado == 1){
+                $proyecto->offsetSet('EstadoAnteAoI',  "Activo" );
+            }else{
+                $proyecto->offsetSet('EstadoAnteAoI',  "Inactivo" );
+            } 
             
             setlocale(LC_TIME, 'es_ES'); 
             $fecha = Carbon::now()->formatlocalized('%A %d %B %Y');
@@ -706,6 +725,12 @@ class PdfController extends Controller
                 
                     $anteproyecto->offsetSet('Duracion',  $anteproyecto->NPRY_Duracion." Meses" );
                     $anteproyecto->offsetSet('Estado', $anteproyecto->relacionEstado->EST_Estado);
+                    if($anteproyecto->NPRY_Ante_Estado == 1 ){
+                        $anteproyecto->offsetSet('EstadoAnteAI', "Activo");
+                    
+                    }else{
+                        $anteproyecto->offsetSet('EstadoAnteAI', "Inactivo");
+                    }
 
                 }    
             
@@ -748,6 +773,12 @@ class PdfController extends Controller
                 
                     $anteproyecto->offsetSet('Duracion',  $anteproyecto->NPRY_Duracion." Meses" );
                     $anteproyecto->offsetSet('Estado', $anteproyecto->relacionEstado->EST_Estado);
+                    if($anteproyecto->NPRY_Ante_Estado == 1 ){
+                        $anteproyecto->offsetSet('EstadoAnteAI', "Activo");
+                    
+                    }else{
+                        $anteproyecto->offsetSet('EstadoAnteAI', "Inactivo");
+                    }
 
                 }    
             
@@ -791,6 +822,12 @@ public function ReportesEspAnteproyectoPC(Request $request,$id)
             
                 $anteproyecto->offsetSet('Duracion',  $anteproyecto->NPRY_Duracion." Meses" );
                 $anteproyecto->offsetSet('Estado', $anteproyecto->relacionEstado->EST_Estado);
+                if($anteproyecto->NPRY_Ante_Estado == 1 ){
+                    $anteproyecto->offsetSet('EstadoAnteAI', "Activo");
+                
+                }else{
+                    $anteproyecto->offsetSet('EstadoAnteAI', "Inactivo");
+                }
 
             }    
         
@@ -838,6 +875,11 @@ public function ReportesEspAnteproyectoPE(Request $request,$id,$id2)
             
                 $anteproyecto->offsetSet('Duracion',  $anteproyecto->NPRY_Duracion." Meses" );
                 $anteproyecto->offsetSet('Estado', $anteproyecto->relacionEstado->EST_Estado);
+                if($anteproyecto->NPRY_Ante_Estado == 1 ){
+                    $anteproyecto->offsetSet('EstadoAnteAI', "Activo");
+                }else{
+                    $anteproyecto->offsetSet('EstadoAnteAI', "Inactivo");
+                }
 
             }    
         
@@ -883,6 +925,12 @@ public function ReportesEspProyecto(Request $request,$id)
 
                 }
                 $proyecto->offsetSet('Estado',  $proyecto->relacionEstado->EST_Estado);
+                if($proyecto->NPRY_Pro_Estado == 1 ){
+                    $proyecto->offsetSet('EstadoAnteAI', "Activo");
+                }else{
+                    $proyecto->offsetSet('EstadoAnteAI', "Inactivo");
+                }
+
 
             } 
         
@@ -930,6 +978,12 @@ public function ReportesEspProyectoF(Request $request,$id,$id2)
 
                 }
                 $proyecto->offsetSet('Estado',  $proyecto->relacionEstado->EST_Estado);
+                if($proyecto->NPRY_Pro_Estado == 1 ){
+                    $proyecto->offsetSet('EstadoAnteAI', "Activo");
+                }else{
+                    $proyecto->offsetSet('EstadoAnteAI', "Inactivo");
+                }
+
 
             } 
         
@@ -973,6 +1027,11 @@ if ($request->isMethod('GET')) {
         
             $anteproyecto->offsetSet('Duracion',  $anteproyecto->NPRY_Duracion." Meses" );
             $anteproyecto->offsetSet('Estado', $anteproyecto->relacionEstado->EST_Estado);
+            if($anteproyecto->NPRY_Ante_Estado == 1 ){
+                $anteproyecto->offsetSet('EstadoAnteAI', "Activo");
+            }else{
+                $anteproyecto->offsetSet('EstadoAnteAI', "Inactivo");
+            }
 
         }    
     
@@ -1023,6 +1082,12 @@ public function ReportesEspProyectoPE(Request $request,$id,$id2)
 
                 }
                 $proyecto->offsetSet('Estado',  $proyecto->relacionEstado->EST_Estado);
+                if($proyecto->NPRY_Pro_Estado == 1 ){
+                    $proyecto->offsetSet('EstadoAnteAI', "Activo");
+                }else{
+                    $proyecto->offsetSet('EstadoAnteAI', "Inactivo");
+                }
+
 
             }
         

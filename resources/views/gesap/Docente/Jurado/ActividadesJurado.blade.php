@@ -24,7 +24,7 @@
                         <br><br>
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaActividades'])
                         @slot('columns', [
-                            '# jurado',
+                            '#',
                             'Actividad',
                             'Descripcion',
                             'Acciones'

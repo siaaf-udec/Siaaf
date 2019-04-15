@@ -71,7 +71,7 @@
                             {{--'Fecha de realización',--}}
                             'Observación',
                             'Realizada por',
-                            'Fecha De realiación',
+                            'Fecha De Realización',
                        
                             
                         ])

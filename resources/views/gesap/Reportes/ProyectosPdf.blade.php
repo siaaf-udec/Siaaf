@@ -150,6 +150,7 @@
             <th class="line"><b>Estudiantes</b></th>
             <th class="line"><b>Fecha De Radicación</b></th>
             <th class="line"><b>Estado</b></th>
+            <th class="line"><b>Estado Act/Inact</b></th>
            
         </tr>
         </thead>
@@ -162,6 +163,7 @@
                 <td class="line">{{$proyecto->Desarrolladores}}</td>
                 <td class="line">{{$proyecto->PYT_Fecha_Radicacion}}</td>
                 <td class="line">{{$proyecto->Estado}}</td>
+                <td class="line">{{$proyecto->EstadoAnteAoI}}</td>
               
             </tr>
             @endforeach

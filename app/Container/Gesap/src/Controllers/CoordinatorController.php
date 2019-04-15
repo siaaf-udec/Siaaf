@@ -57,19 +57,21 @@ class CoordinatorController extends Controller
 
 	// CONTROLLERS CREADOS PARA GESAP V2.0//
     /// VISTAS ////////
+    //redirecciona a la vista Anteproyectos.blade ///
 	public function index(Request $request)
 	{
 		
 			return view($this->path . 'Anteproyectos');
 		
     }
-    
+    //redirecciona a la vista de solicitudes///
     public function indexSolicitudes(Request $request)
 	{
 		
 			return view($this->path . 'Coordinador.IndexSolicitudes');
 		
     }
+    //es la función ajax de la solicitudes//
     public function indexSolicitudesajax(Request $request, $ids)
 	{
 		
@@ -87,14 +89,14 @@ class CoordinatorController extends Controller
 		
     }
     
-   
+   //redirecciona a la vista de usuarios //
 	public function usuariosindex(Request $request)
 	{   
 		
 			return view($this->path . 'Anteproyectos');
 		
     }
-    
+    //es la funcion ajax del index principal(Anteproyectos)//
 	public function indexAjax(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -106,7 +108,7 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
 		);
     }
-
+    //redirecciona a la vista Mct//
     public function mctindex(Request $request)
 	{
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -121,6 +123,7 @@ class CoordinatorController extends Controller
                 );
         }
     }
+    //redirecciona a la vista par modificar el libro(Proyecto)//
     public function Libro(Request $request)
 	{
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -136,7 +139,7 @@ class CoordinatorController extends Controller
         }
     }
     
-    
+    //funcion para cerrar las solicitudes hechas por docentes o estudiantes///
     public function CerrarSolicitud(Request $request,$ids)
 	{
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -152,7 +155,7 @@ class CoordinatorController extends Controller
                 );
         }
     }
-    
+    //redirecciona a la vista principal de Proyectos///
     public function indexProyecto(Request $request)
 	{
         return view($this->path .'Proyecto.ProyectoGesap',
@@ -164,7 +167,7 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
+    //es la funcion Ajax de Proyectos///
     public function indexProyectoajax(Request $request)
 	{
         //if ($request->ajax() && $request->isMethod('GET')) {
@@ -179,7 +182,7 @@ class CoordinatorController extends Controller
    // }
     }
     
-    
+    //caraga la vista de fechas limites del MCT ///
     public function MctLimit(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -193,6 +196,7 @@ class CoordinatorController extends Controller
             );
         }
     }
+    //carga la vista de fechas limites de proyecto///
     public function LibroLimit(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -206,7 +210,7 @@ class CoordinatorController extends Controller
             );
         }
     }
-    
+    // carga la vista en donde se asignan jurados y estudiantes//
     public function AsignarAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -240,6 +244,7 @@ class CoordinatorController extends Controller
                 ); 
             }
     }
+    //carga la vista donde se muestran los desarrolladores disponibles///
     public function AsignarDesarrollador(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -259,6 +264,7 @@ class CoordinatorController extends Controller
             }              
         
     }
+    //se carga la vista donde se cargan los jurados disponibles//
     public function AsignarJurados(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -278,7 +284,7 @@ class CoordinatorController extends Controller
             }              
         
     }
-    
+    ///carga la vista en donde se crean actividades para el MCT //
     public function MctCreate(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -343,7 +349,7 @@ class CoordinatorController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-
+    // funcion que retorna los predirectores para cargar los dropdownlist////
     public function listarPreDirector(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -361,6 +367,7 @@ class CoordinatorController extends Controller
         );
 
     }
+    //se cargan las fechas para los dropdawnlist///
     public function FechasRadicacion(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -437,7 +444,7 @@ class CoordinatorController extends Controller
         );
         
     }
-
+    //funcion que cargan als solicitudes hechas en una tabla ///
     public function SolicitudesList(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -463,9 +470,10 @@ class CoordinatorController extends Controller
             }
           
             return DataTables::of($Solicitudes)
-                
-                   ->addIndexColumn()
-                   ->make(true);
+            ->removeColumn('created_at')
+            ->removeColumn('updated_at')
+            ->addIndexColumn()
+            ->make(true);
     
         }
         return AjaxResponse::fail(
@@ -474,7 +482,7 @@ class CoordinatorController extends Controller
         );
         
     }
-    
+    /// funcion que cancela el proyecto////
     public function CancelarProyecto(Request $request, $id)
     {
         if ($request->isMethod('GET')) {	
@@ -514,7 +522,7 @@ class CoordinatorController extends Controller
 
     }   
 
-
+    //funcion que muestran las fechas en la tabla del proyecto//
     public function listfechas(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -529,7 +537,8 @@ class CoordinatorController extends Controller
                     $i = $i +1;
                 }
             return DataTables::of($fechas)
-                
+            ->removeColumn('created_at')
+            ->removeColumn('updated_at')
                    ->addIndexColumn()
                    ->make(true);
     
@@ -540,7 +549,7 @@ class CoordinatorController extends Controller
         );
         
     }
-    
+    //funcion que muestra las fechas para anteproyecto en la tabla///
     public function listfechasProyecto(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -567,7 +576,7 @@ class CoordinatorController extends Controller
         
     }
     
-
+    //funcion que carga todas las actividades del MCT para el coordinador//
     public function listaActividades(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -588,6 +597,7 @@ class CoordinatorController extends Controller
                 );
         }
     }
+    //funcion que carga todas las actividadesdel libro//
     public function listaActividadesLibro(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -598,7 +608,8 @@ class CoordinatorController extends Controller
             }
 
             return DataTables::of($Actividades)
-                
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
 			   ->addIndexColumn()
                ->make(true);
                
@@ -608,7 +619,7 @@ class CoordinatorController extends Controller
                 );
         }
     }
-
+    //funcion que muestra los desarrolladores disponibles para asignar//
     public function AsignarDesarrolladoreslist(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -638,9 +649,6 @@ class CoordinatorController extends Controller
                     $i=$i+1;
                        
                     }
-                   
-               
-                   
                }
 
             return DataTables::of($concatenado)
@@ -654,6 +662,7 @@ class CoordinatorController extends Controller
                 );
         }
     }
+    //funcion que muestra los jurados disponibles apra su posterior asignacion//$id= id del anteproyecto para descartar ese docente
     public function AsignarJuradoslist(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -704,6 +713,7 @@ class CoordinatorController extends Controller
                 );
         }
     }
+    //funcion que muestra los jurados asignados a ese anteproyecto($id)//
     public function JuradosList(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -731,8 +741,6 @@ class CoordinatorController extends Controller
 
                 $s=$s+1;
                }
-         
-         
             
               return DataTables::of($Jurados)
               ->removeColumn('created_at')
@@ -747,7 +755,7 @@ class CoordinatorController extends Controller
                 );
         
     }
-    
+    //funcion que muestra los desarrolladores asignados a ese anteproyecto($id)//
 	public function DesarrolladoresList(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -862,7 +870,7 @@ class CoordinatorController extends Controller
                 );
         }
     }
-    
+    //funcion que retorna los datos a la vista donde se hacen efectivas las solicitudes $id = pk_anteproyecto $ids = pk_solicitud //
     public function VerProyectoSolicitud(Request $request, $id,$ids)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -903,7 +911,7 @@ class CoordinatorController extends Controller
         }
     }
     
-	
+	//funcion que retorna los estados para mostrar en un drop dawn list//
 	public function listarEstado(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -922,7 +930,7 @@ class CoordinatorController extends Controller
 
     }
     
-    /////////////// CREATE ////////
+    //funcion para retorna la vista donde se crean los anteproyectos//
     public function CreateAnte(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -986,6 +994,7 @@ class CoordinatorController extends Controller
         }
         }
     }
+    //funcion que editan las fechas de radicacion de proyectoy anteproyecto en solicitudes//
     public function editarfechas(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -1143,6 +1152,7 @@ class CoordinatorController extends Controller
 			
         
     }
+    //funcion para modificar las fechas de entrega del semestre///
     public function storefechas(Request $request)
     {
 		if ($request->ajax() && $request->isMethod('POST')) {	
@@ -1155,7 +1165,7 @@ class CoordinatorController extends Controller
             $fecha -> FCH_Radicacion = $request['FCH_Radicacion_secundaria'];
             $fecha -> save();
 
-            $anteproyectos = Anteproyecto::where('FK_NPRY_Estado',6)->get();
+            $anteproyectos = Anteproyecto::where('FK_NPRY_Estado',6)->where('NPRY_Ante_Estado',1)->get();
             foreach($anteproyectos as $anteproyecto){
 
                 $anteproyecto -> NPRY_FCH_Radicacion =  $request['FCH_Radicacion_principal'];
@@ -1173,6 +1183,7 @@ class CoordinatorController extends Controller
 			);
         
     }
+    //funcion para modificar las fechas de entrega del semestre(Proyecto)///
     public function storefechasProyecto(Request $request)
     {
 		if ($request->ajax() && $request->isMethod('POST')) {	
@@ -1185,7 +1196,7 @@ class CoordinatorController extends Controller
             $fecha -> FCH_Radicacion = $request['FCH_Radicacion_secundaria'];
             $fecha -> save();
 
-            $ProyectosA = Proyecto::where('FK_EST_Id',4)->get();
+            $ProyectosA = Proyecto::where('FK_EST_Id',4)->where('NPRY_Pro_Estado',1)->get();
             foreach($ProyectosA as $ProyectoA){
 
                 $ProyectoA -> PYT_Fecha_Radicacion =  $request['FCH_Radicacion_principal'];
@@ -1210,6 +1221,7 @@ class CoordinatorController extends Controller
 			);
         
     }
+    //funcion que crea una actividad nueva para el mct//
     public function CreateMct(Request $request)
     {
 		if ($request->ajax() && $request->isMethod('POST')) {	
@@ -1229,6 +1241,7 @@ class CoordinatorController extends Controller
 			);
         
     }
+    //funcion que crea una nueva actividad para el libro//
     public function createlibro(Request $request)
     {
 		if ($request->ajax() && $request->isMethod('POST')) {	
@@ -1248,8 +1261,6 @@ class CoordinatorController extends Controller
 			);
         
     }
-          
-    //////////////// EDITARR ///////
     
    //editar el anteproyecto como tal
     public function updateAnte(Request $request)
@@ -1355,6 +1366,7 @@ class CoordinatorController extends Controller
         );
 
     }
+    //funcion para cancelar el anteproyecto//
     public function CancelarAnte(Request $request, $id)
     {
         if ($request->isMethod('GET')) {	
@@ -1388,12 +1400,7 @@ class CoordinatorController extends Controller
         );
 
     }   
-
-
-
-    ///////// ELIMINAR /////
-       
-   
+    //funcion para eliminar un desarrollador de un anteporyecto
     public function EliminarDesarrollador(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -1414,7 +1421,7 @@ class CoordinatorController extends Controller
         );
 
     }   
-   
+   //funcion para eliminar un jurado de unanteproyecto o proyecto//
     public function EliminarJurado(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -1433,6 +1440,7 @@ class CoordinatorController extends Controller
         );
 
     }
+    //funcion para eliminar una actividad del mct $id= id de la actividad //
     public function EliminarActividadMct(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -1450,6 +1458,7 @@ class CoordinatorController extends Controller
         );
 
     }
+    //funcion que elmimina una actividad del libro $id= id de la actividad del libro//
     public function mctdestroyLibro(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -1467,9 +1476,7 @@ class CoordinatorController extends Controller
         );
 
     }
-   
-    //------------FUNCIONES PARA CRUD DE USUARIOS ADMIN--------------------
-	//Index para vista de Usuarios
+  	//Index para vista de Usuarios
 	public function indexUsuarios(Request $request)
 	{
 		
@@ -1490,30 +1497,7 @@ class CoordinatorController extends Controller
 		);
     }
 
-	//lista de usuarios
-	/* public function usuariosList(Request $request)
-    {
-        if ($request->ajax() && $request->isMethod('GET')) {
-
-		   
-		   $usuarios=Usuarios::query();
-		   
-
-		   return DataTables::of($usuarios)
-			   ->removeColumn('created_at')
-			   ->removeColumn('updated_at')
-			    
-			   ->addIndexColumn()
-			   ->make(true);
-        }
-
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-    } */
-
-    //lista de usuarios con el metodo para traer los strings en vez de los id's de rol y estado
+  //lista de usuarios con el metodo para traer los strings en vez de los id's de rol y estado
     public function usuariosList(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1620,21 +1604,7 @@ class CoordinatorController extends Controller
 	public function createUsuario(Request $request)
     {
 		if ($request->ajax() && $request->isMethod('POST')) {
-          /* vairables que resive
-             formData.append('PK_User_Codigo', $('input:text[name="User_Cedula"]').val());
-            formData.append('User_Codigo', $('input:text[name="User_Codigo"]').val());
-            formData.append('User_Nombre1', $('input:text[name="User_Nombre1"]').val());
-            formData.append('User_Apellido1', $('input:text[name="User_Apellido1"]').val());
-            formData.append('User_Correo', $('input[name="User_Correo"]').val());
-            formData.append('User_Contra', $('input:text[name="User_Cedula"]').val());
-            formData.append('User_Direccion', $('input:text[name="User_Direccion"]').val());
-            formData.append('FK_User_IdEstado', '2');
-            formData.append('User_Tipo_Documento', $('select[name="User_Tipo_Documento"]').val());
-            formData.append('User_Sexo', $('select[name="User_Sexo"]').val());
-            formData.append('User_Nacimiento', $('#User_Nacimiento').val());
-            formData.append('User_Fecha_Expedicion', $('#User_Fecha_Expedicion').val());
-           */
-
+        
            //validar Documento identidad           
            $vdocumento = Usuarios::where('PK_User_Codigo',$request['PK_User_Codigo'])->first(); 
            //validar correo
@@ -1706,10 +1676,6 @@ class CoordinatorController extends Controller
             'state' => 'Aprobado',
          ]);
 
-
-
-     //   Mail::to($request['User_Correo'])->send(new EmailGesap($request['User_Nombre1']));
-
         return AjaxResponse::success(
             '¡Bien hecho!',
             'Datos creados en Usuarios'
@@ -1725,19 +1691,6 @@ class CoordinatorController extends Controller
      {
          if ($request->ajax() && $request->isMethod('POST')) {
              $usuario = Usuarios::where('PK_User_Codigo', $request['PK_User_Codigo'])->first();
-            //  $usuario->fill([
-            //     //'PK_User_Codigo' => $request['PK_User_Codigo'],
-            //    // 'User_Cedula' => $request['User_Cedula'],
-            //     'User_Nombre1' => $request['User_Nombre1'],
-            //     //'User_Nombre2' => $request['User_Nombre2'],
-            //     'User_Apellido1' => $request['User_Apellido1'],
-            //     //'User_Apellido2' => $request['User_Apellido2'],
-            //     'User_Correo' => $request['User_Correo'],
-            //     //'User_Contra' => Crypt::encrypt($request['User_Cedula']),
-            //     'User_Direccion' => $request['User_Direccion'],
-            //     'FK_User_IdEstado' => $request['FK_User_IdEstado'],
-            //     'FK_User_IdRol' => $request['FK_User_IdRol'],
-            //  ]);
             $usuario -> User_Nombre1 = $request['User_Nombre1'];
             $usuario -> User_Apellido1 = $request['User_Apellido1'];
             $usuario -> User_Correo = $request['User_Correo'];

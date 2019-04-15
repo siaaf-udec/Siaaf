@@ -23,7 +23,7 @@
                         <br><br>
                         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaActividades'])
                         @slot('columns', [
-                            '# Jurado',
+                            '#',
                             'Actividad',
                             'Descripcion',
                             'Acciones'
@@ -73,9 +73,10 @@
         
         var table, url, columns;
         table = $('#listaActividades');
-        url = '{{ route('DocenteGesap.VerRequerimientosList') }}';
     
         idp='{{  $Anteproyecto  }}';
+        url = '{{ route('DocenteGesap.VerRequerimientosList') }}'+'/'+idp;
+    
     
         columns = [
             {data: 'Numero', name: 'Numero'},

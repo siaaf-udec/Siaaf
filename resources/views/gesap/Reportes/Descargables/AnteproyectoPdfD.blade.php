@@ -99,6 +99,10 @@
             <th><span contenteditable>Semillero</span></th>
             <td><span contenteditable>{{$anteproyecto->NPRY_Semillero}}</span></td>
           </tr>
+          <tr>
+            <th><span contenteditable>Estado Act/Inact</span></th>
+            <td><span contenteditable>{{$anteproyecto->EstadoAnteAoI}}</span></td>
+          </tr>
         </table>
 
     <table border="0" cellspacing="0" cellpadding="0">

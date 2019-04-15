@@ -61,19 +61,21 @@ class StudentController extends Controller
 {
 
     private $path = 'gesap.Estudiante.';
-
+    //funcion que redirecciona ala vista principal de anteproyecto//
     public function index(Request $request)
 	{
 		
 			return view($this->path . 'IndexEstudiante');
 		
     }
+    //funcion que redirecciona a la vista principal de proyectos//
     public function indexProyecto(Request $request)
 	{
 		
 			return view($this->path . 'IndexEstudianteProyecto');
 		
     }
+    //funcion que carga todas las actividades del anteproyecto $id//
     public function VerActividadesList(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -112,7 +114,7 @@ class StudentController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
+    //funcion que carga todas las actividades de proyecto $id//
     public function VerActividadesListProyecto(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -151,6 +153,7 @@ class StudentController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    //funcion que carga las solicitudes hechas por el usuario//
     public function VerSolicitud(Request $request,$id)
     {
         $user = Auth::user();
@@ -175,7 +178,7 @@ class StudentController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
+    //funcion que redirecciona a la plantilla de actividades estudiante//
     public function VerActividades(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -502,15 +505,21 @@ class StudentController extends Controller
                 
 
                 $jurados = Jurados::where('FK_NPRY_IdMctr008',$id)->get();
-                foreach($jurados as $jurado){
-                    $nombre = $jurado -> relacionUsuarios -> User_Nombre1 ;
-                    $apellido = $jurado -> relacionUsuarios -> User_Apellido1 ;
-                    $total = $nombre." ".$apellido;
-                    $jurado ->offsetSet('Nombre',$total);
-                    $jurado ->offsetSet('Estado',$jurado->relacionEstado->EST_Estado );
-                  
+                if($jurados->IsEmpty()){
+                    $jurado ->offsetSet('Nombre',"Sin Asignar");
+                    $jurado ->offsetSet('Estado',"Sin Asignar");
+                }else{
+                    foreach($jurados as $jurado){
+                        $nombre = $jurado -> relacionUsuarios -> User_Nombre1 ;
+                        $apellido = $jurado -> relacionUsuarios -> User_Apellido1 ;
+                        $total = $nombre." ".$apellido;
+                        $jurado ->offsetSet('Nombre',$total);
+                        $jurado ->offsetSet('Estado',$jurado->relacionEstado->EST_Estado );
+                      
+                    }
+    
                 }
-               return DataTables::of($jurados)
+                return DataTables::of($jurados)
                ->removeColumn('created_at')
 			   ->removeColumn('updated_at')
                ->removeColumn('PK_Id_Jurados')
@@ -539,12 +548,14 @@ class StudentController extends Controller
                 
                 $jurados = Jurados::where('FK_NPRY_IdMctr008',$id)->get();
                 foreach($jurados as $jurado){
-                    $nombre = $jurado -> relacionUsuarios -> User_Nombre1 ;
-                    $apellido = $jurado -> relacionUsuarios -> User_Apellido1 ;
-                    $total = $nombre." ".$apellido;
-                    $jurado ->offsetSet('Nombre',$total);
-                    $jurado ->offsetSet('Estado',$jurado->relacionEstado->EST_Estado );
+                    $jurado ->offsetSet('Nombre',$jurado->relacionUsuarios->User_Nombre1." ".$jurado->relacionUsuarios->User_Apellido1);
+                    if($jurado->relacionEstadoJurado->EST_Estado == "RADICADO"){
+                        $jurado ->offsetSet('Estado',"ASIGNADO");
+                    }else{
+                        $jurado ->offsetSet('Estado',$jurado->relacionEstadoJurado->EST_Estado );
 
+                    }
+                    
                 }
                return DataTables::of($jurados)
                ->removeColumn('created_at')
@@ -577,10 +588,15 @@ class StudentController extends Controller
             $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
 
             $jurados=Jurados::where('FK_NPRY_IdMctr008',$id)->first();
-            if($jurados->JR_Comentario_2 == 'inhabilitado'){
+            if($jurados == null){
                 $Anteproyecto->offsetseT('N_Radicacion',1);
             }else{
-                $Anteproyecto->offsetseT('N_Radicacion',2);
+                if($jurados->JR_Comentario_2 == 'inhabilitado'){
+                    $Anteproyecto->offsetseT('N_Radicacion',1);
+                }else{
+                    $Anteproyecto->offsetseT('N_Radicacion',2);
+                }
+                
             }
             
             return view($this->path .'ComentariosJurados',
@@ -606,11 +622,12 @@ class StudentController extends Controller
             $Anteproyecto -> offsetSet('Estado', $estado);
 
             $jurados=Jurados::where('FK_NPRY_IdMctr008',$id)->first();
-            if($jurados->JR_Comentario_Proyecto_2 == 'inhabilitado'){
-                $Anteproyecto->offsetseT('N_Radicacion',1);
-            }else{
-                $Anteproyecto->offsetseT('N_Radicacion',2);
-            }
+               if($jurados->JR_Comentario_Proyecto_2 == 'inhabilitado'){
+                    $Anteproyecto->offsetseT('N_Radicacion',1);
+                }else{
+                    $Anteproyecto->offsetseT('N_Radicacion',2);
+                }
+            
 
             return view($this->path .'.Proyecto.ComentariosJurados',
             [
@@ -625,7 +642,7 @@ class StudentController extends Controller
         }             
         
     }
-    
+    //funcion que retorna la vista de banco de proyectos //
     public function BancoDeProyectos(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -644,7 +661,7 @@ class StudentController extends Controller
         }             
         
     }
-    
+    //funncion en la cual se valida si el proyecto esta listo para radicar $id = la PK del Proyecto //
     public function RadicarProyecto(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {

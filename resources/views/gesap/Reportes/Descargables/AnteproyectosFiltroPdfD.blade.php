@@ -87,6 +87,7 @@
             <th class="line"><b>Estudiantes</b></th>
             <th class="line"><b>Fecha De Radicación</b></th>
             <th class="line"><b>Estado</b></th>
+            <th class="line"><b>Estado Act/inact</b></th>
            
         </tr>
         </thead>
@@ -99,6 +100,8 @@
                 <td class="line">{{$anteproyecto->Desarrolladores}}</td>
                 <td class="line">{{$anteproyecto->NPRY_FCH_Radicacion}}</td>
                 <td class="line">{{$anteproyecto->Estado}}</td>
+                <td class="line">{{$anteproyecto->EstadoAnteAI}}</td>
+
               
             </tr>
             @endforeach
