@@ -175,7 +175,7 @@
                             }
                         });
                     } else {
-                        swal("Cancelado", "No se Deshabilitó ningun usuario", "error");
+                        swal("Cancelado", "No se Deshabilitó ningún usuario", "error");
                     }
                 });
 
