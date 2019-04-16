@@ -49,8 +49,8 @@
                     @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaSolicitudes'])
                         @slot('columns', [
                             'Solicitud',
-                            'Hecha por',
-                            'Para el Proyecto o Ante',
+                            'Solicitante',
+                            'Para el Anteproyecto o Proyecto',
                             'Estado',
                             'Accion'
                         ])

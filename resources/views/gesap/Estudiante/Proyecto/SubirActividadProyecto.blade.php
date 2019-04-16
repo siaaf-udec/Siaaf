@@ -168,9 +168,7 @@ $(document).ready(function(){
                                                 xhr = "warning"
                                                 UIToastr.init(xhr, response.title, response.message);
                                                 App.unblockUI('.portlet-form');
-                                                var route = '{{ route('EstudianteGesap.VerActividadesProyecto') }}' + '/' + '{{$datos['Anteproyecto']}}';
-                                                $(".content-ajax").load(route);
-                                            
+                                               
                                             }else {
                                                 $('#form_subir_actividad')[0].reset(); 
                                                 UIToastr.init(xhr, response.title, response.message);

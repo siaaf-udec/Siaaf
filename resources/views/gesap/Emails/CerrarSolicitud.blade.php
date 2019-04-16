@@ -49,10 +49,12 @@
 
 
 	<h1 class="features">NOTIFICACIÓN (GESAP)</h1>
-    <h2>Se notifica que el {{$Proy}}</h2>
-    <h2>Fue Radicado el dia de Hoy.<h2>
-		<h2>{{$fecha}}<h2>
-		
+    <h2>Su Solicitud de :</h2>
+    <h2>{{$Solicitud}}<h2>
+    <h2>Sobre : {{$Ante}}<h2>
+    <h2>Fue realizada con Éxito.!<h2>
+
+	
 </body>
 </html>
 

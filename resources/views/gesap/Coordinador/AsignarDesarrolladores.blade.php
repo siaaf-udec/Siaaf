@@ -147,7 +147,7 @@
                                     App.unblockUI('.portlet-form');
                                     var route = '{{ route('AnteproyectosGesap.AsignarDesarrollador') }}'+ '/' + id;
                                    // location.href="{{route('AnteproyectosGesap.AsignarDesarrollador')}}"+ '/' + id;
-                                    $(".content-ajax").load(route);;
+                                    $(".content-ajax").load(route);
                                 } else {
                                    // $('#form_usuario_create')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);

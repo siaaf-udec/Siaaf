@@ -309,10 +309,20 @@ class StudentController extends Controller
     public function ComentarioStore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-        $user = Auth::user();
-        $id = $user->identity_no;
-        $id_nombre = $user->name." ".$user->lastname;
-                     ObservacionesMct::create([
+            $user = Auth::user();
+            $id = $user->identity_no;
+            $fecha = Carbon::now();
+            $fechahoy = $fecha->format('Y-m-d');
+            $id_nombre = $user->name." ".$user->lastname;
+            if($request['OBS_Limit'] < $fechahoy){
+                $IdError = 422;
+                return AjaxResponse::success(
+                    '¡Lo sentimos!',
+                    'La Fecha No puede ser anterior a la Fecha Actual.',
+                     $IdError
+                );
+            } else{
+                    ObservacionesMct::create([
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                      'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                      'FK_User_Codigo' => $id,
@@ -342,7 +352,7 @@ class StudentController extends Controller
                     '¡Esta Hecho!',
                     'Comentario Hecho.'
                 );
-       
+            }
             }              
         
     }
@@ -438,10 +448,11 @@ class StudentController extends Controller
                         }else{
                         $Anteproyecto -> FK_NPRY_Estado = 3 ;
                         $Anteproyecto->save();
-
+                        $fecha = Carbon::now();
                         $data = array(
                             'correo'=>$anteproyecto->relacionPredirectores->User_Correo,
                             'Proy'=>"Anteproyecto : ".$anteproyecto->NPRY_Titulo,
+                            'fecha'=>$fecha,
                         );
             
                         Mail::send('gesap.Emails.Radicar',$data, function($message) use ($data){
@@ -700,9 +711,11 @@ class StudentController extends Controller
                                 }else{
                                     $proyecto -> FK_EST_Id = 3 ;
                                     $proyecto->save();
+                                    $fecha = Carbon::now();
                                     $data = array(
                                         'correo'=>$proyecto->relacionAnteproyecto->relacionPredirectores->User_Correo,
                                         'Proy'=>"Proyecto : ".$proyecto->relacionAnteproyecto->NPRY_Titulo,
+                                        'fecha'=>$fecha,
                                     );
                         
                                     Mail::send('gesap.Emails.Radicar',$data, function($message) use ($data){

@@ -60,15 +60,21 @@
                     
           
                             {!! Field::select('FK_NPRY_Pre_Director', null,['name' => 'SelectPre_Director','label'=>'Pre Director:']) !!}
-                            @permission('GESAP_ADMIN_FECHAS_SOLICITUDES')<a href="javascript:;"
+                            @permission('GESAP_ADMIN_FECHAS_SOLICITUDES')
+                            @if($datos['SolEstado']!="Realizada")
+                            <a href="javascript:;"
                                                        class="btn btn-simple btn-warning btn-icon gestionar"
                                                        title="fechas">
+                      
                             <i class="fa fa-plus">
                             </i>Fechas 
-                        </a>@endpermission
+                            </a>
+                            @endif
+                        @endpermission
                                 <h4>Desarrolladores<h4>
                                 <br><br>
-                         @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listadesarrolladores'])
+                        @if($datos['SolEstado']!="Realizada")
+                        @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listadesarrolladores'])
                         @slot('columns', [
                             'Codigo',
                             'Nombre',
@@ -76,6 +82,16 @@
                             'Acciones'
                         ])
                         @endcomponent
+                        @endif
+                        @if($datos['SolEstado']=="Realizada")
+                        @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listadesarrolladores2'])
+                        @slot('columns', [
+                            'Codigo',
+                            'Nombre',
+                            'Apellido'
+                        ])
+                        @endcomponent
+                        @endif
                         <h4>Jurados<h4>
                         <br><br>
                         @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listajurados'])
@@ -97,11 +113,15 @@
                                     Volver 
                                 </a>@endpermission
                               
-                                @permission('GESAP_ADMIN_CANCEL')<a href="javascript:;"
+                                @permission('GESAP_ADMIN_CANCEL')
+                                @if($datos['SolEstado']!="Realizada")
+                                <a href="javascript:;"
                                                                class="btn btn-outline blue button-cerrar"><i
                                             class="fa fa-angle-right"></i>
                                     Cerrar Solicitud
-                                </a>@endpermission
+                                </a>
+                                @endif
+                                @endpermission
                               
                             </div>
                         </div>
@@ -271,6 +291,23 @@
         dataTableServer.init(table1, url1, columns1);
         table1 = table1.DataTable();
 
+        var table2, url2, columns2;
+        table2 = $('#listadesarrolladores2');
+        id='{{  $datos['IdProyecto']  }}';
+        
+        url2 = '{{ route('AnteproyectosGesap.Desarrolladoreslist') }}'+ '/' + id;
+    
+         
+    
+        columns2 = [
+            {data: 'CodigoJ', name: 'CodigoJ'},
+            {data: 'NombreJ', name: 'NombreJ'},
+            {data: 'ApellidoJ', name: 'ApellidoJ'},
+            
+        ];
+        dataTableServer.init(table2, url2, columns2);
+        table2 = table2.DataTable();
+
         table1.on('click', '.remove', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
@@ -379,12 +416,14 @@
                                                 xhr = "warning"
                                                 UIToastr.init(xhr, response.title, response.message);
                                                 App.unblockUI('.portlet-form');
-                                               
+                                                var route = '{{ route('CoordinadorGesap.indexSolicitudes.Ajax') }}';
+                                                location.href="{{route('CoordinadorGesap.indexSolicitudes')}}";
                                                
                                             } else {
                                                 table.ajax.reload();
                                                 UIToastr.init(xhr, response.title, response.message);
-                                              
+                                                var route = '{{ route('CoordinadorGesap.indexSolicitudes.Ajax') }}';
+                                                location.href="{{route('CoordinadorGesap.indexSolicitudes')}}";
                            
                                                 }
                                         }

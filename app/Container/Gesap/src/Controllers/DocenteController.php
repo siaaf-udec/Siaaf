@@ -835,8 +835,17 @@ class DocenteController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $user = Auth::user();
-		    $id = $user->identity_no;
-            
+            $id = $user->identity_no;
+            $fecha = Carbon::now();
+            $fechahoy = $fecha->format('Y-m-d');
+            if($request['OBS_Limit'] < $fechahoy){
+                $IdError = 422;
+                return AjaxResponse::success(
+                    '¡Lo sentimos!',
+                    'La Fecha No puede ser anterior a la Fecha Actual.',
+                     $IdError
+                );
+            } else{
                      ObservacionesMct::create([
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                      'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
@@ -869,7 +878,7 @@ class DocenteController extends Controller
                     '¡Esta Hecho!',
                     'Comentario Hecho.'
                 );
-       
+            }
             }              
         
     }
@@ -879,6 +888,7 @@ class DocenteController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
             $user = Auth::user();
             $id = $user->identity_no;
+            
             
             $desjurado = Jurados::where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_User_Codigo',$id)->first();
             if($desjurado->JR_Comentario_2 == "inhabilitado"){

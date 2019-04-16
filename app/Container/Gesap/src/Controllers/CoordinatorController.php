@@ -72,13 +72,11 @@ class CoordinatorController extends Controller
 		
     }
     //es la función ajax de la solicitudes//
-    public function indexSolicitudesajax(Request $request, $ids)
+    public function indexSolicitudesajax(Request $request)
 	{
 		
         if ($request->ajax() && $request->isMethod('GET')) {
-            $solicitud = Solicitud::where('PK_Id_Solicitud',$ids)->first();
-            $solicitud ->Sol_Estado = 'Realizada';
-            $solicitud -> save();
+            
             return view($this->path . 'Coordinador.IndexSolicitudes');
         }
 
@@ -147,6 +145,21 @@ class CoordinatorController extends Controller
             $solicitud = Solicitud::where('PK_Id_Solicitud',$ids)->first();
             $solicitud ->Sol_Estado = 'Realizada';
             $solicitud -> save();
+            $usuario = Usuarios::where('PK_User_Codigo',$solicitud->FK_User_Codigo)->first();
+            $proyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$solicitud->FK_NPRY_IdMctr008)->first();
+            $data = array(
+                'correo'=>$usuario->User_Correo,
+                'Solicitud'=>$solicitud->Sol_Solicitud,
+                'Ante'=>$proyecto->NPRY_Titulo,
+            );
+
+            Mail::send('gesap.Emails.CerrarSolicitud',$data, function($message) use ($data){
+                
+                $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+
+                $message->to($data['correo']);
+
+            });
 
 
                 return AjaxResponse::success(
@@ -889,12 +902,13 @@ class CoordinatorController extends Controller
             
             $Proyecto->OffsetSet('Director',$Proyecto->User_Nombre1." ".$Proyecto->User_Apellido1);
             $Proyecto->OffsetSet('IdDirector',$Proyecto->FK_NPRY_Pre_Director);
+            $Proyecto->OffsetSet('SolEstado',$Solicitud->Sol_Estado);
 
             $ProyectoRadicado = Proyecto::where('FK_NPRY_IdMctr008',$id)->first();
             if($ProyectoRadicado != null){
                 $Proyecto->OffsetSet('FechaProyecto',$ProyectoRadicado->PYT_Fecha_Radicacion);
             }else{
-                $Proyecto->OffsetSet('FechaProyecto','Aun No Es Un Proyecto Valido');
+                $Proyecto->OffsetSet('FechaProyecto','Aún No Es Un Proyecto Valido');
             }
             
             $datos = $Proyecto;
