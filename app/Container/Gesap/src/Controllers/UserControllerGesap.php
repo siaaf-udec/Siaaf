@@ -218,15 +218,14 @@ class UserControllerGesap extends Controller
                 Usuarios::create([
                     'PK_User_Codigo' => $request['identity_no'],
                     'User_Codigo' => $request['User_Codigo'],
-                    'User_Nombre1' => $request['name'],
-                    'User_Apellido1' => $request['lastname'],
-                    'User_Correo' => $request['email'],
-                    'User_Contra' => 12345,
-                    'User_Direccion' => $request['address_create'],
+                    'User_Nombre1' => strtoupper($request['name']),
+                    'User_Apellido1' => strtoupper($request['lastname']),
+                    'User_Correo' => strtoupper($request['email']),
+                    'User_Contra' => substr( $request['identity_no'], 0,5),
+                    'User_Direccion' => strtoupper($request['address_create']),
                     'FK_User_IdEstado' => 1,
                     'FK_User_IdRol' => $request['rol_gesap'],
-                    ]);
-
+                ]);
                     $usuario = Usuarios::where('PK_User_Codigo', $request['identity_no'])->first();
                     $data = array(
                             'name'=>$usuario->User_Nombre1." ".$usuario->User_Apellido1,
@@ -323,11 +322,11 @@ class UserControllerGesap extends Controller
                 Usuarios::create([
                     'PK_User_Codigo' => $request['identity_no'],
                     'User_Codigo' => $request['User_Codigo'],
-                    'User_Nombre1' => $request['name'],
-                    'User_Apellido1' => $request['lastname'],
-                    'User_Correo' => $request['email'],
+                    'User_Nombre1' => strtoupper($request['name']),
+                    'User_Apellido1' => strtoupper($request['lastname']),
+                    'User_Correo' => strtoupper($request['email']),
                     'User_Contra' => substr( $request['identity_no'], 0,5),
-                    'User_Direccion' => $request['address_create'],
+                    'User_Direccion' => strtoupper($request['address_create']),
                     'FK_User_IdEstado' => 1,
                     'FK_User_IdRol' => $request['rol_gesap'],
                 ]);
