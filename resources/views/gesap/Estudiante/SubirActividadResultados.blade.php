@@ -46,15 +46,15 @@
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: Text('MCT_Resultado',null,['label'=>'Resultado:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aquie el resultado obtenido','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('MCT_Producto_Esperado',null,['label'=>'Producto Esperado:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el producto que esperaba','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('MCT_Indicador',null,['label'=>'Indicador :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aqui el indicador del producto','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('MCT_Beneficiario',null,['label'=>'Beneficiario :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el beneficiario de dicho producto','icon'=>'fa fa-book']) !!}
                                    {!! Field::select('MCT_Categoria',['Conocimiento y/o nuevo desarrollo'=>'Conocimiento y/o nuevo desarrollo', 'Fortalecimiento de la capacidad cientifica'=>'Fortalecimiento de la capacidad cientifica',
-                                                         'Apropiación social del conocimiento'=>'Apropiación social del conocimiento'],null,['label'=>'Categoria: ']) !!}
+                                                         'Seleccióne la categoria del producto'=>'Apropiación social del conocimiento'],null,['label'=>'Categoria: ']) !!}
                                  
                                
                                
@@ -87,15 +87,15 @@
                                 <div class="col-md-12">
                                  
                                    {!! Field:: Text('MCT_EDITAR_Resultado',null,['label'=>'Resultado:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aquie el resultado obtenido','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('MCT_EDITAR_Producto_Esperado',null,['label'=>'Producto Esperado:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el producto que esperaba','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('MCT_EDITAR_Indicador',null,['label'=>'Indicador :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aqui el indicador del producto','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('MCT_EDITAR_Beneficiario',null,['label'=>'Beneficiario :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el beneficiario de dicho producto','icon'=>'fa fa-book']) !!}
                                    {!! Field::select('MCT_EDITAR_Categoria',['Conocimiento y/o nuevo desarrollo'=>'Conocimiento y/o nuevo desarrollo', 'Fortalecimiento de la capacidad cientifica'=>'Fortalecimiento de la capacidad cientifica',
-                                                         'Apropiación social del conocimiento'=>'Apropiación social del conocimiento'],null,['label'=>'Categoria: ']) !!}
+                                                         'Seleccióne la categoria del producto'=>'Apropiación social del conocimiento'=>'Apropiación social del conocimiento'],null,['label'=>'Categoria: ']) !!}
                                  
                                
                                

@@ -46,23 +46,23 @@
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: Text('RBR_PER_Nombre',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite el nombre','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_PER_Funcion',null,['label'=>'Función en el proyecto:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la funcion que tiene con respecto al proyecto','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_PER_Tipo',null,['label'=>'Tipo de vinculación :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el tipod e vinculación','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_PER_Dedicacion',null,['label'=>'Dedicación hora/semana :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el tiempo que le dedica a su función','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_PER_Entidad',null,['label'=>'Entidad a la que pertenece:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aqui la entidad a la que pertenece','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_PER_Solicitado_Udec',null,['label'=>'Solicitado a la UDEC:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aca el valor solicitado a la UDEC','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_PER_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC):','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la contrapartida en especie a la UDEC','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_PER_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS) :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la contrapartida en especie a OTROS','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_PER_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el valor total','icon'=>'fa fa-book']) !!}
                                 
                                
                                
@@ -94,23 +94,23 @@
                         <div class="row">
                             <div class="col-md-12">
                                {!! Field:: Text('RBR_PER_EDITAR_Nombre',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                    ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                    ['help' => 'Digite aqui el nombre','icon'=>'fa fa-book']) !!}
                                {!! Field:: Text('RBR_PER_EDITAR_Funcion',null,['label'=>'Función en el proyecto:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                    ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                    ['help' => 'Digite acá la funcion que tiene para con el proyecto','icon'=>'fa fa-book']) !!}
                                {!! Field:: Text('RBR_PER_EDITAR_Tipo',null,['label'=>'Tipo de vinculación :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                    ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                    ['help' => 'Digite acá el tipo de vinculación','icon'=>'fa fa-book']) !!}
                                {!! Field:: Text('RBR_PER_EDITAR_Dedicacion',null,['label'=>'Dedicación hora/semana :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                    ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                    ['help' => 'Digite aqui le numero de horas que le dedica a la función','icon'=>'fa fa-book']) !!}
                                {!! Field:: Text('RBR_PER_EDITAR_Entidad',null,['label'=>'Entidad a la que pertenece:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                    ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                    ['help' => 'Digite aqui la entidad a la que pertenece','icon'=>'fa fa-book']) !!}
                                {!! Field:: Text('RBR_PER_EDITAR_Solicitado_Udec',null,['label'=>'Solicitado a la UDEC:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                    ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                    ['help' => 'Digite acá el valor solicitado a la UDEC'=>'fa fa-book']) !!}
                                {!! Field:: Text('RBR_PER_EDITAR_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC):','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                    ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                    ['help' => 'Digite acá la contrar partida en especie a la UDEC','icon'=>'fa fa-book']) !!}
                                {!! Field:: Text('RBR_PER_EDITAR_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS) :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                    ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                    ['help' => 'Digite acá la contrapartida en especie a OTROS','icon'=>'fa fa-book']) !!}
                                {!! Field:: Text('RBR_PER_EDITAR_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                    ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                    ['help' => 'Digite acá el valor total','icon'=>'fa fa-book']) !!}
                             
                            
                            
@@ -143,25 +143,25 @@
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: Text('RBR_EQP_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aqui la descripción','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_Lab',null,['label'=>'Laboratorio y/o espacio académico:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá sie s laboratorio o espacio academico o ambas','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_Actividades',null,['label'=>'Actividad en la que requerie el equipo :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la actividad en la querequiere le equipo','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_Justificacion',null,['label'=>'Justificación :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'justifique lo anterior','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_Cantidad',null,['label'=>'Cantidad:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aqui la cantidad requerida','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_Val',null,['label'=>'Valor Unitario:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el valor unitario','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_Solicitado',null,['label'=>'Solicitado en efectivo UDEC:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el valor solicitado en efectivo a la UDEC','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la contrapartida en especia a la UDEC','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la contrapartida en especia a OTROS','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el valor total','icon'=>'fa fa-book']) !!}
                                    
                                
                                
@@ -193,25 +193,25 @@
                         <div class="row">
                             <div class="col-md-12">
                                    {!! Field:: Text('RBR_EQP_EDITAR_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aqui la Descrición','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_EDITAR_Lab',null,['label'=>'Laboratorio y/o espacio académico:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá si es laboratorio, espacio académico o ambos','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_EDITAR_Actividades',null,['label'=>'Actividad en la que requerie el equipo :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la actividad en la que requiere el equipo','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_EDITAR_Justificacion',null,['label'=>'Justificación :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'justifique lo anterior','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_EDITAR_Cantidad',null,['label'=>'Cantidad:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aqui la cantidad que requiere','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_EDITAR_Val',null,['label'=>'Valor Unitario:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el valor unitario','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_EDITAR_Solicitado',null,['label'=>'Solicitado en efectivo UDEC:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el valor solicitado ala UDEC en efectivo','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_EDITAR_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la contrapartida en especie a la UDEC','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_EDITAR_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la contrapartida en especie a OTROS','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_EQP_EDITAR_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el valor total','icon'=>'fa fa-book']) !!}
                                    
                                
                                
@@ -246,21 +246,21 @@
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: Text('RBR_MTL_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aqui la Descripción del material','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_MTL_Justificacion',null,['label'=>'Justificación:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'justifique el material','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_MTL_Cantidad',null,['label'=>'Cantidad :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la cantidad solicitada','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_MTL_Val',null,['label'=>'Valor :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el valor ','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_MTL_Solicitado_Udec',null,['label'=>'Valor Solicitado A la UDEC','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aqui el valor solicitado a la UDEC','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_MTL_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la contrapartida en especiea a la UDEC','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_MTL_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la contrapartida en especie a OTROS','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_MTL_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el valor total','icon'=>'fa fa-book']) !!}
                                    
                                
                                
@@ -292,21 +292,21 @@
                         <div class="row">
                             <div class="col-md-12">
                                    {!! Field:: Text('RBR_MTL_EDITAR_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aqui Descripción del material','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_MTL_EDITAR_Justificacion',null,['label'=>'Justificación:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'justifique el material','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_MTL_EDITAR_Cantidad',null,['label'=>'Cantidad :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la cantidad solicitada','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_MTL_EDITAR_Val',null,['label'=>'Valor :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el valor ','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_MTL_EDITAR_Solicitado_Udec',null,['label'=>':Valor Solicitado A la UDEC','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aqui el valor solicitado a la UDEC','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_MTL_EDITAR_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la contrapartida en especie a la UDEC','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_MTL_EDITAR_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la contrapartida en especie a OTROS','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_MTL_EDITAR_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el valor total','icon'=>'fa fa-book']) !!}
                                    
                                
                            
@@ -340,21 +340,21 @@
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: Text('RBR_TEC_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aqui la descripción','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_TEC_Justificacion',null,['label'=>'Justificación:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Justifique el rubro','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_TEC_Val',null,['label'=>'Valor :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el valor ','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_TEC_Entidad',null,['label'=>'Entidad :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aqui la entidad','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_TEC_Solicitado_Udec',null,['label'=>'Valor Solicitado A la UDEC','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aqui el valor solicitado a la UDEC','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_TEC_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la contrapartida ene specie a la UDEC','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_TEC_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la contraprtida en especie OTROS','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_TEC_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el valor total','icon'=>'fa fa-book']) !!}
                                    
                                
                                
@@ -386,21 +386,21 @@
                         <div class="row">
                             <div class="col-md-12">
                                    {!! Field:: Text('RBR_TEC_EDITAR_Descripcion',null,['label'=>'Descripción:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aqui la descripción','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_TEC_EDITAR_Justificacion',null,['label'=>'Justificación:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Justifique el rubro','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_TEC_EDITAR_Val',null,['label'=>'Valor :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el valor ','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_TEC_EDITAR_Entidad',null,['label'=>'Entidad :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la entidad','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_TEC_EDITAR_Solicitado_Udec',null,['label'=>'Valor Solicitado A la UDEC','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el tipo de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite aqui el valor solicitado a la UDEC','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_TEC_EDITAR_Contra_Udec',null,['label'=>'Contrapartida en especie (UDEC) :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la contrapartida en especie a la UDEC','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_TEC_EDITAR_Contra_Otro',null,['label'=>'Contrapartida en especie (OTROS):','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá la fuente de financiación','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá la contrapartida en especie OTROS','icon'=>'fa fa-book']) !!}
                                    {!! Field:: Text('RBR_TEC_EDITAR_Total',null,['label'=>'Total :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el valor aportado','icon'=>'fa fa-book']) !!}
+                                                        ['help' => 'Digite acá el valor total','icon'=>'fa fa-book']) !!}
                                    
                            
                             </div>

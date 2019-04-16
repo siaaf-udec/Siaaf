@@ -1752,7 +1752,7 @@ class CoordinatorController extends Controller
 
     }
     
-	//Eliminar un usuario
+	//Deshabilitar un usuario
 	public function eliminarUser(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {	

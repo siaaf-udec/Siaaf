@@ -198,6 +198,7 @@ class StudentController extends Controller
             }              
         
     }
+    //funcion que retorna la informacion de u proyecto en el banco de proyectos//
     public function VerProyectoCompleto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -221,7 +222,7 @@ class StudentController extends Controller
             }              
         
     }
-    
+    //funcion que redirecciona a la vista de requerimeintos//
     public function VerRequerimientos(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -241,7 +242,7 @@ class StudentController extends Controller
             }              
         
     }
-    
+    //funcion que retorna los desarrolladores a la tabla del proyecto//
     public function DesarrolladoresEstudiante(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -269,6 +270,7 @@ class StudentController extends Controller
         }         
         
     }
+    //funcion que retorna los datos de requerimientos para cargar en la tabla de la vista de requerimientos $id = pk del anteporyecto//
     public function VerRequerimientosList(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -344,7 +346,7 @@ class StudentController extends Controller
             }              
         
     }
-
+        //funcion que carga las actividades por cronograma ya cuando el anteproyecto es aprobado//
     public function SeguimientoCrono(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -840,7 +842,7 @@ class StudentController extends Controller
         
     }
 
-    
+    //funcion que carga la actividad lo que hace el estudiante//
     public function ActividadStoreProyecto(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -920,7 +922,7 @@ class StudentController extends Controller
             }              
         
     }
-    
+    //CRUD rubros persona///
     //esta funcion sirve para agregar datos a la tabla detalles de persona del MCT//
     public function PersonaDatos(Request $request)
     {
@@ -1014,6 +1016,29 @@ class StudentController extends Controller
             }              
         
     }
+    public function PersonaDatosdelete(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+            
+            $persona = PersonaMct::where('PK_Id_Dpersona',$id)->first();
+            
+            $persona -> delete();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }   
+    //fin crud persona 
+
+    //funcion que elimina una solicitud
     
     public function EliminarSolicitud(Request $request, $id)
     {
@@ -1045,47 +1070,8 @@ class StudentController extends Controller
         );
 
     }   
-     public function PersonaDatosdelete(Request $request, $id)
-    {
-        if ($request->ajax() && $request->isMethod('DELETE')) {	
-            
-            
-            $persona = PersonaMct::where('PK_Id_Dpersona',$id)->first();
-            
-            $persona -> delete();
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos eliminados correctamente.'
-            );
-        }
-
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-
-    }   
-    public function Financiaciondelete(Request $request, $id)
-    {
-        if ($request->ajax() && $request->isMethod('DELETE')) {	
-            
-            
-            $persona = Financiacion::where('PK_Id_Financiacion',$id)->first();
-            
-            $persona -> delete();
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos eliminados correctamente.'
-            );
-        }
-
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-
-    }   
-    public function SubirActividadProyecto(Request $request, $id, $idp)
+   //funcion que sube una actividad PDF al propyecto 
+   public function SubirActividadProyecto(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
@@ -1111,8 +1097,6 @@ class StudentController extends Controller
                 'datos' => $Actividad,
                 ]);
             
-               
-                 
             }     
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
@@ -1120,7 +1104,7 @@ class StudentController extends Controller
             );         
         
     }
-    
+    //funcion que redirecciona al formulariodependiendo laactividad proporcionada $Id y el anteproyecto $idp
     public function SubirActividad(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1190,6 +1174,28 @@ class StudentController extends Controller
             );         
         
     }
+    //funcion para eliminar una financiacion
+    public function Financiaciondelete(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+            
+            $persona = Financiacion::where('PK_Id_Financiacion',$id)->first();
+            
+            $persona -> delete();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }   
+    //funcion para subir los requerimientos comoactividad $id y al anteproyecto $idp 
     public function SubirRequerimiento(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1304,6 +1310,7 @@ class StudentController extends Controller
                 }              
             
         }
+        //funcion para mostrar el cronograma
         public function Cronograma(Request $request,$id)
         {
             if ($request->ajax() && $request->isMethod('GET')) {
@@ -1326,6 +1333,7 @@ class StudentController extends Controller
                    ->make(true);
             }
         }
+        //funcion que edita el cronograma
         public function EditarCronograma(Request $request)
         {
             if ($request->ajax() && $request->isMethod('POST')) {
@@ -1353,6 +1361,7 @@ class StudentController extends Controller
         //
 
                //RUBRO PERSONAL
+               //funcion que elimina en la tabla rubro personal
                public function RubroPersonalDelete(Request $request, $id)
                {
                    if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -1374,7 +1383,7 @@ class StudentController extends Controller
            
                }   
            
-           
+           //funcion que crea en la tabla rubro persona
                public function RubroPersonalStore(Request $request)
                {
                    if ($request->ajax() && $request->isMethod('POST')) {
@@ -1432,6 +1441,7 @@ class StudentController extends Controller
                        }              
                    
                }
+               //funcion que muestra el rubro persona
                public function RubroPersonal(Request $request,$id)
                {
                    if ($request->ajax() && $request->isMethod('GET')) {
@@ -1446,6 +1456,7 @@ class StudentController extends Controller
                           ->make(true);
                    }
                }
+               //funcion que edita el rubro persona
                public function EditarRubroPersonal(Request $request)
                {
                    if ($request->ajax() && $request->isMethod('POST')) {
@@ -1477,7 +1488,7 @@ class StudentController extends Controller
            
                //
            
-               //RUBRO EQUIPOS
+               // CRUD RUBRO EQUIPOS
                public function RubroEquiposDelete(Request $request, $id)
                {
                    if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -1605,7 +1616,7 @@ class StudentController extends Controller
                //
            
        
-               //RUBRO MATERIAL
+               //CRUD RUBRO MATERIAL
                public function RubroMaterialDelete(Request $request, $id)
                {
                    if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -1728,7 +1739,7 @@ class StudentController extends Controller
            
                //
            
-               //RUBRO TECNOLOGICO
+               //CRUD RUBRO TECNOLOGICO
                public function RubroTecnologicoDelete(Request $request, $id)
                {
                    if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -1850,10 +1861,7 @@ class StudentController extends Controller
            
            
                //
-           
-       
-    //Resultados
-        //cronograma
+               //CRUD FUNCION requerimientoos 
         public function FuncionDelete(Request $request, $id)
         {
             if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -1961,7 +1969,7 @@ class StudentController extends Controller
     
         //
     
-    //Resultados
+    //CRUD Resultados
  
     public function ResultadoDelete(Request $request, $id)
     {
@@ -2051,6 +2059,8 @@ class StudentController extends Controller
                ->make(true);
         }
     }
+    //
+    //funcion que muestra la informacion en la tabla de bancos de proyecto
     public function BancoProyectosList(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -2090,7 +2100,7 @@ class StudentController extends Controller
         }
     }
     
-    
+    //funcion para crear una solicitud como estudiante
     public function SolicitudStore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -2112,7 +2122,7 @@ class StudentController extends Controller
           
         }
     }
-    
+    //funcion que carga los proyectos en la lista de bancos
     public function BancoAnteProyectosList(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -2150,7 +2160,7 @@ class StudentController extends Controller
         }
     }
     
-    
+    //editar en la tabla resultados
     public function EditarResultado(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -2176,7 +2186,7 @@ class StudentController extends Controller
     }
 
 
-    //
+    //funcion que carga los comentarios hechos por el director y estudiantes en las actvidades asignadas
     
     public function Comentarios(Request $request, $id, $idp)
     {
@@ -2209,6 +2219,7 @@ class StudentController extends Controller
         }
    
     }
+    //funcion que carga los detalles de persona la tabla 
     public function DetallesPersona(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -2223,6 +2234,7 @@ class StudentController extends Controller
                ->make(true);
         }
     }
+    //CRUD FINANCIACION
     public function EditarFinanciacion(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -2308,6 +2320,7 @@ class StudentController extends Controller
                ->make(true);
         }
     }
+    //
     //funcion apra cargar los proyectos al estduiante
     public function ListaProyecto(Request $request,$idp)
     {
@@ -2354,7 +2367,7 @@ class StudentController extends Controller
     }
     
     
-
+//funcion que redirecciona a la vista para ver las actividades del proyecto
     public function VerActividadesProyecto(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -2401,9 +2414,6 @@ class StudentController extends Controller
                 
             }
         
-
-         
-          
             return DataTables::of($concatenado)
             ->removeColumn('created_at')
             ->removeColumn('updated_at')
