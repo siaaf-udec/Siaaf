@@ -46,7 +46,7 @@
 
                             {!! Field:: text('Solicitud',$datos['Solicitud'],['label'=>'Solicitud:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
                                                              ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
-                             {!! Field:: text('Solicitud_usuario',$datos['Solicitud_usuario'],['label'=>'La Hace:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
+                             {!! Field:: text('Solicitud_usuario',$datos['Solicitud_usuario'],['label'=>'Solicitante:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
                                                              ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
                        
                             {!! Field:: text('NPRY_Titulo',$datos['Proyecto'],['label'=>'TITULO:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
