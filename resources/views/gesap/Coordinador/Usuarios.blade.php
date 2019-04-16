@@ -139,7 +139,7 @@
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             var route = '{{ route('Usuarios.destroy') }}' + '/' + dataTable.PK_User_Codigo;
-            var type = 'DELETE';
+            var type = 'GET';
             var async = async || false;
             swal({
                     title: "¿Está seguro?",

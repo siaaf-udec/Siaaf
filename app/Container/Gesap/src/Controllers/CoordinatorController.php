@@ -1755,12 +1755,14 @@ class CoordinatorController extends Controller
 	//Eliminar un usuario
 	public function eliminarUser(Request $request, $id)
     {
-        if ($request->ajax() && $request->isMethod('DELETE')) {	
+        if ($request->ajax() && $request->isMethod('GET')) {	
             
-			Usuarios::destroy($id);
+            $user=Usuarios::where('PK_User_Codigo',$id)->first();
+            $user->FK_User_IdEstado =2;
+            $user->save();
             return AjaxResponse::success(
                 '¡Bien hecho!',
-                'Datos eliminados correctamente.'
+                'Usuario Deshabilitado Correctamente.'
             );
         }
 

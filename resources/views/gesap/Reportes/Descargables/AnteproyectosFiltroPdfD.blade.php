@@ -65,7 +65,7 @@
        <img src="{{ base_path('public/css/LogoUDEC.png')}}">
         <h1 class="features">REPORTE GENEREADO POR</h1>
  
-        <p class="line">Plataforma Web Para La Gestión De Proyectos y Anteproyectos De Grado (GESAP)</p>
+        <p class="line">Plataforma Web Para La Gestión De Anteproyectos y Proyectos De Grado (GESAP)</p>
         <p class="line">Calle 14 con Avenida 15</p>
         <p class="line">Universidad de Cundinamarca - Ext. Facatativá</p>
         <p class="line">(+57 1) 892 0706 | 892 0707 </p>

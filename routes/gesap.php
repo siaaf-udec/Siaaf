@@ -332,7 +332,7 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'UsuariosGesap.listEstados'
         ]);
 
-		Route::delete('destroy/{id?}', [
+		Route::get('destroy/{id?}', [
 			'uses' => $controller . 'CoordinatorController@eliminarUser', 
 			'as' => 'Usuarios.destroy'
 		]);
