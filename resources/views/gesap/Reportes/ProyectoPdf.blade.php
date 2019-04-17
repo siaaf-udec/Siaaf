@@ -59,7 +59,7 @@
     <img src="{{ asset('css/LogoUDEC.png') }}">
           <h1 class="features">REPORTE GENERADO POR</h1>
  
-        <p class="line">Plataforma Web Para La Gestión De Proyectos y Proyectos De Grado (GESAP)</p>
+        <p class="line">Plataforma Web Para La Gestión De Anteproyectos y Proyectos De Grado (GESAP)</p>
         <p class="line">Calle 14 con Avenida 15</p>
         <p class="line">Universidad de Cundinamarca - Ext. Facatativá</p>
         <p class="line">(+57 1) 892 0706 | 892 0707 </p>
@@ -92,6 +92,11 @@
             <th><span contenteditable>Semillero</span></th>
             <td><span contenteditable>{{$proyecto->Semillero}}</span></td>
           </tr>
+          <tr>
+            <th><span contenteditable>Estado Act/Inact</span></th>
+            <td><span contenteditable>{{$proyecto->EstadoAnteAoI}}</span></td>
+          </tr>
+        
         </table>
 
     <table border="0" cellspacing="0" cellpadding="0">

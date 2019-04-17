@@ -49,11 +49,10 @@
 
 
 	<h1 class="features">NOTIFICACIÓN (GESAP)</h1>
-    <h2> Se le informa que ya se tomo la decisión del Anteproyecto :</h2>
-    <h1> {{$Ante}}</h1>
-    <h2> ingrese a la plataforma para ver los comentarios de los jurados : </h2>
-    
-  
+    <h2>Se notifica que el {{$Proy}}</h2>
+    <h2>Fue Radicado el dia de Hoy.<h2>
+		<h2>{{$fecha}}<h2>
+		
 </body>
 </html>
 

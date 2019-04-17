@@ -62,13 +62,14 @@ use App\Container\Users\src\Controllers\UsersUdecController;
 class DocenteController extends Controller
 {
     private $path = 'gesap.Docente.';
-
+    //funcion que redirecciona a la vista principal Anteproyectos//
     public function index(Request $request)
 	{
 		
 			return view($this->path . 'IndexDocente');
 		
     }
+    //funcion que redirecciona a la vista de proyectos//
     public function indexProyecto(Request $request)
 	{
 		
@@ -124,7 +125,7 @@ class DocenteController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-
+    //funcion que carga las solicitudes en una tabla para ser visualizada//
     public function VerSolicitud(Request $request)
     {
         $user = Auth::user();
@@ -149,6 +150,7 @@ class DocenteController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    //funcion que elimina las solicitudes hechas realizadas o no ///
     public function EliminarSolicitud(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -311,7 +313,7 @@ class DocenteController extends Controller
         );
     }
 
-    
+    //funcion que trae los proyectos para ser mostrados en el drop dawnlist de solicitudes de docente//
     public function WidgetProyecto(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -333,7 +335,7 @@ class DocenteController extends Controller
     
         }              
     }
-
+    //funcion para crear una nueva solicitud//
     public function SolicitudStore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -355,7 +357,7 @@ class DocenteController extends Controller
         }
     }
     
-
+    //funciones que redirecciona a la vista de ver actividades $id = Id Proyecto//
     public function VerActividadesProyecto(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -374,7 +376,7 @@ class DocenteController extends Controller
              
         }              
     }
-
+    //funcionn que carga las actividades para el jurado $id= pk del proyecto //
     public function VerActividadesProyectoJurado(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -393,6 +395,7 @@ class DocenteController extends Controller
              
         }              
     }
+    //funcion que dependiendo la $id= Pk de la actividad redirecciona al formulario correspondiente $idp = pkproyecto//
     public function VerActividadProyecto(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -428,6 +431,7 @@ class DocenteController extends Controller
             );         
         
     }
+    // funcion que retorna a la vista correspondiente dependiendo de la $id = pk de la actividad $idp ) pk anteproyecto//
     public function VerActividadProyectoJurado(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -470,6 +474,7 @@ class DocenteController extends Controller
             );         
         
     }
+    //funcion que carga las actividades del proyecto en cuestion $id//
     public function VerActividadesListProyectoDirector(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -508,6 +513,7 @@ class DocenteController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    //funcion que carga las actividades del mct para jurado//
     public function VerActividadesListJ(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -605,7 +611,7 @@ class DocenteController extends Controller
         );
     }
     
-
+    //funcion que muestra los desarrolaldores asignados al anteproyecto($id)//
     public function DesarrolladoresList(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -649,7 +655,7 @@ class DocenteController extends Controller
                 );
         
     }
-    
+    //funcion que redirecciona a un formulario donde se muestran los datos del anteproyecto($id)//
     public function VerAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -686,6 +692,7 @@ class DocenteController extends Controller
                 );
         }
     }
+    //funcion que redirecciona al formulario donde se muestran los datos del anteproyecto para el jurado ($id = pk anteproyecto)//
     public function VerAnteproyectoJurado(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -783,6 +790,7 @@ class DocenteController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    //funcion que muestra las actividades del mct para director $id = pk del anteproyecto//
     public function VerActividadesList(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -827,8 +835,17 @@ class DocenteController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             $user = Auth::user();
-		    $id = $user->identity_no;
-            
+            $id = $user->identity_no;
+            $fecha = Carbon::now();
+            $fechahoy = $fecha->format('Y-m-d');
+            if($request['OBS_Limit'] < $fechahoy){
+                $IdError = 422;
+                return AjaxResponse::success(
+                    '¡Lo sentimos!',
+                    'La Fecha No puede ser anterior a la Fecha Actual.',
+                     $IdError
+                );
+            } else{
                      ObservacionesMct::create([
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                      'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
@@ -861,7 +878,7 @@ class DocenteController extends Controller
                     '¡Esta Hecho!',
                     'Comentario Hecho.'
                 );
-       
+            }
             }              
         
     }
@@ -871,6 +888,7 @@ class DocenteController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
             $user = Auth::user();
             $id = $user->identity_no;
+            
             
             $desjurado = Jurados::where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_User_Codigo',$id)->first();
             if($desjurado->JR_Comentario_2 == "inhabilitado"){
@@ -929,6 +947,7 @@ class DocenteController extends Controller
                          
           
       }
+      //funcion que muestra la decision de los jurados para el anteproyecto($id)//
     public function DesicionJurados(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -936,16 +955,8 @@ class DocenteController extends Controller
             $desicion = Jurados::where('FK_NPRY_IdMctr008',$id)->get();
 
             foreach($desicion as $des){
-               
-                $Nombre1 = $des -> relacionUsuarios -> User_Nombre1;
-                $Apellido = $des -> relacionUsuarios -> User_Apellido1;
-                $space = " ";
-                $Nombre = $Nombre1.$space.$Apellido;
-                $Estado = $des -> relacionEstado -> EST_Estado;
-
-                $des-> offsetSet('Jurado',$Nombre);
-                $des-> offsetSet('Estado',$Estado);
-
+                $des-> offsetSet('Jurado',$des->relacionUsuarios->User_Nombre1." ".$des->relacionUsuarios->Apellido1);
+                $des-> offsetSet('Estado',$Estado = $des->relacionEstado->EST_Estado);
             }
                      
             return DataTables::of($desicion)
@@ -960,6 +971,7 @@ class DocenteController extends Controller
             );              
         
     }
+    //funcion que muestra la decision tomada por los jurados para proyecto ($id)//
     public function DesicionJuradosProyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -998,6 +1010,7 @@ class DocenteController extends Controller
             );              
         
     }
+    //funcion que retorna el estado para graficar el dropdawnlist//
     public function listarEstadoJurado(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1327,7 +1340,7 @@ class DocenteController extends Controller
     }
 
 
-    
+    //funcon que carga los comentarios hechos por los jurados en la decision final para anteproyecto//    
     public function ComentariosJu(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1335,19 +1348,13 @@ class DocenteController extends Controller
             $ObservacionesJurado = ObservacionesMctJurado::where('FK_NPRY_IdMctr008',$id)->where('OBS_Formato',1)->get();
 
             foreach($ObservacionesJurado as $observacion){
-               
-                $Nombre1 = $observacion -> relacionUsuario -> User_Nombre1;
-                $Apellido = $observacion -> relacionUsuario -> User_Apellido1;
-                $space = " ";
-                $Nombre = $Nombre1.$space.$Apellido;
-
                 $Actividad = $observacion -> relacionActividad -> MCT_Actividad;
                 $tipo = $observacion -> relacionActividad;
                 $formato = $tipo -> relacionFormato -> MCT_Formato;
                 $linea="-";
 
                 $nombreActividad = $Actividad.$linea.$formato;
-                $observacion -> offsetSet('Nombre',$Nombre);
+                $observacion -> offsetSet('Nombre',$observacion->relacionUsuario->User_Nombre1." ".$observacion->relacionUsuario->User_Apellido1);
                 $observacion -> offsetSet('Actividad',$nombreActividad);
 
             }
@@ -1364,6 +1371,7 @@ class DocenteController extends Controller
             );              
         
     }
+    //funcon que carga los comentarios hechos por los jurados en la decision final proyecto//    
     public function ComentariosJuProyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1618,7 +1626,7 @@ class DocenteController extends Controller
             
                 return AjaxResponse::success(
                     '¡Bien hecho!',
-                    'Actividad Avalada.'
+                    'Actividad Aprobada.'
                 );
         }else{
            
@@ -1634,7 +1642,7 @@ class DocenteController extends Controller
        
 
     }
-
+    //funcion que carga los comectarios hechos a la actividad($id) y de ese anteproyecto($idp)//
     public function Comentarios(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1666,6 +1674,7 @@ class DocenteController extends Controller
         }
    
     }
+    //funcion que muestra el cronograma//
     public function Cronograma(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1688,6 +1697,7 @@ class DocenteController extends Controller
                ->make(true);
         }
     }
+    //funcion en donde se muestran los comentarios de los jurados a cada actividad($id)y al proyecto($idp)//
     public function ComentariosJurado(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1719,6 +1729,7 @@ class DocenteController extends Controller
         }
    
     }
+    //funcion que retorna la vista para ver las actividades al docente//
     public function VerActividades(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1738,7 +1749,7 @@ class DocenteController extends Controller
             }              
         
     }
-
+    //funcion que redirecciona la vista para que el jurado vea las actividades//
     public function VerActividadesJurado(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1758,6 +1769,7 @@ class DocenteController extends Controller
             }              
         
     }
+    //funcion para retornar la vista donde se mnuestran las actividades de el mct(requerimientos)//
     public function VerRequerimientosDocente(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1777,6 +1789,7 @@ class DocenteController extends Controller
             }              
         
     }
+    //funcion para retornar la vista donde se mnuestran las actividades de el mct(requerimientos) jurado//
     public function VerRequerimientosJurado(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1796,10 +1809,11 @@ class DocenteController extends Controller
             }              
         
     }
+    //funcion para listar los requerimentos en la tabla de requeriemientos del jurado///
     public function VerRequerimientosList(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-
+                
                $Actividades=Mctr008::where('FK_Id_Formato',2)->get();
                $numero = 1 ;
                foreach($Actividades as $Actividad){
@@ -1821,8 +1835,8 @@ class DocenteController extends Controller
         
                return DataTables::of($Actividades)
                ->removeColumn('created_at')
-			   ->removeColumn('updated_at')
-			    
+               ->removeColumn('updated_at')
+			   
 			   ->addIndexColumn()
                ->make(true);
         
@@ -1834,7 +1848,7 @@ class DocenteController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-
+    
     public function CalificarAnteproyecto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1847,6 +1861,7 @@ class DocenteController extends Controller
             );         
         
     }
+    //funcion que carga la tabla resultados//
     public function Resultados(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1861,6 +1876,8 @@ class DocenteController extends Controller
                ->make(true);
         }
     }
+    //funcion que carga la tabla financiacion//
+    
     public function Financiacion(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1875,6 +1892,8 @@ class DocenteController extends Controller
                ->make(true);
         }
     }
+    //funcion que carga la tabla detalles persona//
+    
     public function DetallesPersona(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1889,6 +1908,8 @@ class DocenteController extends Controller
                ->make(true);
         }
     }
+    //funcion que carga la tabla funciones //
+    
     public function Funcion(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1902,6 +1923,8 @@ class DocenteController extends Controller
                ->make(true);
         }
     }
+    //funcion quedependiendo la actividad($id) redirecciona asu respectiva vista $idp= pk proyecto//
+    
     public function VerRequerimientos(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1942,6 +1965,7 @@ class DocenteController extends Controller
     }
     
 }
+//funcion para retornar la vista del requerimiento seleccionado apra su posterior calificación por parte del jrado(Requerimientos) //
 public function RequerimientosJurado(Request $request, $id, $idp)
 {
     if ($request->ajax() && $request->isMethod('GET')) {
@@ -1981,6 +2005,7 @@ public function RequerimientosJurado(Request $request, $id, $idp)
         [
         'datos' => $Actividad,
         ]);
+        
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -1989,6 +2014,7 @@ public function RequerimientosJurado(Request $request, $id, $idp)
 }
 
 }
+//funcion para retornar la vista del requerimiento seleccionado apra su posterior calificación por parte del jrado(MCT) //
     public function VerActividad(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -2058,6 +2084,8 @@ public function RequerimientosJurado(Request $request, $id, $idp)
             );         
         
     }
+    //funcion que carga la tabla RubrosTecnologicos//
+    
     public function RubroTecnologico(Request $request,$id)
                {
                    if ($request->ajax() && $request->isMethod('GET')) {
@@ -2073,6 +2101,7 @@ public function RequerimientosJurado(Request $request, $id, $idp)
                    }
                }
 
+    //funcion que carga la tabla RubrosMateriales//
     public function RubroMaterial(Request $request,$id)
                {
                    if ($request->ajax() && $request->isMethod('GET')) {
@@ -2088,6 +2117,7 @@ public function RequerimientosJurado(Request $request, $id, $idp)
                    }
                }
 
+    //funcion que carga la tabla RubrosEquipos//
  public function RubroEquipos(Request $request,$id)
                {
                    if ($request->ajax() && $request->isMethod('GET')) {
@@ -2103,6 +2133,7 @@ public function RequerimientosJurado(Request $request, $id, $idp)
                    }
                }	
 
+    //funcion que carga la tabla Rubrospersona//
    public function RubroPersonal(Request $request,$id)
                {
                    if ($request->ajax() && $request->isMethod('GET')) {
@@ -2202,6 +2233,7 @@ public function RequerimientosJurado(Request $request, $id, $idp)
     }
     
                
+    //funcion que se encarga de navegar entre las actividades para su posterior calificacion $id=pk actividad $idp = pk proyecto y $idn navegacion si es la primer actividad //
     public function navegacionActividadesP(Request $request, $id, $idp,$idn)
             {
                    if ($request->ajax() && $request->isMethod('GET')) {
@@ -2249,7 +2281,8 @@ public function RequerimientosJurado(Request $request, $id, $idp)
                    );         
     }
            
-               
+                //funcion que se encarga de navegar entre las actividades para su posterior calificacion $id=pk actividad $idp = pk proyecto y $idn navegacion si es la ultima actividad //
+   
     public function navegacionActividadesR(Request $request, $id, $idp,$idn)
             {
                    if ($request->ajax() && $request->isMethod('GET')) {
@@ -2300,7 +2333,7 @@ public function RequerimientosJurado(Request $request, $id, $idp)
                     );    
                 }     
     }
-           
+        //funcion que depentiendo la actividad $id y el poryecto $idp redirecciona a una vista diferente// 
     public function VerActividadJurado(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {

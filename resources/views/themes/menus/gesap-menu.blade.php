@@ -70,40 +70,32 @@
 		@permission('GESAP_ADMIN')
 		<li class="nav-item {{ active(['CoordinadorGesap.*'], 'start active open') }}">
     	   <a href="{{ route('CoordinadorGesap.indexSolicitudes') }}" class="nav-link nav-toggle">
-     			<i class="fa fa-search"></i>
-				<span class="title">Busquedas</span>
-			</a>
-		</li>
-		@endpermission
-		@permission('GESAP_ADMIN')
-		<li class="nav-item {{ active(['CoordinadorGesap.*'], 'start active open') }}">
-    	   <a href="{{ route('CoordinadorGesap.indexSolicitudes') }}" class="nav-link nav-toggle">
-     			<i class="fa fa-search"></i>
+     			<i class="fa fa-folder"></i>
 				<span class="title">Solicitudes</span>
 			</a>
 		</li>
 		@endpermission
 
-
-		@permission('ADMIN_GESAP')
+		@permission('GESAP_ADMIN')
 		<li class="nav-item {{ active(['CoordinadorGesap.*'], 'start active open') }}">
-    	   <a href="{{ route('CoordinadorGesap.indexSolicitudes') }}" class="nav-link nav-toggle">
-     			<i class="fa fa-book"></i>
-				<span class="title">Reportes</span>
-			</a>
-		</li>
-		
-		@endpermission
-		@permission('ADMIN_GESAP')
-		<li class="nav-item {{ active(['CoordinadorGesap.*'], 'start active open') }}">
-    	   <a href="{{ route('CoordinadorGesap.indexSolicitudes') }}" class="nav-link nav-toggle">
+    	   <a href="{{ route('CoordinadorGesap.Graficos') }}" class="nav-link nav-toggle">
      			<i class="fa fa-bar-chart">
 				</i>
 				<span class="title">
-					Graficos
+					Gráficos Anteproyectos
 				</span>
 			</a>
 		</li>
 		@endpermission
-	</ul>
+
+		@permission('GESAP_ADMIN')
+		<li class="nav-item {{ active(['CoordinadorGesap.*'], 'start active open') }}">
+    	   <a href="{{ route('CoordinadorGesap.GraficosP') }}" class="nav-link nav-toggle">
+     			<i class="fa fa-bar-chart"></i>
+				<span class="title">Gráficos Proyectos</span>
+			</a>
+		</li>
+		@endpermission
+
+		</ul>
 </li>

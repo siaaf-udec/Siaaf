@@ -16,11 +16,11 @@
                                 {!! Field:: TextArea('Desicion',$datos['Comentarios_Jurado'],['label'=>'Tipo:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá el por que de la decision, tenga en cuenta que esta informacion se le mostrara al estudiante.','icon'=>'fa fa-book']) !!}
                                 @if($datos['N_Radicado'] == 1)
-                                {!! Field::select('Estado',['1'=>'EN ESPERA', '4'=>'APROBADO','5'=>'REPROBADO','6'=>'APLAZADO'],null,['label'=>'DECISIÓN: ']) !!}
+                                {!! Field::select('Estado',['4'=>'APROBADO','5'=>'REPROBADO','6'=>'APLAZADO'],null,['label'=>'DECISIÓN: ']) !!}
                  
                                 @endif
                                 @if($datos['N_Radicado'] == 2)
-                                {!! Field::select('Estado',['1'=>'EN ESPERA', '4'=>'APROBADO','5'=>'REPROBADO'],null,['label'=>'DECISIÓN: ']) !!}
+                                {!! Field::select('Estado',[ '4'=>'APROBADO','5'=>'REPROBADO'],null,['label'=>'DECISIÓN: ']) !!}
                  
                                 @endif
                                 
@@ -86,7 +86,7 @@
                     @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'DesicionJurados2'])
                         @slot('columns', [
                             'Jurado',
-                            'Desición Jurado',
+                            'Desición Jurado Actuales',
                             'Observaciónes Anteriores',
                             'Observaciónes Actuales'                        
                         ])

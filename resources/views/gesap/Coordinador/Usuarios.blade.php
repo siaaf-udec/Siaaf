@@ -117,7 +117,7 @@
             {data: 'Rol', name: 'Rol'},
            
             {
-                defaultContent: '@permission('GESAP_ADMIN_USER_REPORT')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('GESAP_ADMIN_CANCEL_USER')<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: '@permission('GESAP_ADMIN_USER_REPORT')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('GESAP_ADMIN_CANCEL_USER')<a href="javascript:;" title="Deshabilitar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -139,11 +139,11 @@
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             var route = '{{ route('Usuarios.destroy') }}' + '/' + dataTable.PK_User_Codigo;
-            var type = 'DELETE';
+            var type = 'GET';
             var async = async || false;
             swal({
                     title: "¿Está seguro?",
-                    text: "¿Está seguro de eliminar este usuario?",
+                    text: "¿Está seguro de deshabilitar este usuario?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -175,7 +175,7 @@
                             }
                         });
                     } else {
-                        swal("Cancelado", "No se eliminó ningun usuario", "error");
+                        swal("Cancelado", "No se Deshabilitó ningún usuario", "error");
                     }
                 });
 

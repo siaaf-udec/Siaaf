@@ -332,7 +332,7 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'UsuariosGesap.listEstados'
         ]);
 
-		Route::delete('destroy/{id?}', [
+		Route::get('destroy/{id?}', [
 			'uses' => $controller . 'CoordinatorController@eliminarUser', 
 			'as' => 'Usuarios.destroy'
 		]);
@@ -964,6 +964,16 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('SolicitudesList', [
 			'uses' => $controller . 'CoordinatorController@SolicitudesList',  
 			'as' => 'CoordinadorGesap.SolicitudesList'
+		]);
+
+		Route::get('Graficos', [
+			'uses' => $controller . 'GraficosController@Graficos',  
+			'as' => 'CoordinadorGesap.Graficos'
+		]);
+		
+		Route::get('GraficosP', [
+			'uses' => $controller . 'GraficosController@GraficosP',  
+			'as' => 'CoordinadorGesap.GraficosP'
 		]);
 
 		Route::get('CerrarSolicitud/{ids?}', [

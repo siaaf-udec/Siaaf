@@ -12,7 +12,7 @@
             {!! Form::open (['id'=>'form_create_mct_activity', 'url'=>'/forms']) !!}
                 <div class="form-body">
                     <div class="row">
-                            <div class="col-md-6">
+                          
 
                                {!! Field:: text('MCT_Actividad',null,['label'=>'NOMBRE ACTIVIDAD:','class'=> 'form-control', 'autofocus', 'maxlength'=>'100','autocomplete'=>'off'],
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
@@ -22,8 +22,7 @@
                                                                 ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
                                 {!! Field::select('FK_Id_Formato',['1'=>'Mct', '2'=>'Requerimientos'],null,['label'=>'Formato: ']) !!}
 
-                                 
-                                </div>
+                                  
                     </div>
 
 

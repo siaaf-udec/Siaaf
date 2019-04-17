@@ -27,36 +27,103 @@
 
 @section('title', '| Información de los Anteproyectos')
 
-@section('page-title', 'Solicitudes Universidad De Cundinamarca Extensión Facatativá:')
+@section('page-title', 'Proyectos Universidad De Cundinamarca Extensión Facatativá:')
 
 @section('content')
     @permission('GESAP_ADMIN')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Solicitudes registradas:'])
-            <br>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="actions">
-                 
-                        <br>
-                    </div>
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos Gráficos:'])
 
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'listaSolicitudes'])
-                        @slot('columns', [
-                            'Solicitud',
-                            'Solicitante',
-                            'Para el Anteproyecto o Proyecto',
-                            'Estado',
-                            'Accion'
-                        ])
-                    @endcomponent
-                </div>
-            </div>
+      <html>
+          <head>
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script type="text/javascript">
+              google.charts.load('current', {'packages':['bar']});
+              google.charts.setOnLoadCallback(drawChart);
+
+              function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                  ['Año', 'Aprobados', 'Reprobados', 'Aplazados'],
+                  ['<?php echo $datos[0]['Año2years']?>', <?php echo $datos[0]['Aprobados2years']; ?>, <?php echo $datos[0]['Reprobados2years']; ?>, <?php echo $datos[0]['Aplazados2years']; ?>],
+                  ['<?php echo $datos[0]['Año']?>', <?php echo $datos[0]['Aprobados']; ?>, <?php echo $datos[0]['Reprobados']; ?>, <?php echo $datos[0]['Aplazados']; ?>]
+                  
+                ]);
+
+                var options = {
+                  chart: {
+                    title: 'Gráfico Del Calificación Proyectos',
+                    subtitle: 'Reportes Aprobados, Reprobados y Aplazados El Los Ultimos Dos Años',
+                  }
+                };
+
+                var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+                chart.draw(data, google.charts.Bar.convertOptions(options));
+              }
+            </script>
+          </head>
+        <body>
+          <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
+        </body>
+      </html>
+      <!-- grafica dos -->
+      <html>
+      <head>
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable([
+            ['Docente', 'Proyecto'],
+            @foreach($datos2 as $datosx)
+              ['<?php echo $datosx['Docente']?>',<?php echo $datosx['NAnteproyectos']?>],
+            @endforeach
+          ]);
+
+          var options = {
+            title: 'Carga de Asignaciónes de Proyectos (Activos)',
+            pieHole: 0.4,
+          };
+
+          var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+          chart.draw(data, options);
+        }
+      </script>
+    </head>
+    <body>
+      <div id="donutchart" style="width: 900px; height: 500px;"></div>
+    </body>
+    </html>
+    <!-- Grafica 3-->
+    <html>
+      <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load("current", {packages:["corechart"]});
+          google.charts.setOnLoadCallback(drawChart);
+          function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+              ['Docente', 'Anteproyecto'],
+            @foreach($datos3 as $datosj)
+              ['<?php echo $datosj['DocenteJ']?>',<?php echo $datosj['NJurados']?>],
+            @endforeach
+            ]);
+
+            var options = {
+              title: 'Carga de Asignaciónes de Proyectos como Jurados(Activos)',
+              is3D: true,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+            chart.draw(data, options);
+          }
+        </script>
+      </head>
+      <body>
+        <div id="piechart_3d" style="width: 900px; height: 500px;"></div>
+      </body>
+    </html>
         @endcomponent
     </div>
     @endpermission
@@ -94,48 +161,8 @@
 
     jQuery(document).ready(function () {
 
-        
-        var table, url, columns;
-        table = $('#listaSolicitudes');
-      
-        url = '{{ route('CoordinadorGesap.SolicitudesList')}}';
-        columns = [
-            {data: 'Sol_Solicitud', name: 'Sol_Solicitud'},
-            {data: 'Usuario', name: 'Usuario'},
-            {data: 'Proyecto', name: 'Proyecto'},
-            {data: 'Sol_Estado', name: 'Sol_Estado'},
-           
-      
-            {
-                defaultContent: ' @permission('GESAP_ADMIN_VER_SOLICITUDES')<a href="javascript:;" title="Ver" class="btn btn-info Ver" ><i class="icon-eye"></i></a>@endpermission ' ,
-                data: 'action',
-                name: 'action',
-                title: 'Acciones',
-                orderable: false,
-                searchable: false,
-                exportable: false,
-                printable: false,
-                className: 'text-center',
-                render: null,
-                serverSide: false,
-                responsivePriority: 2
-            }
-        ];
-        
-      
-     
-        dataTableServer.init(table, url, columns);
-        table = table.DataTable();
 
-        table.on('click', '.Ver', function (e) {
-            e.preventDefault();
-            $tr = $(this).closest('tr');
-            var dataTable = table.row($tr).data(),
-                route_ver = '{{ route('CoordinadorGesap.VerProyectoSolicitud') }}' + '/' + dataTable.IdProyecto + '/' + dataTable.PK_Id_Solicitud;
-            $(".content-ajax").load(route_ver);
-        });
-
-
+    
 
     });
 </script>

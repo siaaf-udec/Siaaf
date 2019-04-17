@@ -61,19 +61,21 @@ class StudentController extends Controller
 {
 
     private $path = 'gesap.Estudiante.';
-
+    //funcion que redirecciona ala vista principal de anteproyecto//
     public function index(Request $request)
 	{
 		
 			return view($this->path . 'IndexEstudiante');
 		
     }
+    //funcion que redirecciona a la vista principal de proyectos//
     public function indexProyecto(Request $request)
 	{
 		
 			return view($this->path . 'IndexEstudianteProyecto');
 		
     }
+    //funcion que carga todas las actividades del anteproyecto $id//
     public function VerActividadesList(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -112,7 +114,7 @@ class StudentController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
+    //funcion que carga todas las actividades de proyecto $id//
     public function VerActividadesListProyecto(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -151,6 +153,7 @@ class StudentController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    //funcion que carga las solicitudes hechas por el usuario//
     public function VerSolicitud(Request $request,$id)
     {
         $user = Auth::user();
@@ -175,7 +178,7 @@ class StudentController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
+    //funcion que redirecciona a la plantilla de actividades estudiante//
     public function VerActividades(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -195,6 +198,7 @@ class StudentController extends Controller
             }              
         
     }
+    //funcion que retorna la informacion de u proyecto en el banco de proyectos//
     public function VerProyectoCompleto(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -218,7 +222,7 @@ class StudentController extends Controller
             }              
         
     }
-    
+    //funcion que redirecciona a la vista de requerimeintos//
     public function VerRequerimientos(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -238,7 +242,7 @@ class StudentController extends Controller
             }              
         
     }
-    
+    //funcion que retorna los desarrolladores a la tabla del proyecto//
     public function DesarrolladoresEstudiante(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -266,6 +270,7 @@ class StudentController extends Controller
         }         
         
     }
+    //funcion que retorna los datos de requerimientos para cargar en la tabla de la vista de requerimientos $id = pk del anteporyecto//
     public function VerRequerimientosList(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -304,10 +309,20 @@ class StudentController extends Controller
     public function ComentarioStore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-        $user = Auth::user();
-        $id = $user->identity_no;
-        $id_nombre = $user->name." ".$user->lastname;
-                     ObservacionesMct::create([
+            $user = Auth::user();
+            $id = $user->identity_no;
+            $fecha = Carbon::now();
+            $fechahoy = $fecha->format('Y-m-d');
+            $id_nombre = $user->name." ".$user->lastname;
+            if($request['OBS_Limit'] < $fechahoy){
+                $IdError = 422;
+                return AjaxResponse::success(
+                    '¡Lo sentimos!',
+                    'La Fecha No puede ser anterior a la Fecha Actual.',
+                     $IdError
+                );
+            } else{
+                    ObservacionesMct::create([
                     'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
                      'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
                      'FK_User_Codigo' => $id,
@@ -337,11 +352,11 @@ class StudentController extends Controller
                     '¡Esta Hecho!',
                     'Comentario Hecho.'
                 );
-       
+            }
             }              
         
     }
-
+        //funcion que carga las actividades por cronograma ya cuando el anteproyecto es aprobado//
     public function SeguimientoCrono(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -396,7 +411,7 @@ class StudentController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
+    //funcion para cambiar de estado el proyecto a radicado para asi poder asignar jurados//
     public function Radicar(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -433,6 +448,21 @@ class StudentController extends Controller
                         }else{
                         $Anteproyecto -> FK_NPRY_Estado = 3 ;
                         $Anteproyecto->save();
+                        $fecha = Carbon::now();
+                        $data = array(
+                            'correo'=>$anteproyecto->relacionPredirectores->User_Correo,
+                            'Proy'=>"Anteproyecto : ".$anteproyecto->NPRY_Titulo,
+                            'fecha'=>$fecha,
+                        );
+            
+                        Mail::send('gesap.Emails.Radicar',$data, function($message) use ($data){
+                            
+                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+            
+                            $message->to($data['correo']);
+            
+                        });
+            
                         return AjaxResponse::success(
                             '¡Esta Hecho!',
                             'Anteproyecto Radicado.'
@@ -488,15 +518,21 @@ class StudentController extends Controller
                 
 
                 $jurados = Jurados::where('FK_NPRY_IdMctr008',$id)->get();
-                foreach($jurados as $jurado){
-                    $nombre = $jurado -> relacionUsuarios -> User_Nombre1 ;
-                    $apellido = $jurado -> relacionUsuarios -> User_Apellido1 ;
-                    $total = $nombre." ".$apellido;
-                    $jurado ->offsetSet('Nombre',$total);
-                    $jurado ->offsetSet('Estado',$jurado->relacionEstado->EST_Estado );
-                  
+                if($jurados->IsEmpty()){
+                    $jurado ->offsetSet('Nombre',"Sin Asignar");
+                    $jurado ->offsetSet('Estado',"Sin Asignar");
+                }else{
+                    foreach($jurados as $jurado){
+                        $nombre = $jurado -> relacionUsuarios -> User_Nombre1 ;
+                        $apellido = $jurado -> relacionUsuarios -> User_Apellido1 ;
+                        $total = $nombre." ".$apellido;
+                        $jurado ->offsetSet('Nombre',$total);
+                        $jurado ->offsetSet('Estado',$jurado->relacionEstado->EST_Estado );
+                      
+                    }
+    
                 }
-               return DataTables::of($jurados)
+                return DataTables::of($jurados)
                ->removeColumn('created_at')
 			   ->removeColumn('updated_at')
                ->removeColumn('PK_Id_Jurados')
@@ -525,12 +561,14 @@ class StudentController extends Controller
                 
                 $jurados = Jurados::where('FK_NPRY_IdMctr008',$id)->get();
                 foreach($jurados as $jurado){
-                    $nombre = $jurado -> relacionUsuarios -> User_Nombre1 ;
-                    $apellido = $jurado -> relacionUsuarios -> User_Apellido1 ;
-                    $total = $nombre." ".$apellido;
-                    $jurado ->offsetSet('Nombre',$total);
-                    $jurado ->offsetSet('Estado',$jurado->relacionEstado->EST_Estado );
+                    $jurado ->offsetSet('Nombre',$jurado->relacionUsuarios->User_Nombre1." ".$jurado->relacionUsuarios->User_Apellido1);
+                    if($jurado->relacionEstadoJurado->EST_Estado == "RADICADO"){
+                        $jurado ->offsetSet('Estado',"ASIGNADO");
+                    }else{
+                        $jurado ->offsetSet('Estado',$jurado->relacionEstadoJurado->EST_Estado );
 
+                    }
+                    
                 }
                return DataTables::of($jurados)
                ->removeColumn('created_at')
@@ -563,10 +601,15 @@ class StudentController extends Controller
             $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
 
             $jurados=Jurados::where('FK_NPRY_IdMctr008',$id)->first();
-            if($jurados->JR_Comentario_2 == 'inhabilitado'){
+            if($jurados == null){
                 $Anteproyecto->offsetseT('N_Radicacion',1);
             }else{
-                $Anteproyecto->offsetseT('N_Radicacion',2);
+                if($jurados->JR_Comentario_2 == 'inhabilitado'){
+                    $Anteproyecto->offsetseT('N_Radicacion',1);
+                }else{
+                    $Anteproyecto->offsetseT('N_Radicacion',2);
+                }
+                
             }
             
             return view($this->path .'ComentariosJurados',
@@ -592,11 +635,12 @@ class StudentController extends Controller
             $Anteproyecto -> offsetSet('Estado', $estado);
 
             $jurados=Jurados::where('FK_NPRY_IdMctr008',$id)->first();
-            if($jurados->JR_Comentario_Proyecto_2 == 'inhabilitado'){
-                $Anteproyecto->offsetseT('N_Radicacion',1);
-            }else{
-                $Anteproyecto->offsetseT('N_Radicacion',2);
-            }
+               if($jurados->JR_Comentario_Proyecto_2 == 'inhabilitado'){
+                    $Anteproyecto->offsetseT('N_Radicacion',1);
+                }else{
+                    $Anteproyecto->offsetseT('N_Radicacion',2);
+                }
+            
 
             return view($this->path .'.Proyecto.ComentariosJurados',
             [
@@ -611,7 +655,7 @@ class StudentController extends Controller
         }             
         
     }
-    
+    //funcion que retorna la vista de banco de proyectos //
     public function BancoDeProyectos(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -630,7 +674,7 @@ class StudentController extends Controller
         }             
         
     }
-    
+    //funncion en la cual se valida si el proyecto esta listo para radicar $id = la PK del Proyecto //
     public function RadicarProyecto(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -667,6 +711,21 @@ class StudentController extends Controller
                                 }else{
                                     $proyecto -> FK_EST_Id = 3 ;
                                     $proyecto->save();
+                                    $fecha = Carbon::now();
+                                    $data = array(
+                                        'correo'=>$proyecto->relacionAnteproyecto->relacionPredirectores->User_Correo,
+                                        'Proy'=>"Proyecto : ".$proyecto->relacionAnteproyecto->NPRY_Titulo,
+                                        'fecha'=>$fecha,
+                                    );
+                        
+                                    Mail::send('gesap.Emails.Radicar',$data, function($message) use ($data){
+                                        
+                                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+                        
+                                        $message->to($data['correo']);
+                        
+                                    });
+                        
                                     return AjaxResponse::success(
                                         '¡Esta Hecho!',
                                         'Proyecto Radicado.'
@@ -796,7 +855,7 @@ class StudentController extends Controller
         
     }
 
-    
+    //funcion que carga la actividad lo que hace el estudiante//
     public function ActividadStoreProyecto(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -876,7 +935,7 @@ class StudentController extends Controller
             }              
         
     }
-    
+    //CRUD rubros persona///
     //esta funcion sirve para agregar datos a la tabla detalles de persona del MCT//
     public function PersonaDatos(Request $request)
     {
@@ -970,6 +1029,29 @@ class StudentController extends Controller
             }              
         
     }
+    public function PersonaDatosdelete(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+            
+            $persona = PersonaMct::where('PK_Id_Dpersona',$id)->first();
+            
+            $persona -> delete();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }   
+    //fin crud persona 
+
+    //funcion que elimina una solicitud
     
     public function EliminarSolicitud(Request $request, $id)
     {
@@ -1001,47 +1083,8 @@ class StudentController extends Controller
         );
 
     }   
-     public function PersonaDatosdelete(Request $request, $id)
-    {
-        if ($request->ajax() && $request->isMethod('DELETE')) {	
-            
-            
-            $persona = PersonaMct::where('PK_Id_Dpersona',$id)->first();
-            
-            $persona -> delete();
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos eliminados correctamente.'
-            );
-        }
-
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-
-    }   
-    public function Financiaciondelete(Request $request, $id)
-    {
-        if ($request->ajax() && $request->isMethod('DELETE')) {	
-            
-            
-            $persona = Financiacion::where('PK_Id_Financiacion',$id)->first();
-            
-            $persona -> delete();
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos eliminados correctamente.'
-            );
-        }
-
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-
-    }   
-    public function SubirActividadProyecto(Request $request, $id, $idp)
+   //funcion que sube una actividad PDF al propyecto 
+   public function SubirActividadProyecto(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
@@ -1067,8 +1110,6 @@ class StudentController extends Controller
                 'datos' => $Actividad,
                 ]);
             
-               
-                 
             }     
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
@@ -1076,7 +1117,7 @@ class StudentController extends Controller
             );         
         
     }
-    
+    //funcion que redirecciona al formulariodependiendo laactividad proporcionada $Id y el anteproyecto $idp
     public function SubirActividad(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1146,6 +1187,28 @@ class StudentController extends Controller
             );         
         
     }
+    //funcion para eliminar una financiacion
+    public function Financiaciondelete(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {	
+            
+            
+            $persona = Financiacion::where('PK_Id_Financiacion',$id)->first();
+            
+            $persona -> delete();
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
+
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+
+    }   
+    //funcion para subir los requerimientos comoactividad $id y al anteproyecto $idp 
     public function SubirRequerimiento(Request $request, $id, $idp)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -1260,6 +1323,7 @@ class StudentController extends Controller
                 }              
             
         }
+        //funcion para mostrar el cronograma
         public function Cronograma(Request $request,$id)
         {
             if ($request->ajax() && $request->isMethod('GET')) {
@@ -1282,6 +1346,7 @@ class StudentController extends Controller
                    ->make(true);
             }
         }
+        //funcion que edita el cronograma
         public function EditarCronograma(Request $request)
         {
             if ($request->ajax() && $request->isMethod('POST')) {
@@ -1309,6 +1374,7 @@ class StudentController extends Controller
         //
 
                //RUBRO PERSONAL
+               //funcion que elimina en la tabla rubro personal
                public function RubroPersonalDelete(Request $request, $id)
                {
                    if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -1330,7 +1396,7 @@ class StudentController extends Controller
            
                }   
            
-           
+           //funcion que crea en la tabla rubro persona
                public function RubroPersonalStore(Request $request)
                {
                    if ($request->ajax() && $request->isMethod('POST')) {
@@ -1388,6 +1454,7 @@ class StudentController extends Controller
                        }              
                    
                }
+               //funcion que muestra el rubro persona
                public function RubroPersonal(Request $request,$id)
                {
                    if ($request->ajax() && $request->isMethod('GET')) {
@@ -1402,6 +1469,7 @@ class StudentController extends Controller
                           ->make(true);
                    }
                }
+               //funcion que edita el rubro persona
                public function EditarRubroPersonal(Request $request)
                {
                    if ($request->ajax() && $request->isMethod('POST')) {
@@ -1433,7 +1501,7 @@ class StudentController extends Controller
            
                //
            
-               //RUBRO EQUIPOS
+               // CRUD RUBRO EQUIPOS
                public function RubroEquiposDelete(Request $request, $id)
                {
                    if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -1561,7 +1629,7 @@ class StudentController extends Controller
                //
            
        
-               //RUBRO MATERIAL
+               //CRUD RUBRO MATERIAL
                public function RubroMaterialDelete(Request $request, $id)
                {
                    if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -1684,7 +1752,7 @@ class StudentController extends Controller
            
                //
            
-               //RUBRO TECNOLOGICO
+               //CRUD RUBRO TECNOLOGICO
                public function RubroTecnologicoDelete(Request $request, $id)
                {
                    if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -1806,10 +1874,7 @@ class StudentController extends Controller
            
            
                //
-           
-       
-    //Resultados
-        //cronograma
+               //CRUD FUNCION requerimientoos 
         public function FuncionDelete(Request $request, $id)
         {
             if ($request->ajax() && $request->isMethod('DELETE')) {	
@@ -1917,7 +1982,7 @@ class StudentController extends Controller
     
         //
     
-    //Resultados
+    //CRUD Resultados
  
     public function ResultadoDelete(Request $request, $id)
     {
@@ -2007,6 +2072,8 @@ class StudentController extends Controller
                ->make(true);
         }
     }
+    //
+    //funcion que muestra la informacion en la tabla de bancos de proyecto
     public function BancoProyectosList(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -2046,7 +2113,7 @@ class StudentController extends Controller
         }
     }
     
-    
+    //funcion para crear una solicitud como estudiante
     public function SolicitudStore(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -2068,7 +2135,7 @@ class StudentController extends Controller
           
         }
     }
-    
+    //funcion que carga los proyectos en la lista de bancos
     public function BancoAnteProyectosList(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -2106,7 +2173,7 @@ class StudentController extends Controller
         }
     }
     
-    
+    //editar en la tabla resultados
     public function EditarResultado(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -2132,7 +2199,7 @@ class StudentController extends Controller
     }
 
 
-    //
+    //funcion que carga los comentarios hechos por el director y estudiantes en las actvidades asignadas
     
     public function Comentarios(Request $request, $id, $idp)
     {
@@ -2165,6 +2232,7 @@ class StudentController extends Controller
         }
    
     }
+    //funcion que carga los detalles de persona la tabla 
     public function DetallesPersona(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -2179,6 +2247,7 @@ class StudentController extends Controller
                ->make(true);
         }
     }
+    //CRUD FINANCIACION
     public function EditarFinanciacion(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
@@ -2264,6 +2333,7 @@ class StudentController extends Controller
                ->make(true);
         }
     }
+    //
     //funcion apra cargar los proyectos al estduiante
     public function ListaProyecto(Request $request,$idp)
     {
@@ -2310,7 +2380,7 @@ class StudentController extends Controller
     }
     
     
-
+//funcion que redirecciona a la vista para ver las actividades del proyecto
     public function VerActividadesProyecto(Request $request,$id)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -2357,9 +2427,6 @@ class StudentController extends Controller
                 
             }
         
-
-         
-          
             return DataTables::of($concatenado)
             ->removeColumn('created_at')
             ->removeColumn('updated_at')

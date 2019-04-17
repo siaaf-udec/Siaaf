@@ -35,7 +35,7 @@
                                 {!! Field:: text('User_Direccion',null,['label'=>'Direccion de Residencia:', 'class'=> 'form-control', 'autofocus','maxlength'=>'100','autocomplete'=>'off'],
                                                                 ['help' => 'Digite la direccion de residencia del usuario.','icon'=>'fa fa-building-o'] ) !!}
                                 
-                                {!! Field::select('FK_User_IdRol',['1'=>'Estudiante', '2'=>'Docente','3'=>'Administrador'],null,['label'=>'ROL: ']) !!}
+                                {!! Field::select('FK_User_IdRol',['1'=>'Estudiante', '2'=>'Docente','3'=>'Coordinador'],null,['label'=>'ROL: ']) !!}
                             
 
                        
