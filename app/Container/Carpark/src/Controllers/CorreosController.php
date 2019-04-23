@@ -49,19 +49,21 @@ class CorreosController extends Controller
             for ($i = 0; $i < sizeof($infoEntradas); $i++) {
                 $infoCorreo = $infoEntradas[$i]['relacionIngresosUsuarios'];
                 $subject = $infoCorreo['username'] . ' ' . $infoCorreo['lastname'];
+
                 Mail::send('carpark.correos.plantilla',
                     [
                         'subject' => 'Parqueader UdeC'.': Advertencia Cierre De Parqueadero UdeC',
                         'title' => 'Parqueader UdeC'.': Advertencia Cierre De Parqueadero UdeC',
-                        'body' => $cuerpoMensaje,
-                        'infoCorreo'=>$infoCorreo, 
+                        'infoCorreo'=>$infoCorreo,
+                        'body' => $cuerpoMensaje
+                       
                     ],
 
                    function($message) use ($infoCorreo){
                         
                         $message->from('no-reply@ucundinamarca.edu.co', 'Parqueader UdeC');
 
-                        $message->to($infoCorreo['email']
+                        $message->to($infoCorreo['email']);
 
                     });
 
