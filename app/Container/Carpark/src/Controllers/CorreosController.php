@@ -3,7 +3,7 @@
 namespace App\Container\Carpark\src\Controllers;
 
 use Illuminate\Http\Request;
-use App\Container\CArpark\src\Mail\EmailCarpark;
+use App\Container\Carpark\src\Mail\EmailCarpark;
 use Illuminate\Support\Facades\Mail;
 use App\Container\Carpark\src\Ingresos;
 use App\Container\Overall\Src\Facades\AjaxResponse;
