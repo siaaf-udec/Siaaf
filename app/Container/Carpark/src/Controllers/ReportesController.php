@@ -150,10 +150,10 @@ class ReportesController extends Controller
             $time = date("h:i A");
             $infoMotos = Motos::all();
             foreach ($infoMotos as $infoMoto) {
-                $Usuarios = UsersUdec::where('code', $infoMoto->FK_CM_CodigoUser)->get();
+                $Usuarios = UsersUdec::where('number_document', $infoMoto->FK_CM_CodigoUser)->first();
 
-                $infoMoto->offsetSet('Nombre', $Usuarios[0]['username']);
-                $infoMoto->offsetSet('Apellido', $Usuarios[0]['lastname']);
+                $infoMoto->offsetSet('Nombre', $Usuarios ['username']);
+                $infoMoto->offsetSet('Apellido', $Usuarios ['lastname']);
 
             }
             return view('carpark.reportes.reporteMotosRegistradas',
@@ -182,10 +182,10 @@ class ReportesController extends Controller
                 $time = date("h:i A");
                 $infoMotos = Motos::all();
                 foreach ($infoMotos as $infoMoto) {
-                    $Usuarios = UsersUdec::where('code', $infoMoto->FK_CM_CodigoUser)->get();
+                    $Usuarios = UsersUdec::where('code', $infoMoto->FK_CM_CodigoUser)->first();;
 
-                    $infoMoto->offsetSet('Nombre', $Usuarios[0]['username']);
-                    $infoMoto->offsetSet('Apellido', $Usuarios[0]['lastname']);
+                    $infoMoto->offsetSet('Nombre', $Usuarios['username']);
+                    $infoMoto->offsetSet('Apellido', $Usuarios['lastname']);
 
                 }
                 return PDF::loadView('carpark.reportes.reporteMotosRegistradas',
