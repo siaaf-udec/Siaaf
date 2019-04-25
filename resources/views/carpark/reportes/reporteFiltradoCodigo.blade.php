@@ -48,7 +48,7 @@
             <div class="to">REPORTE GENERADO POR:</div>
             <h2 class="name">Parqueadero Universidad De Cundinamarca Extensión Facatativá</h2>
             <div class="address">Calle 14 con Avenida 15</div>
-            <div class="email"><a href="#">correoFalso123@mail.com</a></div>
+            <div class="email"><a href="#">citudec2018@gmail.com</a></div>
         </div>
         <div id="invoice">
             <h1>DATOS DE CONTACTO:</h1>
