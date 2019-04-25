@@ -14,14 +14,12 @@ class CreateProcesosTable extends Migration
     public function up()
     {
         Schema::connection('calidadpcs')->create('TBL_Calidadpcs_procesos', function (Blueprint $table) {
-            $table->integer('PK_CP_Id_proceso')->unique()->primary();
-            $table->String('CP_Id_etapa');
-            $table->String('CP_Id_documento');
-            $table->String('CP_Id_proyecto');
-            $table->String('CP_nombre_proceso');
-            $table->String('CP_estado_proceso'); 
-            $table->datetime('CP_FHentrada');
-            $table->timestamp('CP_FHsalida')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->increments('PK_CP_Id_Proceso');
+            $table->String('CP_Nombre_Proceso');
+            $table->String('CP_Tipo_Parseo'); 
+            $table->integer('FK_CP_Id_Etapa')->unsigned();
+            $table->foreign('FK_CP_Id_Etapa')->references('PK_CE_Id_Etapa')->on('TBL_Calidadpcs_etapa');
+            
             $table->timestamps();
         });
     }

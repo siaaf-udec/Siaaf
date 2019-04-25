@@ -21,45 +21,42 @@
 
 @endpush
 
-@section('title', '| Información de los vehículos')
+@section('title', '| Procesos')
 
-@section('page-title', 'Parqueadero Universidad De Cundinamarca Extensión Facatativá:')
+@section('page-title', 'Procesos del Proyecto:')
 
 @section('content')
-    @permission('ADMIN_CARPARK')
+    @permission('ADMIN_CALIDADPCS')
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Vehículos registrados:'])
-            <br>
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Procesos:'])
             <div class="row">
                 <div class="col-md-12">
+
                     <div class="actions">
-                        @permission('PARK_REPORT_MOTO')<a href="javascript:;"
-                                                       class="btn btn-simple btn-success btn-icon reports"
-                                                       title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
-                            de Motos</a>@endpermission
+                        <a href="javascript:;"
+                            class="btn btn-simple btn-success btn-icon create"
+                            title="Crear un nuevo proyecto"><i class="glyphicon glyphicon-plus"></i>Agregar Proyecto</a>
                         <br>
                     </div>
+                    <br>
                 </div>
             </div>
-            <br>
-            <br>
             <div class="row">
                 <div class="col-md-12">
-                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaMotos'])
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaProyectos'])
                         @slot('columns', [
                             '#',
-                            'Placa',
-                            'Marca',
-                            'Documento Propietario',
-                            'Perfil',
-                            'Acciones'
+                            'Nombre  proceso',
+                            'Etapa',
+                            '',
+                            ''
                         ])
                     @endcomponent
                 </div>
             </div>
         @endcomponent
     </div>
-    @endpermission
+    @endpermission 
 @endsection
 
 @push('plugins')
@@ -99,21 +96,22 @@
     <script src = "{{ asset('assets/main/scripts/table-datatable.js') }}" type = "text/javascript" ></script>
     <script type="text/javascript">
 
+    
     jQuery(document).ready(function () {
-
+        /*
         var table, url, columns;
-        table = $('#listaMotos');
-        url = "{{ route('parqueadero.motosCarpark.tablaMotos')}}"; 
+        table = $('#listaProyectos');
+        url = "{{ route('calidadpcs.proyectosCalidad.tablaProyectos')}}";
         columns = [
             {data: 'DT_Row_Index'},
-            {data: 'CM_Placa', name: 'CM_Placa'},
-            {data: 'CM_Marca', name: 'CM_Marca'},
-            {data: 'FK_CM_CodigoUser', name: 'FK_CM_CodigoUser'},
+            {data: 'CP_Nombre_Proyecto', name: 'CP_Nombre_Proyecto'},
+            {data: 'CP_Fecha_Inicio', name: 'CP_Fecha_Inicio'},
+            {data: 'CP_Fecha_Final', name: 'CP_Fecha_Final'},
             {
-                defaultContent: '@permission('PARK_SEE_MOTO')<a href="javascript:;" class="btn btn-success verPerfil"  title="Perfil" ><i class="fa fa-address-card"></i></a>@endpermission',
+                defaultContent: '<a href="javascript:;" class="btn btn-success verProcesos"  title="Ver las etapas de este Proyecto" ><i class="fa fa-th-list"></i></a>',
                 data: 'action',
-                name: 'Perfil',
-                title: 'Perfil',
+                name: 'Procesos',
+                title: 'Procesos',
                 orderable: false,
                 searchable: false,
                 exportable: false,
@@ -124,7 +122,7 @@
                 responsivePriority: 2
             },
             {
-                defaultContent: '@permission('PARK_REPORT_MOTO')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@permission('PARK_UPDATE_MOTO') @endpermission<a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@permission('PARK_DELETE_MOTO') @endpermission<a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a> @endpermission',
+                defaultContent: '<a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a> ',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -140,7 +138,7 @@
         ];
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
-
+        /*
         table.on('click', '.remove', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
@@ -195,15 +193,15 @@
                 route_edit = '{{ route('parqueadero.motosCarpark.verMoto') }}' + '/' + dataTable.PK_CM_IdMoto;
             $(".content-ajax").load(route_edit);
         });
-
-        table.on('click', '.RegistrarMoto', function (e) {
+        
+        table.on('click', '.create', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('parqueadero.motosCarpark.RegistrarMoto') }}' + '/' + dataTable.FK_CM_CodigoUser;
+                route_edit = '{{ route('calidadpcs.proyectosCalidad.RegistrarProyecto') }}' + '/' + dataTable.FK_CM_CodigoUser;
             $(".content-ajax").load(route_edit);
         });
-
+        /*
         table.on('click', '.edit', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
@@ -221,6 +219,30 @@
             });
         });
 
+        $( ".create" ).on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('calidadpcs.proyectosCalidad.RegistrarProyecto') }}' + '/' + {{ Auth::user()->id }} ;
+            $(".content-ajax").load(route);
+        });
+
+        table.on('click', '.verProcesos', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data(),
+                route_edit = '{{ route('calidadpcs.proyectosCalidad.') }}';
+            $(".content-ajax").load(route_edit);
+        });
+        /*
+        $(".create").on('click', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $.ajax({}).done(function () {
+                window.open('{{ route('calidadpcs.proyectosCalidad.RegistrarProyecto') }}');
+            });
+        });
+        */
+        /*
         $(".reports").on('click', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
@@ -228,7 +250,9 @@
             $.ajax({}).done(function () {
                 window.open('{{ route('parqueadero.reportesCarpark.reporteMotosRegistradas') }}', '_blank');
             });
-        });
+        });*/
+
+        
     });
 </script>
 @endpush

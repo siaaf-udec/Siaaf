@@ -14,10 +14,8 @@ class CreateEtapaTable extends Migration
     public function up()
     {
         Schema::connection('calidadpcs')->create('TBL_Calidadpcs_etapa', function (Blueprint $table) {
-            $table->integer('CE_Id_etapa')->unique()->primary();
-            $table->String('CE_Nombre_etapa');
-            $table->datetime('CE_FHentrada');
-            $table->timestamp('CE_FHsalida')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->increments('PK_CE_Id_Etapa');
+            $table->String('CE_Etapa');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateEtapaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('etapa');
+        Schema::dropIfExists('TBL_Calidadpcs_etapa');
     }
 }

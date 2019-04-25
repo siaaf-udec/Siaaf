@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateDependenciasTable extends Migration
 {
@@ -13,8 +13,8 @@ class CreateDependenciasTable extends Migration
      */
     public function up()
     {
-        Schema::connection('carpark')->create('TBL_Carpark_Dependencias', function (Blueprint $table) {
-            $table->integer('PK_CD_IdDependencia')->primary();
+        Schema::connection('calidadpcs')->create('TBL_Calidadpcs_Dependencias', function (Blueprint $table) {
+            $table->increments('PK_CD_Id_Dependencia');
             $table->String('CD_Dependencia', 50);
 
             $table->timestamps();
@@ -28,6 +28,6 @@ class CreateDependenciasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TBL_Carpark_Dependencias');
+        Schema::dropIfExists('TBL_Calidadpcs_Dependencias');
     }
 }
