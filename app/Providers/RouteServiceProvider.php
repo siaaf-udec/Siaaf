@@ -209,6 +209,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::prefix('calidadpcs')
             ->middleware(['web', 'auth'])
             ->namespace($this->namespace)
-            ->group(base_path('routes/calidadpcs.php'));
+            ->group(base_path('routes/calidadpcs.php')); 
     }
 }

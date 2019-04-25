@@ -26,7 +26,7 @@ class CreateUsuariosTable extends Migration
             $table->String('CU_UrlFoto', 90);
             $table->integer('FK_CU_IdEstado')->unsigned();
             $table->foreign('FK_CU_IdEstado')->references('PK_CE_IdEstados')->on('TBL_Carpark_Estados');
-            $table->integer('FK_CU_IdDependencia')->unsigned();
+            $table->integer('FK_CU_IdDependencia');
             $table->foreign('FK_CU_IdDependencia')->references('PK_CD_IdDependencia')->on('TBL_Carpark_Dependencias');
 
             $table->timestamps();
