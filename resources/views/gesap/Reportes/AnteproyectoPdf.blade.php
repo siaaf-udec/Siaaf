@@ -64,7 +64,7 @@
 		<!-- Embeaded image :-) --> 
         <img src="{{ asset('css/LogoUDEC.png') }}">
         
-        <h1 class="features">REPORTE GENEREADO POR</h1>
+        <h1 class="features">REPORTE GENERADO POR</h1>
  
         <p class="line">Plataforma Web Para La Gestión De Anteproyectos y Proyectos De Grado (GESAP)</p>
         <p class="line">Calle 14 con Avenida 15</p>
@@ -244,33 +244,6 @@
             </tbody>
 
     </table>
-    <html>
-  <head>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Desarrollador', '% trabajo'],
-          ['{{$desarrollador1}}', {{$interaccionest1}}],
-          ['{{$desarrollador2}}', {{$interaccionest2}}]
-          ]);
-
-        var options = {
-          title: 'Anteproyectos Radicados el Ultimo Año',
-          is3D: true,
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-        chart.draw(data, options);
-      }
-    </script>
-  </head>
-  <body>
-    <div id="piechart_3d" style="width: 900px; height: 500px;"></div>
-  </body>
-</html>
 </body>
 <footer>
 <div id="head">

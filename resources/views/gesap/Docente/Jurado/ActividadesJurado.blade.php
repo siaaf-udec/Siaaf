@@ -79,7 +79,7 @@
         idp='{{  $Anteproyecto  }}';
     
         columns = [
-            {data: 'PK_MCT_IdMctr008', name: 'PK_MCT_IdMctr008'},
+            {data: 'Numero', name: 'Numero'},
             {data: 'MCT_Actividad', name: 'MCT_Actividad'},
             {data: 'MCT_Descripcion', name: 'MCT_Descripcion'},
             
