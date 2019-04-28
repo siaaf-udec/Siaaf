@@ -745,7 +745,7 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'DocenteController@VerActividadProyecto',  
 			'as' => 'DocenteGesap.VerActividadProyecto'
 		]);
-		Route::get('VerActividadProyectoJurado/{id?}/{idp?}', [
+		Route::get('VerActividadProyectoJurado/{id?}/{idp?}/{idnum?}', [
 			'uses' => $controller . 'DocenteController@VerActividadProyectoJurado',  
 			'as' => 'DocenteGesap.VerActividadProyectoJurado'
 		]);
@@ -819,11 +819,11 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'DocenteController@VerRequerimientos',  
 			'as' => 'DocenteGesap.VerRequerimientos'
 		]);
-		Route::get('RequerimientosJurado/{id?}/{idp?}', [
+		Route::get('RequerimientosJurado/{id?}/{idp?}/{idnum?}', [
 			'uses' => $controller . 'DocenteController@RequerimientosJurado',  
 			'as' => 'DocenteGesap.RequerimientosJurado'
 		]);
-		Route::get('VerActividadJurado/{id?}/{idp?}', [
+		Route::get('VerActividadJurado/{id?}/{idp?}/{idnum?}', [
 			'uses' => $controller . 'DocenteController@VerActividadJurado',  
 			'as' => 'DocenteGesap.VerActividadJurado'
 		]);

@@ -108,7 +108,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('DocenteGesap.VerActividadJurado') }}' + '/' + dataTable.PK_MCT_IdMctr008 + '/'+ idp;
+            var route = '{{ route('DocenteGesap.VerActividadJurado') }}' + '/' + dataTable.PK_MCT_IdMctr008 + '/'+ idp + '/' + (dataTable.Numero - 1) ;
             //location.href="{{route('AnteproyectosGesap.index')}}";
             $(".content-ajax").load(route);
 

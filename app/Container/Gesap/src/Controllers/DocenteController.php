@@ -432,13 +432,14 @@ class DocenteController extends Controller
         
     }
     // funcion que retorna a la vista correspondiente dependiendo de la $id = pk de la actividad $idp ) pk anteproyecto//
-    public function VerActividadProyectoJurado(Request $request, $id, $idp)
+    public function VerActividadProyectoJurado(Request $request, $id, $idp , $idNum)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
             $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',3)->get();
                     
             $Actividad->offsetSet('Anteproyecto', $idp);
+            $Actividad->offsetSet('Numero', $idNum);
 
             $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
             $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
@@ -1966,13 +1967,15 @@ class DocenteController extends Controller
     
 }
 //funcion para retornar la vista del requerimiento seleccionado apra su posterior calificación por parte del jrado(Requerimientos) //
-public function RequerimientosJurado(Request $request, $id, $idp)
+public function RequerimientosJurado(Request $request, $id, $idp,$idNum)
 {
     if ($request->ajax() && $request->isMethod('GET')) {
 
         $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',2)->get();
                 
         $Actividad->offsetSet('Anteproyecto', $idp);
+        $Actividad->offsetSet('Numero', $idNum);
+        
 
         $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
         $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
@@ -2152,20 +2155,23 @@ public function RequerimientosJurado(Request $request, $id, $idp)
     ///funcion que redirecciona a las actividades para calificar como jurado//
     public function navegacionActividades(Request $request, $id, $idp,$idn)
             {
-                   if ($request->ajax() && $request->isMethod('GET')) {
-           if($idn == 0){
-            
-            $id = $id - 1;
-           }else{
-            
-            $id = $id + 1;
-           }
-            $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',1)->get();
-                               
-            $Actividad->offsetSet('Anteproyecto', $idp);
+        if ($request->ajax() && $request->isMethod('GET')) {
+            if($idn == 0){
+                $id = $id - 1;   
+            }else{
+                $id = $id + 1;
+            }
            
+            $Numero = $id ;
+            $Actividades = Mctr008::where('FK_Id_Formato',1)->get();
+            $id = $Actividades[$id]->PK_MCT_IdMctr008;                  
+            $Actividad = Mctr008::where('PK_MCT_IdMctr008',$id)->where('FK_Id_Formato',1)->get();
+            $Actividad->offsetSet('Anteproyecto', $idp);
+            $Actividad->offsetSet('Numero', $Numero);
+            
             $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
             $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
+           
             if($commit2 == null){
                   $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningún cambio a esta actividad del MCT.");
                   $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
@@ -2236,18 +2242,24 @@ public function RequerimientosJurado(Request $request, $id, $idp)
     //funcion que se encarga de navegar entre las actividades para su posterior calificacion $id=pk actividad $idp = pk proyecto y $idn navegacion si es la primer actividad //
     public function navegacionActividadesP(Request $request, $id, $idp,$idn)
             {
-                   if ($request->ajax() && $request->isMethod('GET')) {
-           if($idn == 0){
+        if ($request->ajax() && $request->isMethod('GET')) {
+           
+            if($idn == 0){
             
             $id = $id - 1;
            }else{
             
             $id = $id + 1;
            }
-           $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',3)->get();
-                    
-           $Actividad->offsetSet('Anteproyecto', $idp);
 
+           $Numero = $id ;
+           $Actividades = Mctr008::where('FK_Id_Formato',3)->get();
+           $id = $Actividades[$id]->PK_MCT_IdMctr008;                  
+           $Actividad = Mctr008::where('PK_MCT_IdMctr008',$id)->where('FK_Id_Formato',3)->get();
+           $Actividad->offsetSet('Anteproyecto', $idp);
+           $Actividad->offsetSet('Numero', $Numero);
+
+         
            $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
            $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
            if($commit2 == null)
@@ -2285,18 +2297,22 @@ public function RequerimientosJurado(Request $request, $id, $idp)
    
     public function navegacionActividadesR(Request $request, $id, $idp,$idn)
             {
-                   if ($request->ajax() && $request->isMethod('GET')) {
-           if($idn == 0){
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+            if($idn == 0){
             
             $id = $id - 1;
            }else{
             
             $id = $id + 1;
            }
-            $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',2)->get();
-                               
+            $Numero = $id ;
+            $Actividades = Mctr008::where('FK_Id_Formato',2)->get();
+            $id = $Actividades[$id]->PK_MCT_IdMctr008;                  
+            $Actividad = Mctr008::where('PK_MCT_IdMctr008',$id)->where('FK_Id_Formato',2)->get();
             $Actividad->offsetSet('Anteproyecto', $idp);
-           
+            $Actividad->offsetSet('Numero', $Numero);
+            
             $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
             $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
             if($commit2 == null){
@@ -2334,13 +2350,14 @@ public function RequerimientosJurado(Request $request, $id, $idp)
                 }     
     }
         //funcion que depentiendo la actividad $id y el poryecto $idp redirecciona a una vista diferente// 
-    public function VerActividadJurado(Request $request, $id, $idp)
+    public function VerActividadJurado(Request $request, $id, $idp,$idNum)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
             $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',1)->get();
                     
             $Actividad->offsetSet('Anteproyecto', $idp);
+            $Actividad->offsetSet('Numero', $idNum);
 
             $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
             $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();

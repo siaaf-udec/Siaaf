@@ -236,7 +236,7 @@ $(document).ready(function(){
         $('.button-anterior').on('click', function (e) {
             e.preventDefault();
             idn = 0;
-            id = '{{$datos[0]['PK_MCT_IdMctr008']}}'
+            id = '{{$datos['Numero']}}'
             var route = '{{ route('DocenteGesap.navegacionActividades') }}' + '/' + id + '/'+ '{{$datos['Proyecto']}}' + '/'+idn;
              //location.href="{{route('DocenteGesap.index')}}";
             $(".content-ajax").load(route);
@@ -245,7 +245,7 @@ $(document).ready(function(){
         $('.button-siguiente').on('click', function (e) {
             e.preventDefault();
             idn = 1;
-            id = '{{$datos[0]['PK_MCT_IdMctr008']}}'
+            id = '{{$datos['Numero']}}'
             var route = '{{ route('DocenteGesap.navegacionActividades') }}' + '/' + id + '/'+ '{{$datos['Proyecto']}}' + '/'+idn;
              //location.href="{{route('DocenteGesap.index')}}";
             $(".content-ajax").load(route);
