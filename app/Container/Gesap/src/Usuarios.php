@@ -7,6 +7,7 @@ use App\Container\Users\src\UsersUdec;
 
 class Usuarios extends Model
 {
+    //modelo en donde se almacenan los usuarios de GESAP
     protected $connection = 'gesap';
 
     protected $table = 'TBL_Usuario';
@@ -42,6 +43,7 @@ class Usuarios extends Model
     {
         return $this->hasMany(Anteproyecto::class, 'FK_NPRY_Pre_Director', 'PK_User_Codigo');
     }
+    //relacion que muestra cuantos commist se ha hecho a un proyecto o anteproyecto(SOLO ROL ESTUDIANTE)
     public function relacionCommits()
     {
         return $this->hasMany(Commits::class, 'FK_User_Codigo', 'PK_User_Codigo');

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Formato extends Model
 {
-    //modelo del mct
+    //modelo del mct para darle formato a las actividades 1=MCT 2=Resultados 3=Libro
     protected $connection = 'gesap';
 
     protected $table = 'TBL_MCT_Formato';
