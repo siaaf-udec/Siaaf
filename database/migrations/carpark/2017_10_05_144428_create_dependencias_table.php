@@ -14,7 +14,7 @@ class CreateDependenciasTable extends Migration
     public function up()
     {
         Schema::connection('carpark')->create('TBL_Carpark_Dependencias', function (Blueprint $table) {
-            $table->integer('PK_CD_IdDependencia')->unsigned()->unique()->primary();
+            $table->integer('PK_CD_IdDependencia')->primary();
             $table->String('CD_Dependencia', 50);
 
             $table->timestamps();

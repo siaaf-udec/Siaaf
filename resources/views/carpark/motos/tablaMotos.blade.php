@@ -103,7 +103,7 @@
 
         var table, url, columns;
         table = $('#listaMotos');
-        url = "{{ route('parqueadero.motosCarpark.tablaMotos')}}";
+        url = "{{ route('parqueadero.motosCarpark.tablaMotos')}}"; 
         columns = [
             {data: 'DT_Row_Index'},
             {data: 'CM_Placa', name: 'CM_Placa'},

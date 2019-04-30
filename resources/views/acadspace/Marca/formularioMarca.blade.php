@@ -86,8 +86,8 @@
                                 <div class="col-md-12">
 
                                     {!! Field:: text('tipo_marca',null,
-                                    ['label'=>'Nombre marca:','class'=> 'form-control', 'autofocus', 'maxlength'=>'15','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre de la marca perteneciente a una hoja de vida','icon'=>'fa fa-user'] ) !!}
+                                    ['label'=>'Nombre marca:','class'=> 'form-control', 'autofocus', 'maxlength'=>'15','autocomplete'=>'off','pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ 0-9]+','title'=>'En este campo solo se admiten letras y numeros, con espacios'],
+                                    ['help' => 'Digite el nombre de la marca de un equipo de cómputo','icon'=>'fa fa-tasks'] ) !!}
 
                                 </div>
 

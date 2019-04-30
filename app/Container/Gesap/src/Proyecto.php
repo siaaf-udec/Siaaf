@@ -1,56 +1,39 @@
 <?php
 
-namespace App\container\gesap\src;
+namespace App\Container\Gesap\src;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Proyecto extends Model
 {
-    /**
-     * Conexión de la base de datos usada por el modelo
-     *
-     * @var string
-     */
+    //modelo en donde se guarda el anteproyecto ya aprobado PROYECTO
     protected $connection = 'gesap';
 
-    /**
-     * Tabla utilizada por el modelo.
-     *
-     * @var string
-     */
     protected $table = 'TBL_Proyecto';
 
-    /**
-     * Nombre de columna primary_key de tabla .
-     *
-     * @var string
-     */
-    protected $primaryKey = 'PK_PRYT_IdProyecto';
+    protected $primaryKey = 'PK_Id_Proyecto';
 
-    /**
-     * Atributos que son asignables.
-     *
-     * @var array
-     */
-    protected $fillable = ['PRYT_Estado', 'FK_TBL_Anteproyecto_Id'];
-
-    /*	
-	*Función de relacion entre las tablas de Proyecto y Anteproyecto 
-	*por los campo de FK_TBL_Anteproyecto_Id y PK_NPRY_IdMinr008 
-	*para realizar las busquedas complementarias
-	*/
-    public function anteproyecto()
+    protected $fillable = [
+        'FK_NPRY_IdMctr008',
+        'FK_EST_Id',
+        'PYT_Fecha_Radicacion',
+        'FK_NPRY_Director',
+        'NPRY_Pro_Estado',
+    ];
+    //relacion que muestra el anteproyecto radicado y aprobado anteriormente
+    public function relacionAnteproyecto()
     {
-        return $this->belongsto(Anteproyecto::class, 'FK_TBL_Anteproyecto_Id', 'PK_NPRY_IdMinr008');
+         return $this->hasOne(Anteproyecto::class, 'PK_NPRY_IdMctr008', 'FK_NPRY_IdMctr008');
     }
-
-    /*	
-	*Función de relacion entre las tablas de Proyecto y Documentos 
-	*por los campo de FK_TBL_Proyecto_Id y PK_PRYT_IdProyecto 
-	*para realizar las busquedas complementarias
-	*/
-    public function documentos()
+    //relacion que muestra el estado del PROYECTO
+    public function relacionEstado()
     {
-        return $this->hasMany(Documentos::class, 'FK_TBL_Proyecto_Id', 'PK_PRYT_IdProyecto');
+          return $this->hasone(EstadoAnteproyecto::class, 'PK_EST_Id', 'FK_EST_Id');
     }
+     //esta es la relacion que tiene el anteproyecto con su predirecor     
+     public function relacionDirectores() 
+     {
+          return $this->hasOne(Usuarios::class, 'PK_User_Codigo', 'FK_NPRY_Director');
+      }
 }

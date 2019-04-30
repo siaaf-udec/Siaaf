@@ -11,7 +11,6 @@ use App\Container\Carpark\src\Usuarios;
 use App\Container\Carpark\src\Motos;
 use App\Container\Carpark\src\Ingresos;
 use App\Container\Carpark\src\Historiales;
-use Barryvdh\Snappy\Facades\SnappyPdf;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
@@ -49,7 +48,7 @@ class ReportesController extends Controller
      * Permite descargar el reporte correspondiente al las dependencias registradas.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\PDF | \Illuminate\Http\Response
      */
     public function descargarReporteDependencia(Request $request)
     {
@@ -61,7 +60,7 @@ class ReportesController extends Controller
                 $infoDependencias = Dependencias::all();//->orderBy('PK_CD_IdDependencia','asc')->get();
                 $total = count($infoDependencias);
                 $cont = 1;
-                return SnappyPdf::loadView('carpark.reportes.reporteDependencias',
+                return PDF::loadView('carpark.reportes.descargas.reporteDependencias',
                     compact('infoDependencias', 'date', 'time', 'total', 'cont')
                 )->download('ReporteDependencias.pdf');
 
@@ -107,7 +106,7 @@ class ReportesController extends Controller
      * Permite descargar el reporte correspondiente a los usuarios registrados.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\PDF | \Illuminate\Http\Response
      */
     public function descargarreporteUsuariosRegistrados(Request $request)
     {
@@ -118,7 +117,7 @@ class ReportesController extends Controller
                 $date = date("d/m/Y");
                 $time = date("h:i A");
                 $infoUsuarios = Usuarios::all();
-               return PDF::loadView('carpark.reportes.reporteUsuariosRegistrados', 
+               return PDF::loadView('carpark.reportes.descargas.reporteUsuariosRegistrados', 
                     compact('infoUsuarios', 'date', 'time', 'cont'))->download('ReporteUsuariosRegistrados.pdf'); 
 
 
@@ -150,10 +149,10 @@ class ReportesController extends Controller
             $time = date("h:i A");
             $infoMotos = Motos::all();
             foreach ($infoMotos as $infoMoto) {
-                $Usuarios = UsersUdec::where('code', $infoMoto->FK_CM_CodigoUser)->get();
+                $Usuarios = UsersUdec::where('number_document', $infoMoto->FK_CM_CodigoUser)->first();
 
-                $infoMoto->offsetSet('Nombre', $Usuarios[0]['username']);
-                $infoMoto->offsetSet('Apellido', $Usuarios[0]['lastname']);
+                $infoMoto->offsetSet('Nombre', $Usuarios ['username']);
+                $infoMoto->offsetSet('Apellido', $Usuarios ['lastname']);
 
             }
             return view('carpark.reportes.reporteMotosRegistradas',
@@ -170,7 +169,7 @@ class ReportesController extends Controller
      * Permite descargar el reporte correspondiente a los usuarios registrados.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\PDF | \Illuminate\Http\Response
      */
     public function descargarreporteMotosRegistradas(Request $request)
     {
@@ -182,13 +181,13 @@ class ReportesController extends Controller
                 $time = date("h:i A");
                 $infoMotos = Motos::all();
                 foreach ($infoMotos as $infoMoto) {
-                    $Usuarios = UsersUdec::where('code', $infoMoto->FK_CM_CodigoUser)->get();
+                    $Usuarios = UsersUdec::where('code', $infoMoto->FK_CM_CodigoUser)->first();;
 
-                    $infoMoto->offsetSet('Nombre', $Usuarios[0]['username']);
-                    $infoMoto->offsetSet('Apellido', $Usuarios[0]['lastname']);
+                    $infoMoto->offsetSet('Nombre', $Usuarios['username']);
+                    $infoMoto->offsetSet('Apellido', $Usuarios['lastname']);
 
                 }
-                return PDF::loadView('carpark.reportes.reporteMotosRegistradas',
+                return PDF::loadView('carpark.reportes.descargas.reporteMotosRegistradas',
                     compact('infoMotos', 'date', 'time', 'cont'))->download('ReporteMotosRegistradas.pdf');
 
             } catch (Exception $e) {
@@ -234,7 +233,7 @@ class ReportesController extends Controller
      * Permite descargar el reporte correspondiente a las motos que se encuentran en la universidad.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\PDF | \Illuminate\Http\Response
      */
     public function descargarReporteMotosDentro(Request $request)
     {
@@ -245,7 +244,7 @@ class ReportesController extends Controller
                 $infoIngresos = Ingresos::all();//->orderBy('PK_CD_IdDependencia','asc')->get();
                 $total = count($infoIngresos);
                 $cont = 1;
-                return SnappyPdf::loadView('carpark.reportes.reporteMotosDentro',
+                return PDF::loadView('carpark.reportes.descargas.reporteMotosDentro',
                     compact('infoIngresos', 'date', 'time', 'total', 'cont')
                 )->download('ReporteMotosDentro.pdf');
             } catch (Exception $e) {
@@ -289,7 +288,7 @@ class ReportesController extends Controller
      * Permite descargar el reporte correspondiente a las motos que se encuentran en la universidad.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\PDF | \Illuminate\Http\Response
      */
     public function descargarReporteHistorico(Request $request)
     {
@@ -300,7 +299,7 @@ class ReportesController extends Controller
                 $infoHistoriales = Historiales::all();//->orderBy('PK_CD_IdDependencia','asc')->get();
                 $total = count($infoHistoriales);
                 $cont = 1;
-                return SnappyPdf::loadView('carpark.reportes.reporteHistorico',
+                return PDF::loadView('carpark.reportes.descargas.reporteHistorico',
                     compact('infoHistoriales', 'date', 'time', 'total', 'cont')
                 )->download('ReporteHistorico.pdf');
             } catch (Exception $e) {
@@ -353,7 +352,7 @@ class ReportesController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @param  string $limMinGET
      * @param  string $limMaxGET
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\PDF | \Illuminate\Http\Response
      */
     public function descargarFiltradoFecha(Request $request, $limMinGET, $limMaxGET)
     {
@@ -370,7 +369,7 @@ class ReportesController extends Controller
                 $date = date("d/m/Y");
                 $time = date("h:i A");
 
-                return SnappyPdf::loadView('carpark.reportes.reportePorFecha', compact('infoHistoriales', 'date', 'time', 'cont', 'total', 'FechaMinDescarga', 'FechaMaxDescarga'))->download('ReportePorFechas.pdf');
+                return PDF::loadView('carpark.reportes.descargas.reportePorFecha', compact('infoHistoriales', 'date', 'time', 'cont', 'total', 'FechaMinDescarga', 'FechaMaxDescarga'))->download('ReportePorFechas.pdf');
             } catch (Exception $e) {
                 return view('carpark.reportes.reportePorFecha', compact('infoHistoriales', 'date', 'time', 'cont', 'total', 'FechaMinDescarga', 'FechaMaxDescarga'));
             }
@@ -414,7 +413,7 @@ class ReportesController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\PDF | \Illuminate\Http\Response
      */
     public function descargarFiltradoCodigo(Request $request, $id)
     {
@@ -429,7 +428,7 @@ class ReportesController extends Controller
                 $date = date("d/m/Y");
                 $time = date("h:i A");
 
-                return SnappyPdf::loadView('carpark.reportes.reporteFiltradoCodigo', compact('infoHistoriales', 'date', 'time', 'cont', 'total', 'codigo'))->download('ReportePorCódigo.pdf');
+                return PDF::loadView('carpark.reportes.descargas.reporteFiltradoCodigo', compact('infoHistoriales', 'date', 'time', 'cont', 'total', 'codigo'))->download('ReportePorCódigo.pdf');
             } catch (Exception $e) {
                 return view('carpark.reportes.reporteFiltradoCodigo', compact('infoHistoriales', 'date', 'time', 'cont', 'total', 'codigo'));
             }
@@ -474,7 +473,7 @@ class ReportesController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  string $id
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\PDF | \Illuminate\Http\Response
      */
     public function descargarFiltradoPlaca(Request $request, $id)
     {
@@ -489,7 +488,7 @@ class ReportesController extends Controller
                 $date = date("d/m/Y");
                 $time = date("h:i A");
 
-                return SnappyPdf::loadView('carpark.reportes.reporteFiltradoPlaca', compact('infoHistoriales', 'date', 'time', 'cont', 'total', 'placa'))->download('ReportePorPlaca.pdf');
+                return PDF::loadView('carpark.reportes.descargas.reporteFiltradoPlaca', compact('infoHistoriales', 'date', 'time', 'cont', 'total', 'placa'))->download('ReportePorPlaca.pdf');
             } catch (Exception $e) {
                 return view('carpark.reportes.reporteFiltradoPlaca', compact('infoHistoriales', 'date', 'time', 'cont', 'total', 'placa'));
             }
@@ -534,7 +533,7 @@ class ReportesController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\PDF | \Illuminate\Http\Response
      */
     public function descargarReporteUsuario(Request $request, $id)
     {
@@ -548,7 +547,7 @@ class ReportesController extends Controller
                 $infoHistoriales = Historiales::where('CH_CodigoUser', $id)->get();
                 $total = count($infoHistoriales);
 
-                return SnappyPdf::loadView('carpark.reportes.ReporteUsuario',
+                return PDF::loadView('carpark.reportes.descargas.ReporteUsuario',
                     compact('infoUsuarios', 'infoHistoriales', 'date', 'time', 'total', 'cont'))->download('ReportePorCódigo.pdf');
             } catch (Exception $e) {
                 return view('carpark.reportes.reporteUsuario',
@@ -598,7 +597,7 @@ class ReportesController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Barryvdh\Snappy\Facades\SnappyPdf | \Illuminate\Http\Response
+     * @return \Barryvdh\Snappy\Facades\PDF | \Illuminate\Http\Response
      */
     public function descargarReporteMoto(Request $request, $id)
     {
@@ -616,7 +615,7 @@ class ReportesController extends Controller
                 $infoHistoriales = Historiales::where('CH_Placa', $infoMoto->CM_Placa)->get();
 
                 $total = count($infoHistoriales);
-                return SnappyPdf::loadView('carpark.reportes.reporteMoto',
+                return PDF::loadView('carpark.reportes.descargas.reporteMoto',
                     compact('infoMoto', 'infoHistoriales', 'date', 'time', 'total', 'cont')
                 )->download('ReporteMoto.pdf');
             } catch (Exception $e) {

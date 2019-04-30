@@ -77,7 +77,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-6">
-                                    {!! Field::password('password', ['required', 'label' => 'Contraseña'], ['icon' => 'fa fa-key', 'help' => 'Digita la contreaseña.']) !!}
+                                    {!! Field::password('password', ['required', 'label' => 'Nueva Contraseña'], ['icon' => 'fa fa-key', 'help' => 'Digita la contreaseña.']) !!}
                                 </div>
                                 <div class="col-xs-6">
                                     {!! Field::password('password_confirm', ['required', 'label' => 'Confirmar Contraseña'], ['icon' => 'fa fa-key', 'help' => 'Digita la contreaseña.']) !!}

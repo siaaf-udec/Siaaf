@@ -14,14 +14,14 @@ class RoleCalidadPcsSeeder extends Seeder
     {
         factory(Role::class, 1)->create([
             'name' => 'ADMIN_CALIDADPCS',
-            'display_name' => 'Administrador del parqueadero',
-            'description' => 'Acceso completo a la modulo de parqueaderos.',
+            'display_name' => 'Administrador de los proyectos',
+            'description' => 'Acceso completo al modulo de prpyectos.',
         ]);
 
         factory(Role::class, 1)->create([
             'name' => 'USER_CALIDADPCS',
-            'display_name' => 'Funcionario del parqueadero',
-            'description' => 'Acceso parcial a la modulo de parqueaderos.',
+            'display_name' => 'Funcionario de un proyecto',
+            'description' => 'Acceso a solo los modulo de sus proyectos.',
         ]);
 
     }

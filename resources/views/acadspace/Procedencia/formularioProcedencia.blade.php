@@ -29,7 +29,7 @@
 @section('content')
     {{-- BEGIN HTML SAMPLE --}}
     <div class="col-md-12">
-        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-info', 'title' => 'Gestión Procedencias'])
+        @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-info', 'title' => 'Gestión Procedencía'])
             <div class="clearfix">
             </div>
             <br>
@@ -42,7 +42,7 @@
                         <a class="btn btn-simple btn-success btn-icon create" data-toggle="modal">
                             <i class="fa fa-plus">
                             </i>
-                            Registrar Procedencia
+                            Registrar Procedencía
                         </a>
                         @endpermission
                     </div>
@@ -77,7 +77,7 @@
                             <h2 class="modal-title">
                                 <i class="glyphicon glyphicon-tv">
                                 </i>
-                                Registrar Procedencia
+                                Registrar Procedencía
                             </h2>
                         </div>
                         <div class="modal-body">
@@ -86,8 +86,8 @@
                                 <div class="col-md-12">
 
                                     {!! Field:: text('tipo_procedencia',null,
-                                    ['label'=>'Nombre procedencia:','class'=> 'form-control', 'autofocus', 'maxlength'=>'15','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre de la procedencia perteneciente a un elemento','icon'=>'fa fa-user'] ) !!}
+                                    ['label'=>'Nombre procedencia:','class'=> 'form-control', 'autofocus', 'maxlength'=>'30','autocomplete'=>'off','pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ 0-9]+','title'=>'En este campo solo se admiten letras y números, con espacios'],
+                                    ['help' => 'Digite el nombre de la procedencía','icon'=>'fa fa-home'] ) !!}
 
                                 </div>
 

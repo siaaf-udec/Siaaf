@@ -6,10 +6,10 @@
                     {!! Form::open(['id'=>'form-tipo','url' => '/forms']) !!}
                     <div class="form-wizard">
                         {!! Field:: text('MAN_Nombre',$tiposMant->MAN_Nombre,['label'=>'Digite el nuevo nombre del tipo de mantenimiento', 
-                        'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off','required']
-                        ,['help' => 'Modifique el nombre como desee','icon'=>'fa fa-barcode'] ) !!}
+                        'class'=> 'form-control', 'autofocus', 'maxlength'=>'40','autocomplete'=>'off','required','pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ0-9]+','title'=>'En este campo solo se admiten letras y números, sin espacios']
+                        ,['help' => 'Modifique el nombre como desee','icon'=>'fa fa-wrench'] ) !!}
                         {!! Field:: textarea('MAN_Descripcion',$tiposMant->MAN_Descripcion,
-                        ['label'=>'Digite la nueva descripción del tipo:','class'=> 'form-control', 'rows'=>'3', 'autofocus','autocomplete'=>'off'],
+                        ['label'=>'Digite la nueva descripción del tipo:','class'=> 'form-control', 'rows'=>'3', 'autofocus','autocomplete'=>'off','pattern'=> '[A-Za-zñÑÁáéÉÍíóÓúÚ 0-9]+','title'=>'En este campo solo se admiten letras y números, con espacios'],
                         ['help' => 'Modifique la descripción','icon'=>'fa fa-desktop'] ) !!}                        
                     <div class="row">
                         <div class="col-md-12 col-md-offset-0">
