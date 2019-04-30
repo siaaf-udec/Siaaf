@@ -31,6 +31,7 @@ use App\Container\Gesap\src\Cronograma;
 use App\Container\Gesap\src\Resultados;
 use App\Container\Gesap\src\Solicitud;
 use App\Container\Gesap\src\Funciones;
+use App\Container\Gesap\src\NoFunciones;
 use App\Container\Gesap\src\Financiacion;
 use App\Container\Gesap\src\PersonaMct;
 use App\Container\Gesap\src\Fechas;
@@ -1235,6 +1236,13 @@ class StudentController extends Controller
                 'datos' => $Actividad,
                 ]);   
                  
+            }   
+            if($act->MCT_Actividad == "Requerimientos No Funcionales"){
+                return view($this->path .'SubirRequerimientosNoFuncionales',
+                [
+                'datos' => $Actividad,
+                ]);   
+                 
             }     
             return view($this->path .'SubirRequerimiento',
             [
@@ -1893,6 +1901,26 @@ class StudentController extends Controller
                 'No se pudo completar tu solicitud.'
             );
     
+        } 
+        public function NoFuncionDelete(Request $request, $id)
+        {
+            if ($request->ajax() && $request->isMethod('DELETE')) {	
+                
+                
+                $Funcion = NoFunciones::where('PK_Id_No_Funcion',$id)->first();
+                
+                $Funcion -> delete();
+                return AjaxResponse::success(
+                    '¡Bien hecho!',
+                    'Datos eliminados correctamente.'
+                );
+            }
+    
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+    
         }   
     
     //funcion para llenar la tabla de funcion de requerimientos del MCT//
@@ -1945,11 +1973,74 @@ class StudentController extends Controller
                 }              
             
         }
+         //funcion para llenar la tabla de no funcionales de requerimientos del MCT//
+         public function NoFuncionStore(Request $request)
+         {
+             if ($request->ajax() && $request->isMethod('POST')) {
+                 
+                 $user = Auth::user();
+                 $id = $user->identity_no;
+                     NoFunciones::create([
+                         'MCT_No_Funcion_Nombre'=>$request['MCT_Funcion_Nombre'],
+                         'MCT_No_Funcion_Funcion'=>$request['MCT_Funcion_Funcion'], 
+                         'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],                  
+     
+                     ]);
+                     $commit  = Commits::where('FK_NPRY_IdMctr008',$request['FK_NPRY_IdMctr008'])->where('FK_MCT_IdMctr008',$request['FK_MCT_IdMctr008'])->first();
+                     if($commit == null){
+                         Commits::create([
+                             'FK_NPRY_IdMctr008' => $request['FK_NPRY_IdMctr008'],
+                             'FK_MCT_IdMctr008' => $request['FK_MCT_IdMctr008'],
+                             'FK_User_Codigo' => $id,
+                             'CMMT_Commit' => $request['CMMT_Commit'],
+                             'FK_CHK_Checklist' => $request['FK_CHK_Checklist'],
+                             'CMMT_Formato' => $request['CMMT_Formato']
+                         ]);
+                         $id_name=$user->name." ".$user->lastname;
+                     $predi = Anteproyecto::where('PK_NPRY_IdMctr008', $request['FK_NPRY_IdMctr008'])->first();
+                     $act = Mctr008::where('PK_MCT_IdMctr008',$request['FK_MCT_IdMctr008'])->first();
+                         $data = array(
+                             'correo'=>$predi->relacionPredirectores->User_Correo ,
+                             'Actividad'=>$act->MCT_Actividad,
+                             'usuario'=>$id_name,
+                         );
+             
+                         Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
+                             
+                             $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+             
+                             $message->to($data['correo']);
+             
+                         });
+                     }
+                     
+                 return AjaxResponse::success(
+                     '¡Esta Hecho!',
+                     'Datos Creados.'
+                 );
+               
+            
+                 }              
+             
+         }
         public function Funcion(Request $request,$id)
         {
             if ($request->ajax() && $request->isMethod('GET')) {
     
                     $Funciones = Funciones::where('FK_NPRY_IdMctr008', $id)->get();
+                    return DataTables::of($Funciones)
+                   ->removeColumn('created_at')
+                   ->removeColumn('updated_at')
+                    
+                   ->addIndexColumn()
+                   ->make(true);
+            }
+        }
+        public function NoFuncion(Request $request,$id)
+        {
+            if ($request->ajax() && $request->isMethod('GET')) {
+    
+                    $Funciones = NoFunciones::where('FK_NPRY_IdMctr008', $id)->get();
                     return DataTables::of($Funciones)
                    ->removeColumn('created_at')
                    ->removeColumn('updated_at')
@@ -1966,6 +2057,25 @@ class StudentController extends Controller
     
                 $Funcion -> MCT_Funcion_Nombre = $request['MCT_EDITAR_Funcion_Nombre'];
                 $Funcion -> MCT_Funcion_Funcion = $request['MCT_EDITAR_Funcion_Funcion'];
+                $Funcion -> save();
+    
+                return AjaxResponse::success(
+                    '¡Esta Hecho!',
+                    'Datos Modificados.'
+                );
+              
+           
+                }              
+            
+        }
+        public function EditarNoFuncion(Request $request)
+        {
+            if ($request->ajax() && $request->isMethod('POST')) {
+                
+                $Funcion = NoFunciones::where('PK_Id_No_Funcion',$request['PK_Id_No_Funcion'])->first();
+    
+                $Funcion -> MCT_No_Funcion_Nombre = $request['MCT_EDITAR_No_Funcion_Nombre'];
+                $Funcion -> MCT_No_Funcion_Funcion = $request['MCT_EDITAR_No_Funcion_Funcion'];
                 $Funcion -> save();
     
                 return AjaxResponse::success(

@@ -619,18 +619,34 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'StudentController@FuncionStore',  
 			'as' => 'EstudianteGesap.FuncionStore'
 		]);
+		Route::post('NoFuncionStore', [
+			'uses' => $controller . 'StudentController@NoFuncionStore',  
+			'as' => 'EstudianteGesap.NoFuncionStore'
+		]);
 		
 		Route::post('EditarFuncion', [
 			'uses' => $controller . 'StudentController@EditarFuncion',  
 			'as' => 'EstudianteGesap.EditarFuncion'
 		]);
+		Route::post('EditarNoFuncion', [
+			'uses' => $controller . 'StudentController@EditarNoFuncion',  
+			'as' => 'EstudianteGesap.EditarNoFuncion'
+		]);
 		Route::delete('FuncionDelete/{id?}', [
 			'uses' => $controller . 'StudentController@FuncionDelete',  
 			'as' => 'EstudianteGesap.FuncionDelete'
 		]);
+		Route::delete('NoFuncionDelete/{id?}', [
+			'uses' => $controller . 'StudentController@NoFuncionDelete',  
+			'as' => 'EstudianteGesap.NoFuncionDelete'
+		]);
 		Route::get('Funcion/{id?}', [
 			'uses' => $controller . 'StudentController@Funcion',  
 			'as' => 'EstudianteGesap.Funcion'
+		]);
+		Route::get('NoFuncion/{id?}', [
+			'uses' => $controller . 'StudentController@NoFuncion',  
+			'as' => 'EstudianteGesap.NoFuncion'
 		]);
 		
 		//
@@ -814,6 +830,10 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('Funciones/{id?}', [
 			'uses' => $controller . 'DocenteController@Funcion',  
 			'as' => 'DocenteGesap.Funcion'
+		]);
+		Route::get('NoFunciones/{id?}', [
+			'uses' => $controller . 'DocenteController@NoFuncion',  
+			'as' => 'DocenteGesap.NoFuncion'
 		]);
 		Route::get('VerRequerimientos/{id?}/{idp?}', [
 			'uses' => $controller . 'DocenteController@VerRequerimientos',  

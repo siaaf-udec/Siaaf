@@ -31,6 +31,7 @@ use App\Container\Gesap\src\Estados;
 use App\Container\Gesap\src\Resultados;
 use Illuminate\Support\Facades\Mail;
 use App\Container\Gesap\src\Funciones;
+use App\Container\Gesap\src\NoFunciones;
 use App\Container\Gesap\src\RubroPersonal;
 use App\Container\Gesap\src\RubroEquipos;
 use App\Container\Gesap\src\RubroMaterial;
@@ -1923,6 +1924,19 @@ class DocenteController extends Controller
                ->make(true);
         }
     }
+    public function NoFuncion(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+                $Funciones = NoFunciones::where('FK_NPRY_IdMctr008', $id)->get();
+                return DataTables::of($Funciones)
+               ->removeColumn('created_at')
+               ->removeColumn('updated_at')
+                
+               ->addIndexColumn()
+               ->make(true);
+        }
+    }
     //funcion quedependiendo la actividad($id) redirecciona asu respectiva vista $idp= pk proyecto//
     
     public function VerRequerimientos(Request $request, $id, $idp)
@@ -1948,6 +1962,13 @@ class DocenteController extends Controller
             $act = Mctr008::where('PK_MCT_IdMctr008',$id)->first();
             if($act->MCT_Actividad == "Funciones"){
                 return view($this->path .'VerRequerimientoFunciones',
+                [
+                'datos' => $Actividad,
+                ]);   
+                 
+            }    
+            if($act->MCT_Actividad == "Requerimientos No Funcionales"){
+                return view($this->path .'VerRequerimientoNoFuncional',
                 [
                 'datos' => $Actividad,
                 ]);   
@@ -1998,6 +2019,13 @@ public function RequerimientosJurado(Request $request, $id, $idp,$idNum)
             $Actividad->offsetSet('Proyecto', $idp );
         if($act->MCT_Actividad == "Funciones"){
             return view($this->path .'.Jurado.VerRequerimientoFuncionesJurado',
+            [
+            'datos' => $Actividad,
+            ]);   
+             
+        }    
+        if($act->MCT_Actividad == "Requerimientos No Funcionales"){
+            return view($this->path .'.Jurado.VerRequerimientoNoFuncionesJurado',
             [
             'datos' => $Actividad,
             ]);   
@@ -2333,6 +2361,13 @@ public function RequerimientosJurado(Request $request, $id, $idp,$idNum)
                        $Actividad->offsetSet('Proyecto', $idp );
                        if($act->MCT_Actividad == "Funciones"){
                         return view($this->path .'.Jurado.VerRequerimientoFuncionesJurado',
+                        [
+                        'datos' => $Actividad,
+                        ]);   
+                         
+                    }     
+                    if($act->MCT_Actividad == "Requerimientos No Funcionales"){
+                        return view($this->path .'.Jurado.VerRequerimientoNoFuncionesJurado',
                         [
                         'datos' => $Actividad,
                         ]);   
