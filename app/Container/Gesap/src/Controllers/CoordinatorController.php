@@ -1340,7 +1340,7 @@ class CoordinatorController extends Controller
         );
     }
 
-    	//funcion que redirecciona los datos a la plantilla apra editar anteproyecto
+    	//funcion que redirecciona los datos a la plantilla para editar anteproyecto
 
 	public function EditarAnteproyecto(Request $request, $id)
     {

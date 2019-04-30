@@ -1123,11 +1123,6 @@ public function ReportesEspProyectoPE(Request $request,$id,$id2)
 }
 
 
-    public function descargarReporteAnteproyectos($data)
-    {
-       
-    }
-
 }
 
 

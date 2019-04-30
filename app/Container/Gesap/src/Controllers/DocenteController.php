@@ -313,7 +313,7 @@ class DocenteController extends Controller
         );
     }
 
-    //funcion que trae los proyectos para ser mostrados en el drop dawnlist de solicitudes de docente//
+    //funcion que trae los proyectos para ser mostrados en el drop-down list de solicitudes de docente//
     public function WidgetProyecto(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
