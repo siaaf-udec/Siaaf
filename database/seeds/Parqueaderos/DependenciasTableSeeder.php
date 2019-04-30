@@ -17,7 +17,7 @@ class DependenciasTableSeeder extends Seeder
             [ 'PK_CD_IdDependencia' => '2','CD_Dependencia' => 'Docente' ],
             [ 'PK_CD_IdDependencia' => '3','CD_Dependencia' => 'Externo' ],
             [ 'PK_CD_IdDependencia' => '4','CD_Dependencia' => 'Admin' ],
-            //[ 'PK_CD_IdDependencia' => '5','CD_Dependencia' => 'Ingeniería Agronómica' ],
+            
         ];
 
         foreach ($dependencias as $dependencia ) {
