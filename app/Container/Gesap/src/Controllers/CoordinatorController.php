@@ -1281,7 +1281,8 @@ class CoordinatorController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
             $anteproyecto = Anteproyecto::Where('PK_NPRY_IdMctr008', $request['PK_NPRY_IdMctr008'])->first();
             
-            $anteproyecto -> NPRY_Titulo = $request['NPRY_Titulo']; 
+            $anteproyecto -> NPRY_Titulo = $request['NPRY_Titulo'];
+            $anteproyecto -> NPRY_Semillero = $request['NPRY_Semillero']; 
             $anteproyecto -> NPRY_Keywords = $request['NPRY_Keywords'];
             $anteproyecto -> NPRY_Descripcion = $request['NPRY_Descripcion'];
             $anteproyecto -> NPRY_Duracion = $request['NPRY_Duracion'];
