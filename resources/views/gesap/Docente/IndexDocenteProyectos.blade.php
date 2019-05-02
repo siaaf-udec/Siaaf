@@ -32,6 +32,37 @@
 
 @section('content')
     @permission('GESAP_DOCENTE')
+     <!--MODAL CREAR CALIFICAR-->
+            <!-- Modal -->
+            <div class="modal fade" id="modal-create-decision" tabindex="-1" role="dialog" aria-hidden="true">
+                
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        {!! Form::open(['id' => 'form_create-decision', 'url' => '/forms']) !!}
+
+                        <div class="modal-header modal-header-success">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h1><i class="glyphicon glyphicon-plus"></i> Crear Solicitud</h1>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                   {!! Field:: textArea('AVAL_Coment',null,['label'=>'Comentario:','class'=> 'form-control', 'autofocus','maxlength'=>'1000','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá su comentario para realizar la solicitud','icon'=>'fa fa-book']) !!}
+                                   {!! Field::select('AVAL_Des',['1'=>'AVALADO', '2'=>'SIN AVALAR'],null,['label'=>'DECISIÓN: ']) !!}
+                            
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                
+            </div>
+            <!--MODAL CREAR CALIFICAR-->
      <!--MODAL CREAR COMENTARIO-->
             <!-- Modal -->
             <div class="modal fade" id="modal-create-Solicitud" tabindex="-1" role="dialog" aria-hidden="true">
@@ -469,7 +500,7 @@ jQuery(document).ready(function () {
             
            
             {
-                defaultContent: ' @permission('GESAP_DOCENTE_VER_PRO_DIRECTOR')<a href="javascript:;" title="Ver Actividades" class="btn btn-info VerP" ><i class="icon-eye"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('GESAP_DOCENTE_VER_PRO_DIRECTOR')<a href="javascript:;" title="Ver Actividades" class="btn btn-info VerP" ><i class="icon-eye"></i></a>@endpermission @permission('GESAP_DOCENTE_VER_ANTE_DIRECTOR')<a href="javascript:;" title="Calificar" class="btn btn-success Calificar" ><i class="icon-check"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -486,6 +517,73 @@ jQuery(document).ready(function () {
         
         dataTableServer.init(tablep, urlp, columnsp);
         tablep = tablep.DataTable();
+
+        var id_proyecto = 0 ;
+        tablep.on('click', '.Calificar', function (e) {
+            e.preventDefault();
+            $('#modal-create-decision').modal('toggle');
+            $trp = $(this).closest('tr');
+            var dataTablep = tablep.row($trp).data();
+            id_proyecto = dataTablep.Codigo;
+            
+        });
+        var TomarDesicion = function () {
+                return {
+                    init: function () {
+                        var route = '{{ route('DocenteGesap.CalificarPro') }}';
+                        var type = 'POST';
+                        var async = async || false;
+
+                        var formData = new FormData();      
+                        formData.append('PK_Anteproyecto', id_proyecto);
+                        formData.append('AVAL_Coment', $('#AVAL_Coment').val());
+                        formData.append('AVAL_Des', $('#AVAL_Des').val());
+                        
+
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            data: formData,
+                            processData: false,
+                            async: async,
+                            beforeSend: function () {
+                                App.blockUI({target: '.portlet-form', animate: true});
+                            },
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                   // table.ajax.reload();
+                                    $('#modal-create-decision').modal('hide');
+                                    $('#form_create-decision')[0].reset(); //Limpia formulario
+                                    UIToastr.init(xhr, response.title, response.message);        
+                                    App.unblockUI('.portlet-form');
+                                    
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                   
+                                }
+                            }
+                        });
+                    }
+                }
+            };
+            var form2 = $('#form_create-decision');
+            var rules2 = {
+                AVAL_Coment:{minlength: 1, maxlength: 1000, required: true},
+                AVAL_Des:{required: true},
+           
+             };
+
+
+            FormValidationMd.init(form2, rules2, false, TomarDesicion()); 
+
+        
         
         var tablepr, urlpr, columnspr;
         tablepr = $('#listaProyetoJurado');

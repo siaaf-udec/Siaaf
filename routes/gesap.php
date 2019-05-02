@@ -659,9 +659,17 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'StudentController@Radicar',  
 			'as' => 'EstudianteGesap.RADICAR'
 		]);
+		Route::get('calificar/{id?}', [
+			'uses' => $controller . 'StudentController@Calificar',  
+			'as' => 'EstudianteGesap.CALIFICAR'
+		]);
 		Route::get('RadicarProyecto/{id?}', [
 			'uses' => $controller . 'StudentController@RadicarProyecto',  
 			'as' => 'EstudianteGesap.RADICARPROYECTO'
+		]);
+		Route::get('CalificarProyecto/{id?}', [
+			'uses' => $controller . 'StudentController@CalificarProyecto',  
+			'as' => 'EstudianteGesap.CalificarProyecto'
 		]);
 		Route::post('ActividadStore', [
 			'uses' => $controller . 'StudentController@ActividadStore',  
@@ -805,6 +813,14 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::post('CambiarEstadoJuradoProyecto', [
 			'uses' => $controller . 'DocenteController@CambiarEstadoJuradoProyecto',  
 			'as' => 'DocenteGesap.CambiarEstadoJuradoProyecto'
+		]);
+		Route::post('CalificarAnte', [
+			'uses' => $controller . 'DocenteController@CalificarAnte',  
+			'as' => 'DocenteGesap.CalificarAnte'
+		]);
+		Route::post('CalificarPro', [
+			'uses' => $controller . 'DocenteController@CalificarPro',  
+			'as' => 'DocenteGesap.CalificarPro'
 		]);
 		Route::post('ComentarioStoreJurado', [
 			'uses' => $controller . 'DocenteController@ComentarioStoreJurado',  
