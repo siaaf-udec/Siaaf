@@ -19,7 +19,7 @@
 	.blue{color:#0099CC;}
 
 	h1{color:#037A25; margin-bottom:0; font-weight: Arial;}
-	h2{color:#D2D9D4; margin-bottom:0; font-weight: Arial;}
+	h2{color:#000000; margin-bottom:0; font-weight: Arial;}
 	p{margin-top:0;}
 
 
@@ -53,7 +53,9 @@
     <h1> {{$Ante}}</h1>
     <h2> En el semillero : {{$Semillero}}</h2>
     <h2> Con fecha de radicación {{$Fecha}} </h2>
-	
+		<h2> Recuerde que puede verificar esta información en el siguiente </h2>
+		<a href=" https://cit-udec.com/login">
+		LINK </a>	
 </body>
 </html>
 
