@@ -42,7 +42,7 @@
 
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1><i class="glyphicon glyphicon-plus"></i> Crear Solicitud</h1>
+                            <h1><i class="glyphicon glyphicon-plus"></i> Dar Aval Al Anteproyecto</h1>
                         </div>
                         <div class="modal-body">
                             <div class="row">

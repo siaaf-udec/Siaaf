@@ -932,7 +932,7 @@ class DocenteController extends Controller
             
             return AjaxResponse::success(
                     '¡Esta Hecho!',
-                    'Comentario Enviados.'
+                    'Comentarios Enviados.'
             );
        
             }   
@@ -994,7 +994,7 @@ class DocenteController extends Controller
              
              return AjaxResponse::success(
                      '¡Esta Hecho!',
-                     'Comentario Enviados.'
+                     'Comentarios Enviados.'
              );
         
              }   
