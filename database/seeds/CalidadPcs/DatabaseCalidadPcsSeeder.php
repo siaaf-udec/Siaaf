@@ -21,7 +21,7 @@ class DatabaseCalidadPcsSeeder extends Seeder
      */
     public function run()
     {
-       // $this->call(EtapasCalidadPcsSeeder::class);
+        $this->call(EtapasCalidadPcsSeeder::class);
         $this->call(RolesScrumCalidadPcsSeeder::class);
         $this->call(EstadosSeeder::class);
         $this->call(DependenciasSeeder::class);
