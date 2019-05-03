@@ -440,6 +440,24 @@ class StudentController extends Controller
                         $Anteproyecto -> FK_NPRY_Estado = 3 ;
                         $Anteproyecto->save();
                         $fecha = Carbon::now();
+                        
+                        $jurados = Jurados::where('FK_NPRY_IdMctr008',$id)->get();
+                        foreach ($jurados as $jurado){
+                            $data = array(
+                                'correo'=>$jurado->relacionUsuarios->User_Correo ,
+                                'Proy'=>"Anteproyecto : ".$anteproyecto->NPRY_Titulo,
+                                'fecha'=>$fecha,
+                            );
+                
+                            Mail::send('gesap.Emails.Radicar',$data, function($message) use ($data){
+                                
+                                $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+                
+                                $message->to($data['correo']);
+                
+                            });
+                
+                        }
                         $data = array(
                             'correo'=>$anteproyecto->relacionPredirectores->User_Correo,
                             'Proy'=>"Anteproyecto : ".$anteproyecto->NPRY_Titulo,
@@ -854,7 +872,6 @@ class StudentController extends Controller
             $now = date('Y-d-m');//tomo la fecha de hoy
             $proyecto = Proyecto::where('FK_NPRY_IdMctr008',$id)->first();
             $limit = $proyecto -> PYT_Fecha_Radicacion;
-            if($limit == now()->toDateString()){
                 if($commitsN == $proytN){
 
                         foreach($commits as $commit){
@@ -909,7 +926,7 @@ class StudentController extends Controller
                         
                     
                     }
-            }
+            
           
         }
     }
@@ -1108,13 +1125,7 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
+                    
                 }
                 return AjaxResponse::success(
                 '¡Esta Hecho!',
@@ -1439,13 +1450,7 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
+                  
                     }
                 return AjaxResponse::success(
                     '¡Esta Hecho!',
@@ -1570,13 +1575,7 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
+                       
                            }
                        return AjaxResponse::success(
                            '¡Esta Hecho!',
@@ -1698,13 +1697,7 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
+                     
                            }
                        return AjaxResponse::success(
                            '¡Esta Hecho!',
@@ -1824,13 +1817,7 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
+                     
                            }
                        return AjaxResponse::success(
                            '¡Esta Hecho!',
@@ -1947,13 +1934,7 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
+                      
                            }
                        return AjaxResponse::success(
                            '¡Esta Hecho!',
@@ -2081,13 +2062,6 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
                     }
                     
                 return AjaxResponse::success(
@@ -2131,13 +2105,7 @@ class StudentController extends Controller
                              'usuario'=>$id_name,
                          );
              
-                         Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                             
-                             $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-             
-                             $message->to($data['correo']);
-             
-                         });
+                      
                      }
                      
                  return AjaxResponse::success(
@@ -2276,13 +2244,6 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
                 }
             return AjaxResponse::success(
                 '¡Esta Hecho!',
@@ -2537,13 +2498,7 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
+                      
                 }
                 return AjaxResponse::success(
                 '¡Esta Hecho!',
