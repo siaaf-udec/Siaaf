@@ -85,15 +85,7 @@
                                             class="fa fa-angle-left"></i>
                                     Regresar
                                 </a>@endpermission
-                                @if( $datos['Estado'] == "EN CALIFICACIÓN" )
-                                @permission('GESAP_DOCENTE_APROBAR_ACTIVIDAD')<a href="javascript:;"
-                                                               class="btn btn-warning yellow button-Avalar"><i
-                                ></i>
-                                    Aprobar Actividad
-                                </a>
-                                @endpermission
-                                @endif
-
+                              
                                 
                             </div>
                             

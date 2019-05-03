@@ -159,7 +159,6 @@ $(document).ready(function(){
                         formData.append('FK_User_Codigo', id2);
                         formData.append('OBS_observacion', $('#OBS_observacion').val());
                         formData.append('OBS_Formato', 1);
-                      
 
                         $.ajax({
                             url: route,
@@ -180,7 +179,7 @@ $(document).ready(function(){
                                     $('#from_create-coment')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('DocenteGesap.VerActividadJurado') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('DocenteGesap.VerActividadJurado') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}' + '/'+'{{$datos['Numero']}}';
                                     $(".content-ajax").load(route);
                                 }
                             },
@@ -188,7 +187,7 @@ $(document).ready(function(){
                                 if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('DocenteGesap.VerActividadJurado') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('DocenteGesap.VerActividadJurado') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}' + '/' +'{{$datos['Numero']}}';
                                     $(".content-ajax").load(route);
                                 }
                             }

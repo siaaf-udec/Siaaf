@@ -338,15 +338,6 @@ class StudentController extends Controller
                             'usuario'=>$id_nombre,
                             'Fecha'=> $request['OBS_Limit'],
                         );
-            
-                        Mail::send('gesap.Emails.ActComentstu',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
-            
                     
                 return AjaxResponse::success(
                     '¡Esta Hecho!',
@@ -449,6 +440,24 @@ class StudentController extends Controller
                         $Anteproyecto -> FK_NPRY_Estado = 3 ;
                         $Anteproyecto->save();
                         $fecha = Carbon::now();
+                        
+                        $jurados = Jurados::where('FK_NPRY_IdMctr008',$id)->get();
+                        foreach ($jurados as $jurado){
+                            $data = array(
+                                'correo'=>$jurado->relacionUsuarios->User_Correo ,
+                                'Proy'=>"Anteproyecto : ".$anteproyecto->NPRY_Titulo,
+                                'fecha'=>$fecha,
+                            );
+                
+                            Mail::send('gesap.Emails.Radicar',$data, function($message) use ($data){
+                                
+                                $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+                
+                                $message->to($data['correo']);
+                
+                            });
+                
+                        }
                         $data = array(
                             'correo'=>$anteproyecto->relacionPredirectores->User_Correo,
                             'Proy'=>"Anteproyecto : ".$anteproyecto->NPRY_Titulo,
@@ -511,6 +520,80 @@ class StudentController extends Controller
             }              
         
     }
+    //funcion para enviar las actividades al director para asi que el de el aval al anteproyecto
+    public function Calificar(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+            $commits = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato',1)->get();//miro los comits que se han hecho de Anteproyecto
+            $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
+            $limit = $anteproyecto  -> NPRY_FCH_Radicacion;
+            $mct = Mctr008::where('FK_Id_Formato','!=',3)->get();//miro la cantidad de actividades qeu hay en el mct
+            
+            $commitsN = $commits->count();
+            $mctN = $mct->count();
+            $N = 0;
+            $now = date('Y-d-m');
+            
+                if($commitsN == $mctN){
+
+                    foreach($commits as $commit){
+                        $numero = $commit-> FK_CHK_Checklist;
+                        if($numero == 2){
+                            $N = $N +  1 ;
+                        }
+                    }
+                    $resultado = $mctN - $N ;
+                   
+                        $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008',$id)->first();
+                        $estado = $Anteproyecto -> FK_NPRY_Estado;
+                        if($estado == 3){
+                            $IdError = 422;
+                            return AjaxResponse::success(
+                                '¡Lo sentimos!',
+                                'El Anteproyecto Ya esta radicado.',
+                                $IdError
+                            );
+                        }else{
+                        $fecha = Carbon::now();
+                        $data = array(
+                            'correo'=>$anteproyecto->relacionPredirectores->User_Correo,
+                            'Proy'=>"Anteproyecto : ".$anteproyecto->NPRY_Titulo,
+                            'fecha'=>$fecha,
+                        );
+            
+                        Mail::send('gesap.Emails.Calificar',$data, function($message) use ($data){
+                            
+                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+            
+                            $message->to($data['correo']);
+            
+                        });
+            
+                        return AjaxResponse::success(
+                            '¡Esta Hecho!',
+                            'Anteproyecto Enviado Para Su Calificación.'
+                        );
+                    }
+
+
+                }else{
+
+                    $IdError = 422;
+                    return AjaxResponse::success(
+                        '¡Lo sentimos!',
+                        'No se han subido todas las Actividades Correspondientes.',
+                        $IdError
+                    );
+                
+            
+        }
+      
+       
+            }              
+        
+    }
+   
     //cargar la decision de los jurados a los estudiantes///
     public function ListComentariosJuradoAnteproyecto(Request $request, $id)
     {
@@ -775,6 +858,78 @@ class StudentController extends Controller
         
         }
     }
+    //funcion que envia a calificar el proyecto pro el docente
+    public function CalificarProyecto(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+            $commits = Commits::where('FK_NPRY_IdMctr008',$id)->where('CMMT_Formato',3)->get();//miro los comits que se han hecho de proyecto
+            $proyt = Mctr008::where('FK_Id_Formato',3)->get();//miro la cantidad de actividades para proyecto
+
+            $commitsN = $commits->count();//cuento los commits hechos
+            $proytN = $proyt->count();//cuento las actvidades
+            $N = 0; 
+            $now = date('Y-d-m');//tomo la fecha de hoy
+            $proyecto = Proyecto::where('FK_NPRY_IdMctr008',$id)->first();
+            $limit = $proyecto -> PYT_Fecha_Radicacion;
+                if($commitsN == $proytN){
+
+                        foreach($commits as $commit){
+                            $numero = $commit-> FK_CHK_Checklist;
+                            if($numero == 2){
+                                $N = $N +  1 ;
+                            }
+                        }
+                      
+                                $proyecto = Proyecto::where('FK_NPRY_IdMctr008',$id)->first();
+                                $estado = $proyecto -> FK_EST_Id;
+                                if($estado == 3){
+                                    $IdError = 422;
+                                    return AjaxResponse::success(
+                                        '¡Lo sentimos!',
+                                        'El Proyecto Ya esta radicado.',
+                                        $IdError
+                                    );
+                                }else{
+                                   
+                                    $fecha = Carbon::now();
+                                    $data = array(
+                                        'correo'=>$proyecto->relacionAnteproyecto->relacionPredirectores->User_Correo,
+                                        'Proy'=>"Proyecto : ".$proyecto->relacionAnteproyecto->NPRY_Titulo,
+                                        'fecha'=>$fecha,
+                                    );
+                        
+                                    Mail::send('gesap.Emails.Calificar',$data, function($message) use ($data){
+                                        
+                                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+                        
+                                        $message->to($data['correo']);
+                        
+                                    });
+                        
+                                    return AjaxResponse::success(
+                                        '¡Esta Hecho!',
+                                        'Proyecto Enviado para calificar.'
+                                    );
+                                }
+
+                        
+
+                    }else{
+
+                        $IdError = 422;
+                        return AjaxResponse::success(
+                            '¡Lo sentimos!',
+                            'No se han subido todas las Actividades Correspondientes Del Proyecto.',
+                            $IdError
+                        );
+                        
+                    
+                    }
+            
+          
+        }
+    }
 //funcion para subir una actividad rol estudiante///
     public function ActividadStore(Request $request)
     {
@@ -804,13 +959,7 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
+                     
             
            
                 return AjaxResponse::success(
@@ -890,13 +1039,7 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
 
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-
-                            $message->to($data['correo']);
-
-                        });
+                     
 
                 return AjaxResponse::success(
                     '¡Esta Hecho!',
@@ -982,13 +1125,7 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
+                    
                 }
                 return AjaxResponse::success(
                 '¡Esta Hecho!',
@@ -1313,13 +1450,7 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
+                  
                     }
                 return AjaxResponse::success(
                     '¡Esta Hecho!',
@@ -1444,13 +1575,7 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
+                       
                            }
                        return AjaxResponse::success(
                            '¡Esta Hecho!',
@@ -1572,13 +1697,7 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
+                     
                            }
                        return AjaxResponse::success(
                            '¡Esta Hecho!',
@@ -1698,13 +1817,7 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
+                     
                            }
                        return AjaxResponse::success(
                            '¡Esta Hecho!',
@@ -1821,13 +1934,7 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
+                      
                            }
                        return AjaxResponse::success(
                            '¡Esta Hecho!',
@@ -1955,13 +2062,6 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
                     }
                     
                 return AjaxResponse::success(
@@ -2005,13 +2105,7 @@ class StudentController extends Controller
                              'usuario'=>$id_name,
                          );
              
-                         Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                             
-                             $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-             
-                             $message->to($data['correo']);
-             
-                         });
+                      
                      }
                      
                  return AjaxResponse::success(
@@ -2150,13 +2244,6 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
                 }
             return AjaxResponse::success(
                 '¡Esta Hecho!',
@@ -2411,13 +2498,7 @@ class StudentController extends Controller
                             'usuario'=>$id_name,
                         );
             
-                        Mail::send('gesap.Emails.SubirAct',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
+                      
                 }
                 return AjaxResponse::success(
                 '¡Esta Hecho!',

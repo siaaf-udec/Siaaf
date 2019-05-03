@@ -187,8 +187,8 @@ $(document).ready(function(){
                                     $('#modal-create-coment').modal('hide');
                                     $('#from_create-coment')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
-                                    App.unblockUI('.portlet-form');
-                                    var route = '{{ route('DocenteGesap.RequerimientosJurado') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    App.unblockUI('.portlet-form'); 
+                                    var route = '{{ route('DocenteGesap.RequerimientosJurado') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}'  + '/'+'{{$datos['Numero']}}';
                                     $(".content-ajax").load(route);
                                 }
                             },
@@ -196,7 +196,7 @@ $(document).ready(function(){
                                 if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('DocenteGesap.RequerimientosJurado') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('DocenteGesap.RequerimientosJurado') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}'  + '/'+'{{$datos['Numero']}}';
                                     $(".content-ajax").load(route);
                                 }
                             }

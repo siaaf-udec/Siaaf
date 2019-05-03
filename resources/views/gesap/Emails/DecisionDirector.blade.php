@@ -49,12 +49,13 @@
 
 
 	<h1 class="features">NOTIFICACIÓN (GESAP)</h1>
-    <h2>Se le informa que fue asignado como Desarrollador del Anteproyecto :</h2>
-    <h1> {{$Ante}}</h1>
-    <h2> Ya puede subir sus adelantos del MCT.! </h2>
-		<h2> Recuerde que puede verificar esta información en el siguiente </h2>
-		<a href=" https://cit-udec.com/login">
-		LINK </a>	
+    <h2>Se le Informa que el director ya tomo una desición acerca </h2>
+    <h2>{{$Ante}}</h2>
+    <h2>{{$Mensaje}}<h2>
+    <h2>{{$Comentario}}<h2>
+    <h2> Recuerde que puede verificar esta información en el siguiente </h2>
+	<a href=" https://cit-udec.com/login">
+	LINK </a>	
 </body>
 </html>
 

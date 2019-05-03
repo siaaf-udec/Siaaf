@@ -402,6 +402,63 @@
                 });
 
         });
+        table.on('click', '.Radicar', function (e) {
+      
+      e.preventDefault();
+      $tr = $(this).closest('tr');
+      var dataTable = table.row($tr).data();
+      var route = '{{ route('EstudianteGesap.RADICAR') }}'+'/'+dataTable.PK_NPRY_IdMctr008;
+      var type = 'GET';
+      var async = async || false;
+      swal({
+              title: "¿Está seguro?",
+              text: "¿Está seguro que desea enviar a calificar el anteproyecto?",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "De acuerdo",
+              cancelButtonText: "Cancelar",
+              closeOnConfirm: true,
+              closeOnCancel: false
+          },
+          function (isConfirm) {
+              if (isConfirm) {
+                  $.ajax({
+                      url: route,
+                      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                      cache: false,
+                      type: type,
+                      contentType: false,
+                      processData: false,
+                      async: async,
+                        success: function (response, xhr, request) {
+                                  console.log(response);
+                                  if (request.status === 200 && xhr === 'success') {
+                                      if (response.data == 422) {
+                                          xhr = "warning"
+                                          UIToastr.init(xhr, response.title, response.message);
+                                          App.unblockUI('.portlet-form');
+                                         
+                                      } else {
+                                          table.ajax.reload();
+                                          UIToastr.init(xhr, response.title, response.message);
+                     
+                                          }
+                                  }
+                  },
+                  error: function (response, xhr, request) {
+                                  if (request.status === 422 && xhr === 'error') {
+                                      UIToastr.init(xhr, response.title, response.message);
+                                  }
+                  }
+                          
+                  });
+              } else {
+                  swal("Cancelado", "No se radico el anteproyecto", "error");
+              }
+          });
+
+  });
         var tablep, urlp, columnsp;
         tablep = $('#listaProyecto');
         idp = 123456189 ;
@@ -415,7 +472,7 @@
             {data: 'Fecha', name: 'Fecha'},
       
             {
-                defaultContent: ' @permission('GESAP_STUDENT_FOLDER')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('GESAP_STUDENT_RADICAR')<a href="javascript:;" title="Radicar" class="btn btn-success RadicarP" ><i class="icon-check"></i></a>@endpermission @permission('GESAP_STUDENT_VER_COMENTARIO_JURADO')<a href="javascript:;" title="Ver Comentarios de los Jurados" class="btn btn-success Ver" ><i class="icon-eye"></i></a>@endpermission' ,
+                defaultContent: ' @permission('GESAP_STUDENT_FOLDER')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('GESAP_STUDENT_RADICAR')<a href="javascript:;" title="Radicar" class="btn btn-success RadicarP" ><i class="icon-check"></i></a>@endpermission @permission('GESAP_STUDENT_RADICAR')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-check"></i></a>@endpermission @permission('GESAP_STUDENT_VER_COMENTARIO_JURADO')<a href="javascript:;" title="Ver Comentarios de los Jurados" class="btn btn-success Ver" ><i class="icon-eye"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -552,8 +609,66 @@
 
 
             FormValidationMd.init(form1, rules1, false, CrearSolicitud()); 
+            
+    tablep.on('click', '.Calificar', function (e) {
+      
+      e.preventDefault();
+      $tr = $(this).closest('tr');
+      var dataTable = tablep.row($tr).data();
+      var route = '{{ route('EstudianteGesap.CalificarProyecto') }}'+'/'+dataTable.Codigo;
+      var type = 'GET';
+      var async = async || false;
+      swal({
+              title: "¿Está seguro?",
+              text: "¿Está seguro que enviar para calificar el Proyecto?",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "De acuerdo",
+              cancelButtonText: "Cancelar",
+              closeOnConfirm: true,
+              closeOnCancel: false
+          },
+          function (isConfirm) {
+              if (isConfirm) {
+                  $.ajax({
+                      url: route,
+                      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                      cache: false,
+                      type: type,
+                      contentType: false,
+                      processData: false,
+                      async: async,
+                        success: function (response, xhr, request) {
+                                  console.log(response);
+                                  if (request.status === 200 && xhr === 'success') {
+                                      if (response.data == 422) {
+                                          xhr = "warning"
+                                          UIToastr.init(xhr, response.title, response.message);
+                                          App.unblockUI('.portlet-form');
+                                         
+                                      } else {
+                                          table.ajax.reload();
+                                          UIToastr.init(xhr, response.title, response.message);
+                     
+                                          }
+                                  }
+                  },
+                  error: function (response, xhr, request) {
+                                  if (request.status === 422 && xhr === 'error') {
+                                      UIToastr.init(xhr, response.title, response.message);
+                                  }
+                  }
+                          
+                  });
+              } else {
+                  swal("Cancelado", "No se envio para calificar el Proyecto", "error");
+              }
+          });
 
-        $('.mygestionar').on('click', function (e) {
+  });
+
+     $('.mygestionar').on('click', function (e) {
                 e.preventDefault();
                 $('#modal-ver-Solicitud').modal('toggle');
         });

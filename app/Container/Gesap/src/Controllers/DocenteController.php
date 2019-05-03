@@ -866,13 +866,7 @@ class DocenteController extends Controller
                             'Fecha'=> $request['OBS_Limit'],
                         );
             
-                        Mail::send('gesap.Emails.ActComent',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
+                    
             
                     }
                 return AjaxResponse::success(
@@ -883,6 +877,130 @@ class DocenteController extends Controller
             }              
         
     }
+    //funcion para enviar dar calificacion del anteproyecto de grado
+    public function CalificarAnte(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $user = Auth::user();
+            $id = $user->identity_no;
+            if($request['AVAL_Des'] == 1){
+                $Commits = Commits::where('FK_NPRY_IdMctr008',$request['PK_Anteproyecto'])->get();
+                foreach($Commits as $commit){
+                    $commit ->FK_CHK_CheckList = 2;
+                    $commit->save();
+                }
+                
+                $desarrolladores = Desarrolladores::where('Fk_NPRY_IdMctr008',$request['PK_Anteproyecto'])->get();
+                foreach($desarrolladores as $desarrollador){
+                    $data = array(
+                        'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                        'Ante'=>"del Anteproyecto : ".$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                        'Mensaje'=>"Su Anteproyecto Ha sido AVALADO",
+                        'Comentario'=>$request['AVAL_Coment'],
+                    );
+        
+                    Mail::send('gesap.Emails.DecisionDirector',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+        
+                        $message->to($data['correo']);
+        
+                    });
+                
+                }
+               }else{
+
+                $desarrolladores = Desarrolladores::where('Fk_NPRY_IdMctr008',$request['PK_Anteproyecto'])->get();
+                foreach($desarrolladores as $desarrollador){
+                    $data = array(
+                        'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                        'Ante'=>"del Anteproyecto : ".$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                        'Mensaje'=>"Su Anteproyecto NO Ha sido AVALADO",
+                        'Comentario'=>$request['AVAL_Coment'],
+                    );
+        
+                    Mail::send('gesap.Emails.DecisionDirector',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+        
+                        $message->to($data['correo']);
+        
+                    });
+                
+                }
+            }
+            
+            return AjaxResponse::success(
+                    '¡Esta Hecho!',
+                    'Comentarios Enviados.'
+            );
+       
+            }   
+                       
+        
+    }
+     //funcion para enviar dar calificacion del proyecto de grado
+     public function CalificarPro(Request $request)
+     {
+         if ($request->ajax() && $request->isMethod('POST')) {
+             $user = Auth::user();
+             $id = $user->identity_no;
+             if($request['AVAL_Des'] == 1){
+                 $Commits = Commits::where('FK_NPRY_IdMctr008',$request['PK_Anteproyecto'])->get();
+                 foreach($Commits as $commit){
+                     $commit ->FK_CHK_CheckList = 2;
+                     $commit->save();
+                 }
+                 
+                 $desarrolladores = Desarrolladores::where('Fk_NPRY_IdMctr008',$request['PK_Anteproyecto'])->get();
+                 foreach($desarrolladores as $desarrollador){
+                     $data = array(
+                         'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                         'Ante'=>"del Proyecto : ".$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                         'Mensaje'=>"Su Anteproyecto Ha sido AVALADO",
+                         'Comentario'=>$request['AVAL_Coment'],
+                     );
+         
+                     Mail::send('gesap.Emails.DecisionDirector',$data, function($message) use ($data){
+                         
+                         $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+         
+                         $message->to($data['correo']);
+         
+                     });
+                 
+                 }
+                }else{
+ 
+                 $desarrolladores = Desarrolladores::where('Fk_NPRY_IdMctr008',$request['PK_Anteproyecto'])->get();
+                 foreach($desarrolladores as $desarrollador){
+                     $data = array(
+                         'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                         'Ante'=>"del Proyecto : ".$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                         'Mensaje'=>"Su Anteproyecto NO Ha sido AVALADO",
+                         'Comentario'=>$request['AVAL_Coment'],
+                     );
+         
+                     Mail::send('gesap.Emails.DecisionDirector',$data, function($message) use ($data){
+                         
+                         $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+         
+                         $message->to($data['correo']);
+         
+                     });
+                 
+                 }
+             }
+             
+             return AjaxResponse::success(
+                     '¡Esta Hecho!',
+                     'Comentarios Enviados.'
+             );
+        
+             }   
+                        
+         
+     }
     //funcion para guardar el comentaro del anteproyecto del jurado
     public function ComentarioStoreJurado(Request $request)
     {
