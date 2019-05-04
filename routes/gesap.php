@@ -906,7 +906,7 @@ Route::group(['middleware' => ['auth']], function () {
 			'as' => 'DocenteGesap.VerAnteproyectoJurado'
 		]);
 		Route::get('AnteproyectoList/{id?}', [
-			'uses' => $controller . 'DocenteController@Anteproyectolist',  
+			'uses' => $controller . 'DocenteController@AnteproyectoList',  
 			'as' => 'DocenteGesap.Anteproyectolist'
 		]);
 		Route::get('AnteproyectoListJurado/{id?}', [

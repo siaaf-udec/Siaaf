@@ -110,6 +110,7 @@ class DocenteController extends Controller
                 
                 $anteproyecto->offsetSet('Desarrolladores',  $desarrolladorP );
             }
+            $desarrolladorP = "";
            }
 
                return DataTables::of($anteproyectos)
