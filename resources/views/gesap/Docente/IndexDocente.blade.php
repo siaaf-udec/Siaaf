@@ -418,7 +418,6 @@ jQuery(document).ready(function () {
             {data: 'NPRY_Keywords', name: 'NPRY_Keywords'},
             {data: 'NPRY_Descripcion', name: 'NPRY_Descripcion'},
             {data: 'NPRY_Duracion', name: 'NPRY_Duracion'},
-           
             {data: 'Estado', name: 'Estado'},
             {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
             {data: 'Desarrolladores', name: 'Desarrolladores'},

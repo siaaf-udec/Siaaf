@@ -362,29 +362,35 @@ class StudentController extends Controller
             }else{
             $Anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $desarrollador[0]->FK_NPRY_IdMctr008)->get();
             $Proyecto = Proyecto::where('FK_NPRY_IdMctr008', $desarrollador[0]->FK_NPRY_IdMctr008)->first();
-            $now = date('Y-m-d');
-            $fechaactual = Carbon::now()->format('Y-m-d');
-            
-            $fecharadicacion = Carbon::parse($Proyecto ->PYT_Fecha_Radicacion );
-            $fechahoy = Carbon::parse($fechaactual);
-            $diasDiferencia = $fechahoy->diffInWeeks($fecharadicacion);
-            $Anteproyecto[0] -> offsetSet('semana', $diasDiferencia);
-            $Actividades = "";
-            $Cronograma = Cronograma::where('FK_NPRY_IdMctr008', $desarrollador[0]->FK_NPRY_IdMctr008)->get();
-            $i = 0;
-            foreach($Cronograma as $crono){
-                $inicio = $crono->MCT_CRN_Semana_Inicio;
-                $fin =  $crono->MCT_CRN_Semana_Fin;
-                if($diasDiferencia >= $inicio && $diasDiferencia <= $fin ){
-                    if($i == 0){
-                        $Actividades = $Actividades."-".$crono->MCT_CRN_Actividad;
-                    }else{
-                        $Actividades = $Actividades.",".$crono->MCT_CRN_Actividad;
-                    }
-                }
+            if($Proyecto == null){
+                $Anteproyecto[0] -> offsetSet('semana','No Aplica');
+                $Anteproyecto[0] -> offsetSet('actividades','No Aplica');
+            }else{
                 
+                $now = date('Y-m-d');
+                $fechaactual = Carbon::now()->format('Y-m-d');
+                
+                $fecharadicacion = Carbon::parse($Proyecto ->PYT_Fecha_Radicacion );
+                $fechahoy = Carbon::parse($fechaactual);
+                $diasDiferencia = $fechahoy->diffInWeeks($fecharadicacion);
+                $Anteproyecto[0] -> offsetSet('semana', $diasDiferencia);
+                $Actividades = "";
+                $Cronograma = Cronograma::where('FK_NPRY_IdMctr008', $desarrollador[0]->FK_NPRY_IdMctr008)->get();
+                $i = 0;
+                foreach($Cronograma as $crono){
+                    $inicio = $crono->MCT_CRN_Semana_Inicio;
+                    $fin =  $crono->MCT_CRN_Semana_Fin;
+                    if($diasDiferencia >= $inicio && $diasDiferencia <= $fin ){
+                        if($i == 0){
+                            $Actividades = $Actividades."-".$crono->MCT_CRN_Actividad;
+                        }else{
+                            $Actividades = $Actividades.",".$crono->MCT_CRN_Actividad;
+                        }
+                    }
+                    
+                }
+                $Anteproyecto[0] -> offsetSet('actividades', $Actividades);
             }
-            $Anteproyecto[0] -> offsetSet('actividades', $Actividades);
         }
             
             return DataTables::of($Anteproyecto)
