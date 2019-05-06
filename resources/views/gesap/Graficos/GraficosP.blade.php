@@ -124,6 +124,35 @@
         <div id="piechart_3d" style="width: 900px; height: 500px;"></div>
       </body>
     </html>
+
+   <!---grafica 4-->
+   <html>
+      <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load("current", {packages:["corechart"]});
+          google.charts.setOnLoadCallback(drawChart);
+          function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+              ['Docente', 'Anteproyecto'],
+            @foreach($datos4 as $datosa)
+              ['<?php echo $datosa['Nombre']?>',<?php echo $datosa['Numero']?>],
+            @endforeach
+            ]);
+
+            var options = {
+              title: 'Carga de Asignaciónes de Proyectos como Jurados(Activos)',
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart_3d2'));
+            chart.draw(data, options);
+          }
+        </script>
+      </head>
+      <body>
+        <div id="piechart_3d2" style="width: 900px; height: 500px;"></div>
+      </body>
+    </html>
         @endcomponent
     </div>
     @endpermission

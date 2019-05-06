@@ -25,9 +25,9 @@
                         @slot('columns', [
                             '#',
                             'Actividad',
-                            'Descripcion',
+                            'Descripción',
                             'CheckList',
-                            'Acciones'
+                            'Acciónes'
                         ])
                     @endcomponent
           

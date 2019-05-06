@@ -1121,7 +1121,6 @@ public function ReportesEspProyectoPE(Request $request,$id,$id2)
     }
 }
 
-
 }
 
 

@@ -20,7 +20,7 @@
                             {!! Field:: text('NPRY_Keywords',$infoAnte[0]['NPRY_Keywords'],['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control','maxlength'=>'500', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
 
-                            {!! Field:: text('NPRY_Descripcion',$infoAnte[0]['NPRY_Descripcion'],['label'=>'DESCRIPCION:', 'class'=> 'form-control', 'autofocus','maxlength'=>'1000','autocomplete'=>'off'],
+                            {!! Field:: text('NPRY_Descripcion',$infoAnte[0]['NPRY_Descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'1000','autocomplete'=>'off'],
                                                              ['help' => 'Digite una breve descripción del proyecto.','icon'=>'fa fa-book'] ) !!}
 
                             {!! Field:: text('NPRY_Duracion',$infoAnte[0]['NPRY_Duracion'],['label'=>'DURACIÓN:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
