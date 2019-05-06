@@ -336,6 +336,11 @@ Route::group(['middleware' => ['auth']], function () {
 			'uses' => $controller . 'CoordinatorController@eliminarUser', 
 			'as' => 'Usuarios.destroy'
 		]);
+		
+		Route::get('habilitar/{id?}', [
+			'uses' => $controller . 'CoordinatorController@HabilitarUsuario', 
+			'as' => 'Usuarios.Habilitar'
+		]);
 
 		Route::get('editar/{id?}', [
 			'uses' => $controller . 'CoordinatorController@editarUser',     

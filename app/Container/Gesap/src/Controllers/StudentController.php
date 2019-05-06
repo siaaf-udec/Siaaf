@@ -814,6 +814,23 @@ class StudentController extends Controller
                                         $message->to($data['correo']);
                         
                                     });
+                                    $jurados = Jurados::where('FK_NPRY_IdMctr008',$id)->get();
+                                    foreach($jurados as $jurado){
+                                        $data = array(
+                                            'correo'=>$jurado->relacionUsuarios->User_Correo,
+                                            'Proy'=>"Proyecto : ".$proyecto->relacionAnteproyecto->NPRY_Titulo,
+                                            'fecha'=>$fecha,
+                                        );
+                            
+                                        Mail::send('gesap.Emails.Radicar',$data, function($message) use ($data){
+                                            
+                                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+                            
+                                            $message->to($data['correo']);
+                            
+                                        });
+                                            
+                                    }
                         
                                     return AjaxResponse::success(
                                         '¡Esta Hecho!',
@@ -2540,6 +2557,9 @@ class StudentController extends Controller
             $Anteproyecto = Desarrolladores::where('FK_User_Codigo',$id)->get(); 
             $i = 0 ;
             $concatenado=[];
+       $usuario = Usuarios::where('PK_User_Codigo',$id)->first();
+                if($usuario->FK_User_IdEstado == 1){
+
        
                 foreach($Anteproyecto as $Ante){
 
@@ -2560,6 +2580,9 @@ class StudentController extends Controller
                    
                     }
                     
+                }
+            }else{
+                    $concatenado=[];  
                 }
 
           
@@ -2604,6 +2627,8 @@ class StudentController extends Controller
             $i=0;
             $Desarrollos=Desarrolladores::where('FK_User_Codigo', $id)->get();
             $concatenado=[];
+            $usuario = Usuarios::where('PK_User_Codigo',$id)->first();
+        if($usuario->FK_User_IdEstado == 1){
             foreach($Desarrollos as $Desarrollo){
                 
                 if($Desarrollo -> relacionAnteproyecto->FK_NPRY_Estado != 1 && $Desarrollo -> relacionAnteproyecto->FK_NPRY_Estado != 7 ){
@@ -2622,7 +2647,9 @@ class StudentController extends Controller
                 }
                 
             }
-        
+        }else{
+            $concatenado=[];
+        }        
             return DataTables::of($concatenado)
             ->removeColumn('created_at')
             ->removeColumn('updated_at')

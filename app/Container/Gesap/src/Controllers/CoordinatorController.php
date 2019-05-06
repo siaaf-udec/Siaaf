@@ -494,6 +494,25 @@ class CoordinatorController extends Controller
         );
         
     }
+    //funcion que habilita un usuario si esta deshabilitado ///
+    public function HabilitarUsuario(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $user=Usuarios::where('PK_User_Codigo',$id)->first();
+            $user->FK_User_IdEstado =1;
+            $user->save();
+        return AjaxResponse::success(
+            '¡Bien hecho!',
+            'Usuario Habilitado Correctamente.'
+        );
+    }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+        
+    }
     /// funcion que cancela el proyecto////
     public function CancelarProyecto(Request $request, $id)
     {
