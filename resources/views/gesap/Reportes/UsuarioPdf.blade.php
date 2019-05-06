@@ -120,6 +120,7 @@
             <th class="line"><b>Anteproyecto</b></th>
             <th class="line"><b>Pre Director</b></th>
             <th class="line"><b>Estado</b></th>
+            <th class="line"><b>Estado A/I</b></th>
         </tr>
         </thead>
         @foreach($desarrollador as $desarrollo)
@@ -128,6 +129,7 @@
                 <td class="line">{{$desarrollo->Ante}}</td>
                 <td class="line">{{$desarrollo->AntePreDirec}}</td>
                 <td class="line">{{$desarrollo->AnteEstado}}</td>
+                <td class="line">{{$desarrollo->EstadoA}}</td>
               
             </tr>
             @endforeach
@@ -141,6 +143,7 @@
             <th class="line"><b>Proyecto</b></th>
             <th class="line"><b>Director</b></th>
             <th class="line"><b>Estado</b></th>
+            <th class="line"><b>Estado A/I</b></th>
         </tr>
         </thead>
         @foreach($desarrollador as $desarrollo)
@@ -149,6 +152,7 @@
                 <td class="line">{{$desarrollo->Proy}}</td>
                 <td class="line">{{$desarrollo->Direc}}</td>
                 <td class="line">{{$desarrollo->ProyEstado}}</td>
+                <td class="line">{{$desarrollo->EstadoA}}</td>
               
             </tr>
             @endforeach
@@ -167,6 +171,7 @@
             <th class="line"><b>Titulo</b></th>
             <th class="line"><b>Estado</b></th>
             <th class="line"><b>Desarrolladores</b></th>
+            <th class="line"><b>Estado A/I</b></th>
         </tr>
         </thead>
         @foreach($director as $direc)
@@ -175,6 +180,7 @@
                 <td class="line">{{$direc->NPRY_Titulo}}</td>
                 <td class="line">{{$direc->AnteEstado}}</td>
                 <td class="line">{{$direc->AnteDesarrolladores}}</td>
+                <td class="line">{{$direc->EstadoA}}</td>
               
             </tr>
         @endforeach
@@ -188,6 +194,7 @@
             <th class="line"><b>Titulo</b></th>
             <th class="line"><b>Estado</b></th>
             <th class="line"><b>Desarrolladores</b></th>
+            <th class="line"><b>Estado A/I</b></th>
         </tr>
         </thead>
         @foreach($Proydirector as $proydirec)
@@ -196,6 +203,7 @@
                 <td class="line">{{$proydirec->Titulo}}</td>
                 <td class="line">{{$proydirec->EstadoProy}}</td>
                 <td class="line">{{$proydirec->ProyDesarrolladores}}</td>
+                <td class="line">{{$proydirec->EstadoA}}</td>
               
             </tr>
  
@@ -211,6 +219,7 @@
             <th class="line"><b>Estado Anteproyecto</b></th>
             <th class="line"><b>Desarrolladores</b></th>
             <th class="line"><b>Decisión Jurado</b></th>
+            <th class="line"><b>Estado A/I</b></th>
         </tr>
         </thead>
         @foreach($juradosante as $juradosant)
@@ -220,6 +229,7 @@
                 <td class="line">{{$juradosant->Estado}}</td>
                 <td class="line">{{$juradosant->Desarrolladores}}</td>
                 <td class="line">{{$juradosant->EstadoJur}}</td>
+                <td class="line">{{$juradosant->EstadoA}}</td>
               
             </tr>
  
@@ -235,6 +245,7 @@
             <th class="line"><b>Estado Anteproyecto</b></th>
             <th class="line"><b>Desarrolladores</b></th>
             <th class="line"><b>Decisión Jurado</b></th>
+            <th class="line"><b>Estado A/I</b></th>
         </tr>
         </thead>
         @foreach($juradosproy as $juradospro)
@@ -244,6 +255,7 @@
                 <td class="line">{{$juradospro->Estado}}</td>
                 <td class="line">{{$juradospro->Desarrolladores}}</td>
                 <td class="line">{{$juradospro->EstadoJur}}</td>
+                <td class="line">{{$juradospro->EstadoA}}</td>
               
             </tr>
  

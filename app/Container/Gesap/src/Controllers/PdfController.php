@@ -63,7 +63,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 class PdfController extends Controller
 {
     private $path = 'gesap.Reportes.';
-    //Esta Función Genera la informacion para lelnar los reportes generales de anteproyectos de grado.
+    //Esta Función Genera la informacion para llenar los reportes generales de anteproyectos de grado.
     public function reporteAnteproyectos(Request $request,$id)
     {
         if($request->isMethod('GET')){
@@ -389,6 +389,11 @@ class PdfController extends Controller
                 foreach($director as $direc){
                     $direc->offsetSet('AnteEstado', $direc->relacionEstado->EST_Estado);
                     $direc->offsetSet('Titulo', $direc->NPRY_Titulo);
+                    if($direc->NPRY_Ante_Estado == 1){
+                        $direc->offsetSet('EstadoA','Activo');
+                    }else{
+                        $direc->offsetSet('EstadoA','Inactivo');
+                    }
                     $j=0;
                     $desarrolladorP="";
                     $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$direc->PK_NPRY_IdMctr008)->get();
@@ -413,6 +418,11 @@ class PdfController extends Controller
                 foreach($Proydirector as $proydirec){
                     $proydirec->offsetSet('Titulo',$proydirec->relacionAnteproyecto->NPRY_Titulo);
                     $proydirec->offsetSet('EstadoProy',$proydirec->relacionEstado->EST_Estado);
+                    if($proydirec->NPRY_Pro_Estado == 1){
+                        $proydirec->offsetSet('EstadoA','Activo');
+                    }else{
+                        $proydirec->offsetSet('EstadoA','Inactivo');
+                    }
                     $jj=0;
                     $desarrolladorProy="";
                     $desarrolladoresProyecto = Desarrolladores::where('FK_NPRY_IdMctr008',$proydirec->FK_NPRY_IdMctr008)->get();
@@ -438,7 +448,11 @@ class PdfController extends Controller
                     $juradoante->offsetSet('Titulo', $juradoante->relacionAnteproyecto->NPRY_Titulo );
                     $juradoante->offsetSet('Estado',$juradoante->relacionAnteproyecto->relacionEstado->EST_Estado );
                     $juradoante->offsetSet('EstadoJur',$juradoante->relacionEstado->EST_Estado );
-
+                    if($juradoante->relacionAnteproyecto->NPRY_Ante_Estado == 1){
+                        $juradoante->offsetSet('EstadoA','Activo');
+                    }else{
+                        $juradoante->offsetSet('EstadoA','Inactivo');
+                    }
                     $jja=0;
                     $desarrolladorAntroyjur="";
                     $desarrolladoresAnteproyectojur = Desarrolladores::where('FK_NPRY_IdMctr008',$juradoante->FK_NPRY_IdMctr008)->get();
@@ -465,6 +479,12 @@ class PdfController extends Controller
                 $proyectossirve=[];
                 foreach($juradosproy as $juradoproy){
                     $juradoproy->offsetSet('Titulo',$juradoproy->relacionAnteproyecto->NPRY_Titulo);
+                    if($juradoproy->relacionAnteproyecto->NPRY_Ante_Estado == 1){
+                        $juradoproy->offsetSet('EstadoA','Activo');
+                    }else{
+                        $juradoproy->offsetSet('EstadoA','Inactivo');
+                    }
+                    
                     if($juradoproy->relacionAnteproyecto->FK_NPRY_Estado == 4 ){
                        
                         $juradoproy->offsetSet('Estado',$juradoproy->relacionProyecto->relacionEstado->EST_Estado);      
