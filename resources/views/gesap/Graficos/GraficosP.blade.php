@@ -134,14 +134,14 @@
           google.charts.setOnLoadCallback(drawChart);
           function drawChart() {
             var data = google.visualization.arrayToDataTable([
-              ['Docente', 'Anteproyecto'],
+              ['Docente', 'Proyectos'],
             @foreach($datos4 as $datosa)
               ['<?php echo $datosa['Nombre']?>',<?php echo $datosa['Numero']?>],
             @endforeach
             ]);
 
             var options = {
-              title: 'Carga de Asignaciónes de Proyectos como Jurados(Activos)',
+              title: 'Grafico De Proyectos Aprobados Por Docente',
             };
 
             var chart = new google.visualization.PieChart(document.getElementById('piechart_3d2'));
