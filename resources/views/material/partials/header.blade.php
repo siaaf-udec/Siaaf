@@ -76,7 +76,7 @@
                     {{-- DOC: Apply "dropdown-dark" class below "dropdown-extended" to change the dropdown styte --}}
                     {{-- DOC: Apply "dropdown-hoverable" class after below "dropdown" and remove data-toggle="dropdown" data-hover="dropdown" data-close-others="true" attributes to enable hover dropdown mode --}}
                     {{-- DOC: Remove "dropdown-hoverable" and add data-toggle="dropdown" data-hover="dropdown" data-close-others="true" attributes to the below A element with dropdown-toggle class --}}
-                    <li class="dropdown dropdown-extended dropdown-inbox" id="header_notification_bar">
+                   {{--  <li class="dropdown dropdown-extended dropdown-inbox" id="header_notification_bar">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-bell"></i>
                             <span class="badge badge-default"> {{ Auth::user()->num_status_read_notifications }} </span>
@@ -102,12 +102,12 @@
                                 </ul>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
                     {{-- END NOTIFICATION DROPDOWN --}}
                     {{-- BEGIN INBOX DROPDOWN --}}
                     {{-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte --}}
                     @env('local')
-                    <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
+                    {{-- <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-envelope-open"></i>
                             <span class="badge badge-default"> 4 </span>
@@ -174,13 +174,13 @@
                                 </ul>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
                     @endenv
                     {{-- END INBOX DROPDOWN --}}
                     {{-- BEGIN TODO DROPDOWN --}}
                     {{-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte --}}
                     @env('local')
-                    <li class="dropdown dropdown-extended dropdown-tasks" id="header_task_bar">
+                   {{--  <li class="dropdown dropdown-extended dropdown-tasks" id="header_task_bar">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-calendar"></i>
                             <span class="badge badge-default"> 3 </span>
@@ -287,7 +287,7 @@
                                 </ul>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
                     @endenv
                     {{-- END TODO DROPDOWN --}}
                     {{-- BEGIN USER LOGIN DROPDOWN --}}
@@ -300,7 +300,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
                             @env('local')
-                            <li>
+                           {{--  <li>
                                 <a href="javascript:;"><i class="icon-calendar"></i> My Calendar </a>
                             </li>
                             <li>
@@ -318,7 +318,7 @@
                             <li class="divider"> </li>
                             <li>
                                 <a href="javascript:;"><i class="icon-lock"></i> Lock Screen </a>
-                            </li>
+                            </li> --}}
                             @endenv
                             <li>
                                 <a href="{{ route('users.profile') }}"><i class="icon-user"></i> Mi Perfil </a>
@@ -336,10 +336,10 @@
                     {{-- BEGIN QUICK SIDEBAR TOGGLER --}}
                     {{-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte --}}
                     @env('local')
-                    <li class="dropdown dropdown-extended quick-sidebar-toggler">
+                  {{--   <li class="dropdown dropdown-extended quick-sidebar-toggler">
                         <span class="sr-only">Toggle Quick Sidebar</span>
                         <i class="icon-logout"></i>
-                    </li>
+                    </li> --}}
                     @endenv
                     {{-- END QUICK SIDEBAR TOGGLER --}}
                 </ul>
