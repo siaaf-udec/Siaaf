@@ -127,7 +127,7 @@
             {data: 'Desarrolladores', name: 'Desarrolladores'},
       
             {
-                defaultContent: '@permission('GESAP_ADMIN_REPORT_LIBRO')<a href="javascript:;" class="btn btn-warning reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('GESAP_ADMIN_VER_LIBRO')<a href="javascript:;" title="Ver" class="btn btn-primary Ver" ><i class="icon-eye"></i></a>@endpermission @permission('DELETE_ANTE')<a href="javascript:;" title="Cancelar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
+                defaultContent: '@permission('GESAP_ADMIN_REPORT_LIBRO')<a href="javascript:;" class="btn btn-warning reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('GESAP_ADMIN_VER_LIBRO')<a href="javascript:;" title="Ver" class="btn btn-primary Ver" ><i class="icon-eye"></i></a>@endpermission @permission('GESAP_ADMIN_REPORT_LIBRO')<a href="javascript:;" title="Cancelar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

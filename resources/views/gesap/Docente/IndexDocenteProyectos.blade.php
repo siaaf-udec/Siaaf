@@ -176,7 +176,7 @@
                     ])
                 @endcomponent
             </div>
-    <h3>Proyectos Asigandos Como Jurado</h3>
+    <h3>Proyectos Asignados Como Jurado</h3>
     
     <br><br>
             <div class="col-md-12">

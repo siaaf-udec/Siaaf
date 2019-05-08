@@ -254,12 +254,34 @@ class GraficosController extends Controller
         $collection->put('Año',$datepostf." - ".$dateinicial);
 
         $concatenado[0]= $collection;
+      
+
+        $docentes = Usuarios::where('FK_User_IdRol',2)->get();
+        $n = 0 ;
+        foreach($docentes as $docente){
+            $Proyectos = Proyecto::Where('FK_EST_Id',4)->where('FK_NPRY_Director',$docente->PK_User_Codigo)->where('NPRY_Pro_Estado',2)->get(); 
+            if($Proyectos -> IsEmpty()){
+                $docente->offsetSet('Nombre', $docente->User_Nombre1." ".$docente->User_Apellido1);
+                $docente->OffsetSet('Numero',$n);
+            }else{
+                foreach($proyectos as $proyecto){
+                    $n = $n+1;
+                    $docente->offsetSet('Nombre', $docente->User_Nombre1." ".$docente->User_Apellido1);
+                    $docente->OffsetSet('Numero',$n);
+                    $n=0;
+                }
+            }
+            
+        }
+        
+
         
         return view($this->path .'GraficosP',
         [
             'datos'=>$concatenado,
             'datos2'=>$concatenado2,
             'datos3'=>$concatenado3,
+            'datos4'=>$docentes,
         ]);
            
         

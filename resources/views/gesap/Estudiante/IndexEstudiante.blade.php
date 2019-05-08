@@ -297,7 +297,7 @@
             {data: 'Fecha', name: 'Fecha'},
       
             {
-                defaultContent: ' @permission('GESAP_STUDENT_FOLDER')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('GESAP_STUDENT_RADICAR')<a href="javascript:;" title="Radicar" class="btn btn-success Radicar" ><i class="icon-check"></i></a>@endpermission @permission('GESAP_STUDENT_RADICAR')<a href="javascript:;" title="Calificar" class="btn btn-warning Calificar" ><i class="icon-check"></i></a>@endpermission @permission('GESAP_STUDENT_VER_COMENTARIO_JURADO')<a href="javascript:;" title="Ver Comentarios de los Jurados" class="btn btn-success Ver" ><i class="icon-eye"></i></a>@endpermission' ,
+                defaultContent: ' @permission('GESAP_STUDENT_FOLDER')<a href="javascript:;" title="Actividades" class="btn btn-warning Actividades" ><i class="icon-folder"></i></a>@endpermission @permission('GESAP_STUDENT_RADICAR')<a href="javascript:;" title="Radicar" class="btn btn-success Radicar" ><i class="icon-check"></i></a>@endpermission @permission('GESAP_STUDENT_RADICAR')<a href="javascript:;" title="Enviar para Calificar" class="btn btn-warning Calificar" ><i class="icon-cloud-upload"></i></a>@endpermission @permission('GESAP_STUDENT_VER_COMENTARIO_JURADO')<a href="javascript:;" title="Ver Comentarios de los Jurados" class="btn btn-success Ver" ><i class="icon-eye"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

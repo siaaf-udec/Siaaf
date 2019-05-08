@@ -56,7 +56,7 @@
                         @permission('GESAP_ADMIN_REPORT_ANTE_ALL')<a href="javascript:;"
                                                        class="btn btn-simple btn-success btn-icon reportsE"
                                                        title="Reporte"><i class="glyphicon glyphicon-list-alt"></i>Reporte
-                            Especificos Anteproyecto</a>@endpermission
+                            Específicos Anteproyecto</a>@endpermission
                          
                         <br>
                     </div>

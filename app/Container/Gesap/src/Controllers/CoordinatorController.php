@@ -494,6 +494,25 @@ class CoordinatorController extends Controller
         );
         
     }
+    //funcion que habilita un usuario si esta deshabilitado ///
+    public function HabilitarUsuario(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+            $user=Usuarios::where('PK_User_Codigo',$id)->first();
+            $user->FK_User_IdEstado =1;
+            $user->save();
+        return AjaxResponse::success(
+            '¡Bien hecho!',
+            'Usuario Habilitado Correctamente.'
+        );
+    }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+        
+    }
     /// funcion que cancela el proyecto////
     public function CancelarProyecto(Request $request, $id)
     {
@@ -501,11 +520,14 @@ class CoordinatorController extends Controller
 
             $Proyecto=Proyecto::where('PK_Id_Proyecto',$id)->first();
             $Proyecto->FK_EST_Id=7;
+            $Proyecto->NPRY_Pro_Estado=2;
             $Proyecto->save();
 
             
             $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $Proyecto->FK_NPRY_IdMctr008)->first(); 
             $anteproyecto-> FK_NPRY_Estado = 7;
+            $anteproyecto-> NPRY_Ante_Estado = 2;
+            
             $anteproyecto->save();
             
             $Desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$Proyecto->FK_NPRY_IdMctr008)->get();
@@ -1387,6 +1409,8 @@ class CoordinatorController extends Controller
             
             $anteproyecto = Anteproyecto::where('PK_NPRY_IdMctr008', $id)->first(); 
             $anteproyecto-> FK_NPRY_Estado = 7;
+            $anteproyecto->NPRY_Ante_Estado=2;
+            
             $anteproyecto->save();
             
             $Desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$id)->get();
