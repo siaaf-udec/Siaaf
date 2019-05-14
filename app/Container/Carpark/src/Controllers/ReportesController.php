@@ -547,7 +547,7 @@ class ReportesController extends Controller
                 $infoHistoriales = Historiales::where('CH_CodigoUser', $id)->get();
                 $total = count($infoHistoriales);
 
-                return PDF::loadView('carpark.reportes.descargas.ReporteUsuario',
+                return PDF::loadView('carpark.reportes.descargas.reporteUsuario',
                     compact('infoUsuarios', 'infoHistoriales', 'date', 'time', 'total', 'cont'))->download('ReportePorCódigo.pdf');
             } catch (Exception $e) {
                 return view('carpark.reportes.reporteUsuario',
@@ -619,7 +619,7 @@ class ReportesController extends Controller
                     compact('infoMoto', 'infoHistoriales', 'date', 'time', 'total', 'cont')
                 )->download('ReporteMoto.pdf');
             } catch (Exception $e) {
-                return view('carpark.reportes.ReporteMoto',
+                return view('carpark.reportes.reporteMoto',
                     compact('infoMoto', 'infoHistoriales', 'date', 'time', 'total', 'cont')
                 );
             }
