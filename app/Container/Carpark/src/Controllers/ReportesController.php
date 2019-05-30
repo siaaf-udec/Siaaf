@@ -602,19 +602,16 @@ class ReportesController extends Controller
     public function descargarReporteMoto(Request $request, $id)
     {
         if ($request->isMethod('GET')) {
+            $cont = 1;
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+            $infoMoto = Motos::find($id);
+
+            $infoHistoriales = Historiales::where('CH_Placa', $infoMoto->CM_Placa)->get();
+
+            $total = count($infoHistoriales);
+            
             try {
-                $cont = 1;
-                $date = date("d/m/Y");
-                $time = date("h:i A");
-                $infoMoto = Motos::find($id);
-                $infoUsuario = UsersUdec::find($infoMoto['FK_CM_CodigoUser']);
-
-                $infoMoto->offsetSet('Nombre', $infoUsuario->username);
-                $infoMoto->offsetSet('Apellido', $infoUsuario->lastname);
-
-                $infoHistoriales = Historiales::where('CH_Placa', $infoMoto->CM_Placa)->get();
-
-                $total = count($infoHistoriales);
                 return PDF::loadView('carpark.reportes.descargas.reporteMoto',
                     compact('infoMoto', 'infoHistoriales', 'date', 'time', 'total', 'cont')
                 )->download('ReporteMoto.pdf');
