@@ -7,11 +7,61 @@
                                ],
                ])
         <div class="row">
+        <div class="col-md-12 col-md-offset-0">
+                <div class="panel-group accordion" id="date-range">
+                    <!--Primer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_1"><strong>CMMI:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Nivel de madurez:</strong> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Segundo acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_2"><strong>SCRUM:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    Roles Scrum que son necesarios para este proceso:
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Tercer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_3"><strong>PMBOK:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    <strong>Gestión de la Integración del Proyecto:</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-md-10 col-md-offset-1">
                 {!! Form::model ($codigoUsuario ,['id'=>'form_proyecto_create', 'url' => '/forms']) !!}
                     <div class="form-body">
                         <div class="row">
-                        <h3>Datos del proyecto</h3><br>
+                        <h3><i class="fa fa-arrow-right"></i><strong> Datos del proyecto</strong></h3> <br>
                             <div class="col-md-6">
 
                                 {!! Field:: hidden ('PK_CU_Id_Usuario', $codigoUsuario)!!}
@@ -22,49 +72,58 @@
                                 {!! Field:: hidden ('CU_Telefono', Auth::user()->phone)!!}
                                 {!! Field:: hidden ('CU_Correo', Auth::user()->email)!!}
 
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Nombre del Proyecto:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Nombre del Proyecto:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-                                
                             </div>
                             <div class="col-md-6">
 
                                 {!! Field::date('CP_Fecha_Inicio',['label' => 'Fecha de inicio del proyecto',  'class'=> 'form-control datepicker','auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],['help' => 'Digite la fecha de inicio del proyecto', 'icon' => 'fa fa-calendar']) !!}
-
+                                {{--
                                 {!! Field::date('CP_Fecha_Final',['label' => 'Fecha final del proyecto', 'class'=> 'form-control datepicker', 'auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],['help' => 'Digite la fecha final del proyecto', 'icon' => 'fa fa-calendar']) !!}
+                                --}}
                             </div>
                         </div>
                         <div class="row">
-                        <h3>Informacion de los roles Scrum</h3><br>
+                        <h3><i class="fa fa-arrow-right"></i><strong>  Informacion de los roles Scrum</strong></h3><br>
                             <div class="col-md-6">
 
-                                {!! Field:: text('CE_Nombre_1',['label'=>'Scrum Master:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user'] ) !!}
+                                {!! Field:: text('CE_Nombre_1',['label'=>'Scrum Master:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                            ['help' => 'Digite el nombre del Scrum Master','icon'=>'fa fa-user'] ) !!}
 
-                                {!! Field:: text('CE_Nombre_2',null,['label'=>'Product Owner:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user'] ) !!}
-                                                            
-                                {!! Field:: text('CE_Nombre_3',['label'=>'Stakeholder:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user'] ) !!}
-                                
-                                {!! Field:: text('CE_Nombre_4',null,['label'=>'Lider del Equipo Scrum:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-users'] ) !!}
+                                {!! Field:: text('CE_Nombre_4',['label'=>'Lider del Equipo Scrum:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                            ['help' => 'Digite el nombre del Lider','icon'=>'fa fa-users'] ) !!}
 
                             </div>
                             <div class="col-md-6">
-                                {!! Field:: text('CE_Nombre_5',null,['label'=>'Integrante uno del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user-o'] ) !!}
 
-                                {!! Field:: text('CE_Nombre_6',null,['label'=>'Integrante dos del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user-o'] ) !!}
-
-                                {!! Field:: text('CE_Nombre_7',null,['label'=>'Integrante tres del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user-o'] ) !!}
-
-                                {!! Field:: text('CE_Nombre_8',null,['label'=>'Integrante cuatro del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user-o'] ) !!}                            
-                                
+                                {!! Field:: text('CE_Nombre_2',['label'=>'Product Owner:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                            ['help' => 'Digite el nombre del Product Owner','icon'=>'fa fa-user'] ) !!}
+                                                            
+                                {!! Field:: text('CE_Nombre_3',['label'=>'Stakeholder:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                            ['help' => 'Digite el nombre del Stakeholder','icon'=>'fa fa-user'] ) !!}
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                
+                                <h3>Integrantes del equipo </h3>
+                                <hr>
+                                {!! Field:: text('CE_Nombre_5',['label'=>'Integrante del equipo:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                            ['help' => 'Digite el nombre del integrante','icon'=>'fa fa-user-o'] ) !!}
+
+                                {!! Field:: text('CE_Nombre_6',['label'=>'Integrante del equipo:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                            ['help' => 'Digite el nombre del integrante','icon'=>'fa fa-user-o'] ) !!}
+                            </div>
+                            <div class="col-md-12" id="ListaIntegrantes">
+                               
+                            </div>
+                            <div class="col-md-12">
+                                <hr>
+                                <a class="btn btn-outline blue btn-xs" id="agregarIntegrante"><i class="fa fa-user-plus"></i> Agregar integrante</a>  
+                                <a class="btn btn-outline red btn-xs" id="eliminarIntegrante"><i class="fa fa-user-times"></i> Eliminar integrante</a> 
+                            </div>
+                        </div>
+                        
                     </div>
 
                     <div class="form-actions">
@@ -122,10 +181,10 @@
         });
         /*FIN Configuracion de input tipo fecha*/
         jQuery.validator.addMethod("letters", function(value, element) {
-            return this.optional(element) || /^[a-z," "]+$/i.test(value);
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
         });
         jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
-            return this.optional(element) || /^[-a-z," ",$,0-9,.,#]+$/i.test(value);
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
         });
         var createProyecto = function () {
             return {
@@ -144,7 +203,7 @@
                     //Tabla Proyectos
                     formData.append('CP_Nombre_Proyecto', $('input:text[name="CP_Nombre_Proyecto"]').val());
                     formData.append('CP_Fecha_Inicio', $('#CP_Fecha_Inicio').val());
-                    formData.append('CP_Fecha_Final', $('#CP_Fecha_Final').val());
+                    //formData.append('CP_Fecha_Final', $('#CP_Fecha_Final').val());
                     formData.append('FK_CP_Id_Usuario', $('input:hidden[name="FK_CP_Id_Usuario"]').val());
                     //Tabla Equipo Scrum
                     formData.append('CE_Nombre_1', $('input:text[name="CE_Nombre_1"]').val());
@@ -153,9 +212,12 @@
                     formData.append('CE_Nombre_4', $('input:text[name="CE_Nombre_4"]').val());
                     formData.append('CE_Nombre_5', $('input:text[name="CE_Nombre_5"]').val());
                     formData.append('CE_Nombre_6', $('input:text[name="CE_Nombre_6"]').val());
-                    formData.append('CE_Nombre_7', $('input:text[name="CE_Nombre_7"]').val());
-                    formData.append('CE_Nombre_8', $('input:text[name="CE_Nombre_8"]').val());
+                    //integrantes adicionales
+                    formData.append('CE_Nombre_7', $('input:text[name="integrante_0"]').val());
+                    formData.append('CE_Nombre_8', $('input:text[name="integrante_1"]').val());
+                    formData.append('CE_Nombre_9', $('input:text[name="integrante_2"]').val());
                     
+
                     $.ajax({
                         url: route,
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -199,37 +261,65 @@
         };
         var form = $('#form_proyecto_create');
         var formRules = {
-            CP_Nombre_Proyecto: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
+            CP_Nombre_Proyecto: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
             CP_Fecha_Inicio: {required: true, minlength: 3, maxlength: 20},
-            CP_Fecha_Final: {required: true, minlength: 3, maxlength: 20},
-            CE_Nombre_1: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_2: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_3: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_4: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_5: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_6: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_7: {minlength: 3, maxlength: 50, required: false, noSpecialCharacters:true, letters:true},
-            CE_Nombre_8: {minlength: 3, maxlength: 50, required: false, noSpecialCharacters:true, letters:true},
+            CE_Nombre_1: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+            CE_Nombre_2: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+            CE_Nombre_3: {required: false, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+            CE_Nombre_4: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+            CE_Nombre_5: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+            CE_Nombre_6: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+
+            integrante_0: {required: false, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+            integrante_1: {required: false, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+            integrante_2: {required: false, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+
+            CPR_Nombre_Requerimiento_1: {required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_2: {required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_3: {required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_4: {required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_5: {required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+
+            requisito_0: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            requisito_1: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            requisito_2: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            requisito_3: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            requisito_4: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            requisito_5: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            requisito_6: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            requisito_7: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            requisito_8: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            requisito_9: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
         };
         var formMessage = {
-            CP_Nombre_Proyecto: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CP_Nombre_Proyecto: {letters: 'Los numeros no son válidos'},
-            CE_Nombre_1: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CE_Nombre_1: {letters: 'Los numeros no son válidos'},
-            CE_Nombre_2: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CE_Nombre_2: {letters: 'Los numeros no son válidos'},
-            CE_Nombre_3: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CE_Nombre_3: {letters: 'Los numeros no son válidos'},
-            CE_Nombre_4: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CE_Nombre_4: {letters: 'Los numeros no son válidos'},
-            CE_Nombre_5: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CE_Nombre_5: {letters: 'Los numeros no son válidos'},
-            CE_Nombre_6: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CE_Nombre_6: {letters: 'Los numeros no son válidos'},
-            CE_Nombre_7: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CE_Nombre_7: {letters: 'Los numeros no son válidos'},
-            CE_Nombre_8: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CE_Nombre_8: {letters: 'Los numeros no son válidos'},
+            CP_Nombre_Proyecto: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CE_Nombre_1: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CE_Nombre_2: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CE_Nombre_3: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CE_Nombre_4: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CE_Nombre_5: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CE_Nombre_6: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+
+            integrante_0: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            integrante_1: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            integrante_2: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+
+            CPR_Nombre_Requerimiento_1: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            CPR_Nombre_Requerimiento_2: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            CPR_Nombre_Requerimiento_3: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            CPR_Nombre_Requerimiento_4: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            CPR_Nombre_Requerimiento_5: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+
+            requisito_0: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            requisito_1: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            requisito_2: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            requisito_3: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            requisito_4: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            requisito_5: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            requisito_6: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            requisito_7: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            requisito_8: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            requisito_9: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
         };
         FormValidationMd.init(form, formRules, formMessage, createProyecto());
 
@@ -244,5 +334,69 @@
             location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
         });
 
+        // Integrantes equipo scrum
+        var integrantes_max = 3;   //maximo de campos
+        var x_integrante = 0;
+        $('#agregarIntegrante').click (function(e) {
+                e.preventDefault();     //prevenir novos clicks
+                if (x_integrante < integrantes_max) {
+                    $('<div id="campo'+x_integrante+'" class="form-group form-md-line-input">\
+                    <div class="input-icon">\
+                    <input class="form-control form-control" autofocus="" autocomplete="off" maxlength="40" id="integrante_'+x_integrante+'" name="integrante_'+x_integrante+'" type="text">\
+                    <label for="integrante_'+x_integrante+'" class="control-label">Integrante del equipo (adicional):</label>\
+                    <span class="help-block"> Digite el nombre del integrante </span>\
+                    <i class=" fa fa-user-o "></i>\
+                    </div>\
+                    </div>').appendTo($('#ListaIntegrantes')).hide().slideDown(600);
+                    x_integrante++;
+                }else{
+                    xhr = "warning"
+                    UIToastr.init(xhr, "¡Lo sentimos!", "Maximo puede agregar "+integrantes_max+" integrantes adicionales.");
+                }
+        });
+
+        $('#eliminarIntegrante').click (function(e) {
+            e.preventDefault();
+            if(x_integrante==0){
+                xhr = "warning"
+                UIToastr.init(xhr, "¡Lo sentimos!", "No es posible eliminar mas integrantes.");
+            }else{
+                x_integrante--;
+                $("#campo"+x_integrante).slideUp(400, function(){$("#campo"+x_integrante).remove();});
+            }
+        });
+        
+        // Requisitos
+        var requisitos_max = 10;   //maximo de campos
+        var x_requisitos = 0;
+        $('#agregarRequisito').click (function(e) {
+                e.preventDefault();     //prevenir novos clicks
+                if (x_requisitos < requisitos_max) {
+                    $('<div id="requisito'+x_requisitos+'" class="form-group form-md-line-input">\
+                    <div class="input-icon">\
+                    <input class="form-control form-control" autofocus="" autocomplete="off" maxlength="100" id="requisito_'+x_requisitos+'" name="requisito_'+x_requisitos+'" type="text">\
+                    <label for="requisito_'+x_requisitos+'" class="control-label">Nombre del requisito (adicional):</label>\
+                    <span class="help-block"> Digite el requisito</span>\
+                    <i class=" fa fa-angle-right "></i>\
+                    </div>\
+                    </div>').appendTo($('#ListaRequisitos')).hide().slideDown(600);
+                    x_requisitos++;
+                }else{
+                    xhr = "warning"
+                    UIToastr.init(xhr, "¡Lo sentimos!", "Maximo puede agregar "+requisitos_max+" requisitos adicionales.");
+                }
+        });
+
+        $('#eliminarRequisito').click (function(e) {
+            e.preventDefault();
+            if(x_requisitos==0){
+                xhr = "warning"
+                UIToastr.init(xhr, "¡Lo sentimos!", "No es posible eliminar mas requisitos.");
+            }else{
+                x_requisitos--;
+                $("#requisito"+x_requisitos).slideUp(400, function(){$("#requisito"+x_requisitos).remove();});
+            }
+        });
     });
 </script>
+

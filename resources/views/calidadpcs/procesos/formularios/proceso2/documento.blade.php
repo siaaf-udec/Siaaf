@@ -1,114 +1,105 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Acta de inicio'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Desarrollar plan para la dirección del proyecto'])
         @slot('actions', [
-              'link_cancel' => [
-                  'link' => '',
-                  'icon' => 'fa fa-arrow-left',
-                               ],
-               ])
+            'link_cancel' => [
+                'link' => '',
+                'icon' => 'fa fa-arrow-left',
+            ],
+        ])
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="alert alert-info">
-                       <h4><strong>CMMI:</strong></h4>Este espacio está dedicado al envio de correos informativos para los
-                        usuarios que aún tienen su vehículo dentro de las instalaciones sobre el cierre del parqueadero.
+        <div class="col-md-12 col-md-offset-0">
+                <div class="panel-group accordion" id="date-range">
+                    <!--Primer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_1"><strong>CMMI:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Nivel de madurez:</strong> 2. <br><br><strong>Meta especifica:</strong> Gestionar los requisitos.<br><br><strong>Propósito:</strong> El propósito de la Gestión de Requisitos (REQM) es gestionar los requisitos de los productos y los componentes de producto del proyecto, y asegurar la alineación entre esos requisitos, y los planes y los productos de trabajo del proyecto.
+                                <br><br><strong>Notas introductorias: </strong> Los procesos de gestión de requisitos gestionan todos los requisitos recibidos o generados por el proyecto, incluyendo tanto los requisitos técnicos como los no técnicos, así como los requisitos impuestos al proyecto por la organización. En particular, si se implementa el área de proceso 
+                                Desarrollo de Requisitos, sus procesos generarán requisitos de producto y de componente de producto que también serán gestionados por los procesos de gestión de requisitos. En todas las áreas de proceso, cuando se utilizan los términos “producto” y “componente de producto”, sus significados previstos también incluyen los servicios, 
+                                los sistemas de servicio y sus componentes. Cuando las áreas de proceso Gestión de Requisitos, Desarrollo de Requisitos y Solución Técnica están implementadas, sus procesos asociados pueden estar estrechamente relacionados y realizarse de manera concurrente. El proyecto realiza los pasos apropiados para asegurar que el conjunto de 
+                                requisitos aprobados se gestiona para dar soporte a las necesidades de planificación y de ejecución del proyecto. Cuando un proyecto recibe requisitos de un proveedor de requisitos aprobado, éstos se revisan con dicho proveedor para resolver las cuestiones y para prevenir malentendidos antes de que los requisitos se incorporen en 
+                                los planes del proyecto. Una vez que el proveedor y el receptor de los requisitos alcanzan un acuerdo, se obtiene un compromiso sobre los requisitos por parte de los participantes en el proyecto. El proyecto gestiona los cambios a los requisitos a medida que evolucionan e identifica inconsistencias que ocurren entre los planes, los 
+                                productos de trabajo y los requisitos.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Segundo acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_2"><strong>SCRUM:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    Roles Scrum que son necesarios para este proceso:<br><strong>Stakeholder: </strong>{{ $equipoScrum[2]['CE_Nombre_Persona'] }}<br><strong>Product Owner: </strong>{{ $equipoScrum[1]['CE_Nombre_Persona'] }}<br><strong>Scrum Master: </strong>{{ $equipoScrum[0]['CE_Nombre_Persona'] }}.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Tercer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_3"><strong>PMBOK:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    <strong>Gestión de la Integración del Proyecto: </strong>La Gestión de la Integración del Proyecto incluye los procesos y actividades necesarios para identificar, definir, combinar, unificar y coordinar los diversos procesos y actividades de dirección del proyecto dentro de los Grupos de Procesos de la Dirección de Proyectos. 
+                                    En el contexto de la dirección de proyectos, la integración incluye características de unificación, consolidación, comunicación y acciones integradoras cruciales para que el proyecto se lleve a cabo de manera controlada, de modo que se complete, que se manejen con éxito las expectativas de los interesados y se cumpla con los 
+                                    requisitos. La Gestión de la Integración del Proyecto implica tomar decisiones en cuanto a la asignación de recursos, equilibrar objetivos y alternativas contrapuestas y manejar las interdependencias entre las Áreas de Conocimiento de la dirección de proyectos. Los procesos de la dirección de proyectos se presentan normalmente 
+                                    como procesos diferenciados con interfaces definidas, aunque en la práctica se superponen e interactúan entre ellos de formas que no pueden detallarse en su totalidad dentro de la Guía del PMBOK®.<br><br>
+                                    <strong>Desarrollar el Acta de Constitución del Proyecto: </strong>Es el proceso de desarrollar un documento que autoriza formalmente la existencia de un proyecto y confiere al director del proyecto la autoridad para asignar los recursos de la organización a las actividades del proyecto.<br><br>
+                                    <strong>Gestión de los interesados del proyecto: </strong>La Gestión de los Interesados del Proyecto incluye los procesos necesarios para identificar a las personas, grupos u organizaciones que pueden afectar o ser afectados por el proyecto, para analizar las expectativas de los interesados y su impacto en el proyecto, y para 
+                                    desarrollar estrategias de gestión adecuadas a fin de lograr la participación eficaz de los interesados en las decisiones y en la ejecución del proyecto. La gestión de los interesados también se centra en la comunicación continua con los interesados para comprender sus necesidades y expectativas, abordando los incidentes en el 
+                                    momento en que ocurren, gestionando conflictos de intereses y fomentando una adecuada participación de los interesados en las decisiones y actividades del proyecto. La satisfacción de los interesados debe gestionarse como uno de los objetivos clave del proyecto.<br><br>
+                                    <strong>Identificar a los Interesados: </strong>El proceso de identificar las personas, grupos u organizaciones que podrían afectar o ser afectados por una decisión, actividad o resultado del proyecto, así como de analizar y documentar información relevante relativa a sus intereses, participación, interdependencias, influencia 
+                                    y posible impacto en el éxito del proyecto.<br><br>
+                                    <strong>Planificar la Gestión de los Interesados: </strong>El proceso de desarrollar estrategias de gestión adecuadas para lograr la participación eficaz de los interesados a lo largo del ciclo de vida del proyecto, con base en el análisis de sus necesidades, intereses y el posible impacto en el éxito del proyecto.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-10 col-md-offset-1">
-                <div class="alert alert-info">
-                       <h4><strong>SCRUM:</strong></h4>Roles Scrum que son necesarios para este proceso: <strong>Stakeholder= </strong>{{ $equipoScrum[2]['CE_Nombre_Persona'] }}, <strong>Product Owner= </strong>{{ $equipoScrum[1]['CE_Nombre_Persona'] }} y <strong>Scrum Master= </strong>{{ $equipoScrum[0]['CE_Nombre_Persona'] }}.
-                </div>
-            </div>
+
             <div class="col-md-10 col-md-offset-1">
                 {!! Form::model ([[$idProceso],[$equipoScrum]],['id'=>'form_update_proyecto', 'url' => '/forms']) !!}
                     <div class="form-body">
                         <div class="row">
-                        <h3>Informacion del proceso</h3><br>
-                            <div class="col-md-6">
+                            <h3>Informacion del proceso</h3><br>
+                                <div class="col-md-12">
 
-                                {!! Field:: hidden ('FK_CP_Id_Usuario', Auth::user()->id)!!}
+                                    {!! Field:: hidden ('FK_CP_Id_Usuario', Auth::user()->id)!!}
 
-                                {!! Field:: hidden ('PK_CP_Id_Proyecto', null)!!}
+                                    {!! Field:: hidden ('PK_CP_Id_Proyecto', null)!!}
 
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Numero de acta:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-circle'] ) !!}
-
-                                {!! Field::date('CP_Fecha_Inicio',['label' => 'Fecha',  'class'=> 'form-control','auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],['help' => 'Digite la fecha de inicio del proyecto', 'icon' => 'fa fa-calendar']) !!}
-
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Nombre de proyecto:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off',],
-                                                            ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Tipo de proyecto:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Objetivos:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-                            
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Compromiso de obligatorio cumplimiento:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-
-                            </div>
-                            <div class="col-md-6">
-                            
-                                
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Duracion en meses:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Entidades participantes:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Interesados:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Fuentes de financiacion:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-
-                                                               
+                                    {!! Field::textarea(
+                                        'memo',
+                                        ['label' => 'Alcance:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '2'],
+                                        ['help' => 'Escribe el alcance del proyecto.', 'icon' => 'fa fa-quote-right']) !!}
+                                </div><br>
+                            <h3>Requerimientos</h3>
+                            <div class="col-md-12">
+                                @component('themes.bootstrap.elements.tables.datatables',['id' => 'listaEtapas'])
+                                    @slot('columns', [
+                                        '#',
+                                        'Requerimiento',
+                                        ''
+                                    ])
+                                @endcomponent
                             </div>
                         </div>
-                        <div class="row">
-                        <h3>Informacion de los roles Scrum</h3><br>
-                            <div class="col-md-6">
-
-                                {!! Field:: text('CE_Nombre_1',$equipoScrum[0]['CE_Nombre_Persona'],['label'=>'Scrum Master:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user'] ) !!}
-
-                                {!! Field:: text('CE_Nombre_2',$equipoScrum[1]['CE_Nombre_Persona'],['label'=>'Product Owner:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user'] ) !!}
-                                                            
-                                {!! Field:: text('CE_Nombre_3',$equipoScrum[2]['CE_Nombre_Persona'],['label'=>'Stakeholder:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user'] ) !!}
-                                
-                                {!! Field:: text('CE_Nombre_4',$equipoScrum[3]['CE_Nombre_Persona'],['label'=>'Lider del Equipo Scrum:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-users'] ) !!}
-
-                            </div>
-                            <div class="col-md-6">
-                           
-                                {!! Field:: text('CE_Nombre_5',$equipoScrum[4]['CE_Nombre_Persona'],['label'=>'Integrante uno del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user-o'] ) !!}
-
-                                {!! Field:: text('CE_Nombre_6',$equipoScrum[5]['CE_Nombre_Persona'],['label'=>'Integrante dos del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user-o'] ) !!}
-
-                                @if(empty($equipoScrum[6]['CE_Nombre_Persona']))
-                                    {!! Field:: text('CE_Nombre_7',null,['label'=>'Integrante tres del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user-o'] ) !!}
-                                @else
-                                    {!! Field:: text('CE_Nombre_7',$equipoScrum[6]['CE_Nombre_Persona'],['label'=>'Integrante tres del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user-o'] ) !!}
-                                @endif
-                                @if(empty($equipoScrum[7]))
-                                    {!! Field:: text('CE_Nombre_8',null,['label'=>'Integrante cuatro del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user-o'] ) !!}  
-                                @else
-                                    {!! Field:: text('CE_Nombre_8',$equipoScrum[7]['CE_Nombre_Persona'],['label'=>'Integrante cuatro del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user-o'] ) !!}                            
-                                @endif
-                           
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-4">
@@ -124,10 +115,8 @@
                         </div>
                     </div>
                 {!! Form::close() !!}
-
             </div>
         </div>
-
     @endcomponent
 </div>
 

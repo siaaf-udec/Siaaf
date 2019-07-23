@@ -16,7 +16,6 @@ class CreateProcesosTable extends Migration
         Schema::connection('calidadpcs')->create('TBL_Calidadpcs_procesos', function (Blueprint $table) {
             $table->increments('PK_CP_Id_Proceso');
             $table->String('CP_Nombre_Proceso');
-            $table->String('CP_Tipo_Parseo'); 
             $table->integer('FK_CP_Id_Etapa')->unsigned();
             $table->foreign('FK_CP_Id_Etapa')->references('PK_CE_Id_Etapa')->on('TBL_Calidadpcs_etapa');
             

@@ -114,7 +114,7 @@ class ProyectosController extends Controller
                     Proyectos::create([
                         'CP_Nombre_Proyecto' => $request['CP_Nombre_Proyecto'],
                         'CP_Fecha_Inicio' => $request['CP_Fecha_Inicio'],
-                        'CP_Fecha_Final' => $request['CP_Fecha_Final'],
+                        'CP_Fecha_Final' => $request['CP_Fecha_Inicio'],
                         'FK_CP_Id_Usuario' => $request['FK_CP_Id_Usuario'],
                     ]);
 
@@ -133,11 +133,19 @@ class ProyectosController extends Controller
                         'FK_CE_Id_Proyecto' => $id,
                     ]);
                     //Tercer rol
-                    EquipoScrum::create([
-                        'CE_Nombre_Persona' => $request['CE_Nombre_3'],
-                        'FK_CE_Id_Rol' => 3,
-                        'FK_CE_Id_Proyecto' => $id,
-                    ]);
+                    if($request['CE_Nombre_3'] == ''){
+                        EquipoScrum::create([
+                            'CE_Nombre_Persona' => ' ',
+                            'FK_CE_Id_Rol' => 3,
+                            'FK_CE_Id_Proyecto' => $id,
+                        ]);
+                    }else{
+                        EquipoScrum::create([
+                            'CE_Nombre_Persona' => $request['CE_Nombre_3'],
+                            'FK_CE_Id_Rol' => 3,
+                            'FK_CE_Id_Proyecto' => $id,
+                        ]);
+                    }
                     //Cuarto rol
                     EquipoScrum::create([
                         'CE_Nombre_Persona' => $request['CE_Nombre_4'],
@@ -156,22 +164,33 @@ class ProyectosController extends Controller
                         'FK_CE_Id_Rol' => 5,
                         'FK_CE_Id_Proyecto' => $id,
                     ]);
-                    if($request['CE_Nombre_7'] == ''){
-
+                    //Septimo rol opcional
+                    if($request['CE_Nombre_7'] == '' || $request['CE_Nombre_7'] == 'undefined'){
+                        
                     }else{
-                        //Septimo rol opcional
                         EquipoScrum::create([
                             'CE_Nombre_Persona' => $request['CE_Nombre_7'],
                             'FK_CE_Id_Rol' => 5,
                             'FK_CE_Id_Proyecto' => $id,
                         ]);
                     }
-                    if($request['CE_Nombre_8'] == ''){
-
+                    //Octavo rol - opcional 
+                    if($request['CE_Nombre_8'] == '' || $request['CE_Nombre_8'] == 'undefined'){
+                        
                     }else{
-                        //Octavo rol - opcional 
+                        
                         EquipoScrum::create([
                             'CE_Nombre_Persona' => $request['CE_Nombre_8'],
+                            'FK_CE_Id_Rol' => 5,
+                            'FK_CE_Id_Proyecto' => $id,
+                        ]);
+                    }
+                    //Noveno rol - opcional 
+                    if($request['CE_Nombre_9'] == '' || $request['CE_Nombre_9'] == 'undefined'){
+                        
+                    }else{
+                        EquipoScrum::create([
+                            'CE_Nombre_Persona' => $request['CE_Nombre_9'],
                             'FK_CE_Id_Rol' => 5,
                             'FK_CE_Id_Proyecto' => $id,
                         ]);
@@ -193,34 +212,42 @@ class ProyectosController extends Controller
                     Proyectos::create([
                         'CP_Nombre_Proyecto' => $request['CP_Nombre_Proyecto'],
                         'CP_Fecha_Inicio' => $request['CP_Fecha_Inicio'],
-                        'CP_Fecha_Final' => $request['CP_Fecha_Final'],
+                        'CP_Fecha_Final' => $request['CP_Fecha_Inicio'],
                         'FK_CP_Id_Usuario' => $request['FK_CP_Id_Usuario'],
                     ]);
                     $proyecto = Proyectos::where('CP_Nombre_Proyecto',$request['CP_Nombre_Proyecto'])->first();
                     $id= $proyecto->PK_CP_Id_Proyecto;
-                        //Primer rol
+                    //Primer rol
                     EquipoScrum::create([
                             'CE_Nombre_Persona' => $request['CE_Nombre_1'],
                             'FK_CE_Id_Rol' => 1,
                             'FK_CE_Id_Proyecto' => $id,
                     ]);
-                        //Segundo rol
+                    //Segundo rol
                     EquipoScrum::create([
                             'CE_Nombre_Persona' => $request['CE_Nombre_2'],
                             'FK_CE_Id_Rol' => 2,
                             'FK_CE_Id_Proyecto' => $id,
                     ]);
-                        //Tercer rol
-                    EquipoScrum::create([
+                    //Tercer rol
+                    if($request['CE_Nombre_3'] == ''){
+                        EquipoScrum::create([
+                            'CE_Nombre_Persona' => ' ',
+                            'FK_CE_Id_Rol' => 3,
+                            'FK_CE_Id_Proyecto' => $id,
+                        ]);
+                    }else{
+                        EquipoScrum::create([
                             'CE_Nombre_Persona' => $request['CE_Nombre_3'],
                             'FK_CE_Id_Rol' => 3,
                             'FK_CE_Id_Proyecto' => $id,
-                    ]);
-                        //Cuarto rol
+                        ]);
+                    }
+                    //Cuarto rol
                     EquipoScrum::create([
-                            'CE_Nombre_Persona' => $request['CE_Nombre_4'],
-                            'FK_CE_Id_Rol' => 4,
-                            'FK_CE_Id_Proyecto' => $id,
+                        'CE_Nombre_Persona' => $request['CE_Nombre_4'],
+                        'FK_CE_Id_Rol' => 4,
+                        'FK_CE_Id_Proyecto' => $id,
                     ]);
                     //Quinto rol
                     EquipoScrum::create([
@@ -234,30 +261,32 @@ class ProyectosController extends Controller
                         'FK_CE_Id_Rol' => 5,
                         'FK_CE_Id_Proyecto' => $id,
                     ]);
-                    if($request['CE_Nombre_7'] == ''){
-                        EquipoScrum::create([
-                            'CE_Nombre_Persona' => ' ',
-                            'FK_CE_Id_Rol' => 5,
-                            'FK_CE_Id_Proyecto' => $id,
-                        ]);
+                    //Septimo rol opcional
+                    if($request['CE_Nombre_7'] == '' || $request['CE_Nombre_7'] == 'undefined'){
+                    
                     }else{
-                        //Septimo rol opcional
                         EquipoScrum::create([
                             'CE_Nombre_Persona' => $request['CE_Nombre_7'],
                             'FK_CE_Id_Rol' => 5,
                             'FK_CE_Id_Proyecto' => $id,
                         ]);
                     }
-                    if($request['CE_Nombre_8'] == ''){
+                    //Octavo rol - opcional 
+                    if($request['CE_Nombre_8'] == '' || $request['CE_Nombre_8'] == 'undefined'){
+                        
+                    }else{
                         EquipoScrum::create([
-                            'CE_Nombre_Persona' => ' ',
+                            'CE_Nombre_Persona' => $request['CE_Nombre_8'],
                             'FK_CE_Id_Rol' => 5,
                             'FK_CE_Id_Proyecto' => $id,
                         ]);
+                    }
+                    //Noveno rol - opcional 
+                    if($request['CE_Nombre_9'] == '' || $request['CE_Nombre_9'] == 'undefined'){
+                        
                     }else{
-                        //Octavo rol - opcional 
                         EquipoScrum::create([
-                            'CE_Nombre_Persona' => $request['CE_Nombre_8'],
+                            'CE_Nombre_Persona' => $request['CE_Nombre_9'],
                             'FK_CE_Id_Rol' => 5,
                             'FK_CE_Id_Proyecto' => $id,
                         ]);
@@ -275,7 +304,6 @@ class ProyectosController extends Controller
                 );
             }
         }
-
         return AjaxResponse::fail(
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
@@ -296,11 +324,12 @@ class ProyectosController extends Controller
            
             $infoProyecto = Proyectos::find($id);
             $infoEquipoScrum = EquipoScrum::where('FK_CE_Id_Proyecto',$id)->get();
-                      
+            $cantIntegrantes = EquipoScrum::where('FK_CE_Id_Proyecto',$id)->count();
             return view('calidadpcs.proyectos.editarProyectos',
                 [
                     'infoProyecto' => $infoProyecto,
                     'infoEquipoScrum' => $infoEquipoScrum,
+                    'cantIntegrantes' => $cantIntegrantes,
                 ]);
         }
 
@@ -323,14 +352,14 @@ class ProyectosController extends Controller
 
             $proyecto = Proyectos::find($request['PK_CP_Id_Proyecto']);
             $proyecto->fill([
-                'CP_Fecha_Final' => $request['CP_Fecha_Final'],
+                'CP_Nombre_Proyecto' => $request['CP_Nombre_Proyecto'],
+                'CP_Fecha_Inicio' => $request['CP_Fecha_Inicio'],
             ]);
             $proyecto->save();
-
-            //Tabla equipo scrum
-
-            $EquipoScrum = EquipoScrum::where('FK_CE_Id_Proyecto',$request['FK_CE_Id_Proyecto'])->get();
             
+            //Tabla equipo scrum
+            $EquipoScrum = EquipoScrum::where('FK_CE_Id_Proyecto',$request['FK_CE_Id_Proyecto'])->get();
+
             $Rol1 = $EquipoScrum[0];
             $Rol1 -> fill([
                 'CE_Nombre_Persona' => $request['CE_Nombre_1'],
@@ -367,17 +396,80 @@ class ProyectosController extends Controller
             ]);
             $Rol6 -> save();
 
-            $Rol7 = $EquipoScrum[6];
-            $Rol7 -> fill([
-                'CE_Nombre_Persona' => $request['CE_Nombre_7'],
-            ]);
-            $Rol7 -> save();
+            //roles opcionales
 
-            $Rol8 = $EquipoScrum[7];
-            $Rol8 -> fill([
-                'CE_Nombre_Persona' => $request['CE_Nombre_8'],
-            ]);
-            $Rol8 -> save();
+            if($request['CE_Nombre_7'] == '' || $request['CE_Nombre_7'] == 'undefined'){
+                if(empty($EquipoScrum[6])){
+                }
+                else{
+                    $id_equipo = $EquipoScrum[6]->PK_CE_Id_Equipo_Scrum;
+                    EquipoScrum::destroy($id_equipo);
+                }
+            }
+            else{
+                if(empty($EquipoScrum[6] )){
+                    EquipoScrum::create([
+                        'CE_Nombre_Persona' => $request['CE_Nombre_7'],
+                        'FK_CE_Id_Rol' => 5,
+                        'FK_CE_Id_Proyecto' => $request['PK_CP_Id_Proyecto'],
+                    ]);
+                }else{
+                    $Rol7 = $EquipoScrum[6];
+                    $Rol7 -> fill([
+                        'CE_Nombre_Persona' => $request['CE_Nombre_7'],
+                    ]);
+                    $Rol7 -> save();
+                }
+            }
+
+            if($request['CE_Nombre_8'] == '' || $request['CE_Nombre_8'] == 'undefined'){
+                if(empty($EquipoScrum[7])){
+                }
+                else{
+                    $id_equipo = $EquipoScrum[7]->PK_CE_Id_Equipo_Scrum;
+                    EquipoScrum::destroy($id_equipo);
+                }
+            }
+            else{
+                if(empty($EquipoScrum[7])){
+                    EquipoScrum::create([
+                        'CE_Nombre_Persona' => $request['CE_Nombre_8'],
+                        'FK_CE_Id_Rol' => 5,
+                        'FK_CE_Id_Proyecto' => $request['PK_CP_Id_Proyecto'],
+                    ]);
+                }else{
+                    $Rol8 = $EquipoScrum[7];
+                    $Rol8 -> fill([
+                        'CE_Nombre_Persona' => $request['CE_Nombre_8'],
+                    ]);
+                    $Rol8 -> save();
+                }
+            }
+            
+            if($request['CE_Nombre_9'] == '' || $request['CE_Nombre_9'] == 'undefined'){
+                if(empty($EquipoScrum[8])){
+                }
+                else{
+                    $id_equipo = $EquipoScrum[8]->PK_CE_Id_Equipo_Scrum;
+                    EquipoScrum::destroy($id_equipo);
+                }
+            }
+            else{
+                if(empty($EquipoScrum[8])){
+                    EquipoScrum::create([
+                        'CE_Nombre_Persona' => $request['CE_Nombre_9'],
+                        'FK_CE_Id_Rol' => 5,
+                        'FK_CE_Id_Proyecto' => $request['PK_CP_Id_Proyecto'],
+                    ]);
+                }else{
+                    $Rol9 = $EquipoScrum[8];
+                    $Rol9 -> fill([
+                        'CE_Nombre_Persona' => $request['CE_Nombre_9'],
+                    ]);
+                    $Rol9 -> save();
+                }
+            }
+
 
             return AjaxResponse::success(
                 '¡Bien hecho!',

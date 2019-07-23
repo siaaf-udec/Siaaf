@@ -64,7 +64,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 /////////// INICIO RUTAS PROYECTOS ////////////////
 
-    Route::group(['prefix' => 'proyectosCalidad', 'middleware' => ['permission:ADMIN_CALIDADPCS']], function () {
+    Route::group(['prefix' => 'Proyectos', 'middleware' => ['permission:ADMIN_CALIDADPCS']], function () {
 
         $controller = "\\App\\Container\\CalidadPcs\\src\\Controllers\\";
 
@@ -120,6 +120,22 @@ Route::group(['middleware' => ['auth']], function () {
 
         $controller = "\\App\\Container\\CalidadPcs\\src\\Controllers\\";
 
+        //Etapas
+
+        //ruta que conduce al controlador para mostrar la tabla donde se cargan registros de las etapas por medio de petición ajax
+        Route::get('etapas/{id?}', [
+            'uses' => $controller . 'ProcesosController@indexAjaxEtapa',
+            'as' => 'calidadpcs.procesosCalidad.etapas'             
+        ]);
+
+        //ruta que realiza la consulta de las etapas registrados
+        Route::get('tablaEtapas', [   
+            'uses' => $controller . 'ProcesosController@tablaEtapas',
+            'as' => 'calidadpcs.procesosCalidad.tablaEtapas'            
+        ]);
+
+        //Procesos
+
         //ruta que conduce al controlador para mostrar la tabla donde se cargan registros de los procesos
         Route::get('index', [
             'uses' => $controller . 'ProcesosController@index',
@@ -127,16 +143,18 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
         
         //ruta que conduce al controlador para mostrar la tabla donde se cargan registros de procesos por medio de petición ajax
-        Route::get('index/ajax/{id?}', [
+        Route::get('index/ajax/{idEtapa?}/{idProyecto?}', [
             'uses' => $controller . 'ProcesosController@indexAjax',
             'as' => 'calidadpcs.procesosCalidad.index.ajax'             
         ]);
 
         //ruta que realiza la consulta de los procesos registrados
-        Route::get('tablaProcesos', [   
+        Route::get('tablaProcesos/{id?}', [   
             'uses' => $controller . 'ProcesosController@tablaProcesos',
             'as' => 'calidadpcs.procesosCalidad.tablaProcesos'            
         ]);
+
+        //Informacion de cada proceso - Formularios
 
         //ruta que conduce al controlador para mostrar el formulario para registrar un proceso especifico
          Route::get('formularios/{id?}/{idProyecto?}', [
@@ -144,12 +162,29 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'calidadpcs.procesosCalidad.formularios'
         ]);
         
+         //ruta que conduce al controlador para mostrar el formulario para registrar un proceso especifico
+         Route::get('editarFormularios/{id?}/{idProyecto?}', [
+            'uses' => $controller . 'ProcesosController@editarFormulario',  
+            'as' => 'calidadpcs.procesosCalidad.editarFormularios'
+        ]);
+
         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
         Route::post('storeProceso1', [
             'uses' => $controller . 'ProcesosController@storeProceso1',   
             'as' => 'calidadpcs.procesosCalidad.storeProceso1'
         ]);
 
+        //ruta que realiza la consulta de los procesos registrados
+        Route::get('tablaCronograma/{idProyecto?}', [   
+            'uses' => $controller . 'ProcesosController@tablaCronograma',
+            'as' => 'calidadpcs.procesosCalidad.tablaCronograma'            
+        ]);
+
+        //ruta que realiza la consulta de los procesos registrados
+        Route::get('registrarActividad/{id?}/{idProyecto?}', [   
+            'uses' => $controller . 'ProcesosController@registrarActividad',
+            'as' => 'calidadpcs.procesosCalidad.registrarActividad'            
+        ]);
     });
 });
 

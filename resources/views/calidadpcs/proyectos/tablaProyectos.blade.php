@@ -1,10 +1,11 @@
 @extends('material.layouts.dashboard')
 
 @push('styles')
+<link href="{{ asset('assets/global/plugins/bootstrap/css/bootstrap.css') }}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
 <!-- Datatables Styles -->
 <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
-<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet"
-      type="text/css"/>
+<link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css"/>
 <!-- toastr Styles -->
 <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.css') }}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css"/>
@@ -62,7 +63,7 @@
 
 @push('plugins')
     <!-- Datatables Scripts -->
-    <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 
@@ -74,10 +75,8 @@
 
 <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
 
-<script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') }}" type="text/javascript">
-</script>
-<script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') }}" type="text/javascript">
-</script>
+<script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') }}" type="text/javascript"></script>
 
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
@@ -109,10 +108,10 @@
             {data: 'CP_Fecha_Inicio', name: 'CP_Fecha_Inicio'},
             {data: 'CP_Fecha_Final', name: 'CP_Fecha_Final'},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-success verProcesos"  title="Ver los procesos de este Proyecto" ><i class="fa fa-th-list"></i></a>',
+                defaultContent: '<a href="javascript:;" class="btn btn-success verEtapas"  title="Ver los procesos de este Proyecto" ><i class="fa fa-list-ul"></i></a>',
                 data: 'action',
-                name: 'Procesos',
-                title: 'Procesos',
+                name: 'Etapas',
+                title: 'Etapas',
                 orderable: false,
                 searchable: false,
                 exportable: false,
@@ -146,11 +145,11 @@
             $(".content-ajax").load(route);
         });
 
-        table.on('click', '.verProcesos', function (e) {
+        table.on('click', '.verEtapas', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('calidadpcs.procesosCalidad.index.ajax') }}' + '/' + dataTable.PK_CP_Id_Proyecto;
+                route_edit = '{{ route('calidadpcs.procesosCalidad.etapas') }}' + '/' + dataTable.PK_CP_Id_Proyecto;
             $(".content-ajax").load(route_edit);            
         });
 

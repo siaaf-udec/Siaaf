@@ -1,116 +1,162 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'documento'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Acta de inicio'])
         @slot('actions', [
-            'link_cancel' => [
-                'link' => '',
-                'icon' => 'fa fa-arrow-left',
-            ],
-        ])
+              'link_cancel' => [
+                  'link' => '',
+                  'icon' => 'fa fa-arrow-left',
+                               ],
+               ])
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="alert alert-info">
+            <div class="col-md-12 col-md-offset-0">
+                <div class="panel-group accordion" id="date-range">
+                    <!--Primer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_1"><strong>CMMI:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                Este espacio está dedicado al envio de correos informativos para los usuarios que aún tienen su vehículo dentro de las instalaciones sobre el cierre del parqueadero.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Segundo acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_2"><strong>SCRUM:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    Roles Scrum que son necesarios para este proceso:<br><strong>Stakeholder: </strong>{{ $equipoScrum[2]['CE_Nombre_Persona'] }}<br><strong>Product Owner: </strong>{{ $equipoScrum[1]['CE_Nombre_Persona'] }}<br><strong>Scrum Master: </strong>{{ $equipoScrum[0]['CE_Nombre_Persona'] }}.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Tercer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_3"><strong>PMBOK:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                Este espacio está dedicado al envio de correos informativos para los
+                                usuarios que aún tienen su vehículo dentro de las instalaciones sobre el cierre del parqueadero.Este espacio está dedicado al envio de correos informativos para los
+                                usuarios que aún tienen su vehículo dentro de las instalaciones sobre el cierre del parqueadero.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--div class="alert alert-info">
                        <h4><strong>CMMI:</strong></h4>Este espacio está dedicado al envio de correos informativos para los
                         usuarios que aún tienen su vehículo dentro de las instalaciones sobre el cierre del parqueadero.
-                </div>
+                </div-->
+               
             </div>
-            <div class="col-md-10 col-md-offset-1">
-                <div class="alert alert-info">
+            <!--div class="col-md-10 col-md-offset-1">
+                <div class="alert alert-primary">
                        <h4><strong>SCRUM:</strong></h4>Roles Scrum que son necesarios para este proceso: <strong>Stakeholder= </strong>{{ $equipoScrum[2]['CE_Nombre_Persona'] }}, <strong>Product Owner= </strong>{{ $equipoScrum[1]['CE_Nombre_Persona'] }} y <strong>Scrum Master= </strong>{{ $equipoScrum[0]['CE_Nombre_Persona'] }}.
                 </div>
-            </div>
+            </div-->
             <div class="col-md-10 col-md-offset-1">
-                {!! Form::model ([[$idProceso],[$equipoScrum]],['id'=>'form_update_proyecto', 'url' => '/forms']) !!}
+                {!! Form::model ([[$idProceso],[$equipoScrum],[$infoProyecto],[$infoProceso]],['id'=>'form_update_proyecto', 'url' => '/forms']) !!}
                     <div class="form-body">
                         <div class="row">
                         <h3>Informacion del proceso</h3><br>
                             <div class="col-md-6">
 
-                                {!! Field:: hidden ('FK_CP_Id_Usuario', Auth::user()->id)!!}
+                                {!! Field:: hidden ('FK_CPP_Id_Proyecto', $infoProyecto[0]['PK_CP_Id_Proyecto'])!!}
 
-                                {!! Field:: hidden ('PK_CP_Id_Proyecto', null)!!}
+                                {!! Field:: hidden ('FK_CPP_Id_Proceso', $idProceso) !!}
 
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Numero de acta:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
+                                {!! Field:: text('Numero_acta',$infoProceso->{'Numero_acta'},['label'=>'Numero de acta:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                            ['help' => 'Digite el numero de acta.','icon'=>'fa fa-circle'] ) !!}
 
-                                {!! Field::date('CP_Fecha_Inicio',['label' => 'Fecha',  'class'=> 'form-control','auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],['help' => 'Digite la fecha de inicio del proyecto', 'icon' => 'fa fa-calendar']) !!}
+                                {!! Field::date('Fecha_Inicio',$infoProyecto[0]['CP_Fecha_Inicio'],['label' => 'Fecha de inicio',  'class'=> '','auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d",'readonly'],['help' => 'Digite la fecha de inicio del proyecto', 'icon' => 'fa fa-calendar']) !!}
 
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Nombre de proyecto:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off',],
-                                                            ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
+                                {!! Field:: text('Tipo_Proyecto',$infoProceso->{'Tipo_Proyecto'},['label'=>'Tipo de proyecto:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                            ['help' => 'Digite el tipo de proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
 
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Tipo de proyecto:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Objetivos:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('Objetivos',$infoProceso->{'Objetivos'},['label'=>'Objetivos:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
                             
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Compromiso de obligatorio cumplimiento:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('Compromiso',$infoProceso->{'Compromiso'},['label'=>'Compromiso de obligatorio cumplimiento:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
 
                             </div>
                             <div class="col-md-6">
                             
-                                
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Duracion en meses:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('Nombre_Proyecto',$infoProyecto[0]['CP_Nombre_Proyecto'],['label'=>'Nombre de proyecto:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                                                             ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
 
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Entidades participantes:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('Duracion',$infoProceso->{'Duracion'},['label'=>'Duracion en meses:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
 
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Interesados:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('Entidades',$infoProceso->{'Entidades'},['label'=>'Entidades participantes:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
 
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Fuentes de financiacion:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('Interesados',$infoProceso->{'Interesados'},['label'=>'Interesados:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
 
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Equipo Scrum:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('Financiacion',$infoProceso->{'Financiacion'},['label'=>'Fuentes de financiacion:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-                               
+
                             </div>
                         </div>
-                        <!--div class="row">
+                        <div class="row">
                         <h3>Informacion de los roles Scrum</h3><br>
                             <div class="col-md-6">
-                                {!! Field:: hidden ('FK_CPP_Id_Proceso',$idProceso)!!}
 
-                                {!! Field:: text('CE_Nombre_1',['label'=>'nombre:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('CE_Nombre_1',$equipoScrum[0]['CE_Nombre_Persona'],['label'=>'Scrum Master:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                                                             ['help' => '','icon'=>'fa fa-user'] ) !!}
 
-                                {!! Field:: text('CE_Nombre_2',null,['label'=>'Apellido:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('CE_Nombre_2',$equipoScrum[1]['CE_Nombre_Persona'],['label'=>'Product Owner:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                                                             ['help' => '','icon'=>'fa fa-user'] ) !!}
                                                             
-                                {!! Field:: text('CE_Nombre_3',null,['label'=>'Telefono:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('CE_Nombre_3',$equipoScrum[2]['CE_Nombre_Persona'],['label'=>'Stakeholder:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                                                             ['help' => '','icon'=>'fa fa-user'] ) !!}
                                 
-                                {!! Field:: text('CE_Nombre_4',null,['label'=>'Correo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('CE_Nombre_4',$equipoScrum[3]['CE_Nombre_Persona'],['label'=>'Lider del Equipo Scrum:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                                                             ['help' => '','icon'=>'fa fa-users'] ) !!}
 
                             </div>
                             <div class="col-md-6">
-                           {{-- 
-                                {!! Field:: text('CE_Nombre_5',$infoEquipoScrum[4]['CE_Nombre_Persona'],['label'=>'Integrante uno del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                           
+                                {!! Field:: text('CE_Nombre_5',$equipoScrum[4]['CE_Nombre_Persona'],['label'=>'Integrante uno del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                                                             ['help' => '','icon'=>'fa fa-user-o'] ) !!}
 
-                                {!! Field:: text('CE_Nombre_6',$infoEquipoScrum[5]['CE_Nombre_Persona'],['label'=>'Integrante dos del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('CE_Nombre_6',$equipoScrum[5]['CE_Nombre_Persona'],['label'=>'Integrante dos del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                                                             ['help' => '','icon'=>'fa fa-user-o'] ) !!}
 
-                                @if(empty($infoEquipoScrum[6]['CE_Nombre_Persona']))
-                                    {!! Field:: text('CE_Nombre_7',null,['label'=>'Integrante tres del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                @if(empty($equipoScrum[6]['CE_Nombre_Persona']))
+                                    {!! Field:: text('CE_Nombre_7',null,['label'=>'Integrante tres del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                                                             ['help' => '','icon'=>'fa fa-user-o'] ) !!}
                                 @else
-                                    {!! Field:: text('CE_Nombre_7',$infoEquipoScrum[6]['CE_Nombre_Persona'],['label'=>'Integrante tres del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    {!! Field:: text('CE_Nombre_7',$equipoScrum[6]['CE_Nombre_Persona'],['label'=>'Integrante tres del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                                                             ['help' => '','icon'=>'fa fa-user-o'] ) !!}
                                 @endif
-                                @if(empty($infoEquipoScrum[7]))
-                                    {!! Field:: text('CE_Nombre_8',null,['label'=>'Integrante cuatro del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                @if(empty($equipoScrum[7]))
+                                    {!! Field:: text('CE_Nombre_8',null,['label'=>'Integrante cuatro del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                                                             ['help' => '','icon'=>'fa fa-user-o'] ) !!}  
                                 @else
-                                    {!! Field:: text('CE_Nombre_8',$infoEquipoScrum[7]['CE_Nombre_Persona'],['label'=>'Integrante cuatro del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    {!! Field:: text('CE_Nombre_8',$equipoScrum[7]['CE_Nombre_Persona'],['label'=>'Integrante cuatro del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                                                             ['help' => '','icon'=>'fa fa-user-o'] ) !!}                            
                                 @endif
-                            --}}
+                           
                             </div>
                         </div>
-                    </div-->
+                    </div>
 
                     <div class="form-actions">
                         <div class="row">
@@ -120,7 +166,7 @@
                                             class="fa fa-angle-left"></i>
                                     Cancelar
                                 </a>
-                                {{ Form::submit('Guardar', ['class' => 'btn blue']) }}
+                                {{ Form::submit('Actualizar', ['class' => 'btn blue']) }}
                                 
                                 @endpermission
                             </div>
@@ -181,29 +227,21 @@
                     var formData = new FormData();
                     //var FileMoto = document.getElementById("CM_UrlFoto");
               
-                    // var FileProp = document.getElementById("CM_UrlPropiedad");
-                    // var FileSOAT = document.getElementById("CM_UrlSoat");
-                    /*Tabla Usuarios
-                    formData.append('PK_CU_Id_Usuario', $('input:hidden[name="PK_CU_Id_Usuario"]').val());
-                    formData.append('CU_Cedula', $('input:hidden[name="CU_Cedula"]').val());
-                    formData.append('CU_Nombre', $('input:hidden[name="CU_Nombre"]').val());
-                    formData.append('CU_Apellido', $('input:hidden[name="CU_Apellido"]').val());
-                    formData.append('CU_Telefono', $('input:hidden[name="CU_Telefono"]').val());
-                    formData.append('CU_Correo', $('input:hidden[name="CU_Correo"]').val());*/
-                    //Tabla Proyectos
-                    //formData.append('PK_CP_Id_Proyecto', $('input:hidden[name="PK_CP_Id_Proyecto"]').val());
-                    //formData.append('CP_Nombre_Proyecto', $('input:text[name="CP_Nombre_Proyecto"]').val());
-                    //formData.append('CP_Fecha_Inicio', $('#CP_Fecha_Inicio').val());
-                    //formData.append('CP_Fecha_Final', $('#CP_Fecha_Final').val());
-                    //formData.append('PK_CP_Id_Usuario', $('input:hidden[name="PK_CP_Id_Usuario"]').val());
-                    //formData.append('FK_CP_Id_Usuario', $('input:hidden[name="FK_CP_Id_Usuario"]').val());
-                    //Tabla Equipo Scrum
-
+                    //Tabla Proyecto Proceso
+                    formData.append('FK_CPP_Id_Proyecto', $('input:hidden[name="FK_CPP_Id_Proyecto"]').val());
                     formData.append('FK_CPP_Id_Proceso', $('input:hidden[name="FK_CPP_Id_Proceso"]').val());
-                    formData.append('CE_Nombre_1', $('input:text[name="CE_Nombre_1"]').val());
-                    formData.append('CE_Nombre_2', $('input:text[name="CE_Nombre_2"]').val());
-                    formData.append('CE_Nombre_3', $('input:text[name="CE_Nombre_3"]').val());
-                    formData.append('CE_Nombre_4', $('input:text[name="CE_Nombre_4"]').val());
+
+                    formData.append('Numero_acta', $('input:text[name="Numero_acta"]').val());
+                    formData.append('Fecha_Inicio', $('#Fecha_Inicio').val());
+                    formData.append('Tipo_Proyecto', $('input:text[name="Tipo_Proyecto"]').val());
+                    formData.append('Objetivos', $('input:text[name="Objetivos"]').val());
+                    formData.append('Compromiso', $('input:text[name="Compromiso"]').val());
+
+                    formData.append('Nombre_Proyecto', $('input:text[name="Nombre_Proyecto"]').val());
+                    formData.append('Duracion', $('input:text[name="Duracion"]').val());
+                    formData.append('Entidades', $('input:text[name="Entidades"]').val());
+                    formData.append('Interesados', $('input:text[name="Interesados"]').val());
+                    formData.append('Financiacion', $('input:text[name="Financiacion"]').val());
 
                     //formData.append('CE_Nombre_5', $('input:text[name="CE_Nombre_5"]').val());
                     //formData.append('CE_Nombre_6', $('input:text[name="CE_Nombre_6"]').val());
@@ -246,10 +284,11 @@
         var form = $('#form_update_proyecto');
         var formRules = {
             //CM_UrlFoto: {required: false, extension: "jpg|png"},
-            CP_Nombre_Proyecto: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
+            Numero_acta: {minlength: 2, maxlength: 20, required: true, noSpecialCharacters:true},
+            Duracion: {minlength: 1, maxlength: 2, required: true, noSpecialCharacters:true},
+
             CP_Fecha_Inicio: {required: true, minlength: 3, maxlength: 20},
-            CP_Fecha_Final: {required: true, minlength: 3, maxlength: 20},
-            CE_Nombre_1: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
+            CP_Fecha_Final: {required: true, minlength: 3, maxlength: 20},            
             CE_Nombre_2: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
             CE_Nombre_3: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
             CE_Nombre_4: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
@@ -263,8 +302,7 @@
             // CM_UrlSoat: {required: false, extension: "jpg|png"},
         };
         var formMessage = {
-            CP_Nombre_Proyecto: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CP_Nombre_Proyecto: {letters: 'Los numeros no son válidos'},
+            Numero_acta: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
             CE_Nombre_1: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
             CE_Nombre_1: {letters: 'Los numeros no son válidos'},
             CE_Nombre_2: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
