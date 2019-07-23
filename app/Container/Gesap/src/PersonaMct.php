@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PersonaMct extends Model
 {
-    
+    //modelo apra llenar la tabla persona rubros
     protected $connection = 'gesap';
 
     protected $table = 'TBL_MCT_Detalles_Persona';

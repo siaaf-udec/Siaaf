@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Crypt;
 use App\Container\Gesap\src\Anteproyecto;
 use App\Container\Gesap\src\Proyecto;
 use App\Container\Gesap\src\Actividad;
-use App\Container\Gesap\src\Radicacion;
 use App\Container\Gesap\src\Encargados;
 use App\Container\Gesap\src\Usuarios;
 use App\Container\Gesap\src\Fechas;
@@ -32,6 +31,7 @@ use App\Container\Gesap\src\Estados;
 use App\Container\Gesap\src\Resultados;
 use Illuminate\Support\Facades\Mail;
 use App\Container\Gesap\src\Funciones;
+use App\Container\Gesap\src\NoFunciones;
 use App\Container\Gesap\src\RubroPersonal;
 use App\Container\Gesap\src\RubroEquipos;
 use App\Container\Gesap\src\RubroMaterial;
@@ -110,6 +110,7 @@ class DocenteController extends Controller
                 
                 $anteproyecto->offsetSet('Desarrolladores',  $desarrolladorP );
             }
+            $desarrolladorP = "";
            }
 
                return DataTables::of($anteproyectos)
@@ -313,7 +314,7 @@ class DocenteController extends Controller
         );
     }
 
-    //funcion que trae los proyectos para ser mostrados en el drop dawnlist de solicitudes de docente//
+    //funcion que trae los proyectos para ser mostrados en el drop-down list de solicitudes de docente//
     public function WidgetProyecto(Request $request)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
@@ -432,13 +433,14 @@ class DocenteController extends Controller
         
     }
     // funcion que retorna a la vista correspondiente dependiendo de la $id = pk de la actividad $idp ) pk anteproyecto//
-    public function VerActividadProyectoJurado(Request $request, $id, $idp)
+    public function VerActividadProyectoJurado(Request $request, $id, $idp , $idNum)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
             $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',3)->get();
                     
             $Actividad->offsetSet('Anteproyecto', $idp);
+            $Actividad->offsetSet('Numero', $idNum);
 
             $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
             $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
@@ -865,13 +867,7 @@ class DocenteController extends Controller
                             'Fecha'=> $request['OBS_Limit'],
                         );
             
-                        Mail::send('gesap.Emails.ActComent',$data, function($message) use ($data){
-                            
-                            $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
-            
-                            $message->to($data['correo']);
-            
-                        });
+                    
             
                     }
                 return AjaxResponse::success(
@@ -882,6 +878,130 @@ class DocenteController extends Controller
             }              
         
     }
+    //funcion para enviar dar calificacion del anteproyecto de grado
+    public function CalificarAnte(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            $user = Auth::user();
+            $id = $user->identity_no;
+            if($request['AVAL_Des'] == 1){
+                $Commits = Commits::where('FK_NPRY_IdMctr008',$request['PK_Anteproyecto'])->get();
+                foreach($Commits as $commit){
+                    $commit ->FK_CHK_CheckList = 2;
+                    $commit->save();
+                }
+                
+                $desarrolladores = Desarrolladores::where('Fk_NPRY_IdMctr008',$request['PK_Anteproyecto'])->get();
+                foreach($desarrolladores as $desarrollador){
+                    $data = array(
+                        'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                        'Ante'=>"del Anteproyecto : ".$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                        'Mensaje'=>"Su Anteproyecto Ha sido AVALADO",
+                        'Comentario'=>$request['AVAL_Coment'],
+                    );
+        
+                    Mail::send('gesap.Emails.DecisionDirector',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+        
+                        $message->to($data['correo']);
+        
+                    });
+                
+                }
+               }else{
+
+                $desarrolladores = Desarrolladores::where('Fk_NPRY_IdMctr008',$request['PK_Anteproyecto'])->get();
+                foreach($desarrolladores as $desarrollador){
+                    $data = array(
+                        'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                        'Ante'=>"del Anteproyecto : ".$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                        'Mensaje'=>"Su Anteproyecto NO Ha sido AVALADO",
+                        'Comentario'=>$request['AVAL_Coment'],
+                    );
+        
+                    Mail::send('gesap.Emails.DecisionDirector',$data, function($message) use ($data){
+                        
+                        $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+        
+                        $message->to($data['correo']);
+        
+                    });
+                
+                }
+            }
+            
+            return AjaxResponse::success(
+                    '¡Esta Hecho!',
+                    'Comentarios Enviados.'
+            );
+       
+            }   
+                       
+        
+    }
+     //funcion para enviar dar calificacion del proyecto de grado
+     public function CalificarPro(Request $request)
+     {
+         if ($request->ajax() && $request->isMethod('POST')) {
+             $user = Auth::user();
+             $id = $user->identity_no;
+             if($request['AVAL_Des'] == 1){
+                 $Commits = Commits::where('FK_NPRY_IdMctr008',$request['PK_Anteproyecto'])->get();
+                 foreach($Commits as $commit){
+                     $commit ->FK_CHK_CheckList = 2;
+                     $commit->save();
+                 }
+                 
+                 $desarrolladores = Desarrolladores::where('Fk_NPRY_IdMctr008',$request['PK_Anteproyecto'])->get();
+                 foreach($desarrolladores as $desarrollador){
+                     $data = array(
+                         'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                         'Ante'=>"del Proyecto : ".$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                         'Mensaje'=>"Su Anteproyecto Ha sido AVALADO",
+                         'Comentario'=>$request['AVAL_Coment'],
+                     );
+         
+                     Mail::send('gesap.Emails.DecisionDirector',$data, function($message) use ($data){
+                         
+                         $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+         
+                         $message->to($data['correo']);
+         
+                     });
+                 
+                 }
+                }else{
+ 
+                 $desarrolladores = Desarrolladores::where('Fk_NPRY_IdMctr008',$request['PK_Anteproyecto'])->get();
+                 foreach($desarrolladores as $desarrollador){
+                     $data = array(
+                         'correo'=>$desarrollador->relacionUsuario->User_Correo,
+                         'Ante'=>"del Proyecto : ".$desarrollador->relacionAnteproyecto ->NPRY_Titulo,
+                         'Mensaje'=>"Su Anteproyecto NO Ha sido AVALADO",
+                         'Comentario'=>$request['AVAL_Coment'],
+                     );
+         
+                     Mail::send('gesap.Emails.DecisionDirector',$data, function($message) use ($data){
+                         
+                         $message->from('no-reply@ucundinamarca.edu.co', 'GESAP');
+         
+                         $message->to($data['correo']);
+         
+                     });
+                 
+                 }
+             }
+             
+             return AjaxResponse::success(
+                     '¡Esta Hecho!',
+                     'Comentarios Enviados.'
+             );
+        
+             }   
+                        
+         
+     }
     //funcion para guardar el comentaro del anteproyecto del jurado
     public function ComentarioStoreJurado(Request $request)
     {
@@ -1923,6 +2043,19 @@ class DocenteController extends Controller
                ->make(true);
         }
     }
+    public function NoFuncion(Request $request,$id)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+
+                $Funciones = NoFunciones::where('FK_NPRY_IdMctr008', $id)->get();
+                return DataTables::of($Funciones)
+               ->removeColumn('created_at')
+               ->removeColumn('updated_at')
+                
+               ->addIndexColumn()
+               ->make(true);
+        }
+    }
     //funcion quedependiendo la actividad($id) redirecciona asu respectiva vista $idp= pk proyecto//
     
     public function VerRequerimientos(Request $request, $id, $idp)
@@ -1952,6 +2085,13 @@ class DocenteController extends Controller
                 'datos' => $Actividad,
                 ]);   
                  
+            }    
+            if($act->MCT_Actividad == "Requerimientos No Funcionales"){
+                return view($this->path .'VerRequerimientoNoFuncional',
+                [
+                'datos' => $Actividad,
+                ]);   
+                 
             }     
             return view($this->path .'VerRequerimiento',
             [
@@ -1966,13 +2106,15 @@ class DocenteController extends Controller
     
 }
 //funcion para retornar la vista del requerimiento seleccionado apra su posterior calificación por parte del jrado(Requerimientos) //
-public function RequerimientosJurado(Request $request, $id, $idp)
+public function RequerimientosJurado(Request $request, $id, $idp,$idNum)
 {
     if ($request->ajax() && $request->isMethod('GET')) {
 
         $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',2)->get();
                 
         $Actividad->offsetSet('Anteproyecto', $idp);
+        $Actividad->offsetSet('Numero', $idNum);
+        
 
         $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
         $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
@@ -1996,6 +2138,13 @@ public function RequerimientosJurado(Request $request, $id, $idp)
             $Actividad->offsetSet('Proyecto', $idp );
         if($act->MCT_Actividad == "Funciones"){
             return view($this->path .'.Jurado.VerRequerimientoFuncionesJurado',
+            [
+            'datos' => $Actividad,
+            ]);   
+             
+        }    
+        if($act->MCT_Actividad == "Requerimientos No Funcionales"){
+            return view($this->path .'.Jurado.VerRequerimientoNoFuncionesJurado',
             [
             'datos' => $Actividad,
             ]);   
@@ -2152,20 +2301,23 @@ public function RequerimientosJurado(Request $request, $id, $idp)
     ///funcion que redirecciona a las actividades para calificar como jurado//
     public function navegacionActividades(Request $request, $id, $idp,$idn)
             {
-                   if ($request->ajax() && $request->isMethod('GET')) {
-           if($idn == 0){
-            
-            $id = $id - 1;
-           }else{
-            
-            $id = $id + 1;
-           }
-            $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',1)->get();
-                               
-            $Actividad->offsetSet('Anteproyecto', $idp);
+        if ($request->ajax() && $request->isMethod('GET')) {
+            if($idn == 0){
+                $id = $id - 1;   
+            }else{
+                $id = $id + 1;
+            }
            
+            $Numero = $id ;
+            $Actividades = Mctr008::where('FK_Id_Formato',1)->get();
+            $id = $Actividades[$id]->PK_MCT_IdMctr008;                  
+            $Actividad = Mctr008::where('PK_MCT_IdMctr008',$id)->where('FK_Id_Formato',1)->get();
+            $Actividad->offsetSet('Anteproyecto', $idp);
+            $Actividad->offsetSet('Numero', $Numero);
+            
             $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
             $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
+           
             if($commit2 == null){
                   $Actividad->offsetSet('Commit', "Aún NO se ha hecho ningún cambio a esta actividad del MCT.");
                   $Actividad->offsetSet('Estado', "Sin Enviar Para Calificar.");
@@ -2236,18 +2388,24 @@ public function RequerimientosJurado(Request $request, $id, $idp)
     //funcion que se encarga de navegar entre las actividades para su posterior calificacion $id=pk actividad $idp = pk proyecto y $idn navegacion si es la primer actividad //
     public function navegacionActividadesP(Request $request, $id, $idp,$idn)
             {
-                   if ($request->ajax() && $request->isMethod('GET')) {
-           if($idn == 0){
+        if ($request->ajax() && $request->isMethod('GET')) {
+           
+            if($idn == 0){
             
             $id = $id - 1;
            }else{
             
             $id = $id + 1;
            }
-           $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',3)->get();
-                    
-           $Actividad->offsetSet('Anteproyecto', $idp);
 
+           $Numero = $id ;
+           $Actividades = Mctr008::where('FK_Id_Formato',3)->get();
+           $id = $Actividades[$id]->PK_MCT_IdMctr008;                  
+           $Actividad = Mctr008::where('PK_MCT_IdMctr008',$id)->where('FK_Id_Formato',3)->get();
+           $Actividad->offsetSet('Anteproyecto', $idp);
+           $Actividad->offsetSet('Numero', $Numero);
+
+         
            $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
            $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
            if($commit2 == null)
@@ -2285,18 +2443,22 @@ public function RequerimientosJurado(Request $request, $id, $idp)
    
     public function navegacionActividadesR(Request $request, $id, $idp,$idn)
             {
-                   if ($request->ajax() && $request->isMethod('GET')) {
-           if($idn == 0){
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+            if($idn == 0){
             
             $id = $id - 1;
            }else{
             
             $id = $id + 1;
            }
-            $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',2)->get();
-                               
+            $Numero = $id ;
+            $Actividades = Mctr008::where('FK_Id_Formato',2)->get();
+            $id = $Actividades[$id]->PK_MCT_IdMctr008;                  
+            $Actividad = Mctr008::where('PK_MCT_IdMctr008',$id)->where('FK_Id_Formato',2)->get();
             $Actividad->offsetSet('Anteproyecto', $idp);
-           
+            $Actividad->offsetSet('Numero', $Numero);
+            
             $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
             $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();
             if($commit2 == null){
@@ -2323,6 +2485,13 @@ public function RequerimientosJurado(Request $request, $id, $idp)
                         ]);   
                          
                     }     
+                    if($act->MCT_Actividad == "Requerimientos No Funcionales"){
+                        return view($this->path .'.Jurado.VerRequerimientoNoFuncionesJurado',
+                        [
+                        'datos' => $Actividad,
+                        ]);   
+                         
+                    }     
                     return view($this->path .'.Jurado.VerRequerimientoJurado',
                     [
                     'datos' => $Actividad,
@@ -2334,13 +2503,14 @@ public function RequerimientosJurado(Request $request, $id, $idp)
                 }     
     }
         //funcion que depentiendo la actividad $id y el poryecto $idp redirecciona a una vista diferente// 
-    public function VerActividadJurado(Request $request, $id, $idp)
+    public function VerActividadJurado(Request $request, $id, $idp,$idNum)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
             $Actividad = Mctr008::where('PK_MCT_IdMctr008', $id)->where('FK_Id_Formato',1)->get();
                     
             $Actividad->offsetSet('Anteproyecto', $idp);
+            $Actividad->offsetSet('Numero', $idNum);
 
             $commit = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->get();
             $commit2 = Commits::where('FK_NPRY_Idmctr008',$idp)->where('FK_MCT_IdMctr008',$id)->first();

@@ -21,12 +21,15 @@
                             {!! Field:: textArea('NPRY_Keywords',$datos[0]['NPRY_Keywords'],['label'=>'PALABRAS CLAVE:','readonly', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
 
-                            {!! Field:: textArea('NPRY_Descripcion',$datos[0]['NPRY_Descripcion'],['label'=>'DESCRIPCION:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: textArea('NPRY_Descripcion',$datos[0]['NPRY_Descripcion'],['label'=>'DESCRIPCIÓN:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-book'] ) !!}
 
-                            {!! Field:: text('NPRY_Duracion',$datos[0]['NPRY_Duracion'],['label'=>'DURACION EN MESES:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
+                            {!! Field:: text('NPRY_Duracion',$datos[0]['NPRY_Semillero'],['label'=>'SEMILLERO:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-book'] ) !!}
 
+                            {!! Field:: text('NPRY_Duracion',$datos[0]['NPRY_Duracion'],['label'=>'DURACIÓN EN MESES:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                             ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
+                            
                             {!! Field:: text('FK_NPRY_Estado',$datos['Estado'],['label'=>'ESTADO:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}
                             {!! Field:: text('NPRY_FCH_Radicacion',$datos[0]['NPRY_FCH_Radicacion'],['label'=>'FECHA RADIACIÓN:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],

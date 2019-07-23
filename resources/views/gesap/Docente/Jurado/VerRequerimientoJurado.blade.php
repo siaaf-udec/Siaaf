@@ -50,7 +50,7 @@
                                 {!! Field:: text('MCT_Actividad',$datos[0]['MCT_Actividad'],['label'=>'Actividad:','class'=> 'form-control', 'autofocus','readonly', 'maxlength'=>'100','autocomplete'=>'off'],
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
-
+                                                               
                                 {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_Descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','autocomplete'=>'off'],
                                                                 ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
 
@@ -178,7 +178,7 @@ $(document).ready(function(){
                                     $('#from_create-coment')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('DocenteGesap.RequerimientosJurado') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('DocenteGesap.RequerimientosJurado') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}'  + '/'+'{{$datos['Numero']}}';
                                     $(".content-ajax").load(route);
                                 }
                             },
@@ -186,7 +186,7 @@ $(document).ready(function(){
                                 if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('DocenteGesap.RequerimientosJurado') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('DocenteGesap.RequerimientosJurado') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}'  + '/'+'{{$datos['Numero']}}';
                                     $(".content-ajax").load(route);
                                 }
                             }
@@ -205,7 +205,7 @@ $(document).ready(function(){
             $('.button-anterior').on('click', function (e) {
             e.preventDefault();
             idn = 0;
-            id = '{{$datos[0]['PK_MCT_IdMctr008']}}'
+            id = '{{$datos['Numero']}}'
             var route = '{{ route('DocenteGesap.navegacionActividadesR') }}' + '/' + id + '/'+ '{{$datos['Proyecto']}}' + '/'+idn;
              //location.href="{{route('DocenteGesap.index')}}";
             $(".content-ajax").load(route);
@@ -214,7 +214,7 @@ $(document).ready(function(){
         $('.button-siguiente').on('click', function (e) {
             e.preventDefault();
             idn = 1;
-            id = '{{$datos[0]['PK_MCT_IdMctr008']}}'
+            id = '{{$datos['Numero']}}'
             var route = '{{ route('DocenteGesap.navegacionActividadesR') }}' + '/' + id + '/'+ '{{$datos['Proyecto']}}' + '/'+idn;
              //location.href="{{route('DocenteGesap.index')}}";
             $(".content-ajax").load(route);

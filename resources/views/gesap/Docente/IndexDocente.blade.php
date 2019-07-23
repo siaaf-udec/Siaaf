@@ -32,6 +32,37 @@
 
 @section('content')
     @permission('GESAP_DOCENTE')
+     <!--MODAL CREAR CALIFICAR-->
+            <!-- Modal -->
+            <div class="modal fade" id="modal-create-decision" tabindex="-1" role="dialog" aria-hidden="true">
+                
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        {!! Form::open(['id' => 'form_create-decision', 'url' => '/forms']) !!}
+
+                        <div class="modal-header modal-header-success">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h1><i class="glyphicon glyphicon-plus"></i> Dar Aval Al Anteproyecto</h1>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                   {!! Field:: textArea('AVAL_Coment',null,['label'=>'Comentario:','class'=> 'form-control', 'autofocus','maxlength'=>'1000','autocomplete'=>'off'],
+                                                        ['help' => 'Digite acá su comentario para realizar la solicitud','icon'=>'fa fa-book']) !!}
+                                   {!! Field::select('AVAL_Des',['1'=>'AVALADO', '2'=>'SIN AVALAR'],null,['label'=>'DECISIÓN: ']) !!}
+                            
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                
+            </div>
+            <!--MODAL CREAR CALIFICAR-->
      <!--MODAL CREAR COMENTARIO-->
             <!-- Modal -->
             <div class="modal fade" id="modal-create-Solicitud" tabindex="-1" role="dialog" aria-hidden="true">
@@ -296,7 +327,7 @@ jQuery(document).ready(function () {
             {data: 'Sol_Estado', name: 'Sol_Estado'},
       
             {
-                defaultContent: ' @permission('GESAP_DOCENTE_DELETE_SOL')<a href="javascript:;" title="Eliminar Solicitud" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: ' @permission('GESAP_DOCENTE_DELETE_SOL')<a href="javascript:;" title="Eliminar Solicitud" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission ',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -387,13 +418,12 @@ jQuery(document).ready(function () {
             {data: 'NPRY_Keywords', name: 'NPRY_Keywords'},
             {data: 'NPRY_Descripcion', name: 'NPRY_Descripcion'},
             {data: 'NPRY_Duracion', name: 'NPRY_Duracion'},
-           
             {data: 'Estado', name: 'Estado'},
             {data: 'NPRY_FCH_Radicacion', name: 'NPRY_FCH_Radicacion'},
             {data: 'Desarrolladores', name: 'Desarrolladores'},
       
             {
-                defaultContent: ' @permission('GESAP_DOCENTE_VER_ANTE_DIRECTOR')<a href="javascript:;" title="Ver Actividades" class="btn btn-info Ver" ><i class="icon-eye"></i></a>@endpermission ' ,
+                defaultContent: ' @permission('GESAP_DOCENTE_VER_ANTE_DIRECTOR')<a href="javascript:;" title="Ver Actividades" class="btn btn-info Ver" ><i class="icon-eye"></i></a>@endpermission @permission('GESAP_DOCENTE_VER_ANTE_DIRECTOR')<a href="javascript:;" title="Calificar" class="btn btn-success Calificar" ><i class="icon-check"></i></a>@endpermission' ,
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -407,8 +437,75 @@ jQuery(document).ready(function () {
                 responsivePriority: 2
             }
         ];
+        var id_anteproyecto = 0 ;
+        table.on('click', '.Calificar', function (e) {
+            e.preventDefault();
+            $('#modal-create-decision').modal('toggle');
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            id_anteproyecto = dataTable.PK_NPRY_IdMctr008;
+            
+        });
+        var TomarDesicion = function () {
+                return {
+                    init: function () {
+                        var route = '{{ route('DocenteGesap.CalificarAnte') }}';
+                        var type = 'POST';
+                        var async = async || false;
+
+                        var formData = new FormData();      
+                        formData.append('PK_Anteproyecto', id_anteproyecto);
+                        formData.append('AVAL_Coment', $('#AVAL_Coment').val());
+                        formData.append('AVAL_Des', $('#AVAL_Des').val());
+                        
+
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            data: formData,
+                            processData: false,
+                            async: async,
+                            beforeSend: function () {
+                                App.blockUI({target: '.portlet-form', animate: true});
+                            },
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                   // table.ajax.reload();
+                                    $('#modal-create-decision').modal('hide');
+                                    $('#form_create-decision')[0].reset(); //Limpia formulario
+                                    UIToastr.init(xhr, response.title, response.message);        
+                                    App.unblockUI('.portlet-form');
+                                    
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    App.unblockUI('.portlet-form');
+                                   
+                                }
+                            }
+                        });
+                    }
+                }
+            };
+            var form2 = $('#form_create-decision');
+            var rules2 = {
+                AVAL_Coment:{minlength: 1, maxlength: 1000, required: true},
+                AVAL_Des:{required: true},
+           
+             };
+
+
+            FormValidationMd.init(form2, rules2, false, TomarDesicion()); 
+
+        
         
       
+
      
         dataTableServer.init(table, url, columns);
         table = table.DataTable();

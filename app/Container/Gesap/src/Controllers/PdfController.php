@@ -26,7 +26,6 @@ use Barryvdh\Snappy\Facades\SnappyPdf;
 use App\Container\Gesap\src\Anteproyecto;
 use App\Container\Gesap\src\Proyecto;
 use App\Container\Gesap\src\Actividad;
-use App\Container\Gesap\src\Radicacion;
 use App\Container\Gesap\src\Encargados;
 use App\Container\Gesap\src\Usuarios;
 use App\Container\Gesap\src\Cronograma;
@@ -64,7 +63,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 class PdfController extends Controller
 {
     private $path = 'gesap.Reportes.';
-    //Esta Función Genera la informacion para lelnar los reportes generales de anteproyectos de grado.
+    //Esta Función Genera la informacion para llenar los reportes generales de anteproyectos de grado.
     public function reporteAnteproyectos(Request $request,$id)
     {
         if($request->isMethod('GET')){
@@ -390,6 +389,11 @@ class PdfController extends Controller
                 foreach($director as $direc){
                     $direc->offsetSet('AnteEstado', $direc->relacionEstado->EST_Estado);
                     $direc->offsetSet('Titulo', $direc->NPRY_Titulo);
+                    if($direc->NPRY_Ante_Estado == 1){
+                        $direc->offsetSet('EstadoA','Activo');
+                    }else{
+                        $direc->offsetSet('EstadoA','Inactivo');
+                    }
                     $j=0;
                     $desarrolladorP="";
                     $desarrolladores = Desarrolladores::where('FK_NPRY_IdMctr008',$direc->PK_NPRY_IdMctr008)->get();
@@ -414,6 +418,11 @@ class PdfController extends Controller
                 foreach($Proydirector as $proydirec){
                     $proydirec->offsetSet('Titulo',$proydirec->relacionAnteproyecto->NPRY_Titulo);
                     $proydirec->offsetSet('EstadoProy',$proydirec->relacionEstado->EST_Estado);
+                    if($proydirec->NPRY_Pro_Estado == 1){
+                        $proydirec->offsetSet('EstadoA','Activo');
+                    }else{
+                        $proydirec->offsetSet('EstadoA','Inactivo');
+                    }
                     $jj=0;
                     $desarrolladorProy="";
                     $desarrolladoresProyecto = Desarrolladores::where('FK_NPRY_IdMctr008',$proydirec->FK_NPRY_IdMctr008)->get();
@@ -439,7 +448,11 @@ class PdfController extends Controller
                     $juradoante->offsetSet('Titulo', $juradoante->relacionAnteproyecto->NPRY_Titulo );
                     $juradoante->offsetSet('Estado',$juradoante->relacionAnteproyecto->relacionEstado->EST_Estado );
                     $juradoante->offsetSet('EstadoJur',$juradoante->relacionEstado->EST_Estado );
-
+                    if($juradoante->relacionAnteproyecto->NPRY_Ante_Estado == 1){
+                        $juradoante->offsetSet('EstadoA','Activo');
+                    }else{
+                        $juradoante->offsetSet('EstadoA','Inactivo');
+                    }
                     $jja=0;
                     $desarrolladorAntroyjur="";
                     $desarrolladoresAnteproyectojur = Desarrolladores::where('FK_NPRY_IdMctr008',$juradoante->FK_NPRY_IdMctr008)->get();
@@ -466,6 +479,12 @@ class PdfController extends Controller
                 $proyectossirve=[];
                 foreach($juradosproy as $juradoproy){
                     $juradoproy->offsetSet('Titulo',$juradoproy->relacionAnteproyecto->NPRY_Titulo);
+                    if($juradoproy->relacionAnteproyecto->NPRY_Ante_Estado == 1){
+                        $juradoproy->offsetSet('EstadoA','Activo');
+                    }else{
+                        $juradoproy->offsetSet('EstadoA','Inactivo');
+                    }
+                    
                     if($juradoproy->relacionAnteproyecto->FK_NPRY_Estado == 4 ){
                        
                         $juradoproy->offsetSet('Estado',$juradoproy->relacionProyecto->relacionEstado->EST_Estado);      
@@ -701,7 +720,9 @@ class PdfController extends Controller
         if ($request->isMethod('GET')) {
         
                $anteproyectos = Anteproyecto::where('FK_NPRY_Estado',$id)->get();
-            
+            if($anteproyectos -> IsEmpty()){
+                return PDF::loadView($this->path .'.Descargables.Nullreport')->download('Nullreport.pdf');
+            }else{
                 $title = "Reporte : Historial de Anteproyectos De Grado Por Estado";
                 foreach($anteproyectos as $anteproyecto){
                     $anteproyecto->offsetSet('Director',$anteproyecto->relacionPredirectores->User_Nombre1." ".$anteproyecto->relacionPredirectores->User_Apellido1);
@@ -739,7 +760,7 @@ class PdfController extends Controller
                 $fecha = Carbon::now()->formatlocalized('%A %d %B %Y'); 
                 return PDF::loadView($this->path .'.Descargables.AnteproyectosFiltroPdfD',
                 compact('anteproyectos','title' ,'fecha'))->download('ReportePorEstado.pdf');  
- 
+            }
         }
     }
 //descargar un reporte especifico con las fechas $id = fecha inicial $id2= fecha secundaria///
@@ -749,7 +770,9 @@ class PdfController extends Controller
         
                
                $anteproyectos = Anteproyecto::whereBetween('NPRY_FCH_Radicacion',[$id,$id2])->get(); 
-               
+               if($anteproyectos->IsEmpty()){
+                    return PDF::loadView($this->path .'.Descargables.Nullreport')->download('Nullreport.pdf');
+               }else{
                 $title = "Reporte : Historial de Anteproyectos De Grado Por Estado";
                 foreach($anteproyectos as $anteproyecto){
                     $anteproyecto->offsetSet('Director',$anteproyecto->relacionPredirectores->User_Nombre1." ".$anteproyecto->relacionPredirectores->User_Apellido1);
@@ -788,7 +811,7 @@ class PdfController extends Controller
                 
                 return PDF::loadView($this->path .'.Descargables.AnteproyectosFiltroPdfD',
                 compact('anteproyectos','title' ,'fecha'))->download('ReportePorFecha.pdf');  
- 
+            }
         }
     }
 
@@ -798,7 +821,9 @@ public function ReportesEspAnteproyectoPC(Request $request,$id)
     if ($request->isMethod('GET')) {
     
            $anteproyectos = Anteproyecto::where('NPRY_Keywords','LIKE','%'.$id.'%')->get();
-        
+           if($anteproyectos->IsEmpty()){
+                 return PDF::loadView($this->path .'.Descargables.Nullreport')->download('Nullreport.pdf');
+           }else{
             $title = "Reporte : Historial de Anteproyectos De Grado Por Palabras Clave";
             foreach($anteproyectos as $anteproyecto){
                 $anteproyecto->offsetSet('Director',$anteproyecto->relacionPredirectores->User_Nombre1." ".$anteproyecto->relacionPredirectores->User_Apellido1);
@@ -835,8 +860,8 @@ public function ReportesEspAnteproyectoPC(Request $request,$id)
 
             $fecha = Carbon::now()->formatlocalized('%A %d %B %Y'); 
             return PDF::loadView($this->path .'.Descargables.AnteproyectosFiltroPdfD',
-            compact('anteproyectos','title' ,'fecha'))->download('ReportePorFecha.pdf');  
-
+            compact('anteproyectos','title' ,'fecha'))->download('ReportePalabraClave.pdf');  
+        }
     }
 }
 
@@ -847,11 +872,17 @@ public function ReportesEspAnteproyectoPE(Request $request,$id,$id2)
         if($id2==1){
             $anteproyectos = Anteproyecto::where('FK_NPRY_Pre_Director',$id)->where('NPRY_Ante_Estado',1)->get();
             
-        }else{
+        }
+        if($id2==2){
             $anteproyectos = Anteproyecto::where('FK_NPRY_Pre_Director',$id)->where('NPRY_Ante_Estado',2)->get();
     
         }
-        
+        else{
+            $anteproyectos = Anteproyecto::where('FK_NPRY_Pre_Director',$id)->where('NPRY_Ante_Estado',$id2)->get();
+        }
+        if(  $anteproyectos->IsEmpty() ){
+            return PDF::loadView($this->path .'.Descargables.Nullreport')->download('Nullreport.pdf');
+        }else{
             $title = "Reporte : Historial de Anteproyectos De Grado Por Docente y Estado";
             foreach($anteproyectos as $anteproyecto){
                 $anteproyecto->offsetSet('Director',$anteproyecto->relacionPredirectores->User_Nombre1." ".$anteproyecto->relacionPredirectores->User_Apellido1);
@@ -888,7 +919,7 @@ public function ReportesEspAnteproyectoPE(Request $request,$id,$id2)
             $fecha = Carbon::now()->formatlocalized('%A %d %B %Y'); 
             return PDF::loadView($this->path .'.Descargables.AnteproyectosFiltroPdfD',
             compact('anteproyectos','title' ,'fecha'))->download('ReportePorFecha.pdf');  
-
+        }
     }
 }
 
@@ -898,7 +929,9 @@ public function ReportesEspProyecto(Request $request,$id)
     if ($request->isMethod('GET')) {
     
            $proyectos = Proyecto::where('FK_EST_Id',$id)->get();
-        
+           if($proyectos->IsEmpty()){
+                 return PDF::loadView($this->path .'.Descargables.Nullreport')->download('Nullreport.pdf');
+           }else{
             $title = "Reporte : Historial de Proyectos De Grado Por Estado";
             $j=0;
             $desarrolladorP = "";
@@ -941,7 +974,7 @@ public function ReportesEspProyecto(Request $request,$id)
             $fecha = Carbon::now()->formatlocalized('%A %d %B %Y'); 
             return PDF::loadView($this->path .'.Descargables.ProyectosFiltroPdfD',
             compact('proyectos','title' ,'fecha'))->download('ReportePorEstado.pdf');  
-
+        }
     }
 }
 //descargar un reporte especifico con las fechas $id = fecha inicial $id2= fecha secundaria de proyectos///
@@ -1003,7 +1036,9 @@ public function ReportesEspProyectoPC(Request $request,$id)
 if ($request->isMethod('GET')) {
 
        $anteproyectos = Anteproyecto::where('NPRY_Keywords','LIKE','%'.$id.'%')->where('FK_NPRY_Estado',4)->get();
-    
+       if($anteproyectos->IsEmpty()){
+             return PDF::loadView($this->path .'.Descargables.Nullreport')->download('Nullreport.pdf');
+       }else{
         $title = "Reporte : Historial de Proyecto De Grado Por Palabras Clave";
         foreach($anteproyectos as $anteproyecto){
             $anteproyecto->offsetSet('Director',$anteproyecto->relacionPredirectores->User_Nombre1." ".$anteproyecto->relacionPredirectores->User_Apellido1);
@@ -1040,7 +1075,7 @@ if ($request->isMethod('GET')) {
         $fecha = Carbon::now()->formatlocalized('%A %d %B %Y'); 
         return PDF::loadView($this->path .'.Descargables.AnteproyectosFiltroPdfD',
         compact('anteproyectos','title' ,'fecha'))->download('ReportePorFecha.pdf');  
-
+    }
 }
 }
 
@@ -1051,11 +1086,16 @@ public function ReportesEspProyectoPE(Request $request,$id,$id2)
         if($id2==1){
             $proyectos = Proyecto::where('FK_NPRY_Director',$id)->where('NPRY_Pro_Estado',1)->get();
             
-        }else{
+        }
+        if($id2==2){
             $proyectos = Proyecto::where('FK_NPRY_Director',$id)->where('NPRY_Pro_Estado',2)->get();
 
+        }else{
+            $proyectos = Proyecto::where('FK_NPRY_Director',$id)->where('NPRY_Pro_Estado',$id2)->get();
         }
-        
+        if($proyectos->IsEmpty()){
+            return PDF::loadView($this->path .'.Descargables.Nullreport')->download('Nullreport.pdf');
+        }else{
             $title = "Reporte : Historial de Proyectos De Grado Por Docente y Estado";
             $j=0;
             $desarrolladorP = "";
@@ -1097,15 +1137,9 @@ public function ReportesEspProyectoPE(Request $request,$id,$id2)
 
             return PDF::loadView($this->path .'.Descargables.ProyectosFiltroPdfD',
             compact('proyectos','title' ,'fecha'))->download('ReportePorFecha.pdf');  
-
+        }    
     }
 }
-
-
-    public function descargarReporteAnteproyectos($data)
-    {
-       
-    }
 
 }
 

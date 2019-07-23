@@ -42,11 +42,13 @@
                                <br>
                         </div>
                         <div class="col-md-6">
-                          
+                            
+
+                               
                                </div>
                              
                         </div>
-                        {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'ESTADO:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
+                        {!! Field:: text('MCT_Actividad',$datos['Estado'],['label'=>'ESTADO DE LA ACTIVIDAD:','class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
                        
@@ -56,10 +58,17 @@
 
                                 {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_Descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','autocomplete'=>'off'],
                                                                 ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
-
-                               
-                        {!! Field:: textArea('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
+                        {!! Field:: text('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'autofocus','readonly','autocomplete'=>'off'],
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
+                    <br><br>
+                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'FuncionF'])
+                    @slot('columns', [
+                            'Nombre',
+                            'Función',
+                    ])
+                    @endcomponent
+
+                    <br><br>
 
                     
 
@@ -89,7 +98,7 @@
                                             class="fa fa-angle-left"></i>
                                     Regresar
                                 </a>@endpermission
-                            
+                                
 
                                 
                             </div>
@@ -171,7 +180,7 @@ $(document).ready(function(){
                                     $('#from_create-coment')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('DocenteGesap.VerRequerimientos') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('DocenteGesap.VerActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                 }
                             },
@@ -179,7 +188,7 @@ $(document).ready(function(){
                                 if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('DocenteGesap.VerRequerimientos') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('DocenteGesap.VerActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                 }
                             }
@@ -231,8 +240,9 @@ $(document).ready(function(){
                                                 xhr = "warning"
                                                 UIToastr.init(xhr, response.title, response.message);
                                                 App.unblockUI('.portlet-form');
-                                                 var route = '{{ route('DocenteGesap.VerRequerimientos') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                                var route = '{{ route('DocenteGesap.VerRequerimientos') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                                  $(".content-ajax").load(route);
+                                               
                                             } else {
                                                 table.ajax.reload();
                                                 UIToastr.init(xhr, response.title, response.message);
@@ -257,6 +267,28 @@ $(document).ready(function(){
                 });
 
         });
+        
+        var table2, url2, columns2;
+        
+        table2 = $('#FuncionF');
+       
+           
+        url2 = '{{ route('DocenteGesap.NoFuncion') }}'+'/'+'{{$datos['Anteproyecto']}}';
+       
+       
+        columns2 = [
+            
+            {data: 'MCT_No_Funcion_Nombre', name: 'MCT_No_Funcion_Nombre'},
+            {data: 'MCT_No_Funcion_Funcion', name: 'MCT_No_Funcion_Funcion'},
+            
+        ];
+        dataTableServer.init(table2, url2, columns2);
+        table2 = table2.DataTable();
+
+        
+
+
+
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class RubroTecnologico extends Model
 {
-    
+    //modelo que llena la tabla rubros
     protected $connection = 'gesap';
 
     protected $table = 'TBL_RBR_Tecnologico';

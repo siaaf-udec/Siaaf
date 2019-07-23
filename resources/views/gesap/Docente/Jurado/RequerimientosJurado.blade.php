@@ -108,7 +108,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('DocenteGesap.RequerimientosJurado') }}' + '/' + dataTable.PK_MCT_IdMctr008 + '/'+ idp;
+            var route = '{{ route('DocenteGesap.RequerimientosJurado') }}' + '/' + dataTable.PK_MCT_IdMctr008 + '/'+ idp + '/' + (dataTable.Numero-1);
             //location.href="{{route('AnteproyectosGesap.index')}}";
             $(".content-ajax").load(route);
 
@@ -121,7 +121,7 @@
         $('.Actividades').on('click', function (e) {
             e.preventDefault();
            
-            var route =  '{{ route('DocenteGesap.VerActividadesJurado') }}' + '/' + idp;
+            var route =  '{{ route('DocenteGesap.VerActividadesJurado') }}' + '/' + idp ;
             //location.href="{{route('DocenteGesap.index')}}";
             $(".content-ajax").load(route);
         });

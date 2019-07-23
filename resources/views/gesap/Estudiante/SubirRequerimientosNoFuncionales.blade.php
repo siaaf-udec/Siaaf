@@ -30,32 +30,26 @@
                 
             </div>
             <!--MODAL CREAR COMENTARIO-->
-             <!--MODAL CREAR Resultado-->
+             <!--MODAL CREAR Funcion-->
             <!-- Modal -->
-            <div class="modal fade" id="modal-create-Resultado" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="modal-create-Funcion" tabindex="-1" role="dialog" aria-hidden="true">
                 
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'form_create-Resultado', 'url' => '/forms']) !!}
+                        {!! Form::open(['id' => 'form_create-Funcion', 'url' => '/forms']) !!}
 
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1><i class="glyphicon glyphicon-plus"></i> Añadir Resultado</h1>
+                            <h1><i class="glyphicon glyphicon-plus"></i> Añadir Actividad</h1>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: Text('MCT_Resultado',null,['label'=>'Resultado:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el resultado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Producto_Esperado',null,['label'=>'Producto Esperado:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el producto esperado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Indicador',null,['label'=>'Indicador :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el indicador','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_Beneficiario',null,['label'=>'Beneficiario :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el Beneficiario','icon'=>'fa fa-book']) !!}
-                                   {!! Field::select('MCT_Categoria',['Conocimiento y/o nuevo desarrollo'=>'Conocimiento y/o nuevo desarrollo', 'Fortalecimiento de la capacidad cientifica'=>'Fortalecimiento de la capacidad cientifica',
-                                                         'Apropiación social del conocimiento'=>'Apropiación social del conocimiento'],null,['label'=>'Categoria: ']) !!}
-                                 
+                                   {!! Field:: Text('MCT_Funcion_Nombre',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
+                                                        ['help' => 'Digite el nombre del Requerimiento','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_Funcion_Funcion',null,['label'=>'Función:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
+                                                        ['help' => 'Digite lo que hara el requerimiento','icon'=>'fa fa-book']) !!}
+                                                    
                                
                                
                                 </div>
@@ -69,36 +63,27 @@
                     </div>
                 
             </div>
-            <!--MODAL CREAR Resultado-->
-            <!--MODAL EDITAR Resultado-->
+            <!--MODAL CREAR Funcion-->
+            <!--MODAL EDITAR Funcion-->
             <!-- Modal -->
-            <div class="modal fade" id="modal-edit-Resultado" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="modal-edit-Funcion" tabindex="-1" role="dialog" aria-hidden="true">
                 
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'form_edit-Resultado', 'url' => '/forms']) !!}
+                        {!! Form::open(['id' => 'form_edit-Funcion', 'url' => '/forms']) !!}
 
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1><i class="glyphicon glyphicon-plus"></i> Editar Resultado</h1>
+                            <h1><i class="glyphicon glyphicon-plus"></i> Editar Actividad</h1>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                 
-                                    {!! Field:: Text('MCT_EDITAR_Resultado',null,['label'=>'Resultado:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite aqui el resultado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Producto_Esperado',null,['label'=>'Producto Esperado:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el producto esperado','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Indicador',null,['label'=>'Indicador :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el indicador','icon'=>'fa fa-book']) !!}
-                                   {!! Field:: Text('MCT_EDITAR_Beneficiario',null,['label'=>'Beneficiario :','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
-                                                        ['help' => 'Digite acá el Beneficiario','icon'=>'fa fa-book']) !!}
-                                   {!! Field::select('MCT_EDITAR_Categoria',['Conocimiento y/o nuevo desarrollo'=>'Conocimiento y/o nuevo desarrollo', 'Fortalecimiento de la capacidad cientifica'=>'Fortalecimiento de la capacidad cientifica',
-                                                         'Apropiación social del conocimiento'=>'Apropiación social del conocimiento'],null,['label'=>'Categoria: ']) !!}
-                                   
-                               
-                               
+                                   {!! Field:: Text('MCT_EDITAR_Funcion_Nombre',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
+                                                        ['help' => 'Digite el nombre del Requerimiento','icon'=>'fa fa-book']) !!}
+                                   {!! Field:: Text('MCT_EDITAR_Funcion_Funcion',null,['label'=>'Función:','class'=> 'form-control', 'autofocus','maxlength'=>'190','autocomplete'=>'off'],
+                                                        ['help' => 'Digite lo que hara el requerimiento','icon'=>'fa fa-book']) !!}
+                      
                                 </div>
                             </div>
                         </div>
@@ -110,11 +95,13 @@
                     </div>
                 
             </div>
-            <!--MODAL EDITAR Resultado-->
+            <!--MODAL EDITAR Funcion-->
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para subir Actividades del Mctr008'])
+  
+@component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario para subir Los Requerimientos del Anteproyecto'])
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
+            
             {!! Form::model ([$datos], ['id'=>'form_subir_actividad', 'url' => '/forms'])  !!}
        <div class="form-body">
                     <div class="row">
@@ -123,7 +110,8 @@
                                <br>
                         </div>
                         <div class="col-md-6">
-                                  
+                              
+                               
                                </div>
                              
                         </div>
@@ -138,7 +126,6 @@
                                 {!! Field:: textArea('MCT_Descripcion',$datos[0]['MCT_Descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control','readonly', 'autofocus','autocomplete'=>'off'],
                                                                 ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
 
-              
                         {!! Field:: text('CMMT_Commit',$datos['Commit'],['label'=>'INFORMACIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'500','readonly','autocomplete'=>'off'],
                     
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
@@ -148,32 +135,25 @@
                                                        class="btn btn-simple btn-warning btn-icon person"
                                                        title="Gestionar Mct">
                             <i class="fa fa-plus">
-                            </i>Agregar Resultado
+                            </i>Agregar Función
                         </a>@endpermission
                     @endif
                     <br><br>
                     @if($datos['Estado'] != "APROBADO" )
-                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'Resultados'])
+                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'Funcion'])
                     @slot('columns', [
-                            'Resultado',
-                            'Producto Esperado',
-                            'Indicador',
-                            'Beneficio',
-                            'Categoria',
-                            'Acciones'
+                            'Nombre',
+                            'Función',
+                            'Acciones',
     
                     ])
                     @endcomponent
                     @endif
                     @if($datos['Estado'] == "APROBADO" )
-                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'ResultadosF'])
+                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'FuncionF'])
                     @slot('columns', [
-                            'Resultado',
-                            'Producto Esperado',
-                            'Indicador',
-                            'Beneficio',
-                            'Categoria'
-    
+                            'Nombre',
+                            'Función',
                     ])
                     @endcomponent
                     @endif
@@ -226,20 +206,6 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    
-    $.fn.select2.defaults.set("theme", "bootstrap");
-        $(".pmd-select2").select2({
-            placeholder: "Selecciónar",
-            allowClear: true,
-            width: 'auto',
-            escapeMarkup: function (m) {
-                return m;
-            }
-        });
-
-        $('.pmd-select2', form).change(function () {
-            form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
-        });
 
     id = 123456189 ;
 
@@ -300,7 +266,7 @@ $(document).ready(function(){
                                     $('#from_create-coment')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);        
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('EstudianteGesap.SubirRequerimiento') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                     
                                 }
@@ -309,7 +275,7 @@ $(document).ready(function(){
                                 if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('EstudianteGesap.SubirRequerimiento') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                    
                                 }
@@ -329,20 +295,16 @@ $(document).ready(function(){
      
         var table1, url1, columns1;
         
-        table1 = $('#Resultados');
+        table1 = $('#Funcion');
        
            
-        url1 = '{{ route('EstudianteGesap.Resultados') }}'+'/'+'{{$datos['Anteproyecto']}}';
+        url1 = '{{ route('EstudianteGesap.NoFuncion') }}'+'/'+'{{$datos['Anteproyecto']}}';
        
        
         columns1 = [
             
-            {data: 'MCT_Resultado', name: 'MCT_Resultado'},
-            {data: 'MCT_Producto_Esperado', name: 'MCT_Producto_Esperado'},
-            {data: 'MCT_Indicador', name: 'MCT_Indicador'},
-            {data: 'MCT_Beneficiario', name: 'MCT_Beneficiario'},
-            {data: 'MCT_Categoria', name: 'MCT_Categoria'},  
-           
+            {data: 'MCT_No_Funcion_Nombre', name: 'MCT_No_Funcion_Nombre'},
+            {data: 'MCT_No_Funcion_Funcion', name: 'MCT_No_Funcion_Funcion'},
             {
                 defaultContent: ' @permission('GESAP_STUDENT_DELETE')<a href="javascript:;" title="Eliminar" class="btn btn-danger Eliminar" ><i class="icon-trash"></i></a>@endpermission @permission('GESAP_STUDENT_UPDATE')<a href="javascript:;" title="Editar" class="btn btn-warning Editar" ><i class="icon-pencil"></i></a>@endpermission ' ,
                 data: 'action',
@@ -360,42 +322,42 @@ $(document).ready(function(){
         ];
         dataTableServer.init(table1, url1, columns1);
         table1 = table1.DataTable();
+
+        var table2, url2, columns2;
+        
+        table2 = $('#FuncionF');
        
-        var tabler, urlr, columnsr;
-        tabler = $('#ResultadosF');
-        urlr = '{{ route('EstudianteGesap.Resultados') }}'+'/'+'{{$datos['Anteproyecto']}}';
-        columnsr = [
+           
+        url2 = '{{ route('EstudianteGesap.NoFuncion') }}'+'/'+'{{$datos['Anteproyecto']}}';
+       
+       
+        columns2 = [
             
-            {data: 'MCT_Resultado', name: 'MCT_Resultado'},
-            {data: 'MCT_Producto_Esperado', name: 'MCT_Producto_Esperado'},
-            {data: 'MCT_Indicador', name: 'MCT_Indicador'},
-            {data: 'MCT_Beneficiario', name: 'MCT_Beneficiario'},
-            {data: 'MCT_Categoria', name: 'MCT_Categoria'},  
+            {data: 'MCT_No_Funcion_Nombre', name: 'MCT_No_Funcion_Nombre'},
+            {data: 'MCT_No_Funcion_Funcion', name: 'MCT_No_Funcion_Funcion'},
+            
         ];
-        dataTableServer.init(tabler, urlr, columnsr);
-        tabler = tabler.DataTable();
+        dataTableServer.init(table2, url2, columns2);
+        table2 = table2.DataTable();
 
         
         $('.person').on('click', function (e) {
             e.preventDefault();
-            $('#modal-create-Resultado').modal('toggle');
+            $('#modal-create-Funcion').modal('toggle');
         });
         jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
                  return this.optional(element) || /^[0-9]+$/i.test(value);
         });
-        var CrearResultado = function () {
+        var CrearFuncion = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('EstudianteGesap.ResultadoStore') }}';
+                        var route = '{{ route('EstudianteGesap.NoFuncionStore') }}';
                         var type = 'POST';
                         var async = async || false;
 
                         var formData = new FormData();
-                        formData.append('MCT_Resultado', $('#MCT_Resultado').val());
-                        formData.append('MCT_Producto_Esperado', $('#MCT_Producto_Esperado').val());
-                        formData.append('MCT_Indicador', $('#MCT_Indicador').val());
-                        formData.append('MCT_Beneficiario', $('#MCT_Beneficiario').val());
-                        formData.append('MCT_Categoria', $('#MCT_Categoria').val());
+                        formData.append('MCT_Funcion_Nombre', $('#MCT_Funcion_Nombre').val());
+                        formData.append('MCT_Funcion_Funcion', $('#MCT_Funcion_Funcion').val());
                         
             
 ///LA OTRA TABLA///
@@ -423,11 +385,11 @@ $(document).ready(function(){
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                    // table.ajax.reload();
-                                    $('#modal-create-Resultado').modal('hide');
-                                    $('#form_create-Resultado')[0].reset(); //Limpia formulario
+                                    $('#modal-create-Funcion').modal('hide');
+                                    $('#form_create-Funcion')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);        
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('EstudianteGesap.SubirRequerimiento') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                     
                                 }
@@ -436,7 +398,7 @@ $(document).ready(function(){
                                 if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('EstudianteGesap.SubirRequerimiento') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                    
                                 }
@@ -445,31 +407,28 @@ $(document).ready(function(){
                     }
                 }
             };
-            var form1 = $('#form_create-Resultado');
+            var form1 = $('#form_create-Funcion');
             var rules1 = {
                 
-                MCT_Resultado:{minlength: 1, maxlength: 190, required: true},
-                MCT_Producto_Esperado:{minlength: 1, maxlength: 190, required: true},
-                MCT_Indicador:{minlength: 1, maxlength: 190, required: true,},       
-                MCT_Beneficiario:{minlength: 1, maxlength: 190, required: true},
-                MCT_Categoria:{required: true},       
+                MCT_Funcion_Nombre:{minlength: 1, maxlength: 190, required: true},
+                MCT_Funcion_Funcion:{minlength: 1, maxlength: 190, required: true},
            
             };
 
 
-            FormValidationMd.init(form1, rules1, false, CrearResultado()); 
-
+            FormValidationMd.init(form1, rules1, false, CrearFuncion()); 
+            
             table1.on('click', '.Eliminar', function (e) {
             e.preventDefault();
             $tr1 = $(this).closest('tr');
 
             var dataTable1 = table1.row($tr1).data();
-            var route1 = '{{ route('EstudianteGesap.ResultadoDelete') }}' + '/' + dataTable1.PK_Id_Resultados;
+            var route1 = '{{ route('EstudianteGesap.NoFuncionDelete') }}' + '/' + dataTable1.PK_Id_No_Funcion;
             var type1 = 'DELETE';
             var async1 = async1 || false;
             swal({
                     title: "¿Está seguro?",
-                    text: "¿Está seguro de eliminar este Resultado?",
+                    text: "¿Está seguro de eliminar esta Funcion?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -501,39 +460,34 @@ $(document).ready(function(){
                             }
                         });
                     } else {
-                        swal("Cancelado", "No se eliminó ningun Resultado", "error");
+                        swal("Cancelado", "No se eliminó ninguna Funcion", "error");
                     }
                 });
 
         });
-        var id_actividad = 0;
+        var id_tabla = 0;
         table1.on('click', '.Editar', function (e) {
             e.preventDefault();
-            $('#modal-edit-Resultado').modal('toggle');
+            $('#modal-edit-Funcion').modal('toggle');
             $tr1 = $(this).closest('tr');
             var dataTable1 = table1.row($tr1).data();
-            id_actividad = dataTable1.PK_Id_Resultados;
-            $('#MCT_EDITAR_Resultado').val(dataTable1.MCT_Resultado);
-            $('#MCT_EDITAR_Producto_Esperado').val(dataTable1.MCT_Producto_Esperado);
-            $('#MCT_EDITAR_Indicador').val(dataTable1.MCT_Indicador);
-            $('#MCT_EDITAR_Beneficiario').val(dataTable1.MCT_Beneficiario);
-            $('#MCT_EDITAR_Categoria').val(dataTable1.MCT_Categoria);
+            id_tabla = dataTable1.PK_Id_No_Funcion;
+            $('#PK_Id_Funcion').val(dataTable1.PK_Id_No_Funcion);
+            $('#MCT_EDITAR_Funcion_Nombre').val(dataTable1.MCT_No_Funcion_Nombre);
+            $('#MCT_EDITAR_Funcion_Funcion').val(dataTable1.MCT_No_Funcion_Funcion);
         });
 
-        var EditarResultado = function () {
+        var EditarFuncion = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('EstudianteGesap.EditarResultado') }}';
+                        var route = '{{ route('EstudianteGesap.EditarNoFuncion') }}';
                         var type = 'POST';
                         var async = async || false;
 
                         var formData = new FormData();      
-                        formData.append('PK_Id_Resultados', id_actividad);
-                        formData.append('MCT_EDITAR_Resultado', $('#MCT_EDITAR_Resultado').val());
-                        formData.append('MCT_EDITAR_Producto_Esperado', $('#MCT_EDITAR_Producto_Esperado').val());
-                        formData.append('MCT_EDITAR_Indicador', $('#MCT_EDITAR_Indicador').val());
-                        formData.append('MCT_EDITAR_Beneficiario', $('#MCT_EDITAR_Beneficiario').val());
-                        formData.append('MCT_EDITAR_Categoria', $('#MCT_EDITAR_Categoria').val());
+                        formData.append('PK_Id_No_Funcion', id_tabla);
+                        formData.append('MCT_EDITAR_No_Funcion_Nombre', $('#MCT_EDITAR_Funcion_Nombre').val());
+                        formData.append('MCT_EDITAR_No_Funcion_Funcion', $('#MCT_EDITAR_Funcion_Funcion').val());
                         
 
                         $.ajax({
@@ -551,11 +505,11 @@ $(document).ready(function(){
                             success: function (response, xhr, request) {
                                 if (request.status === 200 && xhr === 'success') {
                                    // table.ajax.reload();
-                                    $('#modal-edit-Resultado').modal('hide');
-                                    $('#form_edit-Resultado')[0].reset(); //Limpia formulario
+                                    $('#modal-edit-Funcion').modal('hide');
+                                    $('#form_edit-Funcion')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);        
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('EstudianteGesap.SubirRequerimiento') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                     
                                 }
@@ -564,7 +518,7 @@ $(document).ready(function(){
                                 if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('EstudianteGesap.SubirActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('EstudianteGesap.SubirRequerimiento') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
                                     $(".content-ajax").load(route);
                                    
                                 }
@@ -573,32 +527,27 @@ $(document).ready(function(){
                     }
                 }
             };
-            var form2 = $('#form_edit-Resultado');
+            var form2 = $('#form_edit-Funcion');
             var rules2 = {
-                MCT_EDITAR_Resultado:{minlength: 1, maxlength: 190, required: true},
-                MCT_EDITAR_Producto_Esperado:{minlength: 1, maxlength: 190, required: true},
-                MCT_EDITAR_Indicador:{minlength: 1, maxlength: 190, required: true,},       
-                MCT_EDITAR_Beneficiario:{minlength: 1, maxlength: 190, required: true},
-                MCT_EDITAR_Categoria:{required: true},       
-                 
+                MCT_Funcion_Nombre:{minlength: 1, maxlength: 190, required: true},
+                MCT_Funcion_Funcion:{minlength: 1, maxlength: 190, required: true},
+           
              };
 
 
-            FormValidationMd.init(form2, rules2, false, EditarResultado()); 
+            FormValidationMd.init(form2, rules2, false, EditarFuncion()); 
 
         
         
       
 
-
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
-            var route = '{{ route('EstudianteGesap.VerActividades') }}' + '/' + '{{$datos['Anteproyecto']}}';
-
+            var route = '{{ route('EstudianteGesap.VerRequerimientos') }}' + '/' + '{{$datos['Anteproyecto']}}';
+            
             //location.href="{{route('EstudianteGesap.index')}}";
            $(".content-ajax").load(route);
         });
-   
     
 })
 </script>    

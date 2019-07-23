@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Financiacion extends Model
 {   
-    //modelo del mct
-    
+    //modelo del mct para la tabla financiacion
     protected $connection = 'gesap';
 
     protected $table = 'TBL_MCT_Financiacion';

@@ -117,7 +117,7 @@
             {data: 'Rol', name: 'Rol'},
            
             {
-                defaultContent: '@permission('GESAP_ADMIN_USER_REPORT')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('GESAP_ADMIN_CANCEL_USER')<a href="javascript:;" title="Deshabilitar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission',
+                defaultContent: '@permission('GESAP_ADMIN_USER_REPORT')<a href="javascript:;" class="btn btn-success reporte"  title="Reporte" ><i class="fa fa-table"></i></a>@endpermission @permission('GESAP_ADMIN_CANCEL_USER')<a href="javascript:;" title="Deshabilitar Usuario" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a>@endpermission @permission('GESAP_ADMIN_CANCEL_USER')<a href="javascript:;" title="Habilitar Usuario" class="btn btn-simple btn-warning btn-icon HabilitarU"><i class="icon-lock"></i></a>@endpermission',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',
@@ -180,6 +180,53 @@
                 });
 
         });
+        table.on('click', '.HabilitarU', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            var route = '{{ route('Usuarios.Habilitar') }}' + '/' + dataTable.PK_User_Codigo;
+            var type = 'GET';
+            var async = async || false;
+            swal({
+                    title: "¿Está seguro?",
+                    text: "¿Está seguro de Habilitar este usuario?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    table.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                    } else {
+                        swal("Cancelado", "No se Habilitar ningún usuario", "error");
+                    }
+                });
+
+        });
+      
         $(".reports").on('click', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');

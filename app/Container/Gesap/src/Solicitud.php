@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Solicitud extends Model
 {
-    
+    //modelo que llena la tabla solicitud(solicitudes hechas por (DOCENTES Y ESTUDIANTES))
     protected $connection = 'gesap';
 
     protected $table = 'TBL_Solicitud';

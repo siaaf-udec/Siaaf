@@ -15,9 +15,6 @@
                                 <div class="col-md-12">
                                    {!! Field:: textArea('OBS_observacion',null,['label'=>'Comentario:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
                                                         ['help' => 'Digite acá su comentario acerca esta actividad','icon'=>'fa fa-book']) !!}
-                                    {!! Field:: date('OBS_Limit',null,['label'=>'Fecha limite:','class'=> 'form-control', 'autofocus','maxlength'=>'600','autocomplete'=>'off'],
-                                                        ['help' => 'Coloque acá la fecha esperada de revision','icon'=>'fa fa-book']) !!}
-                             
                                 </div>
                             </div>
                         </div>
@@ -42,7 +39,8 @@
                                <br>
                         </div>
                         <div class="col-md-6">
-                          
+                     
+                               
                                </div>
                              
                         </div>
@@ -62,6 +60,12 @@
                                                                 ['help' => 'Coloque una breve descrición del Anteproyecto.','icon'=>'fa fa-book'] ) !!}
 
                     
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'FuncionF'])
+                    @slot('columns', [
+                            'Nombre',
+                            'Función',
+                    ])
+                    @endcomponent
 
                     <h4> Observaciónes acerca de esta Actividad del Mct</h4>
                     <br><br>
@@ -71,25 +75,39 @@
                             <i class="fa fa-plus">
                             </i>Agregar Observación
                         </a>@endpermission
-                    @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'ListaComentarios'])
+                    @component('themes.bootstrap.elements.tables.datatables', ['id' => 'ListaComentarios'])
                         @slot('columns', [
-                            'Fecha de realización',
+                    
                             'Observación',
                             'Realizada por',
-                            'Fecha esperdad de respuesta'
+                            'Fecha De Realización'
+                          
                             
                         ])
                     @endcomponent
                      <br>
                      <div class="form-actions">
                         <div class="row">
-                            <div class="col-md-12 col-md-offset-5">
+                            <div class="col-md-12 col-md-offset-2">
+                            @if($datos['Primera'] != $datos[0]['PK_MCT_IdMctr008'])
+                                @permission('GESAP_DOCENTE_CANCEL')<a href="javascript:;"
+                                                               class="btn btn-outline red button-anterior"><i
+                                            class="fa fa-angle-left"></i>
+                                    Actividad Anterior
+                                </a>@endpermission
+                                @endif
                                 @permission('GESAP_DOCENTE_CANCEL')<a href="javascript:;"
                                                                class="btn btn-outline red button-cancel"><i
                                             class="fa fa-angle-left"></i>
                                     Regresar
                                 </a>@endpermission
-                            
+                                @if($datos['Ultima'] != $datos[0]['PK_MCT_IdMctr008'])
+                                @permission('GESAP_DOCENTE_CANCEL')<a href="javascript:;"
+                                                               class="btn btn-outline blue button-siguiente"><i
+                                            class="fa fa-angle-rigth"></i>
+                                    Siguente Actividad
+                                </a>@endpermission
+                                @endif
 
                                 
                             </div>
@@ -112,21 +130,20 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-
-
-    id = 123400009 ;
-    //id = 111111111 ;
+ 
+    //id = 123400009 ;
+    id2 = 111100009 ;
 
     var table, url, columns;
         table = $('#ListaComentarios');
-        url = '{{ route('DocenteGesap.Comentarios') }}'+'/'+'{{$datos[0]['PK_MCT_IdMctr008']}}'+'/'+'{{$datos['Anteproyecto']}}';
+        url = '{{ route('DocenteGesap.ComentariosJurado') }}'+'/'+'{{$datos[0]['PK_MCT_IdMctr008']}}'+'/'+'{{$datos['Anteproyecto']}}';
          
         columns = [
-            {data: 'updated_at', name: 'updated_at'},
+            //{data: 'updated_at', name: 'updated_at'},
             {data: 'OBS_Observacion', name: 'OBS_Observacion'},
             {data: 'Usuario', name: 'Usuario'},
-            {data: 'OBS_Limit', name: 'OBS_Limit'},
-            
+            {data: 'created_at', name: 'created_at'},
+          
         ];
 
         dataTableServer.init(table, url, columns);
@@ -136,21 +153,21 @@ $(document).ready(function(){
                 e.preventDefault();
                 $('#modal-create-coment').modal('toggle');
             });
-
+            id = 111100009;
             var CrearComentario = function () {
                 return {
                     init: function () {
-                        var route = '{{ route('DocenteGesap.ComentarioStore') }}';
+                        var route = '{{ route('DocenteGesap.ComentarioStoreJurado') }}';
                         var type = 'POST';
                         var async = async || false;
 
                         var formData = new FormData();
                         formData.append('FK_NPRY_IdMctr008', '{{$datos['Anteproyecto']}}');
                         formData.append('FK_MCT_IdMctr008', '{{$datos[0]['PK_MCT_IdMctr008']}}');
-                        formData.append('FK_User_Codigo', id);
+                        formData.append('FK_User_Codigo', id2);
                         formData.append('OBS_observacion', $('#OBS_observacion').val());
-                        formData.append('OBS_Limit', $('[name="OBS_Limit"]').val());
-                  
+                        formData.append('OBS_Formato', 1);
+                      
 
                         $.ajax({
                             url: route,
@@ -170,8 +187,8 @@ $(document).ready(function(){
                                     $('#modal-create-coment').modal('hide');
                                     $('#from_create-coment')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
-                                    App.unblockUI('.portlet-form');
-                                    var route = '{{ route('DocenteGesap.VerRequerimientos') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    App.unblockUI('.portlet-form'); 
+                                    var route = '{{ route('DocenteGesap.RequerimientosJurado') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}'  + '/'+'{{$datos['Numero']}}';
                                     $(".content-ajax").load(route);
                                 }
                             },
@@ -179,7 +196,7 @@ $(document).ready(function(){
                                 if (request.status === 422 && xhr === 'error') {
                                     UIToastr.init(xhr, response.title, response.message);
                                     App.unblockUI('.portlet-form');
-                                    var route = '{{ route('DocenteGesap.VerRequerimientos') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
+                                    var route = '{{ route('DocenteGesap.RequerimientosJurado') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}'  + '/'+'{{$datos['Numero']}}';
                                     $(".content-ajax").load(route);
                                 }
                             }
@@ -190,82 +207,53 @@ $(document).ready(function(){
             var form = $('#from_create-coment');
             var rules = {
                 OBS_observacion: {required: true, minlength: 1, maxlength: 600},
-                OBS_Limit:{required:true},
+              
             };
 
             FormValidationMd.init(form, rules, false, CrearComentario());
            
+            var table2, url2, columns2;
+        
+        table2 = $('#FuncionF');
+       
+           
+        url2 = '{{ route('DocenteGesap.NoFuncion') }}'+'/'+'{{$datos['Anteproyecto']}}';
+       
+       
+        columns2 = [
+            
+            {data: 'MCT_No_Funcion_Nombre', name: 'MCT_No_Funcion_Nombre'},
+            {data: 'MCT_No_Funcion_Funcion', name: 'MCT_No_Funcion_Funcion'},
+            
+        ];
+        dataTableServer.init(table2, url2, columns2);
+        table2 = table2.DataTable();
 
-        $('.button-Avalar').on('click', function (e) {
+        
+        $('.button-anterior').on('click', function (e) {
             e.preventDefault();
-            $tr = $(this).closest('tr');
-            var dataTable = table.row($tr).data();
-            var route = '{{ route('DocenteGesap.Avalar') }}' +'/'+'{{$datos[0]['PK_MCT_IdMctr008']}}'+'/'+'{{$datos['Anteproyecto']}}';
-            var type = 'GET';
-            var async = async || false;
-            swal({
-                    title: "¿Está seguro?",
-                    text: "¿Está seguro que desea Aprobar esta Actividad?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "De acuerdo",
-                    cancelButtonText: "Cancelar",
-                    closeOnConfirm: true,
-                    closeOnCancel: false
-                },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                            url: route,
-                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                            cache: false,
-                            type: type,
-                            contentType: false,
-                            processData: false,
-                            async: async,
-                            success: function (response, xhr, request) {
-                                        console.log(response);
-                                        if (request.status === 200 && xhr === 'success') {
-                                            if (response.data == 422) {
-                                                xhr = "warning"
-                                                UIToastr.init(xhr, response.title, response.message);
-                                                App.unblockUI('.portlet-form');
-                                                 var route = '{{ route('DocenteGesap.VerRequerimientos') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
-                                                 $(".content-ajax").load(route);
-                                            } else {
-                                                table.ajax.reload();
-                                                UIToastr.init(xhr, response.title, response.message);
-                                                var route = '{{ route('DocenteGesap.VerRequerimientos') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
-                                                 $(".content-ajax").load(route);
-                           
-                                                }
-                                        }
-                        },
-                            error: function (response, xhr, request) {
-                                if (request.status === 422 && xhr === 'error') {
-                                    UIToastr.init(xhr, response.title, response.message);
-                                     var route = '{{ route('DocenteGesap.VerActividad') }}' + '/' + '{{$datos[0]['PK_MCT_IdMctr008']}}' + '/'+ '{{$datos['Anteproyecto']}}';
-                                    $(".content-ajax").load(route);
-                             
-                                }
-                            }
-                        });
-                    } else {
-                        swal("Cancelado", "No se aprobo la actividad", "error");
-                    }
-                });
-
+            idn = 0;
+            id = '{{$datos['Numero']}}'
+            var route = '{{ route('DocenteGesap.navegacionActividadesR') }}' + '/' + id + '/'+ '{{$datos['Proyecto']}}' + '/'+idn;
+             //location.href="{{route('DocenteGesap.index')}}";
+            $(".content-ajax").load(route);
         });
-
+        
+        $('.button-siguiente').on('click', function (e) {
+            e.preventDefault();
+            idn = 1;
+            id = '{{$datos['Numero']}}'
+            var route = '{{ route('DocenteGesap.navegacionActividadesR') }}' + '/' + id + '/'+ '{{$datos['Proyecto']}}' + '/'+idn;
+             //location.href="{{route('DocenteGesap.index')}}";
+            $(".content-ajax").load(route);
+        });
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
             
-            var route = '{{ route('DocenteGesap.VerRequerimientosDocente') }}' + '/' + '{{$datos['Anteproyecto']}}';;
+            var route = '{{ route('DocenteGesap.VerRequerimientosJurado') }}' + '/' + '{{$datos['Anteproyecto']}}';;
             //location.href="{{route('DocenteGesap.index')}}";
             $(".content-ajax").load(route);
         });
    
-    
 })
 </script>    

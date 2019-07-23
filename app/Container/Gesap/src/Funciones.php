@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Funciones extends Model
 {
-    //modelo del mct
+    //modelo del mct para la tabla funciones 
     protected $connection = 'gesap';
 
     protected $table = 'TBL_Requerimientos_Funciones';

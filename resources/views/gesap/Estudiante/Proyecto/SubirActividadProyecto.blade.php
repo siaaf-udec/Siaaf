@@ -58,11 +58,11 @@
                                  </div>
                                
                         </div>
-                        @if($datos['Estado'] != "APROBADO" )
+                       
                                 <span class="label label-primary">Seleccione el archivo de la Actividad (PDF)</span>
                         
                                {!! Field:: file('PYT_Actividad',['label'=>'Archivo:', 'class'=> 'form-control-file']) !!}
-                        @endif
+                       
 
                         <br><br>
                        
@@ -76,9 +76,7 @@
                                             class="fa fa-angle-left"></i>
                                     Volver
                                 </a>@endpermission
-                                @if($datos['Estado'] != "APROBADO" )
                                 @permission('GESAP_STUDENT_ADD_ACTIVIDAD'){{ Form::submit('SUBIR', ['class' => 'btn blue']) }}@endpermission
-                                @endif
                             </div>
                             
                         </div>

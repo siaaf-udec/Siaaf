@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Resultados extends Model
 {
-    
+    //modelo que llena la tabla resultados del MCT
     protected $connection = 'gesap';
 
     protected $table = 'TBL_MCT_Resultados';

@@ -18,7 +18,7 @@
                                                                 ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
 
 
-                                {!! Field:: textArea('MCT_Descripcion',null,['label'=>'DESCRIPCION:', 'class'=> 'form-control', 'autofocus','maxlength'=>'350','autocomplete'=>'off'],
+                                {!! Field:: textArea('MCT_Descripcion',null,['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'350','autocomplete'=>'off'],
                                                                 ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
                                 {!! Field::select('FK_Id_Formato',['1'=>'Mct', '2'=>'Requerimientos'],null,['label'=>'Formato: ']) !!}
 

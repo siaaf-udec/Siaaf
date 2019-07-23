@@ -20,15 +20,15 @@
                             {!! Field:: text('NPRY_Keywords',$infoAnte[0]['NPRY_Keywords'],['label'=>'PALABRAS CLAVE:', 'class'=> 'form-control','maxlength'=>'500', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite las palabras clave.','icon'=>'fa fa-book'] ) !!}
 
-                            {!! Field:: text('NPRY_Descripcion',$infoAnte[0]['NPRY_Descripcion'],['label'=>'DESCRIPCION:', 'class'=> 'form-control', 'autofocus','maxlength'=>'1000','autocomplete'=>'off'],
+                            {!! Field:: text('NPRY_Descripcion',$infoAnte[0]['NPRY_Descripcion'],['label'=>'DESCRIPCIÓN:', 'class'=> 'form-control', 'autofocus','maxlength'=>'1000','autocomplete'=>'off'],
                                                              ['help' => 'Digite una breve descripción del proyecto.','icon'=>'fa fa-book'] ) !!}
 
                             {!! Field:: text('NPRY_Duracion',$infoAnte[0]['NPRY_Duracion'],['label'=>'DURACIÓN:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-calendar'] ) !!}
                             {!! Field:: text('NPRY_FCH_Radicacion',$infoAnte[0]['NPRY_FCH_Radicacion'],['label'=>'FECHA RADIACIÓN:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}
-                          
-                            
+                            {!! Field:: text('NPRY_Semillero',$infoAnte[0]['NPRY_Semillero'],['label'=>'SEMILLERO:','class'=> 'form-control', 'autofocus','maxlength'=>'500','autocomplete'=>'off'],
+                                                             ['help' => 'Digite el nombre del anteproyecto','icon'=>'fa fa-book']) !!}
                             {!! Field:: text('FK_NPRY_Estado',$infoAnte['Estado'],['label'=>'ESTADO:', 'readonly','class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                              ['help' => 'Digite la duracion del anteproyecto.','icon'=>'fa fa-user'] ) !!}  
                             
@@ -120,6 +120,7 @@
                     var async = async || false;
                     
                     formData.append('NPRY_Titulo', $('#NPRY_Titulo').val());
+                    formData.append('NPRY_Semillero', $('#NPRY_Semillero').val());
                     formData.append('NPRY_Keywords', $('#NPRY_Keywords').val());
                     formData.append('NPRY_Descripcion', $('#NPRY_Descripcion').val());
                     formData.append('NPRY_Duracion', $('#NPRY_Duracion').val());

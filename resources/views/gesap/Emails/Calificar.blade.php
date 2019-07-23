@@ -49,13 +49,14 @@
 
 
 	<h1 class="features">NOTIFICACIÓN (GESAP)</h1>
-    <h2>Se le informa que le fue asignado como Pre-Director del Anteproyecto :</h2>
-    <h1> {{$Ante}}</h1>
-    <h2> En el semillero : {{$Semillero}}</h2>
-    <h2> Con fecha de radicación {{$Fecha}} </h2>
+    <h2>Se notifica que el {{$Proy}}</h2>
+    <h2>Fue Enviado para calificar el dia :<h2>
+		<h2>{{$fecha}}<h2>
+    <h2>Con el fin de ser calificado por el director</h2>
 		<h2> Recuerde que puede verificar esta información en el siguiente </h2>
 		<a href=" https://cit-udec.com/login">
 		LINK </a>	
+		
 </body>
 </html>
 

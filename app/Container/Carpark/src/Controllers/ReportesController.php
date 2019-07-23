@@ -547,7 +547,7 @@ class ReportesController extends Controller
                 $infoHistoriales = Historiales::where('CH_CodigoUser', $id)->get();
                 $total = count($infoHistoriales);
 
-                return PDF::loadView('carpark.reportes.descargas.ReporteUsuario',
+                return PDF::loadView('carpark.reportes.descargas.reporteUsuario',
                     compact('infoUsuarios', 'infoHistoriales', 'date', 'time', 'total', 'cont'))->download('ReportePorCódigo.pdf');
             } catch (Exception $e) {
                 return view('carpark.reportes.reporteUsuario',
@@ -602,24 +602,21 @@ class ReportesController extends Controller
     public function descargarReporteMoto(Request $request, $id)
     {
         if ($request->isMethod('GET')) {
+            $cont = 1;
+            $date = date("d/m/Y");
+            $time = date("h:i A");
+            $infoMoto = Motos::find($id);
+
+            $infoHistoriales = Historiales::where('CH_Placa', $infoMoto->CM_Placa)->get();
+
+            $total = count($infoHistoriales);
+            
             try {
-                $cont = 1;
-                $date = date("d/m/Y");
-                $time = date("h:i A");
-                $infoMoto = Motos::find($id);
-                $infoUsuario = UsersUdec::find($infoMoto['FK_CM_CodigoUser']);
-
-                $infoMoto->offsetSet('Nombre', $infoUsuario->username);
-                $infoMoto->offsetSet('Apellido', $infoUsuario->lastname);
-
-                $infoHistoriales = Historiales::where('CH_Placa', $infoMoto->CM_Placa)->get();
-
-                $total = count($infoHistoriales);
                 return PDF::loadView('carpark.reportes.descargas.reporteMoto',
                     compact('infoMoto', 'infoHistoriales', 'date', 'time', 'total', 'cont')
                 )->download('ReporteMoto.pdf');
             } catch (Exception $e) {
-                return view('carpark.reportes.ReporteMoto',
+                return view('carpark.reportes.reporteMoto',
                     compact('infoMoto', 'infoHistoriales', 'date', 'time', 'total', 'cont')
                 );
             }

@@ -93,7 +93,7 @@
                     @endcomponent
                     @endif
                     
-                    <h4> Observaciónes del Mct Hecha Por los Jurados</h4>
+                    <h4> Observaciónes del Libro Hechas Por los Jurados</h4>
                      <br>
                     @component('themes.bootstrap.elements.tables.datatablescoment', ['id' => 'ListaComentariosJurados'])
                         @slot('columns', [

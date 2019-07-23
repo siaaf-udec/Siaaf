@@ -62,7 +62,7 @@
 	<div id="head">
 		<!-- Embeaded image :-) --> 
         <img src="{{ base_path('public/css/LogoUDEC.png')}}">
-        <h1 class="features">REPORTE GENEREADO POR</h1>
+        <h1 class="features">REPORTE GENERADO POR</h1>
  
         <p class="line">Plataforma Web Para La Gestión De Anteproyectos y Proyectos De Grado (GESAP)</p>
         <p class="line">Calle 14 con Avenida 15</p>
