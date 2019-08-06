@@ -89,13 +89,11 @@
                         $.ajax({
                             type: 'GET',
                             success: function (response, xhr, request) {
-                                console.log(response);
                                 if (response.data == 422) {
                                         xhr = "warning"
                                         UIToastr.init(xhr, response.title, response.message);
                                         App.unblockUI('.portlet-form');
-                                        //var route = '{{ route('calidadpcs.procesosCalidad.index.ajax') }}' + '/' + {{$idProyecto}};
-                                        //$(".content-ajax").load(route);
+                                        
                                 }
                                 else{
                                     if (request.status === 200 && xhr === 'success') {
@@ -148,14 +146,13 @@
                                 App.blockUI({target: '.portlet-form', animate: true});
                             },
                             success: function (response, xhr, request) {
-                                //console.log(response);
                                 if (request.status === 200 && xhr === 'success') {
                                     if (response.data == 422) {
                                             xhr = "warning"
                                             UIToastr.init(xhr, response.title, response.message);
                                             App.unblockUI('.portlet-form');
-                                            var route = '{{ route('calidadpcs.procesosCalidad.index.ajax') }}' + '/' + {{$idProyecto}};
-                                            $(".content-ajax").load(route);
+                                            // var route = '{{ route('calidadpcs.procesosCalidad.indexAjaxProcesos') }}' + '/' + {{$idProyecto}};
+                                            // $(".content-ajax").load(route);
                                     }
                                     else{
                                         

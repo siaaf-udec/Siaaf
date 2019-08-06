@@ -107,7 +107,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-                route_edit = '{{ route('calidadpcs.procesosCalidad.index.ajax') }}' + '/' + dataTable.PK_CE_Id_Etapa + '/' + {{$idProyecto}};
+                route_edit = '{{ route('calidadpcs.procesosCalidad.indexAjaxProcesos') }}' + '/' + dataTable.PK_CE_Id_Etapa + '/' + {{$idProyecto}};
                 $(".content-ajax").load(route_edit);
             
         });

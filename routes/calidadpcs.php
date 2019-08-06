@@ -124,7 +124,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         //ruta que conduce al controlador para mostrar la tabla donde se cargan registros de las etapas por medio de petición ajax
         Route::get('etapas/{id?}', [
-            'uses' => $controller . 'ProcesosController@indexAjaxEtapa',
+            'uses' => $controller . 'ProcesosController@indexTablaAjaxEtapa',
             'as' => 'calidadpcs.procesosCalidad.etapas'             
         ]);
 
@@ -144,8 +144,8 @@ Route::group(['middleware' => ['auth']], function () {
         
         //ruta que conduce al controlador para mostrar la tabla donde se cargan registros de procesos por medio de petición ajax
         Route::get('index/ajax/{idEtapa?}/{idProyecto?}', [
-            'uses' => $controller . 'ProcesosController@indexAjax',
-            'as' => 'calidadpcs.procesosCalidad.index.ajax'             
+            'uses' => $controller . 'ProcesosController@indexAjaxProcesos',
+            'as' => 'calidadpcs.procesosCalidad.indexAjaxProcesos'             
         ]);
 
         //ruta que realiza la consulta de los procesos registrados
@@ -169,9 +169,9 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
-        Route::post('storeProceso1', [
-            'uses' => $controller . 'ProcesosController@storeProceso1',   
-            'as' => 'calidadpcs.procesosCalidad.storeProceso1'
+        Route::post('storeProceso', [
+            'uses' => $controller . 'ProcesosController@storeProceso',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso'
         ]);
 
         //ruta que realiza la consulta de los procesos registrados
@@ -185,6 +185,25 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@registrarActividad',
             'as' => 'calidadpcs.procesosCalidad.registrarActividad'            
         ]);
+
+        //ruta que realiza la consulta de los requerimientos registrados de ese proyecto
+        Route::get('tablaRequerimientos/{id?}', [   
+            'uses' => $controller . 'ProcesosController@tablaRequerimientos',
+            'as' => 'calidadpcs.procesosCalidad.tablaRequermientos'            
+        ]);
+
+        //ruta que conduce al controlador para eliminar un registro de una motocicleta
+        Route::delete('destroy/{id?}', [
+            'uses' => $controller . 'ProcesosController@destroyRequerimiento', 
+            'as' => 'calidadpcs.procesosCalidad.destroyRequerimiento'
+        ]);
+
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::post('storeProceso2', [
+            'uses' => $controller . 'ProcesosController@storeProceso2',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso2'
+        ]);
+
     });
 });
 

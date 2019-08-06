@@ -17,7 +17,7 @@ class CreateProcesosTable extends Migration
             $table->increments('PK_CP_Id_Proceso');
             $table->String('CP_Nombre_Proceso');
             $table->integer('FK_CP_Id_Etapa')->unsigned();
-            $table->foreign('FK_CP_Id_Etapa')->references('PK_CE_Id_Etapa')->on('TBL_Calidadpcs_etapa');
+            $table->foreign('FK_CP_Id_Etapa')->references('PK_CE_Id_Etapa')->on('TBL_Calidadpcs_etapa')->onDelete("cascade");
             
             $table->timestamps();
         });

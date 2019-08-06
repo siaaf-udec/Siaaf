@@ -74,7 +74,7 @@
             </div>
 
             <div class="col-md-10 col-md-offset-1">
-                {!! Form::model ([[$idProceso],[$equipoScrum]],['id'=>'form_update_proyecto', 'url' => '/forms']) !!}
+                {!! Form::model([[$idProceso],[$equipoScrum],[$idProyecto]],['id'=>'form_update_proyecto', 'url' => '/forms']) !!}
                     <div class="form-body">
                         <div class="row">
                             <h3>Informacion del proceso</h3><br>
@@ -82,16 +82,16 @@
 
                                     {!! Field:: hidden ('FK_CP_Id_Usuario', Auth::user()->id)!!}
 
-                                    {!! Field:: hidden ('PK_CP_Id_Proyecto', null)!!}
+                                    {!! Field:: hidden ('PK_CP_Id_Proyecto', $idProyecto)!!}
 
-                                    {!! Field::textarea(
-                                        'memo',
-                                        ['label' => 'Alcance:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '2'],
+                                    {!! Field:: hidden ('PK_CP_Id_Proceso', $idProceso)!!}
+
+                                    {!! Field::textArea('Alcance',['label' => 'Alcance:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '2'],
                                         ['help' => 'Escribe el alcance del proyecto.', 'icon' => 'fa fa-quote-right']) !!}
-                                </div><br>
+                                </div><br><br><br>
                             <h3>Requerimientos</h3>
                             <div class="col-md-12">
-                                @component('themes.bootstrap.elements.tables.datatables',['id' => 'listaEtapas'])
+                                @component('themes.bootstrap.elements.tables.datatables',['id' => 'tablaRequerimientos'])
                                     @slot('columns', [
                                         '#',
                                         'Requerimiento',
@@ -130,27 +130,97 @@
 
     jQuery(document).ready(function () {
 
-        /*Configuracion de input tipo fecha*/
-        $('.datepicker').datepicker({
-            //rtl: App.isRTL(),
-            orientation: "left",
-            autoclose: true,
-            language: 'es',
-            closeText: 'Cerrar',
-            prevText: '<Ant',
-            nextText: 'Sig>',
-            currentText: 'Hoy',
-            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
-            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-            weekHeader: 'Sm',
-            dateFormat: 'yyyy-mm-dd',
-            firstDay: 1,
-            showMonthAfterYear: false,
-            yearSuffix: ''
+        var table, url, columns;
+        table = $('#tablaRequerimientos');
+        url = "{{ route('calidadpcs.procesosCalidad.tablaRequermientos')}}"+ "/"+ {{$idProyecto}};
+        columns = [
+            {data: 'DT_Row_Index'},
+            {data: 'CPR_Nombre_Requerimiento', name: 'CPR_Nombre_Requerimiento'},
+            {
+                defaultContent: '<a href="javascript:;" class="btn btn-danger remove"  title="Eliminar este requerimiento" ><i class="fa fa-trash"></i></a>',
+                data: 'action',
+                name: 'Acciones',
+                title: 'Acciones',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-center',
+                render: null,
+                serverSide: false,
+                responsivePriority: 2
+            }
+        ];
+        dataTableServer.init(table, url, columns);
+        table = table.DataTable();
+        
+        table.on('click', '.remove', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            var route = '{{ route('calidadpcs.procesosCalidad.destroyRequerimiento') }}' + '/' + dataTable.PK_CPR_Id_Requerimientos;
+            var type = 'DELETE';
+            var async = async || false;
+            swal({
+                    title: "¿Está seguro?",
+                    text: "¿Está seguro de eliminar el requerimiento seleccionado?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    table.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                    } else {
+                        swal("Cancelado", "No se eliminó ningun requerimiento", "error");
+                    }
+                });
+
         });
+        /*Configuracion de input tipo fecha*/
+        // $('.datepicker').datepicker({
+        //     //rtl: App.isRTL(),
+        //     orientation: "left",
+        //     autoclose: true,
+        //     language: 'es',
+        //     closeText: 'Cerrar',
+        //     prevText: '<Ant',
+        //     nextText: 'Sig>',
+        //     currentText: 'Hoy',
+        //     monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        //     monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        //     dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        //     dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+        //     dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+        //     weekHeader: 'Sm',
+        //     dateFormat: 'yyyy-mm-dd',
+        //     firstDay: 1,
+        //     showMonthAfterYear: false,
+        //     yearSuffix: ''
+        // });
         /*FIN Configuracion de input tipo fecha*/
         jQuery.validator.addMethod("letters", function(value, element) {
             return this.optional(element) || /^[a-z," "]+$/i.test(value);
@@ -161,40 +231,14 @@
         var editarProyecto = function () {
             return {
                 init: function () {
-                    var route = '{{ route('calidadpcs.procesosCalidad.storeProceso1') }}';
+                    var route = '{{ route('calidadpcs.procesosCalidad.storeProceso2') }}';
                     var type = 'POST';
                     var async = async || false;
                     var formData = new FormData();
-                    //var FileMoto = document.getElementById("CM_UrlFoto");
-              
-                    // var FileProp = document.getElementById("CM_UrlPropiedad");
-                    // var FileSOAT = document.getElementById("CM_UrlSoat");
-                    /*Tabla Usuarios
-                    formData.append('PK_CU_Id_Usuario', $('input:hidden[name="PK_CU_Id_Usuario"]').val());
-                    formData.append('CU_Cedula', $('input:hidden[name="CU_Cedula"]').val());
-                    formData.append('CU_Nombre', $('input:hidden[name="CU_Nombre"]').val());
-                    formData.append('CU_Apellido', $('input:hidden[name="CU_Apellido"]').val());
-                    formData.append('CU_Telefono', $('input:hidden[name="CU_Telefono"]').val());
-                    formData.append('CU_Correo', $('input:hidden[name="CU_Correo"]').val());*/
-                    //Tabla Proyectos
-                    //formData.append('PK_CP_Id_Proyecto', $('input:hidden[name="PK_CP_Id_Proyecto"]').val());
-                    //formData.append('CP_Nombre_Proyecto', $('input:text[name="CP_Nombre_Proyecto"]').val());
-                    //formData.append('CP_Fecha_Inicio', $('#CP_Fecha_Inicio').val());
-                    //formData.append('CP_Fecha_Final', $('#CP_Fecha_Final').val());
-                    //formData.append('PK_CP_Id_Usuario', $('input:hidden[name="PK_CP_Id_Usuario"]').val());
-                    //formData.append('FK_CP_Id_Usuario', $('input:hidden[name="FK_CP_Id_Usuario"]').val());
-                    //Tabla Equipo Scrum
 
-                    formData.append('FK_CPP_Id_Proceso', $('input:hidden[name="FK_CPP_Id_Proceso"]').val());
-                    formData.append('CE_Nombre_1', $('input:text[name="CE_Nombre_1"]').val());
-                    formData.append('CE_Nombre_2', $('input:text[name="CE_Nombre_2"]').val());
-                    formData.append('CE_Nombre_3', $('input:text[name="CE_Nombre_3"]').val());
-                    formData.append('CE_Nombre_4', $('input:text[name="CE_Nombre_4"]').val());
-
-                    //formData.append('CE_Nombre_5', $('input:text[name="CE_Nombre_5"]').val());
-                    //formData.append('CE_Nombre_6', $('input:text[name="CE_Nombre_6"]').val());
-                    //formData.append('CE_Nombre_7', $('input:text[name="CE_Nombre_7"]').val());
-                    //formData.append('CE_Nombre_8', $('input:text[name="CE_Nombre_8"]').val());
+                    formData.append('FK_CPP_Id_Proyecto', $('input:hidden[name="PK_CP_Id_Proyecto"]').val());
+                    formData.append('FK_CPP_Id_Proceso', $('input:hidden[name="PK_CP_Id_Proceso"]').val());
+                    formData.append('Alcance', $('#Alcance').val());
                    
                     $.ajax({
                         url: route,
@@ -244,9 +288,7 @@
             CE_Nombre_7: {maxlength: 50, required: false, noSpecialCharacters:true, letters:true},
             CE_Nombre_8: {maxlength: 50, required: false, noSpecialCharacters:true, letters:true},
             // CM_NuSoat: {required: true, minlength: 5, maxlength: 20, noSpecialCharacters:true},
-            // CM_FechaSoat: {required: true},
-            // CM_UrlPropiedad: {required: false, extension: "jpg|png"},
-            // CM_UrlSoat: {required: false, extension: "jpg|png"},
+            
         };
         var formMessage = {
             CP_Nombre_Proyecto: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
@@ -267,9 +309,7 @@
             CE_Nombre_7: {letters: 'Los numeros no son válidos'},
             CE_Nombre_8: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
             CE_Nombre_8: {letters: 'Los numeros no son válidos'},
-            //CP_fecha_inicio: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            //CP_fecha_final: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            // CM_NuSoat: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            
         };
         FormValidationMd.init(form, formRules, formMessage, editarProyecto());
 
@@ -285,13 +325,6 @@
             location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
             //$(".content-ajax").load(route);
         });
-        /*
-         $(".create").on('click', function (e) {
-            e.preventDefault();
-            var codigo=  $('input:text[name="FK_CP_Codigo"]').val();
-            var route = '{{ route('parqueadero.motosCarpark.RegistrarMoto2') }}' + '/' + codigo;
-            $(".content-ajax").load(route);
-        });*/
 
     });
 </script>

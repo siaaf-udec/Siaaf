@@ -94,11 +94,16 @@
 @push('functions')
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <script src = "{{ asset('assets/main/scripts/table-datatable.js') }}" type = "text/javascript" ></script>
+    <script src="http://momentjs.com/downloads/moment.min.js"></script>
     <script type="text/javascript">
 
     
     jQuery(document).ready(function () {
-        
+        var fechaEmision = moment('2019/07/31');
+        var fechaExpiracion = moment('2019/10/01');
+        var diasDiferencia = fechaExpiracion.diff(fechaEmision, 'weeks');
+        console.log(diasDiferencia);
+
         var table, url, columns;
         table = $('#listaProyectos');
         url = "{{ route('calidadpcs.proyectosCalidad.tablaProyectos')}}";

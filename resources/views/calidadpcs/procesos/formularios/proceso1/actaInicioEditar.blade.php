@@ -221,7 +221,7 @@
         var editarProyecto = function () {
             return {
                 init: function () {
-                    var route = '{{ route('calidadpcs.procesosCalidad.storeProceso1') }}';
+                    var route = '{{ route('calidadpcs.procesosCalidad.storeProceso') }}';
                     var type = 'POST';
                     var async = async || false;
                     var formData = new FormData();

@@ -10,15 +10,12 @@ class ProcesoCronograma extends Model
 
     protected $table = 'tbl_calidadpcs_proceso_cronograma';
 
-    protected $primaryKey = 'PK_CPP_Id_Proy_Pro';
+    protected $primaryKey = 'PK_CPC_Id_Sprint';
 
     protected $fillable = [
-        'PK_CPC_Id_Actividad',
-        'CPC_Nombre_Actividad',
-        'CPC_Fecha_Inicio',
-        'CPC_Fecha_Final',
-        'CPC_Recursos',
+        'CPC_Nombre_Sprint',
+        'CPC_Requerimiento',
+        'CPC_Recurso',
         'FK_CPP_Id_Proyecto',
-        'FK_CPP_Id_Proceso',
     ];
 }

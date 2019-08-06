@@ -17,9 +17,9 @@ class CreateProcesoRequerimientosTable extends Migration
             $table->increments('PK_CPR_Id_Requerimientos');
             $table->String('CPR_Nombre_Requerimiento')->nullable();
             $table->integer('FK_CPR_Id_Proyecto')->unsigned();
-            $table->foreign('FK_CPR_Id_Proyecto')->references('PK_CP_Id_Proyecto')->on('TBL_Calidadpcs_proyectos');
+            $table->foreign('FK_CPR_Id_Proyecto')->references('PK_CP_Id_Proyecto')->on('TBL_Calidadpcs_proyectos')->onDelete("cascade");
             $table->integer('FK_CPR_Id_Proceso')->unsigned();
-            $table->foreign('FK_CPR_Id_Proceso')->references('PK_CP_Id_Proceso')->on('TBL_Calidadpcs_procesos');
+            $table->foreign('FK_CPR_Id_Proceso')->references('PK_CP_Id_Proceso')->on('TBL_Calidadpcs_procesos')->onDelete("cascade");
             
             $table->timestamps();
         });
