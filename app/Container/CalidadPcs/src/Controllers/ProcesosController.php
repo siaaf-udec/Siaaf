@@ -285,11 +285,13 @@ class ProcesosController extends Controller
                     ]
                 );
             } elseif ($id == 3) {
+                $requerimientos = Proceso_Requerimientos::where('FK_CPR_Id_Proyecto',$idProyecto)->get()->pluck('CPR_Nombre_Requerimiento','PK_CPR_Id_Requerimientos')->toArray();
                 return view(
                     'calidadpcs.procesos.formularios.proceso3.cronograma.cronogramaTabla',
                     [
-                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
+                        'requerimientos' => $requerimientos,
                     ]
                 );
             }
@@ -376,9 +378,6 @@ class ProcesosController extends Controller
             
             $Fecha = Carbon::parse($request['Fecha_Inicio']);
             $Fecha_Final = $Fecha->addMonth($request['Duracion']);
-            $Fecha2 = Carbon::parse($Fecha_Final);
-            $diff = $Fecha2->diffInDays($Fecha);
-            //dd($diff);
             $proyecto = Proyectos::find($request['FK_CPP_Id_Proyecto']);
             $proyecto->fill([
                 'CP_Fecha_Final' => $Fecha_Final,
@@ -399,16 +398,11 @@ class ProcesosController extends Controller
                         'FK_CPR_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
                         'FK_CPR_Id_Proceso' => $request['FK_CPP_Id_Proceso'],
                     ]);
-                    ProcesoCronograma::create([
-                        'CPC_Nombre_Requerimiento' => $request['CPR_Nombre_Requerimiento_'.$i.''],
-                        'FK_CPP_Id_Proyecto'       => $request['FK_CPP_Id_Proyecto'],
-                        'FK_CPP_Id_Proceso'        => $request['FK_CPP_Id_Proceso'],
-                    ]);
                 }
             }
             return AjaxResponse::success(
                 '¡Bien hecho!',
-                'Datos almacenados correctamente. '.$diff.''
+                'Datos almacenados correctamente.'
             );
         }
         return AjaxResponse::fail(

@@ -1,14 +1,25 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Cronograma:'])
     <br>
-    <br>
+    <div class="row">
+                <div class="col-md-12">
+
+                    <div class="actions">
+                        <a href="javascript:;"
+                            class="btn btn-simple btn-success btn-icon create"
+                            title="Crear un nuevo proyecto"><i class="glyphicon glyphicon-plus"></i>Agregar sprint</a>
+                        <br>
+                    </div>
+                    <br>
+                </div>
+            </div>
     <div class="row">
         <div class="col-md-12">
             @component('themes.bootstrap.elements.tables.datatables',['id' => 'listaActividades'])
             @slot('columns', [
             '#',
-            'Nombre Actividad',
-            'Sprint',
+            'Nombre Sprint',
+            'Requerimientos',
             'Recurso',
             ''
             ])
@@ -65,14 +76,21 @@
                             ×
                         </button>
                         <h1>
-                            Modificar 
+                            Crear sprint
                         </h1>
+                        <h3>Numero de semanas disponibles: <span id="num"></span></h3>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
-                            {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Nombre del Requerimiento:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Nombre del sprint:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
+                            {{Form::label('sports', 'Sports')}}
+                            {{ Form::select('id', $requerimientos, null, ['class' => 'bs-select form-control', 'multiple' ]) }}
+                            
+                            {!! Field:: number('CP_Nombre_Proyecto',null,['label'=>'Numero de semanas:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                            ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
+
                             {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Recurso:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
                             </div>
@@ -94,22 +112,31 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+<script src="http://momentjs.com/downloads/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
-
+        //inicio fechas
+        // console.log('{{$infoProyecto[0]['CP_Fecha_Inicio']}}');
+        var fechaEmision = moment('{{$infoProyecto[0]['CP_Fecha_Inicio']}}');
+        var fechaExpiracion = moment('{{$infoProyecto[0]['CP_Fecha_Final']}}');
+        var diasDiferencia = fechaExpiracion.diff(fechaEmision, 'weeks');
+        console.log(diasDiferencia);
+        $("#num").text(diasDiferencia);
+        //fin fechas
         var table, url, columns;
         table = $('#listaActividades');
-        url = "{{route('calidadpcs.procesosCalidad.tablaCronograma')}}" + "/" + {{$idProyecto}};
+        url = "{{route('calidadpcs.procesosCalidad.tablaCronograma')}}" + "/" + {{$infoProyecto[0]['PK_CP_Id_Proyecto']}};
         columns = [{
                 data: 'DT_Row_Index'
             },
             {
-                data: 'CPC_Nombre_Requerimiento',
-                name: 'CPC_Nombre_Requerimiento'
+                data: 'CPC_Nombre_Sprint',
+                name: 'CPC_Nombre_Sprint'
             },
             {
-                data: 'CPC_Sprint',
-                name: 'CPC_Sprint'
+                data: 'CPC_Requerimiento',
+                name: 'CPC_Requerimiento'
             },
             {
                 data: 'CPC_Recurso',
@@ -133,12 +160,16 @@
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
 
+        $( ".create" ).on('click', function (e) {
+            e.preventDefault();
+            $('#modal-update-permission').modal('toggle');
+            $tr = $(this).closest('tr');
+        });
+
         table.on('click', '.edit', function (e) {
             e.preventDefault();
             $('#modal-update-permission').modal('toggle');
-
             $tr = $(this).closest('tr');
-
             // var dataTable = table.row($tr).data(),
             //     route_edit = '{{ route('permissions.edit') }}'+ '/'+ dataTable.id;
 

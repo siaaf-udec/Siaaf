@@ -16,7 +16,7 @@
 <!-- Modal Styles -->
 <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css"/>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 <!-- Date Styles -->
 <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css"/>
 
@@ -94,16 +94,8 @@
 @push('functions')
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <script src = "{{ asset('assets/main/scripts/table-datatable.js') }}" type = "text/javascript" ></script>
-    <script src="http://momentjs.com/downloads/moment.min.js"></script>
     <script type="text/javascript">
-
-    
     jQuery(document).ready(function () {
-        var fechaEmision = moment('2019/07/31');
-        var fechaExpiracion = moment('2019/10/01');
-        var diasDiferencia = fechaExpiracion.diff(fechaEmision, 'weeks');
-        console.log(diasDiferencia);
-
         var table, url, columns;
         table = $('#listaProyectos');
         url = "{{ route('calidadpcs.proyectosCalidad.tablaProyectos')}}";

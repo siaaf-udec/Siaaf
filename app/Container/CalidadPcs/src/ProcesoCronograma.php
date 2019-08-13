@@ -15,6 +15,7 @@ class ProcesoCronograma extends Model
     protected $fillable = [
         'CPC_Nombre_Sprint',
         'CPC_Requerimiento',
+        'CPC_Duracion',
         'CPC_Recurso',
         'FK_CPP_Id_Proyecto',
     ];
