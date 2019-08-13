@@ -85,11 +85,10 @@
                             <div class="col-md-12">
                             {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Nombre del sprint:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-                            {{Form::label('sports', 'Sports')}}
-                            {{ Form::select('id', $requerimientos, null, ['class' => 'bs-select form-control', 'multiple' ]) }}
+                            {!! Field::select('id', $requerimientos, null, ['label' => 'Seleccione los requerimientos', 'class' => 'bs-select form-control', 'multiple' => 'multiple' ]) !!}
                             
-                            {!! Field:: number('CP_Nombre_Proyecto',null,['label'=>'Numero de semanas:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
+                            {!! Field:: number('numero_semanas',null,['label'=>'Numero de semanas:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                            ['icon'=>'fa fa-file-text-o'] ) !!}
 
                             {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Recurso:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
@@ -111,22 +110,23 @@
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 <script src="http://momentjs.com/downloads/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 <script type="text/javascript">
+        var diasDiferencia;
     jQuery(document).ready(function() {
         //inicio fechas
         // console.log('{{$infoProyecto[0]['CP_Fecha_Inicio']}}');
         var fechaEmision = moment('{{$infoProyecto[0]['CP_Fecha_Inicio']}}');
         var fechaExpiracion = moment('{{$infoProyecto[0]['CP_Fecha_Final']}}');
-        var diasDiferencia = fechaExpiracion.diff(fechaEmision, 'weeks');
+        diasDiferencia = fechaExpiracion.diff(fechaEmision, 'weeks');
         console.log(diasDiferencia);
         $("#num").text(diasDiferencia);
         //fin fechas
         var table, url, columns;
         table = $('#listaActividades');
-        url = "{{route('calidadpcs.procesosCalidad.tablaCronograma')}}" + "/" + {{$infoProyecto[0]['PK_CP_Id_Proyecto']}};
+        url = "{{route('calidadpcs.procesosCalidad.tablaCronograma')}}" + "/" + '{{$infoProyecto[0]['PK_CP_Id_Proyecto']}}';
         columns = [{
                 data: 'DT_Row_Index'
             },
@@ -182,5 +182,48 @@
             //     $('#modal-update-permission').modal('toggle');
             // });
         });
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
+        });
+        var createProyecto = function () {
+            return {
+                init: function () {
+                    //var route = '{{ route('calidadpcs.proyectosCalidad.store') }}';
+                    // var type = 'POST';
+                    var async = async || false;
+                    var formData = new FormData();
+                    //Tabla Usuarios
+                    console.log($('#id').val());
+
+
+                    // formData.append('PK_CU_Id_Usuario', $('input:hidden[name="PK_CU_Id_Usuario"]').val());
+                    // formData.append('CU_Cedula', $('input:hidden[name="CU_Cedula"]').val());
+                    // formData.append('CU_Nombre', $('input:hidden[name="CU_Nombre"]').val());
+                    // formData.append('CU_Apellido', $('input:hidden[name="CU_Apellido"]').val());
+                    // formData.append('CU_Telefono', $('input:hidden[name="CU_Telefono"]').val());
+                    // formData.append('CU_Correo', $('input:hidden[name="CU_Correo"]').val());
+                    // //Tabla Proyectos
+                    // formData.append('CP_Nombre_Proyecto', $('input:text[name="CP_Nombre_Proyecto"]').val());
+                    // formData.append('CP_Fecha_Inicio', $('#CP_Fecha_Inicio').val());
+                    // //formData.append('CP_Fecha_Final', $('#CP_Fecha_Final').val());
+                    // formData.append('FK_CP_Id_Usuario', $('input:hidden[name="FK_CP_Id_Usuario"]').val());
+                    
+                   
+                    
+
+                }
+            }
+        };
+        var form = $('#from_permissions_update');
+        var formRules = {
+            numero_semanas: {required: true, min: 1, max: diasDiferencia , noSpecialCharacters:true, letters:true},
+        };
+        var formMessage = {
+            
+        };
+        FormValidationMd.init(form, formRules, formMessage, createProyecto());
     });
 </script>
