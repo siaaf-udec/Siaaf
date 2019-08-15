@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Container\Overall\Src\Facades\AjaxResponse;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
+use App\Container\CalidadPcs\src\Proceso_Requerimientos;
 
 class ProyectosController extends Controller
 {
@@ -23,7 +24,6 @@ class ProyectosController extends Controller
     public function index()
     {
         return view('calidadpcs.proyectos.tablaProyectos');
-
     }
 
     /**
@@ -41,7 +41,6 @@ class ProyectosController extends Controller
             '¡Lo sentimos!',
             'No se pudo completar tu solicitud.'
         );
-
     }
 
      /**
