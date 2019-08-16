@@ -82,21 +82,25 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Nombre del sprint:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
+                                    ['help' => 'Digite el nombre del proyecto.'] ) !!}
 
-                                    <select class="bs-select selectpicker form-control" multiple>
-                                            @foreach($requerimientos as $key => $name)
-                                            <option value="{{$key}}">{{$name}}</option>
-                                            @endforeach
-                                        </select>
-
-                                        {!! Field::select('Modulo',$requerimientos, null,['class' => 'form-control js-example-basic-multiple', 'multiple' => 'multiple']) !!}
                                     
-                                        {!! Field:: number('numero_semanas',null,['label'=>'Numero de semanas:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                        ['icon'=>'fa fa-file-text-o'] ) !!}
+                                        <div class="form-group form-md-line-input">
+                                            <div class="input-icon">
+                                                <select id="my_list" name="my_list" class="selectpicker form-control" multiple data-size="5" title="">
+                                                    @foreach($requerimientos as $key => $name)
+                                                    <option value="{{$key}}">{{$name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <label for="my_list" class="control-label">Numero de semanas:</label>
+                                                <i></i>
+                                            </div>
+                                        </div>
+
+                                        {!! Field:: number('numero_semanas',null,['label'=>'Numero de semanas:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off']                                        ) !!}
 
                                         {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Recurso:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                        ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
+                                        ['help' => 'Digite el nombre del proyecto.'] ) !!}
                                     </div>
                                 </div>
                             </div>
@@ -116,14 +120,15 @@
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script> 
-    <!-- <script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script> -->
+    <script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script> -->
     <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         var diasDiferencia;
         jQuery(document).ready(function() {
+            $('.selectpicker').selectpicker();
             //inicio fechas
             // console.log('{{$infoProyecto[0]['CP_Fecha_Inicio']}}');
             var fechaEmision = moment('{{$infoProyecto[0]['CP_Fecha_Inicio']}}');
@@ -204,7 +209,7 @@
                         var async = async ||false;
                         var formData = new FormData();
                         //Tabla Usuarios
-                        console.log($('#id').val());
+                        console.log($('#my_list').val());
 
 
                         // formData.append('PK_CU_Id_Usuario', $('input:hidden[name="PK_CU_Id_Usuario"]').val());
@@ -225,14 +230,16 @@
                     }
                 }
             };
+            my_list
             var form = $('#from_permissions_update');
             var formRules = {
                 numero_semanas: {
                     required: true,
                     min: 1,
                     max: diasDiferencia,
-                    noSpecialCharacters: true,
-                    letters: true
+                },
+                my_list: {
+                    required: true,
                 },
             };
             var formMessage = {
