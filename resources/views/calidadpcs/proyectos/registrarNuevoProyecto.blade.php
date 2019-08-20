@@ -145,19 +145,13 @@
         </div>
     @endcomponent
 </div>
-
-<!-- file script -->
-    <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-
-    <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-    <script src = "{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type = "text/javascript" > </script>
-
-    <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-    <script type="text/javascript">
-
+    <!-- <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script> -->
+<script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type = "text/javascript" > </script>
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
     jQuery(document).ready(function () {
-
         /*Configuracion de input tipo fecha*/
         $('.datepicker').datepicker({
             rtl: App.isRTL(),

@@ -286,12 +286,14 @@ class ProcesosController extends Controller
                 );
             } elseif ($id == 3) {
                 $requerimientos = Proceso_Requerimientos::where('FK_CPR_Id_Proyecto',$idProyecto)->get()->pluck('CPR_Nombre_Requerimiento','PK_CPR_Id_Requerimientos')->toArray();
+                $integrantesScrum = EquipoScrum::where('FK_CE_Id_Proyecto',$idProyecto)->where('FK_CE_Id_Rol',5)->get()->pluck('CE_Nombre_Persona','PK_CE_Id_Equipo_Scrum')->toArray();
                 return view(
                     'calidadpcs.procesos.formularios.proceso3.cronograma.cronogramaTabla',
                     [
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
                         'requerimientos' => $requerimientos,
+                        'integrantes' => $integrantesScrum,
                     ]
                 );
             }
@@ -472,6 +474,36 @@ class ProcesosController extends Controller
                 'CPP_Info_Proceso' => $request['Alcance'], 
                 'FK_CPP_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
                 'FK_CPP_Id_Proceso' => $request['FK_CPP_Id_Proceso'],
+            ]);
+            
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente. '
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    //Proceso #3
+    /**
+     * Función que almacena en la base de datos un nuevo procesp.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso3(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            ProcesoCronograma::create([
+                'CPC_Nombre_Sprint' => $request['CPC_Nombre_Sprint'],
+                'CPC_Requerimiento' => $request['CPC_Requerimiento'], 
+                'CPC_Duracion' => $request['CPC_Duracion'],
+                'CPC_Recurso' => $request['CPC_Recurso'],
+                'FK_CPP_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
             ]);
             
             return AjaxResponse::success(
