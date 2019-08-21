@@ -197,24 +197,7 @@ class ProcesosController extends Controller
         );
     }
 
-    /**
-     * Función que consulta los procesos registrados y los envía al datatable correspondiente.
-     *
-     * @param  \Illuminate\Http\Request
-     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
-     */
-    public function tablaCronograma(Request $request, $idProyecto)
-    {
-        if ($request->ajax() && $request->isMethod('GET')) {
-            return Datatables::of(ProcesoCronograma::where('FK_CPP_Id_Proyecto', $idProyecto))
-                ->addIndexColumn()
-                ->make(true);
-        }
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-    }
+    
 
     /**
      * Función que muestra el formulario de registro de un nuevo proyecto.
@@ -489,6 +472,33 @@ class ProcesosController extends Controller
 
     //Proceso #3
     /**
+     * Función que consulta los procesos registrados y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function tablaCronograma(Request $request, $idProyecto)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            
+            $cronograma = ProcesoCronograma::where('FK_CPP_Id_Proyecto', $idProyecto);
+            return Datatables::of($cronograma)
+                ->addIndexColumn()
+                ->addColumn('Etapa', function ($cronograma){
+                    $nombres = [];
+                    
+                    $perfil=Etapas::where('PK_CE_Id_Etapa', $cronograma->FK_CP_Id_Etapa)->first();
+                    return $perfil['CE_Etapa'];
+                })
+                ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    
+    /**
      * Función que almacena en la base de datos un nuevo procesp.
      *
      * @param  \Illuminate\Http\Request $request
@@ -516,4 +526,6 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+
+    
 }
