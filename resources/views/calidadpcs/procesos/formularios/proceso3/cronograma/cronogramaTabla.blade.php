@@ -127,17 +127,18 @@
                 name: 'CPC_Nombre_Sprint'
             },
             {
-                data: 'CPC_Requerimiento',
-                name: 'CPC_Requerimiento'
+                data: 'RequerimientoNombre',
+                name: 'RequerimientoNombre'
             },
             {
-                data: 'CPC_Recurso',
-                name: 'CPC_Recurso'
+                data: 'RecursoNombre',
+                name: 'RecursoNombre'
             },
             {
                 data: 'CPC_Duracion',
                 name: 'CPC_Duracion'
             },
+            
             {
                 defaultContent: '<a href="javascript:;" title="Editar" id="myb" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>',
                 data: 'action',

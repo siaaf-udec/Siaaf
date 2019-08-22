@@ -484,11 +484,27 @@ class ProcesosController extends Controller
             $cronograma = ProcesoCronograma::where('FK_CPP_Id_Proyecto', $idProyecto);
             return Datatables::of($cronograma)
                 ->addIndexColumn()
-                ->addColumn('Etapa', function ($cronograma){
-                    $nombres = [];
-                    
-                    $perfil=Etapas::where('PK_CE_Id_Etapa', $cronograma->FK_CP_Id_Etapa)->first();
-                    return $perfil['CE_Etapa'];
+                ->addColumn('RecursoNombre', function ($cronograma){
+                    $Nnombres = [];
+                    $item = $cronograma->CPC_Recurso;
+                    $nombres = explode(',', $item);
+                    $perfil=EquipoScrum::whereIn('PK_CE_Id_Equipo_Scrum', $nombres)->get();
+                    foreach($perfil as $value){
+                        array_push($Nnombres, $value['CE_Nombre_Persona']);
+                    }
+                    $valores =implode(", ", $Nnombres);
+                    return $valores;
+                })
+                ->addColumn('RequerimientoNombre', function ($cronograma){
+                    $Nnombres = [];
+                    $item = $cronograma->CPC_Requerimiento;
+                    $nombres = explode(',', $item);
+                    $perfil=Proceso_Requerimientos::whereIn('PK_CPR_Id_Requerimientos', $nombres)->get();
+                    foreach($perfil as $value){
+                        array_push($Nnombres, $value['CPR_Nombre_Requerimiento']);
+                    }
+                    $valores =implode(", ", $Nnombres);
+                    return $valores;
                 })
                 ->make(true);
         }
