@@ -110,10 +110,19 @@
     jQuery(document).ready(function() {
         $('.selectpicker').selectpicker();
         //inicio fechas
+        var subtotal=0;
         var fechaEmision = moment('{{$infoProyecto[0]['CP_Fecha_Inicio']}}');
         var fechaExpiracion = moment('{{$infoProyecto[0]['CP_Fecha_Final']}}');
         diasDiferencia = fechaExpiracion.diff(fechaEmision, 'weeks');
         console.log(diasDiferencia);
+        url = "{{route('calidadpcs.procesosCalidad.tablaCronograma')}}" + "/" + {{$infoProyecto[0]['PK_CP_Id_Proyecto']}};
+        $.get(url, function(data){
+            $.each(data.data, function(index, value){
+                subtotal =+ value.CPC_Duracion;
+                console.log(subtotal);
+            });          
+        });
+        console.log(subtotal);
         $("#num").text(diasDiferencia);
         //fin fechas
         var table, url, columns;
