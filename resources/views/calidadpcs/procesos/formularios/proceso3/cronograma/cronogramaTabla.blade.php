@@ -106,28 +106,30 @@
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
-    var diasDiferencia;
+    var semDiferencia;
+    var subtotal=0;
+    var fechaEmision = moment('{{$infoProyecto[0]['CP_Fecha_Inicio']}}');
+    var fechaExpiracion = moment('{{$infoProyecto[0]['CP_Fecha_Final']}}');
+    
+    var actualizarSemanas= function(){
+            semDiferencia = fechaExpiracion.diff(fechaEmision, 'weeks');
+            url = "{{route('calidadpcs.procesosCalidad.tablaCronograma')}}" + "/" + {{$idProyecto}};
+            $.get(url, function(data){
+                $.each(data.data, function(index, value){
+                    console.log(value.CPC_Duracion);
+                    subtotal += parseInt(value.CPC_Duracion);
+                }); 
+                semDiferencia = (semDiferencia - subtotal);
+                console.log(semDiferencia);
+                $("#num").text(semDiferencia);    
+            });
+        }
     jQuery(document).ready(function() {
         $('.selectpicker').selectpicker();
-        //inicio fechas
-        var subtotal=0;
-        var fechaEmision = moment('{{$infoProyecto[0]['CP_Fecha_Inicio']}}');
-        var fechaExpiracion = moment('{{$infoProyecto[0]['CP_Fecha_Final']}}');
-        diasDiferencia = fechaExpiracion.diff(fechaEmision, 'weeks');
-        console.log(diasDiferencia);
-        url = "{{route('calidadpcs.procesosCalidad.tablaCronograma')}}" + "/" + {{$infoProyecto[0]['PK_CP_Id_Proyecto']}};
-        $.get(url, function(data){
-            $.each(data.data, function(index, value){
-                subtotal =+ value.CPC_Duracion;
-                console.log(subtotal);
-            });          
-        });
-        console.log(subtotal);
-        $("#num").text(diasDiferencia);
-        //fin fechas
+        actualizarSemanas();
         var table, url, columns;
         table = $('#listaActividades');
-        url = "{{route('calidadpcs.procesosCalidad.tablaCronograma')}}" + "/" + {{$infoProyecto[0]['PK_CP_Id_Proyecto']}};
+        url = "{{route('calidadpcs.procesosCalidad.tablaCronograma')}}" + "/" + {{$idProyecto}};
         columns = [{
                 data: 'DT_Row_Index'
             },
@@ -191,6 +193,7 @@
                     var async = async ||false;
                     var formData = new FormData();
                     
+                    
                     formData.append('FK_CPP_Id_Proyecto', $('input:hidden[name="FK_CPP_Id_Proyecto"]').val());
                     formData.append('CPC_Nombre_Sprint', $('input:text[name="CPC_Nombre_Sprint"]').val());
                     formData.append('CPC_Requerimiento', $('#lista_requerimientos').val());
@@ -219,6 +222,7 @@
                             } else {
                                 if (request.status === 200 && xhr === 'success') {
                                     table.ajax.reload();
+                                    actualizarSemanas();
                                     $('#modal-create-permission').modal('hide');
                                     $('#from_permissions_update')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
@@ -245,7 +249,7 @@
             numero_semanas: {
                 required: true,
                 min: 1,
-                max: diasDiferencia,
+                max: semDiferencia,
             },
             lista_requerimientos: {
                 required: true,

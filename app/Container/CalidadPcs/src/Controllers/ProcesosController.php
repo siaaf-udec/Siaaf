@@ -273,6 +273,7 @@ class ProcesosController extends Controller
                 return view(
                     'calidadpcs.procesos.formularios.proceso3.cronograma.cronogramaTabla',
                     [
+                        'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
                         'requerimientos' => $requerimientos,
