@@ -107,93 +107,30 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     var semDiferencia;
-    var subtotal=0;
+    var subtotal = 0;
     var fechaEmision = moment('{{$infoProyecto[0]['CP_Fecha_Inicio']}}');
     var fechaExpiracion = moment('{{$infoProyecto[0]['CP_Fecha_Final']}}');
+
     
-    var actualizarSemanas= function(){
-            semDiferencia = fechaExpiracion.diff(fechaEmision, 'weeks');
-            url = "{{route('calidadpcs.procesosCalidad.tablaCronograma')}}" + "/" + {{$idProyecto}};
-            $.get(url, function(data){
-                $.each(data.data, function(index, value){
-                    console.log(value.CPC_Duracion);
-                    subtotal += parseInt(value.CPC_Duracion);
-                }); 
-                semDiferencia = (semDiferencia - subtotal);
-                console.log(semDiferencia);
-                $("#num").text(semDiferencia);    
-            });
-        }
-    jQuery(document).ready(function() {
-        $('.selectpicker').selectpicker();
-        actualizarSemanas();
-        var table, url, columns;
-        table = $('#listaActividades');
+    var actualizarSemanas = function() {
+        semDiferencia = fechaExpiracion.diff(fechaEmision, 'weeks');
         url = "{{route('calidadpcs.procesosCalidad.tablaCronograma')}}" + "/" + {{$idProyecto}};
-        columns = [{
-                data: 'DT_Row_Index'
-            },
-            {
-                data: 'CPC_Nombre_Sprint',
-                name: 'CPC_Nombre_Sprint'
-            },
-            {
-                data: 'RequerimientoNombre',
-                name: 'RequerimientoNombre'
-            },
-            {
-                data: 'RecursoNombre',
-                name: 'RecursoNombre'
-            },
-            {
-                data: 'CPC_Duracion',
-                name: 'CPC_Duracion'
-            },
-            
-            {
-                defaultContent: '<a href="javascript:;" title="Editar" id="myb" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>',
-                data: 'action',
-                name: 'action',
-                title: 'Acciones',
-                orderable: false,
-                searchable: false,
-                exportable: false,
-                printable: false,
-                className: 'text-center',
-                render: null,
-                serverSide: false,
-                responsivePriority: 2
-            }
-        ];
-        dataTableServer.init(table, url, columns);
-        table = table.DataTable();
-
-        $(".create").on('click', function(e) {
-            e.preventDefault();
-            $('#modal-create-permission').modal('toggle');
-            // $tr = $(this).closest('tr');
-        });
-
-        // table.on('click', '.edit', function(e) {
-        //     e.preventDefault();
-        //     $('#modal-update-permission').modal('toggle');
-        //     $tr = $(this).closest('tr');
-        // });
-        jQuery.validator.addMethod("letters", function(value, element) {
-            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
-        });
-        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
-            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
-        });
-        var createProyecto = function() {
+        $.get(url, function(data) {
+            $.each(data.data, function(index, value) {
+                console.log(value.CPC_Duracion);
+                subtotal += parseInt(value.CPC_Duracion);
+            });
+            semDiferencia = (semDiferencia - subtotal);
+            console.log(semDiferencia);
+            var createProyecto = function() {
             return {
                 init: function() {
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso3') }}';
                     var type = 'POST';
                     var async = async ||false;
                     var formData = new FormData();
-                    
-                    
+
+
                     formData.append('FK_CPP_Id_Proyecto', $('input:hidden[name="FK_CPP_Id_Proyecto"]').val());
                     formData.append('CPC_Nombre_Sprint', $('input:text[name="CPC_Nombre_Sprint"]').val());
                     formData.append('CPC_Requerimiento', $('#lista_requerimientos').val());
@@ -212,21 +149,23 @@
                         processData: false,
                         async: async,
                         beforeSend: function() {
-                            
+
                         },
                         success: function(response, xhr, request) {
                             if (response.data == 422) {
                                 xhr = "warning"
                                 UIToastr.init(xhr, response.title, response.message);
-                                
+
                             } else {
                                 if (request.status === 200 && xhr === 'success') {
+                                    var table = $('#listaActividades');
+                                    table = table.DataTable();
                                     table.ajax.reload();
                                     actualizarSemanas();
                                     $('#modal-create-permission').modal('hide');
                                     $('#from_permissions_update')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
-                                    
+
                                 }
                             }
                         },
@@ -262,5 +201,72 @@
 
         };
         FormValidationMd.init(form, formRules, formMessage, createProyecto());
+            $("#num").text(semDiferencia);
+            
+        });
+    }
+    jQuery(document).ready(function() {
+        $('.selectpicker').selectpicker();
+        actualizarSemanas();
+        var table, url, columns;
+        table = $('#listaActividades');
+        url = "{{route('calidadpcs.procesosCalidad.tablaCronograma')}}" + "/" + {{$idProyecto}};
+        columns = [{
+                data: 'DT_Row_Index'
+            },
+            {
+                data: 'CPC_Nombre_Sprint',
+                name: 'CPC_Nombre_Sprint'
+            },
+            {
+                data: 'RequerimientoNombre',
+                name: 'RequerimientoNombre'
+            },
+            {
+                data: 'RecursoNombre',
+                name: 'RecursoNombre'
+            },
+            {
+                data: 'CPC_Duracion',
+                name: 'CPC_Duracion'
+            },
+
+            {
+                defaultContent: '<a href="javascript:;" title="Editar" id="myb" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>',
+                data: 'action',
+                name: 'action',
+                title: 'Acciones',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-center',
+                render: null,
+                serverSide: false,
+                responsivePriority: 2
+            }
+        ];
+        dataTableServer.init(table, url, columns);
+        table = table.DataTable();
+
+        $(".create").on('click', function(e) {
+            e.preventDefault();
+            $('#modal-create-permission').modal('toggle');
+            // $tr = $(this).closest('tr');
+        });
+
+        // table.on('click', '.edit', function(e) {
+        //     e.preventDefault();
+        //     $('#modal-update-permission').modal('toggle');
+        //     $tr = $(this).closest('tr');
+        // });
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
+        });
+       
     });
+  
 </script>
