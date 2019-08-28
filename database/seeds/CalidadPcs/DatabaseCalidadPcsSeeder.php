@@ -28,6 +28,7 @@ class DatabaseCalidadPcsSeeder extends Seeder
         $this->call(DependenciasSeeder::class);
         $this->call(PermissionCalidadPcsSeeder::class);
         $this->call(RoleCalidadPcsSeeder::class);
+        $this->call(InformacionCostosCalidadPcsSeeder::class);
 
     }
 }

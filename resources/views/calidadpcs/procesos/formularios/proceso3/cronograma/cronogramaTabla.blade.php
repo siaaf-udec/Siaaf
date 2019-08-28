@@ -107,13 +107,13 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     var semDiferencia;
-    var subtotal = 0;
+    var subtotal;
     var fechaEmision = moment('{{$infoProyecto[0]['CP_Fecha_Inicio']}}');
     var fechaExpiracion = moment('{{$infoProyecto[0]['CP_Fecha_Final']}}');
 
-    
     var actualizarSemanas = function() {
         semDiferencia = fechaExpiracion.diff(fechaEmision, 'weeks');
+        subtotal = 0;
         url = "{{route('calidadpcs.procesosCalidad.tablaCronograma')}}" + "/" + {{$idProyecto}};
         $.get(url, function(data) {
             $.each(data.data, function(index, value) {
@@ -122,6 +122,8 @@
             });
             semDiferencia = (semDiferencia - subtotal);
             console.log(semDiferencia);
+            setTimeout(function(){
+            
             var createProyecto = function() {
             return {
                 init: function() {
@@ -129,7 +131,6 @@
                     var type = 'POST';
                     var async = async ||false;
                     var formData = new FormData();
-
 
                     formData.append('FK_CPP_Id_Proyecto', $('input:hidden[name="FK_CPP_Id_Proyecto"]').val());
                     formData.append('CPC_Nombre_Sprint', $('input:text[name="CPC_Nombre_Sprint"]').val());
@@ -155,7 +156,6 @@
                             if (response.data == 422) {
                                 xhr = "warning"
                                 UIToastr.init(xhr, response.title, response.message);
-
                             } else {
                                 if (request.status === 200 && xhr === 'success') {
                                     var table = $('#listaActividades');
@@ -165,7 +165,6 @@
                                     $('#modal-create-permission').modal('hide');
                                     $('#from_permissions_update')[0].reset(); //Limpia formulario
                                     UIToastr.init(xhr, response.title, response.message);
-
                                 }
                             }
                         },
@@ -178,7 +177,9 @@
                 }
             }
         };
+        
         var form = $('#from_permissions_update');
+        console.log(semDiferencia);
         var formRules = {
             CPC_Nombre_Sprint: {
                 required: true,
@@ -200,10 +201,17 @@
         var formMessage = {
 
         };
+        console.log(semDiferencia);
+        formRules.numero_semanas.max = semDiferencia;
+        // console.log($('#from_permissions_update').validate().settings);
+        $("#num").text(semDiferencia);
+        
+        // console.log(formRules.numero_semanas.max);
         FormValidationMd.init(form, formRules, formMessage, createProyecto());
-            $("#num").text(semDiferencia);
-            
+    },1000);    
+
         });
+    
     }
     jQuery(document).ready(function() {
         $('.selectpicker').selectpicker();
