@@ -64,7 +64,7 @@
                                     <div class="form-group form-md-line-input" style="padding-top: 0px;">
                                         <div class="input-icon">
                                             <label for="lista_requerimientos" class="control-label">Requerimientos:</label>
-                                            <select id="lista_requerimientos" name="lista_requerimientos" class="selectpicker" multiple data-size="5" title="Seleccione por lo menos un requerimiento" data-width="100%">
+                                            <select id="lista_requerimientos" name="lista_requerimientos" class="selectpicker form-control" multiple data-size="5" title="Seleccione por lo menos un requerimiento" data-width="100%">
                                                 @foreach($requerimientos as $key => $name)
                                                 <option value="{{$key}}">{{$name}}</option>
                                                 @endforeach
@@ -74,7 +74,7 @@
                                     <div class="form-group form-md-line-input" style="padding-top: 0px;">
                                         <div class="input-icon">
                                             <label for="lista_integrantes" class="control-label">Integrantes:</label>
-                                            <select id="lista_integrantes" name="lista_integrantes" class="selectpicker" multiple data-size="5" title="Seleccione por lo menos un responsable" data-width="100%">
+                                            <select id="lista_integrantes" name="lista_integrantes" class="selectpicker form-control" multiple data-size="5" title="Seleccione por lo menos un responsable" data-width="100%">
                                                 @foreach($integrantes as $key => $name)
                                                 <option value="{{$key}}">{{$name}}</option>
                                                 @endforeach
@@ -99,31 +99,30 @@
 </div>
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+<!-- <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script> -->
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     var semDiferencia;
     var subtotal;
+    var aux;
     var fechaEmision = moment('{{$infoProyecto[0]['CP_Fecha_Inicio']}}');
     var fechaExpiracion = moment('{{$infoProyecto[0]['CP_Fecha_Final']}}');
+    semDiferencia = fechaExpiracion.diff(fechaEmision, 'weeks');
 
     var actualizarSemanas = function() {
-        semDiferencia = fechaExpiracion.diff(fechaEmision, 'weeks');
+        aux = 0;
+        aux = semDiferencia;
         subtotal = 0;
         url = "{{route('calidadpcs.procesosCalidad.tablaCronograma')}}" + "/" + {{$idProyecto}};
         $.get(url, function(data) {
             $.each(data.data, function(index, value) {
-                console.log(value.CPC_Duracion);
                 subtotal += parseInt(value.CPC_Duracion);
             });
-            semDiferencia = (semDiferencia - subtotal);
-            console.log(semDiferencia);
-            setTimeout(function(){
-            
+            aux = (aux - subtotal);
             var createProyecto = function() {
             return {
                 init: function() {
@@ -131,7 +130,6 @@
                     var type = 'POST';
                     var async = async ||false;
                     var formData = new FormData();
-
                     formData.append('FK_CPP_Id_Proyecto', $('input:hidden[name="FK_CPP_Id_Proyecto"]').val());
                     formData.append('CPC_Nombre_Sprint', $('input:text[name="CPC_Nombre_Sprint"]').val());
                     formData.append('CPC_Requerimiento', $('#lista_requerimientos').val());
@@ -150,7 +148,6 @@
                         processData: false,
                         async: async,
                         beforeSend: function() {
-
                         },
                         success: function(response, xhr, request) {
                             if (response.data == 422) {
@@ -158,13 +155,16 @@
                                 UIToastr.init(xhr, response.title, response.message);
                             } else {
                                 if (request.status === 200 && xhr === 'success') {
-                                    var table = $('#listaActividades');
-                                    table = table.DataTable();
-                                    table.ajax.reload();
-                                    actualizarSemanas();
+                                    // var table = $('#listaActividades');
+                                    // table = table.DataTable();
+                                    // table.ajax.reload();
+                                    var route ='{{ route('calidadpcs.procesosCalidad.formularios') }}' + '/3/' + {{$idProyecto}};
+                                    $(".content-ajax").load(route);
                                     $('#modal-create-permission').modal('hide');
                                     $('#from_permissions_update')[0].reset(); //Limpia formulario
+                                    $('.selectpicker').selectpicker('deselectAll');
                                     UIToastr.init(xhr, response.title, response.message);
+                                    // formRules.numero_semanas.max = aux;
                                 }
                             }
                         },
@@ -177,9 +177,7 @@
                 }
             }
         };
-        
         var form = $('#from_permissions_update');
-        console.log(semDiferencia);
         var formRules = {
             CPC_Nombre_Sprint: {
                 required: true,
@@ -189,7 +187,7 @@
             numero_semanas: {
                 required: true,
                 min: 1,
-                max: semDiferencia,
+                max: aux,
             },
             lista_requerimientos: {
                 required: true,
@@ -201,17 +199,15 @@
         var formMessage = {
 
         };
-        console.log(semDiferencia);
-        formRules.numero_semanas.max = semDiferencia;
+        // console.log(aux);
+        // formRules.numero_semanas.max = aux;
+        // console.log(formRules);
         // console.log($('#from_permissions_update').validate().settings);
-        $("#num").text(semDiferencia);
+        $("#num").text(aux);
         
         // console.log(formRules.numero_semanas.max);
         FormValidationMd.init(form, formRules, formMessage, createProyecto());
-    },1000);    
-
         });
-    
     }
     jQuery(document).ready(function() {
         $('.selectpicker').selectpicker();
@@ -257,9 +253,16 @@
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
 
+        
+      
+
+
+
+
         $(".create").on('click', function(e) {
             e.preventDefault();
             $('#modal-create-permission').modal('toggle');
+            // actualizarSemanas();
             // $tr = $(this).closest('tr');
         });
 
