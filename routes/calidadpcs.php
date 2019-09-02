@@ -211,6 +211,21 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@storeProceso3',   
             'as' => 'calidadpcs.procesosCalidad.storeProceso3'
         ]);
+
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::post('storeProceso3_1', [
+            'uses' => $controller . 'ProcesosController@storeProceso3_1',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso3_1'
+        ]);
+
+        //
+        // PROCESO #4
+        //  
+         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+         Route::get('tablaCostosInfomacion', [
+            'uses' => $controller . 'ProcesosController@tablaCostosInformacion',   
+            'as' => 'calidadpcs.procesosCalidad.tablaCostosInformacion'
+        ]);
     });
 });
 

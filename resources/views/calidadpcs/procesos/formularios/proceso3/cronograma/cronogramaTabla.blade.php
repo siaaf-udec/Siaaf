@@ -35,7 +35,7 @@
                     @permission('CALIDADPCS_CREATE_PROJECT')<a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
                         Cancelar
                     </a>
-                    {{ Form::submit('Registrar', ['class' => 'btn blue']) }}
+                    {{ Form::submit('Registrar', ['class' => 'btn blue fin_proceso']) }}
                     @endpermission
                 </div>
             </div>
@@ -58,6 +58,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     {!! Field:: hidden ('FK_CPP_Id_Proyecto', $infoProyecto[0]['PK_CP_Id_Proyecto'])!!}
+                                    {!! Field:: hidden ('FK_CPP_Id_Proceso', $idProceso)!!}
 
                                     {!! Field:: text('CPC_Nombre_Sprint',null,['label'=>'Nombre del sprint:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Digite el nombre del sprint.'] ) !!}
@@ -255,7 +256,50 @@
 
         
       
-
+        $(".fin_proceso").on('click', function(e) {
+            e.preventDefault();
+            if(aux == 0){
+                var route = '{{ route('calidadpcs.procesosCalidad.storeProceso3_1') }}';
+                    var type = 'POST';
+                    var async = async ||false;
+                    var formData = new FormData();
+                    formData.append('FK_CPP_Id_Proyecto', $('input:hidden[name="FK_CPP_Id_Proyecto"]').val());
+                    formData.append('FK_CPP_Id_Proceso', $('input:hidden[name="FK_CPP_Id_Proceso"]').val());
+                    $.ajax({
+                        url: route,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        success: function(response, xhr, request) {
+                            if (response.data == 422) {
+                                xhr = "warning"
+                                UIToastr.init(xhr, response.title, response.message);
+                            } else {
+                                if (request.status === 200 && xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
+                                }
+                            }
+                        },
+                        error: function(response, xhr, request) {
+                            if (request.status === 422 && xhr === 'error') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+            }else{
+                UIToastr.init('warning', "Acción no permitida", "Para poder pasar este proceso, no debe tener semanas disponibles");
+            }
+            // $('#modal-create-permission').modal('toggle');
+            // actualizarSemanas();
+            // $tr = $(this).closest('tr');
+        });
 
 
 

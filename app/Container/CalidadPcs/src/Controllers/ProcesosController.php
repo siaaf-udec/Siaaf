@@ -2,6 +2,7 @@
 
 namespace App\Container\CalidadPcs\src\Controllers;
 
+use App\Container\CalidadPcs\src\Costos_Informacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
 
@@ -280,6 +281,14 @@ class ProcesosController extends Controller
                         'integrantes' => $integrantesScrum,
                     ]
                 );
+            } elseif ($id == 4){
+                return view(
+                    'calidadpcs.procesos.formularios.proceso4.costosTabla',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'idProceso' => $id
+                    ]
+                );
             }
         } else {
             return AjaxResponse::fail(
@@ -471,7 +480,10 @@ class ProcesosController extends Controller
         );
     }
 
+    // 
     //Proceso #3
+    //
+
     /**
      * Función que consulta los procesos registrados y los envía al datatable correspondiente.
      *
@@ -544,5 +556,51 @@ class ProcesosController extends Controller
         );
     }
 
-    
+    /**
+     * Función que almacena en la base de datos un nuevo procesp.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso3_1(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            Proceso_Proyecto::create([
+                'CPP_Info_Proceso' => "Proceso Gestion del tiempo, se creo correctamente",
+                'FK_CPP_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
+                'FK_CPP_Id_Proceso' => $request['FK_CPP_Id_Proceso'],
+            ]);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente. '
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    // 
+    // PROCESO #4
+    // 
+
+    /**
+     * Función que consulta los procesos registrados y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function tablaCostosInformacion(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return Datatables::of(Costos_Informacion::all())
+                ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
 }

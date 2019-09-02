@@ -93,7 +93,6 @@
                                         xhr = "warning"
                                         UIToastr.init(xhr, response.title, response.message);
                                         App.unblockUI('.portlet-form');
-                                        
                                 }
                                 else{
                                     if (request.status === 200 && xhr === 'success') {
