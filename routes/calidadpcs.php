@@ -248,10 +248,10 @@ Route::group(['middleware' => ['auth']], function () {
         // 
         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
         
-        // Route::get('tablaGestionCalidad', [
-        //     'uses' => $controller . 'ProcesosController@tablaGestionCalidad',   
-        //     'as' => 'calidadpcs.procesosCalidad.tablaGestionCalidad'
-        // ]);
+        Route::get('tablaGestionCalidad/{idProyecto?}', [
+            'uses' => $controller . 'ProcesosController@tablaGestionCalidad',   
+            'as' => 'calidadpcs.procesosCalidad.tablaGestionCalidad'
+        ]);
 
     });
 });

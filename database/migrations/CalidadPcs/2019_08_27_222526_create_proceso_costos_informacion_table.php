@@ -17,10 +17,10 @@ class CreateProcesoCostosInformacionTable extends Migration
             $table->increments('PK_CPCI_Id_Costos');
             $table->string('CPCI_Abreviatura');
             $table->string('CPCI_Nombre');
-            $table->string('CPCI_Definicion');
-            $table->string('CPCI_Uso');
-            $table->string('CPCI_Formula');
-            $table->string('CPCI_Interpretacion');
+            $table->text('CPCI_Definicion');
+            $table->text('CPCI_Uso');
+            $table->text('CPCI_Formula');
+            $table->text('CPCI_Interpretacion');
             $table->timestamps();
         });
     }

@@ -19,6 +19,8 @@ class CreateProcesoCronogramaTable extends Migration
             $table->string('CPC_Requerimiento');
             $table->bigInteger('CPC_Duracion');
             $table->string('CPC_Recurso')->nullable();
+            $table->text('CPC_Entregable')->nullable();
+            $table->date('CPC_Fecha_Fin_Sprint')->nullable();
             $table->integer('FK_CPP_Id_Proyecto')->unsigned();
             $table->foreign('FK_CPP_Id_Proyecto')->references('PK_CP_Id_Proyecto')->on('TBL_Calidadpcs_proyectos')->onDelete("cascade");
             

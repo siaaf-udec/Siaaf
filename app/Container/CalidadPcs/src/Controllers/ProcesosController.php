@@ -289,6 +289,19 @@ class ProcesosController extends Controller
                         'idProceso' => $id
                     ]
                 );
+            } elseif ($id == 5){
+                $requerimientos = Proceso_Requerimientos::where('FK_CPR_Id_Proyecto',$idProyecto)->get()->pluck('CPR_Nombre_Requerimiento','PK_CPR_Id_Requerimientos')->toArray();
+                $integrantesScrum = EquipoScrum::where('FK_CE_Id_Proyecto',$idProyecto)->where('FK_CE_Id_Rol',5)->get()->pluck('CE_Nombre_Persona','PK_CE_Id_Equipo_Scrum')->toArray();
+                return view(
+                    'calidadpcs.procesos.formularios.proceso5.gestionCalidadTabla',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                        'requerimientos' => $requerimientos,
+                        'integrantes' => $integrantesScrum,
+                    ]
+                );
             }
         } else {
             return AjaxResponse::fail(
@@ -620,10 +633,34 @@ class ProcesosController extends Controller
      * @param  \Illuminate\Http\Request
      * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function tablaGestionCalidad(Request $request)
+    public function tablaGestionCalidad(Request $request, $idProyecto)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            return Datatables::of(ProcesoCronograma::all())
+            $cronograma = ProcesoCronograma::where('FK_CPP_Id_Proyecto', $idProyecto);
+            return Datatables::of($cronograma)
+                ->addIndexColumn()
+                ->addColumn('RecursoNombre', function ($cronograma){
+                    $Nnombres = [];
+                    $item = $cronograma->CPC_Recurso;
+                    $nombres = explode(',', $item);
+                    $perfil=EquipoScrum::whereIn('PK_CE_Id_Equipo_Scrum', $nombres)->get();
+                    foreach($perfil as $value){
+                        array_push($Nnombres, $value['CE_Nombre_Persona']);
+                    }
+                    $valores =implode(", ", $Nnombres);
+                    return $valores;
+                })
+                ->addColumn('RequerimientoNombre', function ($cronograma){
+                    $Nnombres = [];
+                    $item = $cronograma->CPC_Requerimiento;
+                    $nombres = explode(',', $item);
+                    $perfil=Proceso_Requerimientos::whereIn('PK_CPR_Id_Requerimientos', $nombres)->get();
+                    foreach($perfil as $value){
+                        array_push($Nnombres, $value['CPR_Nombre_Requerimiento']);
+                    }
+                    $valores =implode(", ", $Nnombres);
+                    return $valores;
+                })
                 ->make(true);
         }
         return AjaxResponse::fail(

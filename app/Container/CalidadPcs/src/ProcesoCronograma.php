@@ -17,6 +17,7 @@ class ProcesoCronograma extends Model
         'CPC_Requerimiento',
         'CPC_Duracion',
         'CPC_Recurso',
+        'CPC_Entregable',
         'FK_CPP_Id_Proyecto',
     ];
 }
