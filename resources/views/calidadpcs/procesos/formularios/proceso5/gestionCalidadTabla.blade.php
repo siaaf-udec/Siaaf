@@ -1,36 +1,25 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos:'])
+    <br>
     <div class="row">
         <div class="col-md-12">
-            <h3>Tabla informativa</h3><br>
+            <div class="actions">
+                <a href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Crear un nuevo proyecto"><i class="glyphicon glyphicon-plus"></i>Agregar Proyecto</a>
+                <br>
+            </div>
         </div>
     </div>
+    <br>
+    <br>
     <div class="row">
         <div class="col-md-12">
             @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaProyectos'])
             @slot('columns', [
             '#',
-            'Abreviatura',
-            'Nombre',
-            'Uso',
-            ''
-            ])
-            @endcomponent
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Tabla de costos</h3><br>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-        @component('themes.bootstrap.elements.tables.datatables', ['id' => 'tablaCostos'])
-            @slot('columns', [
-            '#',
-            'Formula',
-            'Valor',
+            'Nombre Proyecto',
+            'Fecha inicial',
+            'Fecha final',
+            '',
             ''
             ])
             @endcomponent
@@ -46,28 +35,41 @@
 
         var table, url, columns;
         table = $('#listaProyectos');
-        url = "{{ route('calidadpcs.procesosCalidad.tablaCostosInformacion')}}";
+        url = "{{ route('calidadpcs.proyectosCalidad.tablaProyectos')}}";
         columns = [{
-                data: 'PK_CPCI_Id_Costos',
-                name: 'PK_CPCI_Id_Costos'
+                data: 'DT_Row_Index'
             },
             {
-                data: 'CPCI_Abreviatura',
-                name: 'CPCI_Abreviatura'
+                data: 'CP_Nombre_Proyecto',
+                name: 'CP_Nombre_Proyecto'
             },
             {
-                data: 'CPCI_Nombre',
-                name: 'CPCI_Nombre'
+                data: 'CP_Fecha_Inicio',
+                name: 'CP_Fecha_Inicio'
             },
             {
-                data: 'CPCI_Uso',
-                name: 'CPCI_Uso'
+                data: 'CP_Fecha_Final',
+                name: 'CP_Fecha_Final'
             },
             {
                 defaultContent: '<a href="javascript:;" class="btn btn-success verEtapas"  title="Ver los procesos de este Proyecto" ><i class="fa fa-list-ul"></i></a>',
                 data: 'action',
                 name: 'Etapas',
                 title: 'Etapas',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-center',
+                render: null,
+                serverSide: false,
+                responsivePriority: 2
+            },
+            {
+                defaultContent: '<a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove"><i class="icon-trash"></i></a> ',
+                data: 'action',
+                name: 'action',
+                title: 'Acciones',
                 orderable: false,
                 searchable: false,
                 exportable: false,

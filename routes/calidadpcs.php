@@ -186,10 +186,25 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'calidadpcs.procesosCalidad.registrarActividad'            
         ]);
 
-        //ruta que realiza la consulta de los requerimientos registrados de ese proyecto
-        Route::get('tablaRequerimientos/{id?}', [   
-            'uses' => $controller . 'ProcesosController@tablaRequerimientos',
-            'as' => 'calidadpcs.procesosCalidad.tablaRequermientos'            
+        
+
+        
+
+        
+        
+        // 
+        // PROCESO  #1
+        // 
+
+
+        // 
+        // PROCESO #2
+        // 
+        
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::post('storeProceso2', [
+            'uses' => $controller . 'ProcesosController@storeProceso2',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso2'
         ]);
 
         //ruta que conduce al controlador para eliminar un registro de una motocicleta
@@ -198,14 +213,15 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'calidadpcs.procesosCalidad.destroyRequerimiento'
         ]);
 
-        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
-        Route::post('storeProceso2', [
-            'uses' => $controller . 'ProcesosController@storeProceso2',   
-            'as' => 'calidadpcs.procesosCalidad.storeProceso2'
+        //ruta que realiza la consulta de los requerimientos registrados de ese proyecto
+        Route::get('tablaRequerimientos/{id?}', [   
+            'uses' => $controller . 'ProcesosController@tablaRequerimientos',
+            'as' => 'calidadpcs.procesosCalidad.tablaRequermientos'            
         ]);
 
-        //Proceso #3
-
+        // 
+        //PROCESO #3
+        // 
         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
         Route::post('storeProceso3', [
             'uses' => $controller . 'ProcesosController@storeProceso3',   
@@ -226,6 +242,17 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@tablaCostosInformacion',   
             'as' => 'calidadpcs.procesosCalidad.tablaCostosInformacion'
         ]);
+
+        // 
+        // PROCESO #5
+        // 
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        
+        // Route::get('tablaGestionCalidad', [
+        //     'uses' => $controller . 'ProcesosController@tablaGestionCalidad',   
+        //     'as' => 'calidadpcs.procesosCalidad.tablaGestionCalidad'
+        // ]);
+
     });
 });
 

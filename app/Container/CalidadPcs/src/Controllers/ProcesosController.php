@@ -429,28 +429,11 @@ class ProcesosController extends Controller
         );
     }
 
-    /**
-     * Se realiza la eliminación de los registros de un vehículo.
-     *
-     * @param  int $id
-     * @param  \Illuminate\Http\Request $request
-     * @return \App\Container\Overall\Src\Facades\AjaxResponse
-     */
-    public function destroyRequerimiento(Request $request, $id)
-    {
-        if ($request->ajax() && $request->isMethod('DELETE')) {
-            //$infoIngresos = Ingresos::where('CI_CodigoMoto','=',$id)->delete();
-            Proceso_Requerimientos::destroy($id);
-            return AjaxResponse::success(
-                '¡Bien hecho!',
-                'Datos eliminados correctamente.'
-            );
-        }
-        return AjaxResponse::fail(
-            '¡Lo sentimos!',
-            'No se pudo completar tu solicitud.'
-        );
-    }
+    
+
+    // 
+    // PROCESO #2 
+    // 
 
     /**
      * Función que almacena en la base de datos un nuevo procesp.
@@ -480,6 +463,29 @@ class ProcesosController extends Controller
         );
     }
 
+    /**
+     * Se realiza la eliminación de los registros de un vehículo.
+     *
+     * @param  int $id
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function destroyRequerimiento(Request $request, $id)
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {
+            //$infoIngresos = Ingresos::where('CI_CodigoMoto','=',$id)->delete();
+            Proceso_Requerimientos::destroy($id);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    
     // 
     //Proceso #3
     //
@@ -596,6 +602,28 @@ class ProcesosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
             return Datatables::of(Costos_Informacion::all())
+                ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    // 
+    // PROCESO #5
+    // 
+
+    /**
+     * Función que consulta los procesos registrados y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function tablaGestionCalidad(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            return Datatables::of(ProcesoCronograma::all())
                 ->make(true);
         }
         return AjaxResponse::fail(
