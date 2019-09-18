@@ -185,12 +185,7 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@registrarActividad',
             'as' => 'calidadpcs.procesosCalidad.registrarActividad'            
         ]);
-
-        
-
-        
-
-        
+       
         
         // 
         // PROCESO  #1

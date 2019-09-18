@@ -85,8 +85,16 @@
 
                                 {!! Field::date('Fecha_Inicio',$infoProyecto[0]['CP_Fecha_Inicio'],['label' => 'Fecha de inicio',  'class'=> '','auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d",'readonly'],['help' => 'Digite la fecha de inicio del proyecto', 'icon' => 'fa fa-calendar']) !!}
 
-                                {!! Field:: text('Tipo_Proyecto',$infoProceso->{'Tipo_Proyecto'},['label'=>'Tipo de proyecto:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {{--   {!! Field:: text('Tipo_Proyecto',$infoProceso->{'Tipo_Proyecto'},['label'=>'Tipo de proyecto:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => 'Digite el tipo de proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
+                                                            --}}
+                                                            
+                                {!! Field::select('SOL_carrera',
+                                          ['1' => 'Ingeniería de sistemas', '2' => 'Ingeniería Ambiental',
+                                          '3' => 'Ingeniería agronomica', '4' => 'Administración de empresas',
+                                          '5' => 'Psicología', '6' => 'Contaduría'],
+                                          null,
+                                          [ 'label' => 'Programa:']) !!}
 
                                 {!! Field:: text('Objetivos',$infoProceso->{'Objetivos'},['label'=>'Objetivos:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
