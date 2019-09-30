@@ -45,16 +45,16 @@ class ProcesosController extends Controller
         if ($aux == 0) {
             $conteoEtapa = 1;
         } else {
-            if ($aux >= 1) {
+            if ($aux <= 1) {
                 $conteoEtapa = 2;
             } else {
-                if ($aux >= 9) {
+                if ($aux <= 9) {
                     $conteoEtapa = 3;
                 } else {
-                    if ($aux >= 15) {
+                    if ($aux <= 15) {
                         $conteoEtapa = 4;
                     } else {
-                        if ($aux >= 24) {
+                        if ($aux <= 24) {
                             $conteoEtapa = 5;
                         }
                     }
@@ -68,16 +68,19 @@ class ProcesosController extends Controller
             $aux = $aux - 1;
             if ($aux < 8) {
                 $etapa2 = ($aux * 100) / 8;
+                $etapa2 = bcdiv($etapa2,'1',1);
             } else {
                 $etapa2 = 100;
                 $aux = $aux - 8;
                 if ($aux < 6) {
                     $etapa3 = ($aux * 100) / 6;
+                    $etapa3 = bcdiv($etapa3,'1',1);
                 } else {
                     $etapa3 = 100;
                     $aux = $aux - 6;
                     if ($aux < 9) {
                         $etapa4 = ($aux * 100) / 9;
+                        $etapa4 = bcdiv($etapa4,'1',1);
                     } else {
                         $etapa4 = 100;
                         $aux = $aux - 9;
@@ -148,7 +151,7 @@ class ProcesosController extends Controller
     {
         $procesos = Proceso_Proyecto::where('FK_CPP_Id_Proyecto', $idProyecto);
         $numProcesos = $procesos->count();
-        if($numProcesos == null){
+        if ($numProcesos == null) {
             $numProcesos = 0;
         }
         $numProcesos = $procesos->count() + 1;
@@ -198,7 +201,7 @@ class ProcesosController extends Controller
         );
     }
 
-    
+
 
     /**
      * Función que muestra el formulario de registro de un nuevo proyecto.
@@ -269,8 +272,8 @@ class ProcesosController extends Controller
                     ]
                 );
             } elseif ($id == 3) {
-                $requerimientos = Proceso_Requerimientos::where('FK_CPR_Id_Proyecto',$idProyecto)->get()->pluck('CPR_Nombre_Requerimiento','PK_CPR_Id_Requerimientos')->toArray();
-                $integrantesScrum = EquipoScrum::where('FK_CE_Id_Proyecto',$idProyecto)->where('FK_CE_Id_Rol',5)->get()->pluck('CE_Nombre_Persona','PK_CE_Id_Equipo_Scrum')->toArray();
+                $requerimientos = Proceso_Requerimientos::where('FK_CPR_Id_Proyecto', $idProyecto)->get()->pluck('CPR_Nombre_Requerimiento', 'PK_CPR_Id_Requerimientos')->toArray();
+                $integrantesScrum = EquipoScrum::where('FK_CE_Id_Proyecto', $idProyecto)->where('FK_CE_Id_Rol', 5)->get()->pluck('CE_Nombre_Persona', 'PK_CE_Id_Equipo_Scrum')->toArray();
                 return view(
                     'calidadpcs.procesos.formularios.proceso3.cronograma.cronogramaTabla',
                     [
@@ -281,7 +284,7 @@ class ProcesosController extends Controller
                         'integrantes' => $integrantesScrum,
                     ]
                 );
-            } elseif ($id == 4){
+            } elseif ($id == 4) {
                 return view(
                     'calidadpcs.procesos.formularios.proceso4.costosTabla',
                     [
@@ -289,9 +292,9 @@ class ProcesosController extends Controller
                         'idProceso' => $id
                     ]
                 );
-            } elseif ($id == 5){
-                $requerimientos = Proceso_Requerimientos::where('FK_CPR_Id_Proyecto',$idProyecto)->get()->pluck('CPR_Nombre_Requerimiento','PK_CPR_Id_Requerimientos')->toArray();
-                $integrantesScrum = EquipoScrum::where('FK_CE_Id_Proyecto',$idProyecto)->where('FK_CE_Id_Rol',5)->get()->pluck('CE_Nombre_Persona','PK_CE_Id_Equipo_Scrum')->toArray();
+            } elseif ($id == 5) {
+                $requerimientos = Proceso_Requerimientos::where('FK_CPR_Id_Proyecto', $idProyecto)->get()->pluck('CPR_Nombre_Requerimiento', 'PK_CPR_Id_Requerimientos')->toArray();
+                $integrantesScrum = EquipoScrum::where('FK_CE_Id_Proyecto', $idProyecto)->where('FK_CE_Id_Rol', 5)->get()->pluck('CE_Nombre_Persona', 'PK_CE_Id_Equipo_Scrum')->toArray();
                 return view(
                     'calidadpcs.procesos.formularios.proceso5.gestionCalidadTabla',
                     [
@@ -302,6 +305,167 @@ class ProcesosController extends Controller
                         'integrantes' => $integrantesScrum,
                     ]
                 );
+            } elseif ($id == 6) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso6.gestionRecursosHumanos',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]
+                );
+            } elseif ($id == 7) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso7.gestionComunicaciones',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 8) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso8.gestionRiesgos',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 9) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso9.gestionAdquisiciones',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 10) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso10.planDeDireccion',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 11) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso11.aseguramientoCalidad',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 12) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso12.dirigirEquipo',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 13) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso13.gestionarComunicaciones',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 14) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso14.EfectuarAdquisiciones',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 15) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso15.gestionarParticipacion',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 16) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso16.controlarTrabajo',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 17) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso17.controlarAlcance',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 18) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso18.controlarCronograma',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 19) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso19.controlarCostos',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 20) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso20.controlarCalidad',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 21) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso21.controlarComunicaciones',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 22) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso22.controlarRiesgos',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 23) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso23.controlarAdquisiciones',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 24) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso24.controlarInteresados',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
+            } elseif ($id == 25) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso25.cerrarProyecto',
+                    [
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'idProceso' => $id,
+                    ]);
             }
         } else {
             return AjaxResponse::fail(
@@ -383,7 +547,7 @@ class ProcesosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
             //Tabla Proyectos
-            
+
             $Fecha = Carbon::parse($request['Fecha_Inicio']);
             $Fecha_Final = $Fecha->addMonth($request['Duracion']);
             $proyecto = Proyectos::find($request['FK_CPP_Id_Proyecto']);
@@ -400,9 +564,9 @@ class ProcesosController extends Controller
             ]);
             //Tabla requerimientos
             for ($i = 1; $i < 16; $i++) {
-                if ($request['CPR_Nombre_Requerimiento_'.$i.''] == '' || $request['CPR_Nombre_Requerimiento_'.$i.''] == 'undefined') { } else {
+                if ($request['CPR_Nombre_Requerimiento_' . $i . ''] == '' || $request['CPR_Nombre_Requerimiento_' . $i . ''] == 'undefined') { } else {
                     Proceso_Requerimientos::create([
-                        'CPR_Nombre_Requerimiento' => $request['CPR_Nombre_Requerimiento_'.$i.''],
+                        'CPR_Nombre_Requerimiento' => $request['CPR_Nombre_Requerimiento_' . $i . ''],
                         'FK_CPR_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
                         'FK_CPR_Id_Proceso' => $request['FK_CPP_Id_Proceso'],
                     ]);
@@ -442,7 +606,7 @@ class ProcesosController extends Controller
         );
     }
 
-    
+
 
     // 
     // PROCESO #2 
@@ -460,11 +624,11 @@ class ProcesosController extends Controller
             //Tabla Proyecto Proceso
             //$data = $request->only('Numero_acta', 'Fecha_Inicio', 'Tipo_Proyecto', 'Nombre_Proyecto', 'Duracion', 'Entidades', 'Objetivo_General', 'Objetivo_Especifico_1', 'Objetivo_Especifico_2', 'Objetivo_Especifico_3', 'Objetivo_Especifico_4', 'Objetivo_Especifico_5');
             Proceso_Proyecto::create([
-                'CPP_Info_Proceso' => $request['Alcance'], 
+                'CPP_Info_Proceso' => $request['Alcance'],
                 'FK_CPP_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
                 'FK_CPP_Id_Proceso' => $request['FK_CPP_Id_Proceso'],
             ]);
-            
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos almacenados correctamente. '
@@ -498,7 +662,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
+
     // 
     //Proceso #3
     //
@@ -512,30 +676,30 @@ class ProcesosController extends Controller
     public function tablaCronograma(Request $request, $idProyecto)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            
+
             $cronograma = ProcesoCronograma::where('FK_CPP_Id_Proyecto', $idProyecto);
             return Datatables::of($cronograma)
                 ->addIndexColumn()
-                ->addColumn('RecursoNombre', function ($cronograma){
+                ->addColumn('RecursoNombre', function ($cronograma) {
                     $Nnombres = [];
                     $item = $cronograma->CPC_Recurso;
                     $nombres = explode(',', $item);
-                    $perfil=EquipoScrum::whereIn('PK_CE_Id_Equipo_Scrum', $nombres)->get();
-                    foreach($perfil as $value){
+                    $perfil = EquipoScrum::whereIn('PK_CE_Id_Equipo_Scrum', $nombres)->get();
+                    foreach ($perfil as $value) {
                         array_push($Nnombres, $value['CE_Nombre_Persona']);
                     }
-                    $valores =implode(", ", $Nnombres);
+                    $valores = implode(", ", $Nnombres);
                     return $valores;
                 })
-                ->addColumn('RequerimientoNombre', function ($cronograma){
+                ->addColumn('RequerimientoNombre', function ($cronograma) {
                     $Nnombres = [];
                     $item = $cronograma->CPC_Requerimiento;
                     $nombres = explode(',', $item);
-                    $perfil=Proceso_Requerimientos::whereIn('PK_CPR_Id_Requerimientos', $nombres)->get();
-                    foreach($perfil as $value){
+                    $perfil = Proceso_Requerimientos::whereIn('PK_CPR_Id_Requerimientos', $nombres)->get();
+                    foreach ($perfil as $value) {
                         array_push($Nnombres, $value['CPR_Nombre_Requerimiento']);
                     }
-                    $valores =implode(", ", $Nnombres);
+                    $valores = implode(", ", $Nnombres);
                     return $valores;
                 })
                 ->make(true);
@@ -545,7 +709,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
+
     /**
      * Función que almacena en la base de datos un nuevo procesp.
      *
@@ -558,12 +722,12 @@ class ProcesosController extends Controller
 
             ProcesoCronograma::create([
                 'CPC_Nombre_Sprint' => $request['CPC_Nombre_Sprint'],
-                'CPC_Requerimiento' => $request['CPC_Requerimiento'], 
+                'CPC_Requerimiento' => $request['CPC_Requerimiento'],
                 'CPC_Duracion' => $request['CPC_Duracion'],
                 'CPC_Recurso' => $request['CPC_Recurso'],
                 'FK_CPP_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
             ]);
-            
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos almacenados correctamente. '
@@ -639,26 +803,26 @@ class ProcesosController extends Controller
             $cronograma = ProcesoCronograma::where('FK_CPP_Id_Proyecto', $idProyecto);
             return Datatables::of($cronograma)
                 ->addIndexColumn()
-                ->addColumn('RecursoNombre', function ($cronograma){
+                ->addColumn('RecursoNombre', function ($cronograma) {
                     $Nnombres = [];
                     $item = $cronograma->CPC_Recurso;
                     $nombres = explode(',', $item);
-                    $perfil=EquipoScrum::whereIn('PK_CE_Id_Equipo_Scrum', $nombres)->get();
-                    foreach($perfil as $value){
+                    $perfil = EquipoScrum::whereIn('PK_CE_Id_Equipo_Scrum', $nombres)->get();
+                    foreach ($perfil as $value) {
                         array_push($Nnombres, $value['CE_Nombre_Persona']);
                     }
-                    $valores =implode(", ", $Nnombres);
+                    $valores = implode(", ", $Nnombres);
                     return $valores;
                 })
-                ->addColumn('RequerimientoNombre', function ($cronograma){
+                ->addColumn('RequerimientoNombre', function ($cronograma) {
                     $Nnombres = [];
                     $item = $cronograma->CPC_Requerimiento;
                     $nombres = explode(',', $item);
-                    $perfil=Proceso_Requerimientos::whereIn('PK_CPR_Id_Requerimientos', $nombres)->get();
-                    foreach($perfil as $value){
+                    $perfil = Proceso_Requerimientos::whereIn('PK_CPR_Id_Requerimientos', $nombres)->get();
+                    foreach ($perfil as $value) {
                         array_push($Nnombres, $value['CPR_Nombre_Requerimiento']);
                     }
-                    $valores =implode(", ", $Nnombres);
+                    $valores = implode(", ", $Nnombres);
                     return $valores;
                 })
                 ->make(true);

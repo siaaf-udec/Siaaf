@@ -15,7 +15,7 @@
 <!-- bootstrap -->
 <!-- <script src="{{ asset('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-multiselect/css/bootstrap-multiselect.css') }}" type="text/javascript"></script> -->
-
+<link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 <!-- select2 -->
 <!-- <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
