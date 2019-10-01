@@ -237,6 +237,11 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@tablaCostosInformacion',   
             'as' => 'calidadpcs.procesosCalidad.tablaCostosInformacion'
         ]);
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::post('storeProceso4', [
+            'uses' => $controller . 'ProcesosController@storeProceso4',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso4'
+        ]);
 
         // 
         // PROCESO #5

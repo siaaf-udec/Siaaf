@@ -2,6 +2,7 @@
 
 namespace App\Container\CalidadPcs\src\Controllers;
 
+use App\Container\CalidadPcs\src\Costos;
 use App\Container\CalidadPcs\src\Costos_Informacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
@@ -786,6 +787,33 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+
+     /**
+     * Función que almacena en la base de datos un nuevo procesp.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso4(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            Costos::create([
+                'CPC_Valor' => $request['valor'],
+                'FK_CPC_Id_Formula' => $request['id_formula'],
+                'FK_CPC_Id_Proyecto' => $request['FK_CPC_Id_Proyecto'],
+            ]);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente. '
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
 
     // 
     // PROCESO #5
