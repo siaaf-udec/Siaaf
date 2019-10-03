@@ -242,6 +242,11 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@storeProceso4',   
             'as' => 'calidadpcs.procesosCalidad.storeProceso4'
         ]);
+        //ruta que realiza la consulta de los requerimientos registrados de ese proyecto
+        Route::get('tablaCostos/{id?}', [   
+            'uses' => $controller . 'ProcesosController@tablaCostos',
+            'as' => 'calidadpcs.procesosCalidad.tablaCostos'            
+        ]);
 
         // 
         // PROCESO #5

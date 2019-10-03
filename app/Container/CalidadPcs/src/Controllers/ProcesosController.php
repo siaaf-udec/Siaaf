@@ -814,6 +814,30 @@ class ProcesosController extends Controller
         );
     }
 
+    /**
+     * Función que consulta los procesos registrados y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function tablaCostos(Request $request, $idProyecto)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $costos = Costos::where('FK_CPC_Id_Proyecto', $idProyecto);
+            return Datatables::of($costos)
+                ->addIndexColumn()
+                ->addColumn('Formula', function ($costos){
+                    $perfil=Costos_Informacion::where('PK_CPCI_Id_Costos', $costos->FK_CPC_Id_Formula)->first();
+                    return $perfil['CPCI_Nombre'];
+                })
+                ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
 
     // 
     // PROCESO #5

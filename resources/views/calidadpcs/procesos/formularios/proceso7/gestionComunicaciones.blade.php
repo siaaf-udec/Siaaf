@@ -1,3 +1,22 @@
+
+<!-- 
+    CAMBIAR A: 
+
+    tabla de reuniones: 
+
+    select de reunirse con quien: equipo, dueño del producto (product owner), interesados (stakeholder)
+
+
+
+
+
+
+
+-->
+
+
+
+
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos:'])
         <div class="row">
