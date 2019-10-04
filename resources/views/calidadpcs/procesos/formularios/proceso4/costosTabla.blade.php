@@ -401,7 +401,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                        {{--   {!! Form::submit('Guardar', ['class' => 'btn blue']) !!} --}}
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!} 
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                         {!! Form::close() !!}
@@ -413,7 +413,7 @@
     <div class="row">
         <div class="col-md-12">
             <!-- Modal -->
-            <div aria-hidden="true" class="modal fade" id="modal-costos-12" role="dialog" tabindex="-1">
+            <div aria-hidden="true" class="modal fade" id="modal_costos_12" role="dialog" tabindex="-1">
                 <div class="">
                     <!-- Modal content-->
                     <div class="modal-content">
@@ -425,19 +425,19 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                {!! Field:: text('CPC_Nombre_Sprint',null,['label'=>'Presupuesto hasta la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('MC12_presupuesto',null,['label'=>'Presupuesto hasta la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Digite el nombre del sprint.'] ) !!}
                                   
-                                    {!! Field:: text('numero_semanas',null,['label'=>'Valor Ganado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC12_valor',null,['label'=>'Valor Ganado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
 
-                                    {!! Field:: text('numero_semanas',null,['label'=>'Estimación a la Conclusión:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC12_estimacion',null,['label'=>'Estimación a la Conclusión:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
 
-                                    {!! Field:: text('numero_semanas',null,['label'=>'Costo Real:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC12_costo',null,['label'=>'Costo Real:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                        {{--   {!! Form::submit('Guardar', ['class' => 'btn blue']) !!} --}}
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!} 
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                         {!! Form::close() !!}
@@ -1030,7 +1030,10 @@
         var createModal_11 = function () {
             return{
                 init: function () {
-                    let resultado = ($('input:text[name="MC11_valor_ganado"]').val() / $('input:text[name="MC11_costo_real"]').val());
+                    // console.log($('input:text[name="MC11_presupuesto"]').val());
+                    // console.log( $('input:text[name="MC11_valor_ganado"]').val());
+                    // console.log();
+                    let resultado = (($('input:text[name="MC11_presupuesto"]').val() - $('input:text[name="MC11_valor_ganado"]').val()) / ($('input:text[name="MC11_presupuesto"]').val() - $('input:text[name="MC11_costo_real"]').val()));
                     console.log(resultado);
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
@@ -1080,7 +1083,8 @@
         var createModal_12 = function () {
             return{
                 init: function () {
-                    let resultado = ($('input:text[name="MC12_valor_ganado"]').val() / $('input:text[name="MC12_costo_real"]').val());
+                    let resultado = (($('input:text[name="MC12_presupuesto"]').val() - $('input:text[name="MC12_valor"]').val()) / ($('input:text[name="MC12_estimacion"]').val() - $('input:text[name="MC12_costo"]').val()));
+
                     console.log(resultado);
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';

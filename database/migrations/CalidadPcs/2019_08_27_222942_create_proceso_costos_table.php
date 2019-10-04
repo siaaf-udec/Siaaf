@@ -15,7 +15,7 @@ class CreateProcesoCostosTable extends Migration
     {
         Schema::connection('calidadpcs')->create('TBL_Calidadpcs_proceso_costos', function (Blueprint $table) {
             $table->increments('PK_CPC_Id_Costo');
-            $table->bigInteger('CPC_Valor')->unsigned();
+            $table->double('CPC_Valor',12,3);
             $table->integer('FK_CPC_Id_Formula')->unsigned();
             $table->foreign('FK_CPC_Id_Formula')->references('PK_CPCI_Id_Costos')->on('TBL_Calidadpcs_proceso_costos_informacion')->onDelete("cascade");
             $table->integer('FK_CPC_Id_Proyecto')->unsigned();

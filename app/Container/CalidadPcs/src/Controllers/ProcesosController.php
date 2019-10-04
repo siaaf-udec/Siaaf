@@ -46,22 +46,20 @@ class ProcesosController extends Controller
         if ($aux == 0) {
             $conteoEtapa = 1;
         } else {
-            if ($aux <= 1) {
+            if ($aux >= 1) {
                 $conteoEtapa = 2;
-            } else {
-                if ($aux <= 9) {
+                if ($aux >= 9) {
                     $conteoEtapa = 3;
-                } else {
-                    if ($aux <= 15) {
+                    if ($aux >= 15) {
                         $conteoEtapa = 4;
-                    } else {
-                        if ($aux <= 24) {
+                        if ($aux >= 24) {
                             $conteoEtapa = 5;
                         }
                     }
                 }
-            }
+            } 
         }
+
         if ($aux <= 1) {
             $etapa1 = ($aux * 100) / 1;
         } else {
