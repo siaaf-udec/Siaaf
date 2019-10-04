@@ -224,7 +224,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                        {{--   {!! Form::submit('Guardar', ['class' => 'btn blue']) !!} --}}
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                         {!! Form::close() !!}
@@ -236,30 +236,30 @@
     <div class="row">
         <div class="col-md-12">
             <!-- Modal -->
-            <div aria-hidden="true" class="modal fade" id="modal-costos-7" role="dialog" tabindex="-1">
+            <div aria-hidden="true" class="modal fade" id="modal_costos_7" role="dialog" tabindex="-1">
                 <div class="">
                     <!-- Modal content-->
                     <div class="modal-content">
                         {!! Form::open(['id' => 'form_costos_7', 'class' => '', 'url' => '/forms']) !!}
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
-                            <h1>Formula: Índice de Desempeño del Costo</h1>
+                            <h1>Formula: Estimación a la Conclusión</h1>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: text('CPC_Nombre_Sprint',null,['label'=>'Costo Real:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                   {!! Field:: text('MC7_costo_real',null,['label'=>'Costo Real:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Digite el nombre del sprint.'] ) !!}
 
-                                    {!! Field:: text('CPC_Nombre_Sprint',null,['label'=>'Presupuesto hasta la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    {!! Field:: text('MC7_presupuesto',null,['label'=>'Presupuesto hasta la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Digite el nombre del sprint.'] ) !!}
                                   
-                                    {!! Field:: text('numero_semanas',null,['label'=>'Valor Ganado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC7_valor_ganado',null,['label'=>'Valor Ganado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                        {{--   {!! Form::submit('Guardar', ['class' => 'btn blue']) !!} --}}
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!} 
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                         {!! Form::close() !!}
@@ -271,7 +271,7 @@
     <div class="row">
         <div class="col-md-12">
             <!-- Modal -->
-            <div aria-hidden="true" class="modal fade" id="modal-costos-8" role="dialog" tabindex="-1">
+            <div aria-hidden="true" class="modal fade" id="modal_costos_8" role="dialog" tabindex="-1">
                 <div class="">
                     <!-- Modal content-->
                     <div class="modal-content">
@@ -283,15 +283,16 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: text('CPC_Nombre_Sprint',null,['label'=>'Costo Real:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                   {!! Field:: text('MC8_costo_real',null,['label'=>'Costo Real:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Digite el nombre del sprint.'] ) !!}
                                   
-                                    {!! Field:: text('numero_semanas',null,['label'=>'Estimación hasta la Conclusión (ascendente):', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC8_estimacion',null,['label'=>'Estimación hasta la Conclusión (ascendente):', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
+                                        ['help' => 'Digite el numero de semanas.']) !!}
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                        {{--   {!! Form::submit('Guardar', ['class' => 'btn blue']) !!} --}}
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!} 
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                         {!! Form::close() !!}
@@ -303,7 +304,7 @@
     <div class="row">
         <div class="col-md-12">
             <!-- Modal -->
-            <div aria-hidden="true" class="modal fade" id="modal-costos-9" role="dialog" tabindex="-1">
+            <div aria-hidden="true" class="modal fade" id="modal_costos_9" role="dialog" tabindex="-1">
                 <div class="">
                     <!-- Modal content-->
                     <div class="modal-content">
@@ -315,22 +316,26 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: text('CPC_Nombre_Sprint',null,['label'=>'Costo Real:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                   {!! Field:: text('MC9_costo_real',null,['label'=>'Costo Real:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Digite el nombre del sprint.'] ) !!}
                                   
-                                    {!! Field:: text('numero_semanas',null,['label'=>'Presupuesto hasta la Conclusión:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC9_presupuesto',null,['label'=>'Presupuesto hasta la Conclusión:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
+                                        ['help' => 'Digite el numero de semanas.']) !!}
 
-                                    {!! Field:: text('numero_semanas',null,['label'=>'Valor Ganado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC9_valor_ganado',null,['label'=>'Valor Ganado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
+                                        ['help' => 'Digite el numero de semanas.']) !!}
 
-                                    {!! Field:: text('numero_semanas',null,['label'=>'Índice de Desempeño del Costo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC9_indice_costo',null,['label'=>'Índice de Desempeño del Costo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
+                                        ['help' => 'Digite el numero de semanas.']) !!}
 
-                                    {!! Field:: text('numero_semanas',null,['label'=>'Índice de Desempeño del Cronograma:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC9_indice_cronograma',null,['label'=>'Índice de Desempeño del Cronograma:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                         ['help' => 'Digite el numero de semanas.']) !!}
 
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                        {{--   {!! Form::submit('Guardar', ['class' => 'btn blue']) !!} --}}
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                         {!! Form::close() !!}
@@ -342,7 +347,7 @@
     <div class="row">
         <div class="col-md-12">
             <!-- Modal -->
-            <div aria-hidden="true" class="modal fade" id="modal-costos-10" role="dialog" tabindex="-1">
+            <div aria-hidden="true" class="modal fade" id="modal_costos_10" role="dialog" tabindex="-1">
                 <div class="">
                     <!-- Modal content-->
                     <div class="modal-content">
@@ -354,15 +359,15 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: text('CPC_Nombre_Sprint',null,['label'=>'Estimación a la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                   {!! Field:: text('MC10_estimacion',null,['label'=>'Estimación a la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Digite el nombre del sprint.'] ) !!}
                                   
-                                    {!! Field:: text('numero_semanas',null,['label'=>'Costo Real:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC10_costo_real',null,['label'=>'Costo Real:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                        {{--   {!! Form::submit('Guardar', ['class' => 'btn blue']) !!} --}}
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                         {!! Form::close() !!}
@@ -374,7 +379,7 @@
     <div class="row">
         <div class="col-md-12">
             <!-- Modal -->
-            <div aria-hidden="true" class="modal fade" id="modal-costos-11" role="dialog" tabindex="-1">
+            <div aria-hidden="true" class="modal fade" id="modal_costos_11" role="dialog" tabindex="-1">
                 <div class="">
                     <!-- Modal content-->
                     <div class="modal-content">
@@ -386,12 +391,12 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: text('CPC_Nombre_Sprint',null,['label'=>'Presupuesto hasta la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                   {!! Field:: text('MC11_presupuesto',null,['label'=>'Presupuesto hasta la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Digite el nombre del sprint.'] ) !!}
                                   
-                                    {!! Field:: text('numero_semanas',null,['label'=>'Valor Ganado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC11_valor_ganado',null,['label'=>'Valor Ganado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
 
-                                    {!! Field:: text('numero_semanas',null,['label'=>'Costo Real:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC11_costo_real',null,['label'=>'Costo Real:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
                                 </div>
                             </div>
                         </div>
@@ -825,7 +830,7 @@
         var createModal_7 = function () {
             return{
                 init: function () {
-                    let resultado = ($('input:text[name="MC7_valor_ganado"]').val() / $('input:text[name="MC7_costo_real"]').val());
+                    let resultado = ($('input:text[name="MC7_costo_real"]').val() + $('input:text[name="MC7_presupuesto"]').val() - $('input:text[name="MC7_valor_ganado"]').val());
                     console.log(resultado);
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
@@ -875,7 +880,7 @@
         var createModal_8 = function () {
             return{
                 init: function () {
-                    let resultado = ($('input:text[name="MC8_valor_ganado"]').val() / $('input:text[name="MC8_costo_real"]').val());
+                    let resultado = ($('input:text[name="MC8_costo_real"]').val() + $('input:text[name="MC8_estimacion"]').val());
                     console.log(resultado);
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
@@ -925,7 +930,7 @@
         var createModal_9 = function () {
             return{
                 init: function () {
-                    let resultado = ($('input:text[name="MC9_valor_ganado"]').val() / $('input:text[name="MC9_costo_real"]').val());
+                    let resultado = $('input:text[name="MC9_costo_real"]').val() + (($('input:text[name="MC9_presupuesto"]').val() - $('input:text[name="MC9_valor_ganado"]').val()) / ($('input:text[name="MC9_indice_costo"]').val() * $('input:text[name="MC9_indice_cronograma"]').val())) ;
                     console.log(resultado);
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
@@ -975,7 +980,7 @@
         var createModal_10 = function () {
             return{
                 init: function () {
-                    let resultado = ($('input:text[name="MC10_valor_ganado"]').val() / $('input:text[name="MC10_costo_real"]').val());
+                    let resultado = ($('input:text[name="MC10_estimacion"]').val() - $('input:text[name="MC10_costo_real"]').val());
                     console.log(resultado);
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
