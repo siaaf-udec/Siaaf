@@ -446,6 +446,15 @@
             </div>
         </div>
     </div>
+    <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-12 col-md-offset-4">
+                        <a href="javascript:;" class="btn btn-success guardarCosto"><i class="fa fa-angle-right"></i>
+                            Continuar
+                        </a>
+                    </div>
+                </div>
+            </div>
     @endcomponent
 </div>
 
@@ -1148,7 +1157,7 @@
                 name: 'CPC_Valor'
             },
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-danger verEtapas"  title="Ver los procesos de este Proyecto" ><i class="fa fa-trash-o"></i></a>',
+                defaultContent: '<a href="javascript:;" class="btn btn-danger eliminar"  title="Ver los procesos de este Proyecto" ><i class="fa fa-trash-o"></i></a>',
                 data: 'action',
                 name: '',
                 title: '',
@@ -1164,5 +1173,101 @@
         ];
         dataTableServer.init(table2, url2, columns2);
         table2 = table2.DataTable();
+
+        // table2.on('click', '.eliminar', function(e) {
+        //     e.preventDefault();
+        //     $tr = $(this).closest('tr');
+        //     var dataTable2 = table2.row($tr).data();
+        //     console.log(dataTable2.PK_CPC_Id_Costo)
+        //     // $('#modal_costos_'+dataTable.PK_CPCI_Id_Costos).modal('toggle');
+
+        //         // route_edit = '{{ route('calidadpcs.procesosCalidad.etapas')}}'+'/'+dataTable.PK_CP_Id_Proyecto;
+        //     // $(".content-ajax").load(route_edit);
+        // });
+        table2.on('click', '.eliminar', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable2 = table2.row($tr).data();
+            var route = '{{ route('calidadpcs.procesosCalidad.destroyCosto') }}' + '/' + dataTable2.PK_CPC_Id_Costo;
+            var type = 'DELETE';
+            var async = async || false;
+            swal({
+                    title: "¿Está seguro?",
+                    text: "¿Está seguro de eliminar el requerimiento seleccionado?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    table2.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                    } else {
+                        swal("Cancelado", "No se eliminó ningun costo", "error");
+                    }
+                });
+        });
+
+        $(".guardarCosto").on('click', function(e) {
+            e.preventDefault();
+                var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4_1') }}';
+                    var type = 'POST';
+                    var async = async ||false;
+                    var formData = new FormData();
+                    formData.append('FK_CPP_Id_Proyecto', {{$idProyecto}});
+                    formData.append('FK_CPP_Id_Proceso', {{$idProceso}});
+                    $.ajax({
+                        url: route,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        success: function(response, xhr, request) {
+                            if (response.data == 422) {
+                                xhr = "warning"
+                                UIToastr.init(xhr, response.title, response.message);
+                            } else {
+                                if (request.status === 200 && xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
+                                }
+                            }
+                        },
+                        error: function(response, xhr, request) {
+                            if (request.status === 422 && xhr === 'error') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+            
+        });
     });
+    
 </script>

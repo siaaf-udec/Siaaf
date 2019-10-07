@@ -247,6 +247,17 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@tablaCostos',
             'as' => 'calidadpcs.procesosCalidad.tablaCostos'            
         ]);
+        //ruta que conduce al controlador para eliminar un registro de una motocicleta
+        Route::delete('destroy/{id?}', [
+            'uses' => $controller . 'ProcesosController@destroyCosto', 
+            'as' => 'calidadpcs.procesosCalidad.destroyCosto'
+        ]);
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::post('storeProceso4_1', [
+            'uses' => $controller . 'ProcesosController@storeProceso4_1',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso4_1'
+        ]);
+
 
         // 
         // PROCESO #5
