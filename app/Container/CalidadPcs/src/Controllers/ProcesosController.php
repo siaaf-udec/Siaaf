@@ -930,4 +930,100 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function agregarEntrega(Request $request, $id)
+    {
+        if($request->ajax() && $request->isMethod('GET')){
+           
+            $info = ProcesoCronograma::find($id);
+            $Nnombres = [];
+            $item = $info->CPC_Recurso;
+            $nombres = explode(',', $item);
+            $perfil = EquipoScrum::whereIn('PK_CE_Id_Equipo_Scrum', $nombres)->get();
+                    foreach ($perfil as $value) {
+                        array_push($Nnombres, $value['CE_Nombre_Persona']);
+                    }
+                    $valores = implode(", ", $Nnombres);
+            $info->responsables = $valores;
+
+            $Nnombres2 = [];
+            $item2 = $info->CPC_Requerimiento;
+                    $nombres2 = explode(',', $item2);
+                    $perfil2 = Proceso_Requerimientos::whereIn('PK_CPR_Id_Requerimientos', $nombres2)->get();
+                    foreach ($perfil2 as $value2) {
+                        array_push($Nnombres2, $value2['CPR_Nombre_Requerimiento']);
+                    }
+                    $valores2 = implode(", ", $Nnombres2);
+            $info->requerimientos = $valores2;
+
+            // dd($info);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos cargados correctamente.',
+                $info
+            );
+        }else{
+            return AjaxResponse::fail(
+                '¡Lo sentimos!',
+                'No se pudo completar tu solicitud.'
+            );
+        }
+    }
+
+    /**
+     * Se realiza la actualización de los datos de un proyecto.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function updateProceso5(Request $request, $id_sprint)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            $sprint = ProcesoCronograma::find($id_sprint);
+            $sprint->fill([
+                'CPC_Entregable' => $request['CPC_Entregable'],
+            ]);
+            $sprint->save();
+         
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    /**
+     * Función que almacena en la base de datos un nuevo procesp.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso5(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            Proceso_Proyecto::create([
+                'CPP_Info_Proceso' => "Proceso Gestion de la calidad, se creo correctamente",
+                'FK_CPP_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
+                'FK_CPP_Id_Proceso' => $request['FK_CPP_Id_Proceso'],
+            ]);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente. '
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
 }

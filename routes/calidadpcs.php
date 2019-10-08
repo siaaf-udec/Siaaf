@@ -269,6 +269,20 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'calidadpcs.procesosCalidad.tablaGestionCalidad'
         ]);
 
+        Route::get('agregarEntrega/{id?}', [
+            'uses' => $controller . 'ProcesosController@agregarEntrega',   
+            'as' => 'calidadpcs.procesosCalidad.agregarEntrega'
+        ]);
+        Route::post('updateProceso5/{id?}', [
+            'uses' => $controller . 'ProcesosController@updateProceso5',      
+            'as' => 'calidadpcs.procesosCalidad.updateProceso5'
+        ]);
+         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+         Route::post('storeProceso5', [
+            'uses' => $controller . 'ProcesosController@storeProceso5',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso5'
+        ]);
+    
     });
 });
 

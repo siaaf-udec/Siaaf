@@ -449,8 +449,8 @@
     <div class="form-actions">
                 <div class="row">
                     <div class="col-md-12 col-md-offset-4">
-                        <a href="javascript:;" class="btn btn-success guardarCosto"><i class="fa fa-angle-right"></i>
-                            Continuar
+                        <a href="javascript:;" class="btn btn-success guardarCosto">
+                            Continuar <i class="fa fa-angle-right"></i>
                         </a>
                     </div>
                 </div>

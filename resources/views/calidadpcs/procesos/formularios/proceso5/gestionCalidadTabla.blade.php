@@ -1,14 +1,14 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos:'])
     <br>
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-md-12">
             <div class="actions">
                 <a href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Crear un nuevo proyecto"><i class="glyphicon glyphicon-plus"></i>Agregar Proyecto</a>
                 <br>
             </div>
         </div>
-    </div>
+    </div> -->
     <br>
     <br>
     <div class="row">
@@ -33,41 +33,29 @@
                 <div class="">
                     <!-- Modal content-->
                     <div class="modal-content">
-                        {!! Form::open(['id' => 'from_permissions_update', 'class' => '', 'url' => '/forms']) !!}
+                        {!! Form::open(['id' => 'form_permissions_update', 'class' => '', 'url' => '/forms']) !!}
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
-                            <h1>Crear sprint</h1>
-                            <h3>Numero de semanas disponibles: <span id="num"></span></h3>
+                            <h3>Agregar Entrega</h3>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
                                     {!! Field:: hidden ('FK_CPP_Id_Proyecto', $infoProyecto[0]['PK_CP_Id_Proyecto'])!!}
-                                    {!! Field:: hidden ('FK_CPP_Id_Proceso', $idProceso)!!}
 
-                                    {!! Field:: text('CPC_Nombre_Sprint',null,['label'=>'Nombre del sprint:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+
+                                    {!! Field:: hidden ('PK_CPC_Id_Sprint', null)!!}
+
+                                    {!! Field:: text('CPC_Nombre_Sprint',null,['label'=>'Nombre del sprint:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off', 'readonly'],
                                     ['help' => 'Digite el nombre del sprint.'] ) !!}
-                                    <div class="form-group form-md-line-input" style="padding-top: 0px;">
-                                        <div class="input-icon">
-                                            <label for="lista_requerimientos" class="control-label">Requerimientos:</label>
-                                            <select id="lista_requerimientos" name="lista_requerimientos" class="selectpicker form-control" multiple data-size="5" title="Seleccione por lo menos un requerimiento" data-width="100%">
-                                                @foreach($requerimientos as $key => $name)
-                                                <option value="{{$key}}">{{$name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group form-md-line-input" style="padding-top: 0px;">
-                                        <div class="input-icon">
-                                            <label for="lista_integrantes" class="control-label">Integrantes:</label>
-                                            <select id="lista_integrantes" name="lista_integrantes" class="selectpicker form-control" multiple data-size="5" title="Seleccione por lo menos un responsable" data-width="100%">
-                                                @foreach($integrantes as $key => $name)
-                                                <option value="{{$key}}">{{$name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    {!! Field:: text('numero_semanas',null,['label'=>'Numero de semanas:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+
+                                    {!! Field:: text('Requerimientos',null,['label'=>'Requerimientos:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off', 'readonly'],
+                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+
+                                    {!! Field:: text('Responsables',null,['label'=>'Responsables:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off', 'readonly'],
+                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    
+                                    {!! Field:: text('CPC_Entregable',null,['label'=>'Tareas a realizar :', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite las tareas que se van a cumplir en el sprint.']) !!}
                                 </div>
                             </div>
                         </div>
@@ -81,6 +69,15 @@
             </div>
         </div>
     </div>
+    <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-12 col-md-offset-4">
+                        <a href="javascript:;" class="btn btn-success guardarCosto">
+                            Continuar <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
     @endcomponent
 </div>
 
@@ -116,10 +113,10 @@
                 name: 'CPC_Entregable'
             },
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-success verEtapas"  title="Ver los procesos de este Proyecto" ><i class="fa fa-list-ul"></i></a>',
+                defaultContent: '<a href="javascript:;" class="btn btn-success agregar"  title="Agregar entrega a este sprint" ><i class="fa fa-list-ul"></i></a>',
                 data: 'action',
-                name: 'Etapas',
-                title: 'Etapas',
+                name: 'Acciones',
+                title: 'Acciones',
                 orderable: false,
                 searchable: false,
                 exportable: false,
@@ -133,27 +130,108 @@
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
 
-        // $(".create").on('click', function(e) {
-        //     e.preventDefault();
-        //     var route = '{{ route('calidadpcs.proyectosCalidad.RegistrarProyecto') }}' + '/' +{{Auth::user()->id}};
-        //     $(".content-ajax").load(route);
-        // });
+        table.on('click', '.agregar', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data(),
+                route_edit = '{{ route('calidadpcs.procesosCalidad.agregarEntrega') }}'+ '/'+ dataTable.PK_CPC_Id_Sprint;
 
-        // table.on('click', '.verEtapas', function(e) {
-        //     e.preventDefault();
-        //     $tr = $(this).closest('tr');
-        //     var dataTable = table.row($tr).data(),
-        //         route_edit = '{{ route('calidadpcs.procesosCalidad.etapas')}}'+'/'+dataTable.PK_CP_Id_Proyecto;
-        //     $(".content-ajax").load(route_edit);
-        // });
+            $.get( route_edit, function( info ) {
+                $('input[name="PK_CPC_Id_Sprint"]').val(info.data.PK_CPC_Id_Sprint);
+                $('input[name="CPC_Nombre_Sprint"]').val(info.data.CPC_Nombre_Sprint);
+                $('input[name="Requerimientos"]').val(info.data.requerimientos);
+                $('input[name="Responsables"]').val(info.data.responsables);
+                $('input[name="CPC_Entregable"]').val(info.data.CPC_Entregable);
+                $('#modal-create-permission').modal('toggle');
+            });
+        });
 
-        // table.on('click', '.edit', function(e) {
-        //     e.preventDefault();
-        //     $tr = $(this).closest('tr');
-        //     var dataTable = table.row($tr).data(),
-        //         route_edit = '{{ route('calidadpcs.proyectosCalidad.edit')}}'+'/'+ dataTable.PK_CP_Id_Proyecto;
-        //     $(".content-ajax").load(route_edit);
-        // });
+        var createModal = function () {
+            return{
+                init: function () {
+                    var id_sprint =  $('input:hidden[name="PK_CPC_Id_Sprint"]').val();
+                    var route = '{{ route('calidadpcs.procesosCalidad.updateProceso5') }}'+'/'+ id_sprint;
+                    var type = 'POST';
+                    var async = async || false;
+                    var formData = new FormData();
+                    formData.append('CPC_Entregable', $('input:text[name="CPC_Entregable"]').val());
+                    formData.append('FK_CPC_Id_Proyecto', {{$idProyecto}});
 
+                    $.ajax({
+                        url: route,
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
+
+                        },
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
+                                // table.ajax.reload();
+                                table.ajax.reload();
+                                $('#modal-create-permission').modal('hide');
+                                $('#form_permissions_update')[0].reset(); //Limpia formulario
+                                UIToastr.init(xhr , response.title , response.message  );
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 &&  xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+                }
+            }
+        };
+
+        var form_create_modal = $('#form_permissions_update');
+        var rules_create_modal = {
+            // MC1_valor_ganado: { minlength: 1, required: true },
+            // MC1_costo_real: { minlength: 1, required: true },
+        };
+        FormValidationMd.init(form_create_modal,rules_create_modal,false,createModal());
     });
+
+    $(".guardarCosto").on('click', function(e) {
+            e.preventDefault();
+                var route = '{{ route('calidadpcs.procesosCalidad.storeProceso5') }}';
+                    var type = 'POST';
+                    var async = async ||false;
+                    var formData = new FormData();
+                    formData.append('FK_CPP_Id_Proyecto', {{$idProyecto}});
+                    formData.append('FK_CPP_Id_Proceso', {{$idProceso}});
+                    $.ajax({
+                        url: route,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        success: function(response, xhr, request) {
+                            if (response.data == 422) {
+                                xhr = "warning"
+                                UIToastr.init(xhr, response.title, response.message);
+                            } else {
+                                if (request.status === 200 && xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
+                                }
+                            }
+                        },
+                        error: function(response, xhr, request) {
+                            if (request.status === 422 && xhr === 'error') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+            
+        });
 </script>
