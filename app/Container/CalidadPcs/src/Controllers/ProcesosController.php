@@ -305,12 +305,14 @@ class ProcesosController extends Controller
                     ]
                 );
             } elseif ($id == 6) {
+                $integrantesScrum = EquipoScrum::where('FK_CE_Id_Proyecto', $idProyecto)->get()->pluck('CE_Nombre_Persona', 'PK_CE_Id_Equipo_Scrum')->toArray();
                 return view(
                     'calidadpcs.procesos.formularios.proceso6.gestionRecursosHumanos',
                     [
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
+                        'integrantes' => $integrantesScrum,
                     ]
                 );
             } elseif ($id == 7) {

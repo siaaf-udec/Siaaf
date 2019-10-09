@@ -1,11 +1,13 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos:'])
         <div class="row">
-        <div class="col-md-12">
-        <h3>Gestion de los recusos humanos</h3>
+            <div class="col-md-12">
+                <h3 style="margin-top: 0px;">Gestion de los recusos humanos</h3>
+                <div class="actions">
+                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="glyphicon glyphicon-plus"></i>Agregar</a>
+                </div>
+            </div>
         </div>
-    </div>
-    <br>
     <br>
     <div class="row">
         <div class="col-md-12">
@@ -17,6 +19,40 @@
             ''
             ])
             @endcomponent
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Modal -->
+            <div aria-hidden="true" class="modal fade" id="modal_create" role="dialog" tabindex="-1">
+                <div class="">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        {!! Form::open(['id' => 'form_permissions_update', 'class' => '', 'url' => '/forms']) !!}
+                        <div class="modal-header modal-header-success">
+                            <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
+                            <h3>Agregar Entrega</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+ 
+                                    {!! Field::select('integrantes:',$integrantes,null,['name' => 'module_create']) !!}
+                                    
+                                    {!! Field:: text('funcion',null,['label'=>'Funcion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     @endcomponent
@@ -46,14 +82,6 @@
                 name: 'RecursoNombre'
             },
             {
-                data: 'CPC_Duracion',
-                name: 'CPC_Duracion'
-            },
-            {
-                data: 'CPC_Entregable',
-                name: 'CPC_Entregable'
-            },
-            {
                 defaultContent: '<a href="javascript:;" class="btn btn-success verEtapas"  title="Ver los procesos de este Proyecto" ><i class="fa fa-list-ul"></i></a>',
                 data: 'action',
                 name: 'Etapas',
@@ -70,6 +98,15 @@
         ];
         // dataTableServer.init(table, url, columns);
         // table = table.DataTable();
+
+
+        $(".create").on('click', function(e) {
+            e.preventDefault();
+            $('#modal_create').modal('toggle');
+            // actualizarSemanas();
+            // $tr = $(this).closest('tr');
+        });
+
 
         // $(".create").on('click', function(e) {
         //     e.preventDefault();
