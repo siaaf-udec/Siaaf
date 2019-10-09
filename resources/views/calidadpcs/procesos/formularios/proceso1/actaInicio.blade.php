@@ -93,8 +93,7 @@
                                           ['1' => 'Ingeniería de sistemas', '2' => 'Ingeniería Ambiental',
                                           '3' => 'Ingeniería agronomica', '4' => 'Administración de empresas',
                                           '5' => 'Psicología', '6' => 'Contaduría'],
-                                          null,
-                                          [ 'label' => 'Tipo de proyecto:']) !!}
+                                          [ 'label' => 'Tipo de proyecto:', 'autofocus', 'auto' => 'off']) !!}
 
                                           {{--                        {!! Field:: text('Tipo_Proyecto',null,['label'=>'Tipo de proyecto:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                         ['help' => 'Digite el tipo de proyecto.','icon'=>'fa fa-file-text-o'] ) !!}

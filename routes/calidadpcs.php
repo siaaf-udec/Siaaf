@@ -204,8 +204,8 @@ Route::group(['middleware' => ['auth']], function () {
 
         //ruta que conduce al controlador para eliminar un registro de una motocicleta
         Route::delete('destroy/{id?}', [
-            'uses' => $controller . 'ProcesosController@destroyRequerimiento', 
-            'as' => 'calidadpcs.procesosCalidad.destroyRequerimiento'
+            'uses' => $controller . 'ProcesosController@destroyrequerimientos', 
+            'as' => 'calidadpcs.procesosCalidad.destroyrequerimientos'
         ]);
 
         //ruta que realiza la consulta de los requerimientos registrados de ese proyecto
@@ -263,7 +263,6 @@ Route::group(['middleware' => ['auth']], function () {
         // PROCESO #5
         // 
         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
-        
         Route::get('tablaGestionCalidad/{idProyecto?}', [
             'uses' => $controller . 'ProcesosController@tablaGestionCalidad',   
             'as' => 'calidadpcs.procesosCalidad.tablaGestionCalidad'
@@ -282,7 +281,36 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@storeProceso5',   
             'as' => 'calidadpcs.procesosCalidad.storeProceso5'
         ]);
-    
+
+        // 
+        //  PROCESO $6
+        // 
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::get('tablaGestionRecursos/{idProyecto?}', [
+            'uses' => $controller . 'ProcesosController@tablaGestionRecursos',   
+            'as' => 'calidadpcs.procesosCalidad.tablaGestionRecursos'
+        ]);
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::post('storeProceso6', [
+            'uses' => $controller . 'ProcesosController@storeProceso6',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso6'
+        ]);
+         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+         Route::post('storeProceso6_1', [
+            'uses' => $controller . 'ProcesosController@storeProceso6_1',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso6_1'
+        ]);
+
+        // 
+        // PROCESO #7
+        // 
+         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+         Route::get('tablaGestionComunicacion/{idProyecto?}', [
+            'uses' => $controller . 'ProcesosController@tablaGestionComunicacion',   
+            'as' => 'calidadpcs.procesosCalidad.tablaGestionComunicacion'
+        ]);
+        
+
     });
 });
 

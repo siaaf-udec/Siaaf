@@ -13,9 +13,11 @@ use App\Container\CalidadPcs\src\Proceso_Proyecto;
 use App\Container\CalidadPcs\src\Etapas;
 use App\Container\CalidadPcs\src\Usuarios;
 use App\Container\CalidadPcs\src\EquipoScrum;
+use App\Container\CalidadPcs\src\Proceso_Comunicacion;
+use App\Container\CalidadPcs\src\Proceso_Recursos;
 use App\Container\CalidadPcs\src\ProcesoCronograma;
 use App\Container\CalidadPcs\src\Proceso_Requerimientos;
-
+use App\Container\CalidadPcs\src\Rol_Scrum;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Container\Overall\Src\Facades\AjaxResponse;
@@ -305,7 +307,9 @@ class ProcesosController extends Controller
                     ]
                 );
             } elseif ($id == 6) {
-                $integrantesScrum = EquipoScrum::where('FK_CE_Id_Proyecto', $idProyecto)->get()->pluck('CE_Nombre_Persona', 'PK_CE_Id_Equipo_Scrum')->toArray();
+                $integrantesScrum = EquipoScrum::where('FK_CE_Id_Proyecto', $idProyecto)->with('relacionDependenciaUsuario')->get()->pluck('CE_Nombre_Persona', 'PK_CE_Id_Equipo_Scrum')->toArray();
+                // $integrantesScrum = EquipoScrum::select('PK_CE_Id_Equipo_Scrum','CE_Nombre_Persona','relacionDependenciaUsuario.CR_Nombre_Rol_Scrum as rol')->with('relacionDependenciaUsuario')->get();
+                // dd($integrantesScrum);
                 return view(
                     'calidadpcs.procesos.formularios.proceso6.gestionRecursosHumanos',
                     [
@@ -648,7 +652,7 @@ class ProcesosController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function destroyRequerimiento(Request $request, $id)
+    public function destroyrequerimientos(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
             //$infoIngresos = Ingresos::where('CI_CodigoMoto','=',$id)->delete();
@@ -1028,4 +1032,113 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+
+    // 
+    // PROCESO #6
+    // 
+
+    /**
+     * Función que almacena en la base de datos un nuevo procesp.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso6(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            Proceso_Recursos::create([
+                'CPGR_Funcion' => $request['CPGR_Funcion'],
+                'FK_CPGR_Id_Equipo' => $request['FK_CPGR_Id_Equipo'],
+                'FK_CPC_Id_Proyecto' => $request['FK_CPC_Id_Proyecto'],
+            ]);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente. '
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+     /**
+     * Función que almacena en la base de datos un nuevo procesp.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso6_1(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            Proceso_Proyecto::create([
+                'CPP_Info_Proceso' => "Proceso Gestion de los recursos, se creo correctamente",
+                'FK_CPP_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
+                'FK_CPP_Id_Proceso' => $request['FK_CPP_Id_Proceso'],
+            ]);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente. '
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    /**
+     * Función que consulta los procesos registrados y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function tablaGestionRecursos(Request $request, $idProyecto)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $recursos = Proceso_Recursos::where('FK_CPC_Id_Proyecto', $idProyecto);
+            return Datatables::of($recursos)
+                ->addIndexColumn()
+                ->addColumn('RecursoNombre', function ($recursos) {
+                    $Nnombres = [];
+                    $item = $recursos->FK_CPGR_Id_Equipo;
+                    $nombres = explode(',', $item);
+                    $perfil = EquipoScrum::whereIn('PK_CE_Id_Equipo_Scrum', $nombres)->get();
+                    foreach ($perfil as $value) {
+                        array_push($Nnombres, $value['CE_Nombre_Persona']);
+                    }
+                    $valores = implode(", ", $Nnombres);
+                    return $valores;
+                })
+                ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    // 
+    // PROCESO #7
+    // 
+     /**
+     * Función que consulta los procesos registrados y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function tablaGestionComunicacion(Request $request, $idProyecto)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $recursos = Proceso_Comunicacion::where('FK_CPC_Id_Proyecto', $idProyecto);
+            return Datatables::of($recursos)
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    
 }
