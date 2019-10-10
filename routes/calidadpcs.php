@@ -203,9 +203,9 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         //ruta que conduce al controlador para eliminar un registro de una motocicleta
-        Route::delete('destroy/{id?}', [
-            'uses' => $controller . 'ProcesosController@destroyrequerimientos', 
-            'as' => 'calidadpcs.procesosCalidad.destroyrequerimientos'
+        Route::delete('deleteRequerimiento/{id?}', [
+            'uses' => $controller . 'ProcesosController@deleteRequerimiento', 
+            'as' => 'calidadpcs.procesosCalidad.deleteRequerimiento'
         ]);
 
         //ruta que realiza la consulta de los requerimientos registrados de ese proyecto
@@ -248,7 +248,7 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'calidadpcs.procesosCalidad.tablaCostos'            
         ]);
         //ruta que conduce al controlador para eliminar un registro de una motocicleta
-        Route::delete('destroy/{id?}', [
+        Route::delete('destroyCosto/{id?}', [
             'uses' => $controller . 'ProcesosController@destroyCosto', 
             'as' => 'calidadpcs.procesosCalidad.destroyCosto'
         ]);
@@ -309,7 +309,16 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@tablaGestionComunicacion',   
             'as' => 'calidadpcs.procesosCalidad.tablaGestionComunicacion'
         ]);
-        
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::post('storeProceso7', [
+            'uses' => $controller . 'ProcesosController@storeProceso7',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso7'
+        ]);
+         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+         Route::post('storeProceso7_1', [
+            'uses' => $controller . 'ProcesosController@storeProceso7_1',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso7_1'
+        ]);
 
     });
 });

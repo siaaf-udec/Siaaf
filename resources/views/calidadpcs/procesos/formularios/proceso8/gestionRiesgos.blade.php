@@ -1,11 +1,13 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos:'])
         <div class="row">
-        <div class="col-md-12">
-        <h3>Gestión de riesgos del proyecto.</h3>
+        <h4 style="margin-top: 0px;">Gestión de riesgos del proyecto.</h4>
+        <br>
+        <div class="actions">
+                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="glyphicon glyphicon-plus"></i>Agregar</a>
+                </div>
         </div>
     </div>
-    <br>
     <br>
     <div class="row">
         <div class="col-md-12">
@@ -21,11 +23,62 @@
             @endcomponent
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Modal -->
+            <div aria-hidden="true" class="modal fade" id="modal_create" role="dialog" tabindex="-1">
+                <div class="">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        {!! Form::open(['id' => 'form_permissions_update', 'class' => '', 'url' => '/forms']) !!}
+                        <div class="modal-header modal-header-success">
+                            <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
+                            <h3>Agregar Riesgo</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                {!! Field:: text('Riesgo',null,['label'=>'Riesgo:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Lugar donde va hacer la reunion.'] ) !!}
+
+                                    {!! Field:: text('Caracteristicas',null,['label'=>'Caracteristicas:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Lugar donde va hacer la reunion.'] ) !!}
+
+                                    {!! Field::select('Importancia:',['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5' ],null,['name' => 'Importancia']) !!}
+                                    
+                                    {!! Field:: text('Accion',null,['label'=>'Accion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Lugar donde va hacer la reunion.'] ) !!}
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-12 col-md-offset-4">
+                        <a href="javascript:;" class="btn btn-success guardarProceso">
+                            Continuar <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
     @endcomponent
 </div>
 
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+
 <script type="text/javascript">
     jQuery(document).ready(function() {
 
@@ -73,6 +126,17 @@
         // dataTableServer.init(table, url, columns);
         // table = table.DataTable();
 
+        $(".pmd-select2").select2({
+                width: '100%',
+                placeholder: "Selecccionar",
+            });
+
+            $(".create").on('click', function(e) {
+            e.preventDefault();
+            $('#modal_create').modal('toggle');
+            // actualizarSemanas();
+            // $tr = $(this).closest('tr');
+        });
         // $(".create").on('click', function(e) {
         //     e.preventDefault();
         //     var route = '{{ route('calidadpcs.proyectosCalidad.RegistrarProyecto') }}' + '/' +{{Auth::user()->id}};

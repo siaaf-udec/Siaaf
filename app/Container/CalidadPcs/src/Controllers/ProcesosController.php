@@ -652,10 +652,9 @@ class ProcesosController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \App\Container\Overall\Src\Facades\AjaxResponse
      */
-    public function destroyrequerimientos(Request $request, $id)
+    public function deleteRequerimiento(Request $request, $id)
     {
         if ($request->ajax() && $request->isMethod('DELETE')) {
-            //$infoIngresos = Ingresos::where('CI_CodigoMoto','=',$id)->delete();
             Proceso_Requerimientos::destroy($id);
             return AjaxResponse::success(
                 '¡Bien hecho!',
@@ -1134,6 +1133,57 @@ class ProcesosController extends Controller
             return Datatables::of($recursos)
                 ->addIndexColumn()
                 ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    /**
+     * Función que almacena en la base de datos un nuevo procesp.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso7(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            Proceso_Comunicacion::create([
+                'CPGC_Interesado' => $request['Interesado'],
+                'CPGC_Lugar' => $request['Lugar'],
+                'CPGC_Fecha' => $request['date_time'],
+                'FK_CPC_Id_Proyecto' => $request['FK_CPC_Id_Proyecto'],
+            ]);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente. '
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    /**
+     * Función que almacena en la base de datos un nuevo procesp.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso7_1(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            Proceso_Proyecto::create([
+                'CPP_Info_Proceso' => "Proceso Gestion de las comunicaciones, se creo correctamente",
+                'FK_CPP_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
+                'FK_CPP_Id_Proceso' => $request['FK_CPP_Id_Proceso'],
+            ]);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente. '
+            );
         }
         return AjaxResponse::fail(
             '¡Lo sentimos!',

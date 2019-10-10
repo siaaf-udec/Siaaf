@@ -31,7 +31,7 @@ class CreateProcesoGestionRecursos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TBL_Calidadpcs_proceso_costos');
+        Schema::dropIfExists('TBL_Calidadpcs_proceso_recursos');
     }
 }
 

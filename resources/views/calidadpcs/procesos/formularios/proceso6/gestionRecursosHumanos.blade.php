@@ -116,7 +116,7 @@
             return{
                 init: function () {
                     // console.log($('select[name="module_create"]').val());
-                    var route = '{{ route('calidadpcs.procesosCalidad.storeProceso6') }}';
+                    var route = "{{ route('calidadpcs.procesosCalidad.storeProceso6') }}";
                     var type = 'POST';
                     var async = async || false;
                     var formData = new FormData();

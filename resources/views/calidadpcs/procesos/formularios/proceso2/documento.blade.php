@@ -158,7 +158,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            var route = '{{ route('calidadpcs.procesoscalidad.destroyrequerimientos') }}' + '/' + dataTable.PK_CPR_Id_Requerimientos;
+            var route = "{{route('calidadpcs.procesosCalidad.deleteRequerimiento')}}"+"/"+ dataTable.PK_CPR_Id_Requerimientos;
             var type = 'DELETE';
             var async = async || false;
             swal({
