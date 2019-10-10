@@ -13,10 +13,12 @@ use App\Container\CalidadPcs\src\Proceso_Proyecto;
 use App\Container\CalidadPcs\src\Etapas;
 use App\Container\CalidadPcs\src\Usuarios;
 use App\Container\CalidadPcs\src\EquipoScrum;
+use App\Container\CalidadPcs\src\Proceso_Adquisiciones;
 use App\Container\CalidadPcs\src\Proceso_Comunicacion;
 use App\Container\CalidadPcs\src\Proceso_Recursos;
 use App\Container\CalidadPcs\src\ProcesoCronograma;
 use App\Container\CalidadPcs\src\Proceso_Requerimientos;
+use App\Container\CalidadPcs\src\Proceso_Riesgos;
 use App\Container\CalidadPcs\src\Rol_Scrum;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -1148,11 +1150,11 @@ class ProcesosController extends Controller
     public function storeProceso7(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
-
+            $fecha = Carbon::parse($request['date_time']);
             Proceso_Comunicacion::create([
                 'CPGC_Interesado' => $request['Interesado'],
                 'CPGC_Lugar' => $request['Lugar'],
-                'CPGC_Fecha' => $request['date_time'],
+                'CPGC_Fecha' => $fecha,
                 'FK_CPC_Id_Proyecto' => $request['FK_CPC_Id_Proyecto'],
             ]);
             return AjaxResponse::success(
@@ -1190,5 +1192,161 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+
+    /**
+     * 
+     * 
+     * PROCESO #8
+     * 
+     * 
+     */
+    /**
+     * Función que consulta los procesos registrados y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function tablaGestionRiesgos(Request $request, $idProyecto)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $recursos = Proceso_Riesgos::where('FK_CPC_Id_Proyecto', $idProyecto);
+            return Datatables::of($recursos)
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    /**
+     * Función que almacena en la base de datos un nuevo procesp.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso8(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            Proceso_Riesgos::create([
+                'CPGR_Riesgo' => $request['Riesgo'],
+                'CPGR_Caracteristicas' => $request['Caracteristicas'],
+                'CPGR_Importancia' => $request['Importancia'],
+                'CPGR_Accion' => $request['Accion'],
+                'FK_CPC_Id_Proyecto' => $request['FK_CPC_Id_Proyecto'],
+            ]);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente. '
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    /**
+     * Función que almacena en la base de datos un nuevo procesp.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso8_1(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            Proceso_Proyecto::create([
+                'CPP_Info_Proceso' => "Proceso Gestion de los riesgos, se creo correctamente",
+                'FK_CPP_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
+                'FK_CPP_Id_Proceso' => $request['FK_CPP_Id_Proceso'],
+            ]);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente. '
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    /**
+     * 
+     * 
+     * PROCESO #9
+     * 
+     * 
+     */
+    /**
+     * Función que consulta los procesos registrados y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function tablaGestionAdquisiciones(Request $request, $idProyecto)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $recursos = Proceso_Adquisiciones::where('FK_CPC_Id_Proyecto', $idProyecto);
+            return Datatables::of($recursos)
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    /**
+     * Función que almacena en la base de datos un nuevo procesp.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso9(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+            Proceso_Adquisiciones::create([
+                'CPGA_Adquisicion' => $request['Adquisicion'],
+                'CPGA_Costo' => $request['Costo'],
+                'CPGA_Duracion' => $request['Duracion'],
+                'FK_CPC_Id_Proyecto' => $request['FK_CPC_Id_Proyecto'],
+            ]);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente. '
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    /**
+     * Función que almacena en la base de datos un nuevo procesp.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso9_1(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            Proceso_Proyecto::create([
+                'CPP_Info_Proceso' => "Proceso Gestion de las adquisiciones, se creo correctamente",
+                'FK_CPP_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
+                'FK_CPP_Id_Proceso' => $request['FK_CPP_Id_Proceso'],
+            ]);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente. '
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
     
 }

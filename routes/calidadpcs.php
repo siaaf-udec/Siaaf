@@ -320,6 +320,47 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'calidadpcs.procesosCalidad.storeProceso7_1'
         ]);
 
+        /**
+         * 
+         * PROCESO #8
+         * 
+         */
+         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+         Route::get('tablaGestionRiesgos/{idProyecto?}', [
+            'uses' => $controller . 'ProcesosController@tablaGestionRiesgos',   
+            'as' => 'calidadpcs.procesosCalidad.tablaGestionRiesgos'
+        ]);
+         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+         Route::post('storeProceso8', [
+            'uses' => $controller . 'ProcesosController@storeProceso8',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso8'
+        ]);
+        Route::post('storeProceso8_1', [
+            'uses' => $controller . 'ProcesosController@storeProceso8_1',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso8_1'
+        ]);
+
+        /**
+         * 
+         * 
+         * PROCESO #9
+         * 
+         * 
+         */
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::get('tablaGestionAdquisiciones/{idProyecto?}', [
+            'uses' => $controller . 'ProcesosController@tablaGestionAdquisiciones',   
+            'as' => 'calidadpcs.procesosCalidad.tablaGestionAdquisiciones'
+        ]);
+        Route::post('storeProceso9', [
+            'uses' => $controller . 'ProcesosController@storeProceso9',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso9'
+        ]);
+        Route::post('storeProceso9_1', [
+            'uses' => $controller . 'ProcesosController@storeProceso9_1',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso9_1'
+        ]);
+
     });
 });
 

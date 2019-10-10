@@ -130,7 +130,7 @@
                 autoclose: true,
                 monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                 isRTL: App.isRTL(),
-                format: "dd MM yyyy - hh:ii",
+                format: "dd-mm-yyyy hh:ii",
                 fontAwesome: true,
                 pickerPosition: (App.isRTL() ? "bottom-left" : "bottom-left")
             });
