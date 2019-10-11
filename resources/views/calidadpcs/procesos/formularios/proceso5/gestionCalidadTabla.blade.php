@@ -1,14 +1,10 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos:'])
-    <br>
-    <!-- <div class="row">
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Etapa de planificación:'])
+    <div class="row">
         <div class="col-md-12">
-            <div class="actions">
-                <a href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Crear un nuevo proyecto"><i class="glyphicon glyphicon-plus"></i>Agregar Proyecto</a>
-                <br>
-            </div>
+        <h4 style="margin-top: 0px;">Proceso: Planificar la gestión de la calidad.</h4>
         </div>
-    </div> -->
+    </div>
     <br>
     <br>
     <div class="row">
@@ -47,15 +43,16 @@
                                     {!! Field:: hidden ('PK_CPC_Id_Sprint', null)!!}
 
                                     {!! Field:: text('CPC_Nombre_Sprint',null,['label'=>'Nombre del sprint:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off', 'readonly'],
-                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    ['help' => 'Digite el nombre del sprint.', 'icon' => 'fa fa-tag'] ) !!}
 
                                     {!! Field:: text('Requerimientos',null,['label'=>'Requerimientos:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off', 'readonly'],
-                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    ['help' => 'Digite el nombre del sprint.', 'icon' => 'fa fa-sliders'] ) !!}
 
                                     {!! Field:: text('Responsables',null,['label'=>'Responsables:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off', 'readonly'],
-                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    ['help' => 'Digite el nombre del sprint.', 'icon' => 'fa fa-users'] ) !!}
                                     
-                                    {!! Field:: text('CPC_Entregable',null,['label'=>'Tareas a realizar :', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite las tareas que se van a cumplir en el sprint.']) !!}
+                                    {!! Field:: text('CPC_Entregable',null,['label'=>'Tareas a realizar :', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
+                                        ['help' => 'Digite las tareas que se van a cumplir en el sprint.', 'icon' => 'fa fa-file-text-o']) !!}
                                 </div>
                             </div>
                         </div>
@@ -113,7 +110,7 @@
                 name: 'CPC_Entregable'
             },
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-success agregar"  title="Agregar entrega a este sprint" ><i class="fa fa-list-ul"></i></a>',
+                defaultContent: '<a href="javascript:;" class="btn btn-success agregar"  title="Agregar entrega a este sprint" ><i class="fa fa-plus"></i></a>',
                 data: 'action',
                 name: 'Acciones',
                 title: 'Acciones',

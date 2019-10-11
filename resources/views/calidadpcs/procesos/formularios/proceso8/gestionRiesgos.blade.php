@@ -1,7 +1,8 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos:'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Etapa de planificación:'])
         <div class="row">
-        <h4 style="margin-top: 0px;">Gestión de riesgos del proyecto.</h4>
+        <div class="col-md-12">
+        <h4 style="margin-top: 0px;">Proceso: Gestión de riesgos del proyecto.</h4>
         <br>
         <div class="actions">
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="glyphicon glyphicon-plus"></i>Agregar</a>
@@ -40,15 +41,15 @@
                                 <div class="col-md-12">
 
                                 {!! Field:: text('Riesgo',null,['label'=>'Riesgo:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.'] ) !!}
+                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-warning '] ) !!}
 
                                     {!! Field:: text('Caracteristicas',null,['label'=>'Caracteristicas:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.'] ) !!}
+                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-list-alt'] ) !!}
 
                                     {!! Field::select('Importancia:',['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5' ],null,['name' => 'Importancia']) !!}
                                     
                                     {!! Field:: text('Accion',null,['label'=>'Accion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.'] ) !!}
+                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-bolt'] ) !!}
                                     
                                 </div>
                             </div>

@@ -72,7 +72,7 @@
                                 {!! Field:: hidden ('CU_Telefono', Auth::user()->phone)!!}
                                 {!! Field:: hidden ('CU_Correo', Auth::user()->email)!!}
 
-                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Nombre del Proyecto:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('CP_Nombre_Proyecto',null,['label'=>'Nombre del Proyecto:', 'max' => '190', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
                             </div>
                             <div class="col-md-6">
@@ -255,7 +255,7 @@
         };
         var form = $('#form_proyecto_create');
         var formRules = {
-            CP_Nombre_Proyecto: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+            CP_Nombre_Proyecto: {required: true, minlength: 3, maxlength: 190, noSpecialCharacters:true, letters:true},
             CP_Fecha_Inicio: {required: true, minlength: 3, maxlength: 20},
             CE_Nombre_1: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
             CE_Nombre_2: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},

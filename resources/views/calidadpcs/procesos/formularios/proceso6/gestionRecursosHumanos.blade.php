@@ -1,8 +1,9 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos:'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Etapa de planificación:'])
         <div class="row">
             <div class="col-md-12">
-                <h3 style="margin-top: 0px;">Gestion de los recusos humanos</h3>
+                <h4 style="margin-top: 0px;">Proceso: Planificar la gestión de los recursos humanos.</h4>
+                <br>
                 <div class="actions">
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="glyphicon glyphicon-plus"></i>Agregar</a>
                 </div>
@@ -40,7 +41,7 @@
                                     {!! Field::select('integrantes:',$integrantes,null,['name' => 'module_create']) !!}
                                     
                                     {!! Field:: text('funcion',null,['label'=>'Funcion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Funcion que cumple.'] ) !!}
+                                    ['help' => 'Funcion que cumple.', 'icon' => 'fa fa-list-ol'] ) !!}
 
                                 </div>
                             </div>

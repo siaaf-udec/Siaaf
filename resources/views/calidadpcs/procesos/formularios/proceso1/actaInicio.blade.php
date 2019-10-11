@@ -263,6 +263,8 @@
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"> </script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+
 <script type="text/javascript">
     jQuery(document).ready(function() {
 
@@ -473,6 +475,10 @@
                 UIToastr.init(xhr, "¡Lo sentimos!", "Maximo puede agregar más requisitos adicionales.");
             }
         });
+        $(".pmd-select2").select2({
+                width: '100%',
+                placeholder: "Selecccionar",
+            });
         $('#eliminarRequisito').click(function(e) {
             e.preventDefault();
             if (x_requisitos == 6) {

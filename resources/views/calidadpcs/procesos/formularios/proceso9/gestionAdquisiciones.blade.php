@@ -1,12 +1,14 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos:'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Etapa de planificación:'])
     <div class="row">
-        <h4 style="margin-top: 0px;">Planificar la gestión de adquisiciones.</h4>
+    <div class="col-md-12">
+        <h4 style="margin-top: 0px;">Proceso: Planificar la gestión de adquisiciones.</h4>
         <br>
         <div class="actions">
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="glyphicon glyphicon-plus"></i>Agregar</a>
                 </div>
         </div>   
+    </div>
     <br>
     <div class="row">
         <div class="col-md-12">
@@ -31,7 +33,7 @@
                         {!! Form::open(['id' => 'form_permissions_update', 'class' => '', 'url' => '/forms']) !!}
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
-                            <h3>Agregar Riesgo</h3>
+                            <h3>Agregar adquisicion</h3>
                         </div>
                         <div class="modal-body">
                             <div class="row">

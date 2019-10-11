@@ -1,8 +1,8 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos:'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Etapa de planificación:'])
         <div class="row">
         <div class="col-md-12">
-        <h4 style="margin-top: 0px;">Planificar la gestión de comunicaciones</h4>
+        <h4 style="margin-top: 0px;">Proceso: Planificar la gestión de comunicaciones</h4>
         <br>
         <div class="actions">
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="glyphicon glyphicon-plus"></i>Agregar</a>
@@ -42,7 +42,7 @@
                                     {!! Field::select('Interesado:',['Equipo scrum'=>'Equipo scrum', 'Product owner'=>'Product owner', 'Stakeholder'=>'Stakeholder' ],null,['name' => 'Interesado']) !!}
                                     
                                     {!! Field:: text('Lugar',null,['label'=>'Lugar:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.'] ) !!}
+                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-map-marker'] ) !!}
 
                                     {!! Field::text(
                                         'date_time',

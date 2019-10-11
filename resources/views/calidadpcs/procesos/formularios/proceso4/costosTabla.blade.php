@@ -1,7 +1,9 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos:'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Etapa de planificación:'])
     <div class="row">
         <div class="col-md-12">
+        <h4 style="margin-top: 0px;">Proceso: Gestión del tiempo del proyecto.</h4>
+            <br>
             <h3>Tabla informativa</h3><br>
         </div>
     </div>
@@ -46,16 +48,33 @@
                         {!! Form::open(['id' => 'form_costos_1', 'class' => '', 'url' => '/forms']) !!}
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
-                            <h2>Formula: Variación del Costo</h2>
+                            <h3>Formula: Variación del Costo</h3>
                         </div>
                         <div class="modal-body">
+                        <div class="panel-group accordion" id="modal_1">
+                            <!--Primer acordeon-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#modal_1" href="#collapse_1"><strong>Variables:</strong></a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_1" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="alert alert-primary">
+                                        <strong>Variables:</strong> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC1_valor_ganado',null,['label'=>'Valor Ganado:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    ['help' => 'Digite el nombre del sprint.', 'icon' => 'fa fa-usd'] ) !!}
                                   
                                     {!! Field:: text('MC1_costo_real',null,['label'=>'Costo Real:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
-                                        ['help' => 'Digite el numero de semanas.']) !!}
+                                        ['help' => 'Digite el numero de semanas.', 'icon' => 'fa fa-usd']) !!} 
                                 </div>
                             </div>
                         </div>
@@ -79,16 +98,34 @@
                         {!! Form::open(['id' => 'form_costos_2', 'class' => '', 'url' => '/forms']) !!}
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
-                            <h1>Formula: Variación del Cronograma</h1>
+                            <h3>Formula: Variación del Cronograma</h3>
                         </div>
                         <div class="modal-body">
+                            
+                    <div class="panel-group accordion" id="modal_2">
+                    <!--Primer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#modal_2" href="#collapse_2"><strong>CMMI:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Variables:</strong> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC2_valor_ganado',null,['label'=>'Valor Ganado:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    ['help' => 'Digite el nombre del sprint.', 'icon' => 'fa fa-usd'] ) !!}
                                   
                                     {!! Field:: text('MC2_valor_planificado',null,['label'=>'Valor Planificado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
-                                    ['help' => 'Digite el numero de semanas.']) !!}
+                                    ['help' => 'Digite el numero de semanas.', 'icon' => 'fa fa-usd']) !!}
                                 </div>
                             </div>
                         </div>
@@ -112,9 +149,26 @@
                         {!! Form::open(['id' => 'form_costos_3', 'class' => '', 'url' => '/forms']) !!}
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
-                            <h1>Formula: Variación a la Conclusión</h1>
+                            <h3>Formula: Variación a la Conclusión</h3>
                         </div>
                         <div class="modal-body">
+                        <div class="panel-group accordion" id="modal_3">
+                            <!--Primer acordeon-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#modal_3" href="#collapse_3"><strong>Variables:</strong></a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_3" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="alert alert-primary">
+                                        <strong>Variables:</strong> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC3_presupuesto',null,['label'=>'Presupuesto hasta la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
@@ -145,9 +199,26 @@
                         {!! Form::open(['id' => 'form_costos_4', 'class' => '', 'url' => '/forms']) !!}
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
-                            <h1>Formula: Índice de Desempeño del Costo</h1>
+                            <h3>Formula: Índice de Desempeño del Costo</h3>
                         </div>
                         <div class="modal-body">
+                        <div class="panel-group accordion" id="modal_4">
+                            <!--Primer acordeon-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#modal_4" href="#collapse_4"><strong>Variables:</strong></a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_4" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="alert alert-primary">
+                                        <strong>Variables:</strong> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC4_valor_ganado',null,['label'=>'Valor Ganado:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
@@ -177,9 +248,26 @@
                         {!! Form::open(['id' => 'form_costos_5', 'class' => '', 'url' => '/forms']) !!}
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
-                            <h1>Formula: Índice de Desempeño del Cronograma</h1>
+                            <h3>Formula: Índice de Desempeño del Cronograma</h3>
                         </div>
                         <div class="modal-body">
+                        <div class="panel-group accordion" id="modal_5">
+                            <!--Primer acordeon-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#modal_5" href="#collapse_5"><strong>Variables:</strong></a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_5" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="alert alert-primary">
+                                        <strong>Variables:</strong> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC5_valor_ganado',null,['label'=>'Valor Ganado:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
@@ -210,9 +298,26 @@
                         {!! Form::open(['id' => 'form_costos_6', 'class' => '', 'url' => '/forms']) !!}
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
-                            <h1>Formula: Estimación a la Conclusión</h1>
+                            <h3>Formula: Estimación a la Conclusión</h3>
                         </div>
                         <div class="modal-body">
+                        <div class="panel-group accordion" id="modal_6">
+                            <!--Primer acordeon-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#modal_6" href="#collapse_6"><strong>Variables:</strong></a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_6" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="alert alert-primary">
+                                        <strong>Variables:</strong> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC6_presupuesto_conclucion',null,['label'=>'Presupuesto hasta la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
@@ -243,9 +348,26 @@
                         {!! Form::open(['id' => 'form_costos_7', 'class' => '', 'url' => '/forms']) !!}
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
-                            <h1>Formula: Estimación a la Conclusión</h1>
+                            <h3>Formula: Estimación a la Conclusión</h3>
                         </div>
                         <div class="modal-body">
+                        <div class="panel-group accordion" id="modal_7">
+                            <!--Primer acordeon-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#modal_7" href="#collapse_7"><strong>Variables:</strong></a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_7" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="alert alert-primary">
+                                        <strong>Variables:</strong> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC7_costo_real',null,['label'=>'Costo Real:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
@@ -278,9 +400,26 @@
                         {!! Form::open(['id' => 'form_costos_8', 'class' => '', 'url' => '/forms']) !!}
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
-                            <h1>Formula: Estimación a la Conclusión</h1>
+                            <h3>Formula: Estimación a la Conclusión</h3>
                         </div>
                         <div class="modal-body">
+                        <div class="panel-group accordion" id="modal_8">
+                            <!--Primer acordeon-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#modal_8" href="#collapse_8"><strong>Variables:</strong></a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_8" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="alert alert-primary">
+                                        <strong>Variables:</strong> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC8_costo_real',null,['label'=>'Costo Real:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
@@ -311,9 +450,26 @@
                         {!! Form::open(['id' => 'form_costos_9', 'class' => '', 'url' => '/forms']) !!}
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
-                            <h1>Formula: Estimación a la Conclusión</h1>
+                            <h3>Formula: Estimación a la Conclusión</h3>
                         </div>
                         <div class="modal-body">
+                        <div class="panel-group accordion" id="modal_9">
+                            <!--Primer acordeon-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#modal_9" href="#collapse_9"><strong>Variables:</strong></a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_9" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="alert alert-primary">
+                                        <strong>Variables:</strong> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC9_costo_real',null,['label'=>'Costo Real:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
@@ -354,9 +510,26 @@
                         {!! Form::open(['id' => 'form_costos_10', 'class' => '', 'url' => '/forms']) !!}
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
-                            <h1>Formula: Estimación hasta la Conclusión</h1>
+                            <h3>Formula: Estimación hasta la Conclusión</h3>
                         </div>
                         <div class="modal-body">
+                        <div class="panel-group accordion" id="modal_10">
+                            <!--Primer acordeon-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#modal_10" href="#collapse_10"><strong>Variables:</strong></a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_10" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="alert alert-primary">
+                                        <strong>Variables:</strong> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC10_estimacion',null,['label'=>'Estimación a la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
@@ -386,9 +559,26 @@
                         {!! Form::open(['id' => 'form_costos_11', 'class' => '', 'url' => '/forms']) !!}
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
-                            <h1>Formula: Índice de Desempeño del Trabajo por Completar</h1>
+                            <h3>Formula: Índice de Desempeño del Trabajo por Completar</h3>
                         </div>
                         <div class="modal-body">
+                        <div class="panel-group accordion" id="modal_11">
+                            <!--Primer acordeon-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#modal_11" href="#collapse_11"><strong>Variables:</strong></a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_11" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="alert alert-primary">
+                                        <strong>Variables:</strong> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC11_presupuesto',null,['label'=>'Presupuesto hasta la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
@@ -420,9 +610,26 @@
                         {!! Form::open(['id' => 'form_costos_12', 'class' => '', 'url' => '/forms']) !!}
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
-                            <h1>Formula: Índice de Desempeño del Trabajo por Completar</h1>
+                            <h3>Formula: Índice de Desempeño del Trabajo por Completar</h3>
                         </div>
                         <div class="modal-body">
+                        <div class="panel-group accordion" id="modal_12">
+                            <!--Primer acordeon-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#modal_12" href="#collapse_12"><strong>Variables:</strong></a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_12" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="alert alert-primary">
+                                        <strong>Variables:</strong> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                             <div class="row">
                                 <div class="col-md-12">
                                 {!! Field:: text('MC12_presupuesto',null,['label'=>'Presupuesto hasta la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],

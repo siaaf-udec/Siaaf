@@ -1,15 +1,15 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Cronograma:'])
-    <br>
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Etapa de planificación:'])
     <div class="row">
         <div class="col-md-12">
+        <h4 style="margin-top: 0px;">Proceso: Gestión del tiempo del proyecto.</h4>
+        <br>
             <div class="actions">
-                <a href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Crear un nuevo proyecto"><i class="glyphicon glyphicon-plus"></i>Agregar sprint</a>
-                <br>
+            <a href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Crear un nuevo proyecto"><i class="glyphicon glyphicon-plus"></i>Agregar sprint</a>
             </div>
-            <br>
         </div>
     </div>
+    <br>
     <div class="row">
         <div class="col-md-12">
             @component('themes.bootstrap.elements.tables.datatables',['id' => 'listaActividades'])
@@ -26,7 +26,7 @@
         <div class="col-md-12">
             <div class="note note-success">
                 <h4 class="block">Tener en cuenta!</h4>
-                <p> Recuerda que para avanzar deben estar completos los datos de la tabla</p>
+                <p>Para poder avanzar no pueden haber semanas disponibles.</p>
             </div>
         </div>
         <div class="form-actions">
@@ -61,11 +61,11 @@
                                     {!! Field:: hidden ('FK_CPP_Id_Proceso', $idProceso)!!}
 
                                     {!! Field:: text('CPC_Nombre_Sprint',null,['label'=>'Nombre del sprint:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    ['help' => 'Digite el nombre del sprint.', 'icon' => 'fa fa-tag'] ) !!}
                                     <div class="form-group form-md-line-input" style="padding-top: 0px;">
                                         <div class="input-icon">
                                             <label for="lista_requerimientos" class="control-label">Requerimientos:</label>
-                                            <select id="lista_requerimientos" name="lista_requerimientos" class="selectpicker form-control" multiple data-size="5" title="Seleccione por lo menos un requerimiento" data-width="100%">
+                                            <select id="lista_requerimientos" name="lista_requerimientos" class="selectpicker form-control" multiple data-size="5" title="Seleccione por lo menos un requerimiento" data-width="100%" style="padding-left: 0px;">
                                                 @foreach($requerimientos as $key => $name)
                                                 <option value="{{$key}}">{{$name}}</option>
                                                 @endforeach
@@ -82,7 +82,8 @@
                                             </select>
                                         </div>
                                     </div>
-                                    {!! Field:: text('numero_semanas',null,['label'=>'Numero de semanas:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('numero_semanas',null,['label'=>'Numero de semanas:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
+                                        ['help' => 'Digite el numero de semanas.']) !!}
                                 </div>
                             </div>
                         </div>
@@ -211,6 +212,7 @@
         });
     }
     jQuery(document).ready(function() {
+
         $('.selectpicker').selectpicker();
         actualizarSemanas();
         var table, url, columns;
