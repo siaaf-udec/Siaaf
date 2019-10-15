@@ -40,13 +40,13 @@
                                 <div class="col-md-12">
 
                                     {!! Field:: text('Adquisicion',null,['label'=>'Adquisicion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.'] ) !!}
+                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-ticket'] ) !!}
 
                                     {!! Field:: text('Costo',null,['label'=>'Costo:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.'] ) !!}
+                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-usd'] ) !!} 
 
                                     {!! Field:: text('Duracion',null,['label'=>'Duracion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.'] ) !!}
+                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-clock-o']) !!}
                                     
                                 </div>
                             </div>

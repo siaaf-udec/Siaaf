@@ -361,6 +361,19 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'calidadpcs.procesosCalidad.storeProceso9_1'
         ]);
 
+        /**
+         * 
+         * 
+         * PRCOESO #10
+         * 
+         * 
+         */
+        Route::post('storeProceso10', [
+            'uses' => $controller . 'ProcesosController@storeProceso10',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso10'
+        ]);
+
+
     });
 });
 

@@ -62,16 +62,18 @@
 
                                     {!! Field:: text('CPC_Nombre_Sprint',null,['label'=>'Nombre del sprint:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Digite el nombre del sprint.', 'icon' => 'fa fa-tag'] ) !!}
+                                   
                                     <div class="form-group form-md-line-input" style="padding-top: 0px;">
                                         <div class="input-icon">
-                                            <label for="lista_requerimientos" class="control-label">Requerimientos:</label>
                                             <select id="lista_requerimientos" name="lista_requerimientos" class="selectpicker form-control" multiple data-size="5" title="Seleccione por lo menos un requerimiento" data-width="100%" style="padding-left: 0px;">
                                                 @foreach($requerimientos as $key => $name)
                                                 <option value="{{$key}}">{{$name}}</option>
                                                 @endforeach
                                             </select>
+                                            <label for="lista_requerimientos" class="control-label">Requerimientos:</label>
                                         </div>
                                     </div>
+
                                     <div class="form-group form-md-line-input" style="padding-top: 0px;">
                                         <div class="input-icon">
                                             <label for="lista_integrantes" class="control-label">Integrantes:</label>

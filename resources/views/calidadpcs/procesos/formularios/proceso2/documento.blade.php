@@ -80,8 +80,6 @@
                             <h3>Informacion del proceso</h3><br>
                                 <div class="col-md-12">
 
-                                    {!! Field:: hidden ('FK_CP_Id_Usuario', Auth::user()->id)!!}
-
                                     {!! Field:: hidden ('PK_CP_Id_Proyecto', $idProyecto)!!}
 
                                     {!! Field:: hidden ('PK_CP_Id_Proceso', $idProceso)!!}

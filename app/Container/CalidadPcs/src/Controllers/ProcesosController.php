@@ -15,6 +15,7 @@ use App\Container\CalidadPcs\src\Usuarios;
 use App\Container\CalidadPcs\src\EquipoScrum;
 use App\Container\CalidadPcs\src\Proceso_Adquisiciones;
 use App\Container\CalidadPcs\src\Proceso_Comunicacion;
+use App\Container\CalidadPcs\src\Proceso_Direccion;
 use App\Container\CalidadPcs\src\Proceso_Recursos;
 use App\Container\CalidadPcs\src\ProcesoCronograma;
 use App\Container\CalidadPcs\src\Proceso_Requerimientos;
@@ -346,12 +347,15 @@ class ProcesosController extends Controller
                         'idProceso' => $id,
                     ]);
             } elseif ($id == 10) {
+                $alcance = Proceso_Direccion::where('FK_CPC_Id_Proyecto', $idProyecto)->first();
+                // dd($alcance);
                 return view(
                     'calidadpcs.procesos.formularios.proceso10.planDeDireccion',
                     [
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
+                        'alcance' => $alcance,
                     ]);
             } elseif ($id == 11) {
                 return view(
@@ -630,10 +634,14 @@ class ProcesosController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
             //Tabla Proyecto Proceso
             //$data = $request->only('Numero_acta', 'Fecha_Inicio', 'Tipo_Proyecto', 'Nombre_Proyecto', 'Duracion', 'Entidades', 'Objetivo_General', 'Objetivo_Especifico_1', 'Objetivo_Especifico_2', 'Objetivo_Especifico_3', 'Objetivo_Especifico_4', 'Objetivo_Especifico_5');
+            Proceso_Direccion::create([
+                'CPPD_Alcance' => $request['Alcance'],
+                'FK_CPC_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
+            ]);
             Proceso_Proyecto::create([
-                'CPP_Info_Proceso' => $request['Alcance'],
+                'CPP_Info_Proceso' =>'El proceso desarrollar plan para la dirección del proyecto, se creo correctamente',
                 'FK_CPP_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
-                'FK_CPP_Id_Proceso' => $request['FK_CPP_Id_Proceso'],
+                'FK_CPP_Id_Proceso' => $request['FK_CPP_Id_Proyecto']
             ]);
 
             return AjaxResponse::success(
@@ -1347,6 +1355,48 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+
+    /**
+     * 
+     * 
+     * PROCESO #10
+     * 
+     * 
+     */
+    /**
+     * Se realiza la actualización de los datos de un proyecto.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso10(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            $metodologia = Proceso_Direccion::find($request['id_metodologia']);
+            $metodologia->fill([
+                'CPPD_Metodologia' => $request['Metodologia'],
+            ]);
+            $metodologia->save();
+            
+            Proceso_Proyecto::create([
+                'CPP_Info_Proceso' => "Proceso Plan para la Dirección del proyecto., se creo correctamente",
+                'FK_CPP_Id_Proyecto' => $request['Proyecto_id'],
+                'FK_CPP_Id_Proceso' => $request['Proceso_id'],
+            ]);
+
+         
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+   
 
     
 }
