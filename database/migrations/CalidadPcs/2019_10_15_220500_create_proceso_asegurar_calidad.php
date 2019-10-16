@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProcesoGestionAdquisiciones extends Migration
+class CreateProcesoAsegurarCalidad extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateProcesoGestionAdquisiciones extends Migration
      */
     public function up()
     {
-        Schema::connection('calidadpcs')->create('TBL_Calidadpcs_proceso_adquisiciones', function (Blueprint $table) {
-            $table->increments('PK_CPGA_Id_Adquisicion');
-            $table->string('CPGA_Adquisicion');
-            $table->double('CPGA_Costo',12,2);
-            $table->string('CPGA_Duracion');
-            $table->string('CPGA_Proveedor')->nullable();
-            $table->string('CPGA_Tipo_Contrato')->nullable();
+        Schema::connection('calidadpcs')->create('TBL_Calidadpcs_proceso_aseguramiento', function (Blueprint $table) {
+            $table->increments('PK_CPA_Id_Aseguramiento');
+            $table->text('CPA_Aseguramiento');
             $table->integer('FK_CPC_Id_Proyecto')->unsigned();
             $table->foreign('FK_CPC_Id_Proyecto')->references('PK_CP_Id_Proyecto')->on('TBL_Calidadpcs_proyectos')->onDelete("cascade");
             $table->timestamps();
@@ -32,6 +28,6 @@ class CreateProcesoGestionAdquisiciones extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TBL_Calidadpcs_proceso_adquisiciones');
+        Schema::dropIfExists('TBL_Calidadpcs_proceso_aseguramiento');
     }
 }

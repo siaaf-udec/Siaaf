@@ -16,7 +16,7 @@ class CreateProcesoPlanParaDireccion extends Migration
         Schema::connection('calidadpcs')->create('TBL_Calidadpcs_proceso_direccion', function (Blueprint $table) {
             $table->increments('PK_CPPD_Id_Direccion');
             $table->text('CPPD_Alcance');
-            $table->text('CPPD_Metodologia');
+            $table->text('CPPD_Metodologia')->nullable();
             $table->integer('FK_CPC_Id_Proyecto')->unsigned();
             $table->foreign('FK_CPC_Id_Proyecto')->references('PK_CP_Id_Proyecto')->on('TBL_Calidadpcs_proyectos')->onDelete("cascade");
             $table->timestamps();
