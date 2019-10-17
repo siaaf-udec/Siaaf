@@ -36,7 +36,7 @@
 
 @section('title', '| Proyectos Calidad')
 
-@section('page-title', 'Proyectos de Calidad (PMBOK, CMMI & SCRUM):')
+@section('page-title', 'SIGDEP - Sistema de Informacion para la Gestion de Desarrollo de Proyectos:')
 
 @section('content')
     @permission('ADMIN_CALIDADPCS')

@@ -16,6 +16,8 @@ class Proceso_Adquisiciones extends Model
         'CPGA_Adquisicion',
         'CPGA_Costo',
         'CPGA_Duracion',
+        'CPGA_Proveedor',
+        'CPGA_Tipo_Contrato',
         'FK_CPC_Id_Proyecto',
     ];
 

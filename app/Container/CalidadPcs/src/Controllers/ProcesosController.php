@@ -14,8 +14,11 @@ use App\Container\CalidadPcs\src\Etapas;
 use App\Container\CalidadPcs\src\Usuarios;
 use App\Container\CalidadPcs\src\EquipoScrum;
 use App\Container\CalidadPcs\src\Proceso_Adquisiciones;
+use App\Container\CalidadPcs\src\Proceso_Aseguramiento;
 use App\Container\CalidadPcs\src\Proceso_Comunicacion;
 use App\Container\CalidadPcs\src\Proceso_Direccion;
+use App\Container\CalidadPcs\src\Proceso_Gestionar_Comunicaciones;
+use App\Container\CalidadPcs\src\Proceso_Participacion;
 use App\Container\CalidadPcs\src\Proceso_Recursos;
 use App\Container\CalidadPcs\src\ProcesoCronograma;
 use App\Container\CalidadPcs\src\Proceso_Requerimientos;
@@ -1380,7 +1383,7 @@ class ProcesosController extends Controller
             $metodologia->save();
             
             Proceso_Proyecto::create([
-                'CPP_Info_Proceso' => "Proceso Plan para la Dirección del proyecto., se creo correctamente",
+                'CPP_Info_Proceso' => "Proceso Plan para la Dirección del proyecto, se creo correctamente",
                 'FK_CPP_Id_Proyecto' => $request['Proyecto_id'],
                 'FK_CPP_Id_Proceso' => $request['Proceso_id'],
             ]);
@@ -1397,6 +1400,279 @@ class ProcesosController extends Controller
         );
     }
    
+    /**
+     * 
+     * 
+     * PROCESO #11
+     * 
+     * 
+     */
+    /**
+     * Se realiza la actualización de los datos de un proyecto.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso11(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
 
-    
+            // $metodologia = Proceso_Aseguramiento::find($request['id_metodologia']);
+            Proceso_Aseguramiento::create([
+                'CPA_Aseguramiento' => $request['Practicas'],
+                'FK_CPC_Id_Proyecto' => $request['Proyecto_id'],
+            ]);            
+            Proceso_Proyecto::create([
+                'CPP_Info_Proceso' => "Proceso Aseguramiento de calidad, se creo correctamente",
+                'FK_CPP_Id_Proyecto' => $request['Proyecto_id'],
+                'FK_CPP_Id_Proceso' => $request['Proceso_id'],
+            ]);
+
+         
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    /**
+     * 
+     * 
+     * 
+     * PROCESO #12
+     * 
+     * 
+     */
+   /**
+     * Función que consulta los procesos registrados y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function tablaEquipo(Request $request, $idProyecto)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $integrantes = EquipoScrum::where('FK_CE_Id_Proyecto', $idProyecto);
+            return Datatables::of($integrantes)
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+     /**
+     * Se realiza la actualización de los datos de un proyecto.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso12(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            $integrante = EquipoScrum::find($request['idEquipoScrum']);
+            $integrante->fill([
+                'CE_Horas_Trabajadas' => $request['tiempoTrabajo'],
+            ]);
+            $integrante->save();
+            
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    /**
+     * Función que almacena en la base de datos un nuevo procesp.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso12_1(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            Proceso_Proyecto::create([
+                'CPP_Info_Proceso' => "Proceso Adquirir, desarrollar y dirigir equipo del proyecto, se creo correctamente",
+                'FK_CPP_Id_Proyecto' => $request['Id_Proyecto'],
+                'FK_CPP_Id_Proceso' => $request['Id_Proceso'],
+            ]);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente. '
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    /**
+     * 
+     * PROCESO #13
+     * 
+     */
+    /**
+     * Se realiza la actualización de los datos de un proyecto.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso13(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            // $metodologia = Proceso_Aseguramiento::find($request['id_metodologia']);
+            Proceso_Gestionar_Comunicaciones::create([
+                'CPC_Medio' => $request['Medio'],
+                'CPC_Redaccion' => $request['Redaccion'],
+                'FK_CPC_Id_Proyecto' => $request['Proyecto_id'],
+            ]);            
+            Proceso_Proyecto::create([
+                'CPP_Info_Proceso' => "Proceso Gestionar las Comunicaciones, se creo correctamente",
+                'FK_CPP_Id_Proyecto' => $request['Proyecto_id'],
+                'FK_CPP_Id_Proceso' => $request['Proceso_id'],
+            ]);
+
+         
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    /**
+     * 
+     * PROCESO #14
+     * 
+     */
+    /**
+     * Función que consulta los procesos registrados y los envía al datatable correspondiente.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Yajra\DataTables\DataTables | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function tablaAdquisiciones(Request $request, $idProyecto)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $adquisiciones = Proceso_Adquisiciones::where('FK_CPC_Id_Proyecto', $idProyecto);
+            return Datatables::of($adquisiciones)
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+     /**
+     * Se realiza la actualización de los datos de un proyecto.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso14(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            $adquisicion = Proceso_Adquisiciones::find($request['idAdquisicion']);
+            $adquisicion->fill([
+                'CPGA_Proveedor' => $request['Proveedor'],
+                'CPGA_Tipo_Contrato' => $request['TipoContrato'],
+            ]);
+            $adquisicion->save();
+            
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    /**
+     * Función que almacena en la base de datos un nuevo procesp.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso14_1(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            Proceso_Proyecto::create([
+                'CPP_Info_Proceso' => "Proceso Efectuar las adquisiciones   , se creo correctamente",
+                'FK_CPP_Id_Proyecto' => $request['Id_Proyecto'],
+                'FK_CPP_Id_Proceso' => $request['Id_Proceso'],
+            ]);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos almacenados correctamente. '
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+    /**
+     * 
+     * PROCESO #15
+     * 
+     */
+    /**
+     * Se realiza la actualización de los datos de un proyecto.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function storeProceso15(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            Proceso_Participacion::create([
+                'CPI_Necesidades' => $request['Necesidades'],
+                'CPI_Expectativas' => $request['Expectativas'],
+                'FK_CPC_Id_Proyecto' => $request['Proyecto_id'],
+            ]);            
+            Proceso_Proyecto::create([
+                'CPP_Info_Proceso' => "Proceso Gestionar la participación de los interesados, se creo correctamente",
+                'FK_CPP_Id_Proyecto' => $request['Proyecto_id'],
+                'FK_CPP_Id_Proceso' => $request['Proceso_id'],
+            ]);
+
+         
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+
+
+
 }

@@ -4,23 +4,23 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProcesoGestionarComunicaciones extends Migration
+class CreateProcesoParticipacion extends Migration
 {
-   /**
+    /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::connection('calidadpcs')->create('TBL_Calidadpcs_proceso_comunicaciones', function (Blueprint $table) {
-            $table->increments('PK_CPC_Id_Comunicaciones');
-            $table->string('CPC_Medio');
-            $table->text('CPC_Redaccion')->nullable();
+        Schema::connection('calidadpcs')->create('TBL_Calidadpcs_proceso_interesados', function (Blueprint $table) {
+            $table->increments('PK_CPI_Id_Interesados');
+            $table->string('CPI_Necesidades');
+            $table->text('CPI_Expectativas');
             $table->integer('FK_CPC_Id_Proyecto')->unsigned();
             $table->foreign('FK_CPC_Id_Proyecto')->references('PK_CP_Id_Proyecto')->on('TBL_Calidadpcs_proyectos')->onDelete("cascade");
             $table->timestamps();
-        });
+        }); 
     }
     /**
      * Reverse the migrations.
@@ -29,6 +29,6 @@ class CreateProcesoGestionarComunicaciones extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TBL_Calidadpcs_proceso_comunicaciones');
+        Schema::dropIfExists('TBL_Calidadpcs_proceso_interesados');
     }
 }

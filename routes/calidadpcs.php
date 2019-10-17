@@ -373,6 +373,77 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'calidadpcs.procesosCalidad.storeProceso10'
         ]);
 
+        /**
+         * 
+         * 
+         * 
+         * PROCESO #11
+         * 
+         * 
+         */
+        Route::post('storeProceso11', [
+            'uses' => $controller . 'ProcesosController@storeProceso11',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso11'
+        ]);
+
+        /**
+         * 
+         * PROCESO #12
+         * 
+         */
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::get('tablaEquipo/{idProyecto?}', [
+            'uses' => $controller . 'ProcesosController@tablaEquipo',   
+            'as' => 'calidadpcs.procesosCalidad.tablaEquipo'
+        ]);
+        Route::post('storeProceso12', [
+            'uses' => $controller . 'ProcesosController@storeProceso12',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso12'
+        ]);
+        Route::post('storeProceso12_1', [
+            'uses' => $controller . 'ProcesosController@storeProceso12_1',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso12_1'
+        ]);
+
+        /**
+         * 
+         * PROCESO # 13
+         * 
+         */
+        Route::post('storeProceso13', [
+            'uses' => $controller . 'ProcesosController@storeProceso13',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso13'
+        ]);
+
+        /**
+         * 
+         * PROCESO #14
+         * 
+         */
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::get('tablaAdquisiciones/{idProyecto?}', [
+            'uses' => $controller . 'ProcesosController@tablaAdquisiciones',   
+            'as' => 'calidadpcs.procesosCalidad.tablaAdquisiciones'
+        ]);
+        Route::post('storeProceso14', [
+            'uses' => $controller . 'ProcesosController@storeProceso14',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso14'
+        ]);
+        Route::post('storeProceso14_1', [
+            'uses' => $controller . 'ProcesosController@storeProceso14_1',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso14_1'
+        ]);
+
+        /**
+         * 
+         * PROCESO #15
+         * 
+         */
+        Route::post('storeProceso15', [
+            'uses' => $controller . 'ProcesosController@storeProceso15',   
+            'as' => 'calidadpcs.procesosCalidad.storeProceso15'
+        ]);
+
 
     });
 });

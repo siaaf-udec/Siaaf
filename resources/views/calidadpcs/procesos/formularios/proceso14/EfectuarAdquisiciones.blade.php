@@ -1,10 +1,8 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos:'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Etapa de ejecucion:'])
         <div class="row">
         <div class="col-md-12">
-        <h3>
-        Efectuar las adquisiciones.
-        </h3>
+        <h4 style="margin-top: 0px;">Proceso: Efectuar las adquisiciones.</h4>
         </div>
     </div>
     <br>
@@ -22,6 +20,55 @@
             @endcomponent
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Modal -->
+            <div aria-hidden="true" class="modal fade" id="modal_create" role="dialog" tabindex="-1">
+                <div class="">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        {!! Form::open(['id' => 'form_create', 'class' => '', 'url' => '/forms']) !!}
+                        <div class="modal-header modal-header-success">
+                            <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
+                            <h3>Adquisicion</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+ 
+                                    {!! Field:: hidden ('idAdquisicion') !!} 
+
+                                    {!! Field:: text('Nombre',null,['label'=>'Nombre adquisicion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off', 'readonly'],
+                                    ['help' => 'Funcion que cumple.', 'icon' => 'fa fa-tag'] ) !!}
+
+                                    {!! Field:: text('Proveedor',null,['label'=>'Proveedor:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Escribe el numero de horas trabajadas por dia', 'icon' => 'fa fa-user'] ) !!}
+
+                                    {!! Field:: text('TipoContrato',null,['label'=>'Tipo de contrato:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Escribe el numero de horas trabajadas por dia', 'icon' => 'fa fa-file-o'] ) !!}
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-12 col-md-offset-4">
+                        <a href="javascript:;" class="btn btn-success guardarProceso">
+                            Continuar <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
     @endcomponent
 </div>
 
@@ -32,32 +79,27 @@
 
         var table, url, columns;
         table = $('#listaProyectos');
-        url = "{{ route('calidadpcs.procesosCalidad.tablaGestionCalidad')}}"+"/"+ {{$idProyecto}};
+        url = "{{ route('calidadpcs.procesosCalidad.tablaAdquisiciones')}}"+"/"+ {{$idProyecto}};
         columns = [{
                 data: 'DT_Row_Index'
             },
             {
-                data: 'CPC_Nombre_Sprint',
-                name: 'CPC_Nombre_Sprint'
+                data: 'CPGA_Adquisicion',
+                name: 'CPGA_Adquisicion'
             },
             {
-                data: 'RequerimientoNombre',
-                name: 'RequerimientoNombre'
+                defaultContent: '',
+                data: 'CPGA_Proveedor',
+                name: 'CPGA_Proveedor'
             },
             {
-                data: 'RecursoNombre',
-                name: 'RecursoNombre'
+                defaultContent: '',
+                data: 'CPGA_Tipo_Contrato',
+                name: 'CPGA_Tipo_Contrato'
             },
+            
             {
-                data: 'CPC_Duracion',
-                name: 'CPC_Duracion'
-            },
-            {
-                data: 'CPC_Entregable',
-                name: 'CPC_Entregable'
-            },
-            {
-                defaultContent: '<a href="javascript:;" class="btn btn-success verEtapas"  title="Ver los procesos de este Proyecto" ><i class="fa fa-list-ul"></i></a>',
+                defaultContent: '<a href="javascript:;" class="btn btn-success verEtapas"  title="Agreagar información" ><i class="fa fa-share-square-o"></i></a>',
                 data: 'action',
                 name: 'Etapas',
                 title: 'Etapas',
@@ -71,30 +113,108 @@
                 responsivePriority: 2
             }
         ];
-        // dataTableServer.init(table, url, columns);
-        // table = table.DataTable();
+        dataTableServer.init(table, url, columns);
+        table = table.DataTable();
 
-        // $(".create").on('click', function(e) {
-        //     e.preventDefault();
-        //     var route = '{{ route('calidadpcs.proyectosCalidad.RegistrarProyecto') }}' + '/' +{{Auth::user()->id}};
-        //     $(".content-ajax").load(route);
-        // });
+        table.on('click', '.verEtapas', function(e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $('input:hidden[name="idAdquisicion"]').val(''+dataTable.PK_CPGA_Id_Adquisicion+'');
+            $("#Nombre").val(dataTable.CPGA_Adquisicion);
+            $("#Proveedor").val(dataTable.CPGA_Proveedor);
+            $("#TipoContrato").val(dataTable.CPGA_Tipo_Contrato);
+            $('#modal_create').modal('toggle');
+        });
 
-        // table.on('click', '.verEtapas', function(e) {
-        //     e.preventDefault();
-        //     $tr = $(this).closest('tr');
-        //     var dataTable = table.row($tr).data(),
-        //         route_edit = '{{ route('calidadpcs.procesosCalidad.etapas')}}'+'/'+dataTable.PK_CP_Id_Proyecto;
-        //     $(".content-ajax").load(route_edit);
-        // });
+        var createModal = function () {
+            return{
+                init: function () {
+                    var route = '{{ route('calidadpcs.procesosCalidad.storeProceso14') }}';
+                    var type = 'POST';
+                    var async = async || false;
+                    
+                    var formData = new FormData();
+                    formData.append('idAdquisicion', $('input:hidden[name="idAdquisicion"]').val());
+                    formData.append('Proveedor', $('input:text[name="Proveedor"]').val());
+                    formData.append('TipoContrato', $('input:text[name="TipoContrato"]').val());
 
-        // table.on('click', '.edit', function(e) {
-        //     e.preventDefault();
-        //     $tr = $(this).closest('tr');
-        //     var dataTable = table.row($tr).data(),
-        //         route_edit = '{{ route('calidadpcs.proyectosCalidad.edit')}}'+'/'+ dataTable.PK_CP_Id_Proyecto;
-        //     $(".content-ajax").load(route_edit);
-        // });
+                    $.ajax({
+                        url: route,
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
+
+                        },
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
+                                // table.ajax.reload();
+                                table.ajax.reload();
+                                $('#modal_create').modal('hide');
+                                $('#form_create')[0].reset(); //Limpia formulario
+                                UIToastr.init(xhr , response.title , response.message  );
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 &&  xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+                }
+            }
+        };
+
+        var form_create_modal_1 = $('#form_create');
+        var rules_create_modal_1 = {
+            // MC1_valor_ganado: { minlength: 1, required: true },
+            // MC1_costo_real: { minlength: 1, required: true },
+        };
+        FormValidationMd.init(form_create_modal_1,rules_create_modal_1,false,createModal());
+
+        $(".guardarProceso").on('click', function(e) {
+            e.preventDefault();
+                var route = '{{ route('calidadpcs.procesosCalidad.storeProceso14_1') }}';
+                    var type = 'POST';
+                    var async = async ||false;
+                    var formData = new FormData();
+                    formData.append('Id_Proyecto', {{$idProyecto}});
+                    formData.append('Id_Proceso', {{$idProceso}});
+                    $.ajax({
+                        url: route,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        success: function(response, xhr, request) {
+                            if (response.data == 422) {
+                                xhr = "warning"
+                                UIToastr.init(xhr, response.title, response.message);
+                            } else {
+                                if (request.status === 200 && xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
+                                }
+                            }
+                        },
+                        error: function(response, xhr, request) {
+                            if (request.status === 422 && xhr === 'error') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+            
+        });
 
     });
 </script> 

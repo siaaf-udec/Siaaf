@@ -13,8 +13,9 @@ class EquipoScrum extends Model
     protected $primaryKey = 'PK_CE_Id_Equipo_Scrum';
 
     protected $fillable = [
-        'PK_CE_Id_Equipo_Scrum',
+        // 'PK_CE_Id_Equipo_Scrum',
         'CE_Nombre_Persona',
+        'CE_Horas_Trabajadas',
         'FK_CE_Id_Rol',
         'FK_CE_Id_Proyecto',
     ];

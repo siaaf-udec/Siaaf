@@ -1,8 +1,8 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos:'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Etapa de ejecucion:'])
         <div class="row">
         <div class="col-md-12">
-        <h3>Plan para la Dirección del proyecto.</h3>
+        <h4 style="margin-top: 0px;">Proceso: Plan para la Dirección del proyecto.</h4>
         </div>
     </div>
     <div class="row">

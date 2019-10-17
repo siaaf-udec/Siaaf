@@ -3,7 +3,7 @@
 <li class="nav-item {{ active(['calidadpcs.proyectosCalidad.*'], 'start active open') }}">
     <a href="{{ route('calidadpcs.proyectosCalidad.index') }}" class="nav-link nav-toggle">
         <i class="fa fa-server"></i>
-        <span class="title">Calidad PCS</span>
+        <span class="title">SIGDEP</span>
         <span class="arrow {{ active(['calidadpcs.proyectosCalidad.*'], 'open') }}"></span>
     </a>
 
