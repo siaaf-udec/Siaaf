@@ -656,6 +656,9 @@
     <div class="form-actions">
                 <div class="row">
                     <div class="col-md-12 col-md-offset-4">
+                    <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
+                        Cancelar
+                    </a>
                         <a href="javascript:;" class="btn btn-success guardarCosto">
                             Continuar <i class="fa fa-angle-right"></i>
                         </a>
@@ -1381,16 +1384,6 @@
         dataTableServer.init(table2, url2, columns2);
         table2 = table2.DataTable();
 
-        // table2.on('click', '.eliminar', function(e) {
-        //     e.preventDefault();
-        //     $tr = $(this).closest('tr');
-        //     var dataTable2 = table2.row($tr).data();
-        //     console.log(dataTable2.PK_CPC_Id_Costo)
-        //     // $('#modal_costos_'+dataTable.PK_CPCI_Id_Costos).modal('toggle');
-
-        //         // route_edit = '{{ route('calidadpcs.procesosCalidad.etapas')}}'+'/'+dataTable.PK_CP_Id_Proyecto;
-        //     // $(".content-ajax").load(route_edit);
-        // });
         table2.on('click', '.eliminar', function (e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
@@ -1400,7 +1393,7 @@
             var async = async || false;
             swal({
                     title: "¿Está seguro?",
-                    text: "¿Está seguro de eliminar el requerimiento seleccionado?",
+                    text: "¿Está seguro de eliminar este costo?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -1439,7 +1432,7 @@
 
         $(".guardarCosto").on('click', function(e) {
             e.preventDefault();
-                var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4_1') }}';
+                    var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4_1') }}';
                     var type = 'POST';
                     var async = async ||false;
                     var formData = new FormData();
@@ -1473,7 +1466,12 @@
                             }
                         }
                     });
-            
+        });
+
+        $('.button-cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('calidadpcs.proyectosCalidad.index.ajax') }}';
+            location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
         });
     });
     

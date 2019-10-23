@@ -32,11 +32,11 @@
         <div class="form-actions">
             <div class="row">
                 <div class="col-md-12 col-md-offset-4">
-                    @permission('CALIDADPCS_CREATE_PROJECT')<a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
+                   <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
                         Cancelar
                     </a>
-                    {{ Form::submit('Registrar', ['class' => 'btn blue fin_proceso']) }}
-                    @endpermission
+                    {{ Form::submit('Continuar', ['class' => 'btn blue fin_proceso']) }}
+                    
                 </div>
             </div>
         </div>
@@ -99,13 +99,66 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Modal -->
+            <div aria-hidden="true" class="modal fade" id="modal_edit" role="dialog" tabindex="-1">
+                <div class="">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        {!! Form::open(['id' => 'from_edit', 'class' => '', 'url' => '/forms']) !!}
+                        <div class="modal-header modal-header-success">
+                            <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
+                            <h1>Editar sprint</h1>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {!! Field:: hidden ('idSprint')!!}
+
+                                    {!! Field:: text('Nombre_Sprint_Editar',null,['label'=>'Nombre del sprint:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Digite el nombre del sprint.', 'icon' => 'fa fa-tag'] ) !!}
+                                   
+                                    <div class="form-group form-md-line-input" style="padding-top: 0px;">
+                                        <div class="input-icon">
+                                            <select id="lista_requerimientos_editar" name="lista_requerimientos_editar" class="selectpicker form-control" multiple data-size="5" title="Seleccione por lo menos un requerimiento" data-width="100%" style="padding-left: 0px;">
+                                                @foreach($requerimientos as $key => $name)
+                                                <option value="{{$key}}">{{$name}}</option>
+                                                @endforeach
+                                            </select>
+                                            <label for="lista_requerimientos_editar" class="control-label">Requerimientos:</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-md-line-input" style="padding-top: 0px;">
+                                        <div class="input-icon">
+                                            <label for="lista_integrantes_editar" class="control-label">Integrantes:</label>
+                                            <select id="lista_integrantes_editar" name="lista_integrantes_editar" class="selectpicker form-control" multiple data-size="5" title="Seleccione por lo menos un responsable" data-width="100%">
+                                                @foreach($integrantes as $key => $name)
+                                                <option value="{{$key}}">{{$name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    {!! Field:: text('Numero_Semanas_Editar',null,['label'=>'Numero de semanas:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'], 
+                                        ['help' => 'Digite el numero de semanas.']) !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            {{-- {!! Form::submit('Guardar', ['class' => 'btn blue']) !!} --}}
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @endcomponent
 </div>
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
-<!-- <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script> -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script> -->
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
@@ -137,6 +190,7 @@
                     formData.append('FK_CPP_Id_Proyecto', $('input:hidden[name="FK_CPP_Id_Proyecto"]').val());
                     formData.append('CPC_Nombre_Sprint', $('input:text[name="CPC_Nombre_Sprint"]').val());
                     formData.append('CPC_Requerimiento', $('#lista_requerimientos').val());
+                    console.log($('#lista_requerimientos').val());
                     formData.append('CPC_Recurso', $('#lista_integrantes').val());
                     formData.append('CPC_Duracion', $('input:text[name="numero_semanas"]').val());
 
@@ -305,7 +359,26 @@
             // $tr = $(this).closest('tr');
         });
 
+        $('.button-cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('calidadpcs.proyectosCalidad.index.ajax') }}';
+            location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
+        });
 
+        table.on('click', '.edit', function(e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $('input:hidden[name="idSprint"]').val(dataTable.PK_CPC_Id_Sprint);
+            $("#Nombre_Sprint_Editar").val(dataTable.CPC_Nombre_Sprint);
+            $("#Numero_Semanas_Editar").val(dataTable.CPC_Duracion);
+            /**
+             * revisar se recibe 11,12,13 y el selectpicker recibe "11","12","13"
+             */
+            // $('#lista_requerimientos_editar').selectpicker(dataTable.CPC_Requerimiento); 
+            // $('#lista_requerimientos_editar').selectpicker('val', ["11","12","13"]);;
+            $('#modal_edit').modal('toggle');
+        });
 
         $(".create").on('click', function(e) {
             e.preventDefault();
@@ -314,11 +387,6 @@
             // $tr = $(this).closest('tr');
         });
 
-        // table.on('click', '.edit', function(e) {
-        //     e.preventDefault();
-        //     $('#modal-update-permission').modal('toggle');
-        //     $tr = $(this).closest('tr');
-        // });
         jQuery.validator.addMethod("letters", function(value, element) {
             return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
         });

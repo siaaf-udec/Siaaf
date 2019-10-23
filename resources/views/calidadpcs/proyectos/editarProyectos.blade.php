@@ -26,7 +26,7 @@
 
                                 {{-- {!! Field::date('CP_Fecha_Inicio',$infoProyecto['CP_Fecha_Inicio'],['label' => 'Fecha de inicio del proyecto',  'class'=> 'form-control','auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],['help' => 'Digite la fecha de inicio del proyecto', 'icon' => 'fa fa-calendar']) !!}
                                 --}}
-                                {!! Field::date('CP_Fecha_Inicio',$infoProyecto['CP_Fecha_Inicio'],['label' => 'Fecha de inicio del proyecto',  'class'=> 'form-control datepicker','auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],['help' => 'Digite la fecha de inicio del proyecto', 'icon' => 'fa fa-calendar']) !!}
+                                {!! Field::date('CP_Fecha_Inicio',$infoProyecto['CP_Fecha_Inicio'],['label' => 'Fecha de inicio del proyecto',  'class'=> 'form-control datepicker','auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", "readonly"],['help' => 'Digite la fecha de inicio del proyecto', 'icon' => 'fa fa-calendar']) !!}
                             </div>
                         </div>
                         <div class="row">

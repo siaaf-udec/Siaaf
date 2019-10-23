@@ -5,8 +5,6 @@
             <h4 style="margin-top: 0px;">Proceso: Gestionar las Comunicaciones.</h4>
         </div>
     </div>
-    <br>
-    <br>
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-10 col-md-offset-1">
@@ -34,11 +32,11 @@
                 <div class="form-actions">
                     <div class="row">
                         <div class="col-md-12 col-md-offset-4">
-                            @permission('CALIDADPCS_CREATE_PROJECT')<a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
+                            <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
                                 Cancelar
                             </a>
                             {{ Form::submit('Guardar', ['class' => 'btn blue']) }}
-                            @endpermission
+                            
                         </div>
                     </div>
                 </div>
@@ -141,5 +139,10 @@
         };
         FormValidationMd.init(form, formRules, formMessage, enviarFormulario());
 
+        $('.button-cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('calidadpcs.proyectosCalidad.index.ajax') }}';
+            location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
+        });
     });
 </script>

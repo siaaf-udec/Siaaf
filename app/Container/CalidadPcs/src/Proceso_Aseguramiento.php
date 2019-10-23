@@ -14,6 +14,8 @@ class Proceso_Aseguramiento extends Model
 
     protected $fillable = [
         'CPA_Aseguramiento',
+        'CPA_Desempeño',
+        'CPA_Recomendaciones',
         'FK_CPC_Id_Proyecto',
     ];
 

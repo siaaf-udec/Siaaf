@@ -40,7 +40,7 @@
                             <div class="row">
                                 <div class="col-md-12">
 
-                                {!! Field:: text('Riesgo',null,['label'=>'Riesgo:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    {!! Field:: text('Riesgo',null,['label'=>'Riesgo:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-warning '] ) !!}
 
                                     {!! Field:: text('Caracteristicas',null,['label'=>'Caracteristicas:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
@@ -64,9 +64,53 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Modal -->
+            <div aria-hidden="true" class="modal fade" id="modal_edit" role="dialog" tabindex="-1">
+                <div class="">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        {!! Form::open(['id' => 'form_edit', 'class' => '', 'url' => '/forms']) !!}
+                        <div class="modal-header modal-header-success">
+                            <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
+                            <h3>Editar Riesgo</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {!! Field:: hidden ('idRiesgo')!!}
+
+                                    {!! Field:: text('Riesgo_Edit',null,['label'=>'Riesgo:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-warning '] ) !!}
+
+                                    {!! Field:: text('Caracteristicas_Edit',null,['label'=>'Caracteristicas:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-list-alt'] ) !!}
+
+                                    {!! Field::select('Importancia:',['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5' ],null,['name' => 'Importancia_Edit']) !!}
+                                    
+                                    {!! Field:: text('Accion_Edit',null,['label'=>'Accion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-bolt'] ) !!}
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="form-actions">
                 <div class="row">
                     <div class="col-md-12 col-md-offset-4">
+                    <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
+                        Cancelar
+                    </a>
                         <a href="javascript:;" class="btn btn-success guardarProceso">
                             Continuar <i class="fa fa-angle-right"></i>
                         </a>
@@ -79,7 +123,6 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-
 <script type="text/javascript">
     jQuery(document).ready(function() {
 
@@ -106,10 +149,10 @@
                 name: 'CPGR_Accion'
             },
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-success verEtapas"  title="Ver los procesos de este Proyecto" ><i class="fa fa-list-ul"></i></a>',
+                defaultContent: '<a href="javascript:;" class="btn btn-sm btn-success editar"  title="Editar este Riesgo" ><i class="fa fa-pencil-square-o"></i></a> <a href="javascript:;" class="btn btn-sm btn-danger eliminar"  title="Eliminar este riesgo" ><i class="fa fa-trash-o"></i></a>',
                 data: 'action',
-                name: 'Etapas',
-                title: 'Etapas',
+                name: 'Acciones',
+                title: 'Acciones',
                 orderable: false,
                 searchable: false,
                 exportable: false,
@@ -223,6 +266,124 @@
                         }
                     });
             
+        });
+
+        table.on('click', '.editar', function(e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $('input:hidden[name="idRiesgo"]').val(dataTable.PK_CPGR_Id_Riesgo);
+            $("#Riesgo_Edit").val(dataTable.CPGR_Riesgo);
+            $("#Caracteristicas_Edit").val(dataTable.CPGR_Caracteristicas);
+            $('select[name="Importancia_Edit"]').val(dataTable.CPGR_Importancia);
+            $('select[name="Importancia_Edit"]').trigger('change');
+            $("#Accion_Edit").val(dataTable.CPGR_Accion);
+
+            $('#modal_edit').modal('toggle');
+        });
+
+        var EditModal = function () {
+            return{
+                init: function () {
+                    var route = "{{ route('calidadpcs.procesosCalidad.updateProceso8') }}";
+                    var type = 'POST';
+                    var async = async || false;
+                    var formData = new FormData();
+
+                    formData.append('idRiesgo',  $('input:hidden[name="idRiesgo"]').val());
+                    formData.append('Riesgo', $('input:text[name="Riesgo_Edit"]').val());
+                    formData.append('Caracteristica', $('input:text[name="Caracteristicas_Edit"]').val());
+                    formData.append('Importancia', $('select[name="Importancia_Edit"]').val());
+                    formData.append('Accion', $('input:text[name="Accion_Edit"]').val());
+
+                    $.ajax({
+                        url: route,
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
+
+                        },
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
+                                // table.ajax.reload();
+                                table.ajax.reload();
+                                $('#modal_edit').modal('hide');
+                                $('#form_edit')[0].reset(); //Limpia formulario
+                                UIToastr.init(xhr , response.title , response.message  );
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 &&  xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+                }
+            }
+        };
+
+        var form_edit_modal = $('#form_edit');
+        var rules_edit_modal = {
+            // MC1_valor_ganado: { minlength: 1, required: true },
+            // MC1_costo_real: { minlength: 1, required: true },
+        };
+        FormValidationMd.init(form_edit_modal,rules_edit_modal,false,EditModal());
+
+        table.on('click', '.eliminar', function(e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            var route = "{{route('calidadpcs.procesosCalidad.deleteProceso8')}}"+"/"+ dataTable.PK_CPGR_Id_Riesgo;
+            var type = 'DELETE';
+            var async = async || false;
+            swal({
+                    title: "¿Está seguro?",
+                    text: "¿Está seguro de eliminar este riesgo?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    table.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                    } else {
+                        swal("Cancelado", "No se eliminó ningun riesgo", "error");
+                    }
+                });
+        });
+
+        $('.button-cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('calidadpcs.proyectosCalidad.index.ajax') }}';
+            location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
         });
 
     });

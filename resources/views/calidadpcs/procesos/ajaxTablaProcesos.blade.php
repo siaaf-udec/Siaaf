@@ -30,7 +30,6 @@
         url = "{{ route('calidadpcs.procesosCalidad.tablaProcesos')}}"+ "/"+ {{$idEtapa}};
         columns = [
             {data: 'DT_Row_Index'},
-            //{data: 'PK_CP_Id_Proceso', name: 'PK_CP_Id_Proceso'},
             {data: 'CP_Nombre_Proceso', name: 'CP_Nombre_Proceso'},
             {
                 defaultContent: false,
@@ -66,7 +65,9 @@
                 printable: false,
                 className: 'text-center',
                 render: function (data, type, row) {
-                    if(row.PK_CP_Id_Proceso < {{$numProcesos}}){
+                    if({{$numProcesos}} > 26){
+                        return '<span class="label label-sm label-warning">Proyecto Finalizado</span>';
+                    }else if(row.PK_CP_Id_Proceso < {{$numProcesos}}){
                        return '<a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>';
                     }else{
                         return '<span class="label label-sm label-warning">Pendiente</span>';
@@ -115,23 +116,18 @@
                 }else{
                     xhr = "warning"
                     UIToastr.init(xhr, "Lo sentimos", "Los procesos se deben llenar en orden, el proceso que debe realizar es el numero: "+{{$numProcesos}});
-                    //alert("No se puede Ejecutar este proceso");
                 }
             
         });
 
         table.on('click', '.edit', function (e) {
-            var route = '{{ route('calidadpcs.procesosCalidad.formularios') }}';
             var type = 'GET';
             var async = async || false;
-
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-               
-                //route_edit = '{{ route('calidadpcs.procesosCalidad.formularios') }}' + '/' + dataTable.PK_CP_Id_Proceso + '/' + {{$idProyecto}};
-                if(dataTable.PK_CP_Id_Proceso <= {{$numProcesos}}){
-                                       
+            var route ="{{ route('calidadpcs.procesosCalidad.editarFormularios') }}" + "/" + dataTable.PK_CP_Id_Proceso + "/" + {{$idProyecto}};
+
                         $.ajax({
                             url: route,
                             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -158,7 +154,7 @@
                                         //$('#form_proyecto_create')[0].reset(); //Limpia formulario
                                         //UIToastr.init(xhr, response.title, response.message);
                                         //App.unblockUI('.portlet-form');
-                                        var route ='{{ route('calidadpcs.procesosCalidad.editarFormularios') }}' + '/' + dataTable.PK_CP_Id_Proceso + '/' + {{$idProyecto}};
+                                        
                                         $(".content-ajax").load(route);
                                         
                                     }
@@ -171,12 +167,7 @@
                             }
                         });
                     
-                    //$(".content-ajax").load(route_edit);
-                }else{
-                    xhr = "warning"
-                    UIToastr.init(xhr, "Lo sentimos", "Los procesos se deben llenar en orden, el proceso que debe realizar es:+{{$numProcesos}}");
-                    //alert("No se puede Ejecutar este proceso");
-                }
+                
             
         });
 

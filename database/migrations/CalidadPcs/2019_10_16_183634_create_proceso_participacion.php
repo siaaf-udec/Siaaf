@@ -17,6 +17,8 @@ class CreateProcesoParticipacion extends Migration
             $table->increments('PK_CPI_Id_Interesados');
             $table->string('CPI_Necesidades');
             $table->text('CPI_Expectativas');
+            $table->string('CPI_Participacion')->nullable();
+            $table->text('CPI_Observaciones')->nullable();
             $table->integer('FK_CPC_Id_Proyecto')->unsigned();
             $table->foreign('FK_CPC_Id_Proyecto')->references('PK_CP_Id_Proyecto')->on('TBL_Calidadpcs_proyectos')->onDelete("cascade");
             $table->timestamps();

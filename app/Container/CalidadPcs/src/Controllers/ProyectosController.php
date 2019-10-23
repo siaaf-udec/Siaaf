@@ -86,6 +86,27 @@ class ProyectosController extends Controller
     }
     
     /**
+     * Función que muestra el formulario de registro de un nuevo proyecto.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response | \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function delete(Request $request, $id)//
+    {
+        if ($request->ajax() && $request->isMethod('DELETE')) {
+            Proyectos::destroy($id);
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos eliminados correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
+    /**
      * Función que almacena en la base de datos un nuevo proyecto.
      *
      * @param  \Illuminate\Http\Request $request
@@ -113,7 +134,7 @@ class ProyectosController extends Controller
                     Proyectos::create([
                         'CP_Nombre_Proyecto' => $request['CP_Nombre_Proyecto'],
                         'CP_Fecha_Inicio' => $request['CP_Fecha_Inicio'],
-                        'CP_Fecha_Final' => $request['CP_Fecha_Inicio'],
+                        // 'CP_Fecha_Final' => $request['CP_Fecha_Inicio'],
                         'FK_CP_Id_Usuario' => $request['FK_CP_Id_Usuario'],
                     ]);
 
@@ -211,7 +232,7 @@ class ProyectosController extends Controller
                     Proyectos::create([
                         'CP_Nombre_Proyecto' => $request['CP_Nombre_Proyecto'],
                         'CP_Fecha_Inicio' => $request['CP_Fecha_Inicio'],
-                        'CP_Fecha_Final' => $request['CP_Fecha_Inicio'],
+                        // 'CP_Fecha_Final' => $request['CP_Fecha_Inicio'],
                         'FK_CP_Id_Usuario' => $request['FK_CP_Id_Usuario'],
                     ]);
                     $proyecto = Proyectos::where('CP_Nombre_Proyecto',$request['CP_Nombre_Proyecto'])->first();

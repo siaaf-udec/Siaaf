@@ -31,7 +31,7 @@
                         @permission('CALIDADPCS_CREATE_PROJECT')<a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
                             Cancelar
                         </a>
-                        {{ Form::submit('Guardar', ['class' => 'btn blue']) }}
+                        {{ Form::submit('Continuar', ['class' => 'btn blue']) }}
                         @endpermission
                     </div>
                 </div>
@@ -120,5 +120,11 @@
             // },
         };
         FormValidationMd.init(form, formRules, formMessage, enviarFormulario());
+
+        $('.button-cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('calidadpcs.proyectosCalidad.index.ajax') }}';
+            location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
+        });
     });
 </script> 

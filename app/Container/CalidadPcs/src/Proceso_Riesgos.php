@@ -17,6 +17,7 @@ class Proceso_Riesgos extends Model
         'CPGR_Caracteristicas',
         'CPGR_Importancia',
         'CPGR_Accion',
+        'CPGR_Estado',
         'FK_CPC_Id_Proyecto',
     ];
 

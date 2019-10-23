@@ -1,59 +1,34 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Proyectos:'])
-        <div class="row">
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Etapa de monitoreo y control:'])
+    <h4 style="margin-top: 0px;">Proceso: Controlar las comunicaciones.</h4>
+    <br>
+    <br>
+    <div class="row">
         <div class="col-md-12">
-        <h3>
-        Controlar las comunicaciones.
-    </h3>
+            @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaProyectos'])
+            @slot('columns', [
+            '#',
+            'interesado',
+            'Lugar',
+            'Fecha',
+            'Estado',
+            ''
+            ])
+            @endcomponent
         </div>
     </div>
-    <br>
-    <br>
-    
-
-                        <div class="row">
-        <div class="col-md-12">
-        <div class="col-md-10 col-md-offset-1">
-            {!! Form::model ([[$idProceso],[$infoProyecto]],['id'=>'form_create_proceso_1', 'url' => '/forms']) !!}
-            <div class="form-body">
-                <div class="row">
-                    <div class="col-md-12">
-
-                     {{--   {!! Field:: hidden ('FK_CPP_Id_Proyecto', $infoProyecto[0]['PK_CP_Id_Proyecto'])!!}
-
-                        {!! Field:: hidden ('FK_CPP_Id_Proceso', $idProceso) !!}  --}} 
-
-                        {!! Field:: text('Entidades',null,['label'=>'Cantidad de Reuniones con interesados esperadas:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                        ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-
-                        {!! Field:: text('Entidades',null,['label'=>'Cantidad de Reuniones con interesados realizadas:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                        ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-
-                        {!! Field:: text('Entidades',null,['label'=>'Cantidad de Reuniones con el equipo esperadas:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                        ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-
-                        {!! Field:: text('Entidades',null,['label'=>'Cantidad de Reuniones con el equipo realizadas:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                        ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-
-                    </div>
-                </div>
-            </div>
-            <div class="form-actions">
+    <div class="form-actions">
                 <div class="row">
                     <div class="col-md-12 col-md-offset-4">
-                        @permission('CALIDADPCS_CREATE_PROJECT')<a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
-                            Cancelar
+                    <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
+                                Cancelar
+                            </a>
+                        <a href="javascript:;" class="btn btn-success guardarProceso">
+                            Continuar <i class="fa fa-angle-right"></i>
                         </a>
-                        {{ Form::submit('Guardar', ['class' => 'btn blue']) }}
-                        @endpermission
                     </div>
                 </div>
             </div>
-            {!! Form::close() !!}
-        </div>
-        </div>
-    </div>
- 
     @endcomponent
 </div>
 
@@ -64,35 +39,31 @@
 
         var table, url, columns;
         table = $('#listaProyectos');
-        url = "{{ route('calidadpcs.procesosCalidad.tablaGestionCalidad')}}"+"/"+ {{$idProyecto}};
+        url = "{{ route('calidadpcs.procesosCalidad.tablaproceso21')}}"+"/"+ {{$idProyecto}};
         columns = [{
                 data: 'DT_Row_Index'
             },
             {
-                data: 'CPC_Nombre_Sprint',
-                name: 'CPC_Nombre_Sprint'
+                data: 'CPGC_Interesado',
+                name: 'CPGC_Interesado'
             },
             {
-                data: 'RequerimientoNombre',
-                name: 'RequerimientoNombre'
+                data: 'CPGC_Lugar',
+                name: 'CPGC_Lugar'
             },
             {
-                data: 'RecursoNombre',
-                name: 'RecursoNombre'
+                data: 'CPGC_Fecha',
+                name: 'CPGC_Fecha'
             },
             {
-                data: 'CPC_Duracion',
-                name: 'CPC_Duracion'
+                data: 'Estado',
+                name: 'Estado'
             },
             {
-                data: 'CPC_Entregable',
-                name: 'CPC_Entregable'
-            },
-            {
-                defaultContent: '<a href="javascript:;" class="btn btn-success verEtapas"  title="Ver los procesos de este Proyecto" ><i class="fa fa-list-ul"></i></a>',
+                defaultContent: '<a href="javascript:;" class="btn btn-success verEtapas"  title="Cambiar el estado de esta reunion" ><i class="fa fa-exchange"></i></a>',
                 data: 'action',
-                name: 'Etapas',
-                title: 'Etapas',
+                name: 'Acciones',
+                title: 'Acciones',
                 orderable: false,
                 searchable: false,
                 exportable: false,
@@ -103,30 +74,95 @@
                 responsivePriority: 2
             }
         ];
-        // dataTableServer.init(table, url, columns);
-        // table = table.DataTable();
+        dataTableServer.init(table, url, columns);
+        table = table.DataTable();
 
-        // $(".create").on('click', function(e) {
-        //     e.preventDefault();
-        //     var route = '{{ route('calidadpcs.proyectosCalidad.RegistrarProyecto') }}' + '/' +{{Auth::user()->id}};
-        //     $(".content-ajax").load(route);
-        // });
+        table.on('click', '.verEtapas', function(e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
 
-        // table.on('click', '.verEtapas', function(e) {
-        //     e.preventDefault();
-        //     $tr = $(this).closest('tr');
-        //     var dataTable = table.row($tr).data(),
-        //         route_edit = '{{ route('calidadpcs.procesosCalidad.etapas')}}'+'/'+dataTable.PK_CP_Id_Proyecto;
-        //     $(".content-ajax").load(route_edit);
-        // });
+            var route = '{{ route('calidadpcs.procesosCalidad.storeProceso21') }}';
+                    var type = 'POST';
+                    var async = async ||false;
+                    var formData = new FormData();
+                    formData.append('id_Reunion', dataTable.PK_CPGC_Id_Comunicacion);
+                    formData.append('Estado', dataTable.CPGC_Estado);
+                    $.ajax({
+                        url: route,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        success: function(response, xhr, request) {
+                            if (response.data == 422) {
+                                xhr = "warning"
+                                UIToastr.init(xhr, response.title, response.message);
+                            } else {
+                                if (request.status === 200 && xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    table.ajax.reload();
+                                    // location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
+                                }
+                            }
+                        },
+                        error: function(response, xhr, request) {
+                            if (request.status === 422 && xhr === 'error') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+            
+        });
 
-        // table.on('click', '.edit', function(e) {
-        //     e.preventDefault();
-        //     $tr = $(this).closest('tr');
-        //     var dataTable = table.row($tr).data(),
-        //         route_edit = '{{ route('calidadpcs.proyectosCalidad.edit')}}'+'/'+ dataTable.PK_CP_Id_Proyecto;
-        //     $(".content-ajax").load(route_edit);
-        // });
+        $(".guardarProceso").on('click', function(e) {
+            e.preventDefault();
+                var route = '{{ route('calidadpcs.procesosCalidad.storeProceso21_1') }}';
+                    var type = 'POST';
+                    var async = async ||false;
+                    var formData = new FormData();
+                    formData.append('id_Proyecto', {{$idProyecto}});
+                    formData.append('id_Proceso', {{$idProceso}});
+                    $.ajax({
+                        url: route,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        success: function(response, xhr, request) {
+                            if (response.data == 422) {
+                                xhr = "warning"
+                                UIToastr.init(xhr, response.title, response.message);
+                            } else {
+                                if (request.status === 200 && xhr === 'success') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                    location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
+                                }
+                            }
+                        },
+                        error: function(response, xhr, request) {
+                            if (request.status === 422 && xhr === 'error') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+        });
+
+        $('.button-cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('calidadpcs.proyectosCalidad.index.ajax') }}';
+            location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
+        });
 
     });
 </script> 

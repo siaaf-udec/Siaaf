@@ -13,10 +13,10 @@ class Proceso_Comunicacion extends Model
     protected $primaryKey = 'PK_CPGC_Id_Comunicacion';
 
     protected $fillable = [
-        // 'PK_CPC_Id_Costo',
         'CPGC_Interesado',
         'CPGC_Lugar',
         'CPGC_Fecha',
+        'CPGC_Estado',
         'FK_CPC_Id_Proyecto',
     ];
 

@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Desarrollar acta de constitución del proyecto'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Etapa de inicio:'])
     @slot('actions', [
     'link_cancel' => [
     'link' => '',
@@ -8,6 +8,8 @@
     ])
     <div class="row">
         <div class="col-md-12 col-md-offset-0">
+        <h4 style="margin-top: 0px;">Proceso: Desarrollar acta de constitución del proyecto.</h4>
+            <br>
             <div class="panel-group accordion" id="date-range">
                 <!--Primer acordeon-->
                 <div class="panel panel-default">
@@ -87,35 +89,17 @@
                         {!! Field:: text('Nombre_Proyecto',$infoProyecto[0]['CP_Nombre_Proyecto'],['label'=>'Nombre de proyecto:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                         ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
 
-                        {!! Field:: text('Numero_acta',null,['label'=>'Numero de acta:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                        ['help' => 'Digite el numero de acta.','icon'=>'fa fa-circle'] ) !!}
-
                         {!! Field:: text('Duracion',null,['label'=>'Duracion en meses:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                         ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-
-
-                        {{--       {!! Field::select('SOL_carrera',
-                                          ['1' => 'Ingeniería de sistemas', '2' => 'Ingeniería Ambiental',
-                                          '3' => 'Ingeniería agronomica', '4' => 'Administración de empresas',
-                                          '5' => 'Psicología', '6' => 'Contaduría'],
-                                          [ 'label' => 'Tipo de proyecto:', 'autofocus', 'auto' => 'off']) !!}
-
-                                          {!! Field:: text('Compromiso',null,['label'=>'Compromiso de obligatorio cumplimiento:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-                                --}}
+                      
                     </div>
                     <div class="col-md-6">
 
-                    {!! Field::date('Fecha_Inicio',$infoProyecto[0]['CP_Fecha_Inicio'],['label' => 'Fecha de inicio', 'class'=> '','auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d",'readonly'],['help' => 'Digite la fecha de inicio del proyecto', 'icon' => 'fa fa-calendar']) !!}
+                        {!! Field::date('Fecha_Inicio',$infoProyecto[0]['CP_Fecha_Inicio'],['label' => 'Fecha de inicio', 'class'=> '','auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d",'readonly'],['help' => 'Digite la fecha de inicio del proyecto', 'icon' => 'fa fa-calendar']) !!}
 
-                        
                         {!! Field:: text('Entidades',null,['label'=>'Entidades participantes:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                         ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-
-                        {{--
-                                {!! Field:: text('Financiacion',null,['label'=>'Fuentes de financiacion:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-                                --}}
+                        
                     </div>
                 </div>
                 <div class="container-fluid">
@@ -299,7 +283,7 @@
         var editarProyecto = function() {
             return {
                 init: function() {
-                    var route = '{{route('calidadpcs.procesosCalidad.storeProceso')}}';
+                    var route = "{{route('calidadpcs.procesosCalidad.storeProceso')}}";
                     var type = 'POST';
                     var async = async ||false;
                     var formData = new FormData();
@@ -308,15 +292,12 @@
                     formData.append('FK_CPP_Id_Proyecto', $('input:hidden[name="FK_CPP_Id_Proyecto"]').val());
                     formData.append('FK_CPP_Id_Proceso', $('input:hidden[name="FK_CPP_Id_Proceso"]').val());
                     //Info del proceso
-                    formData.append('Numero_acta', $('input:text[name="Numero_acta"]').val());
+                    // formData.append('Numero_acta', $('input:text[name="Numero_acta"]').val());
                     formData.append('Fecha_Inicio', $('#Fecha_Inicio').val());
-                    formData.append('Tipo_Proyecto', $('input:text[name="Tipo_Proyecto"]').val());
-                    formData.append('Nombre_Proyecto', $('input:text[name="Nombre_Proyecto"]').val());
+                    // formData.append('Tipo_Proyecto', $('input:text[name="Tipo_Proyecto"]').val());
+                    // formData.append('Nombre_Proyecto', $('input:text[name="Nombre_Proyecto"]').val());
                     formData.append('Duracion', $('input:text[name="Duracion"]').val());
                     formData.append('Entidades', $('input:text[name="Entidades"]').val());
-                    // formData.append('Compromiso', $('input:text[name="Compromiso"]').val());
-                    // formData.append('Interesados', $('input:text[name="Interesados"]').val());
-                    // formData.append('Financiacion', $('input:text[name="Financiacion"]').val());
                     // Objetivo general
                     formData.append('Objetivo_General', $('input:text[name="Objetivo_General"]').val());
                     // Objetivos especificos
@@ -341,6 +322,9 @@
                     formData.append('CPR_Nombre_Requerimiento_13', $('input:text[name="CPR_Nombre_Requerimiento_13"]').val());
                     formData.append('CPR_Nombre_Requerimiento_14', $('input:text[name="CPR_Nombre_Requerimiento_14"]').val());
                     formData.append('CPR_Nombre_Requerimiento_15', $('input:text[name="CPR_Nombre_Requerimiento_15"]').val());
+
+
+                    console.log(formData);
 
                     $.ajax({
                         url: route,
@@ -475,10 +459,10 @@
                 UIToastr.init(xhr, "¡Lo sentimos!", "Maximo puede agregar más requisitos adicionales.");
             }
         });
-        $(".pmd-select2").select2({
-                width: '100%',
-                placeholder: "Selecccionar",
-            });
+        // $(".pmd-select2").select2({
+        //         width: '100%',
+        //         placeholder: "Selecccionar",
+        //     });
         $('#eliminarRequisito').click(function(e) {
             e.preventDefault();
             if (x_requisitos == 6) {

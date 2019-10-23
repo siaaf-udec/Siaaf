@@ -16,10 +16,9 @@ class CreateProcesoRequerimientosTable extends Migration
         Schema::connection('calidadpcs')->create('TBL_Calidadpcs_proceso_requerimientos', function (Blueprint $table) {
             $table->increments('PK_CPR_Id_Requerimientos');
             $table->String('CPR_Nombre_Requerimiento')->nullable();
+            $table->integer('CPR_Estado')->default(0);
             $table->integer('FK_CPR_Id_Proyecto')->unsigned();
             $table->foreign('FK_CPR_Id_Proyecto')->references('PK_CP_Id_Proyecto')->on('TBL_Calidadpcs_proyectos')->onDelete("cascade");
-            $table->integer('FK_CPR_Id_Proceso')->unsigned();
-            $table->foreign('FK_CPR_Id_Proceso')->references('PK_CP_Id_Proceso')->on('TBL_Calidadpcs_procesos')->onDelete("cascade");
             
             $table->timestamps();
         });

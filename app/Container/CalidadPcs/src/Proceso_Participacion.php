@@ -15,6 +15,8 @@ class Proceso_Participacion extends Model
     protected $fillable = [
         'CPI_Necesidades',
         'CPI_Expectativas',
+        'CPI_Participacion',
+        'CPI_Observaciones',
         'FK_CPC_Id_Proyecto',
     ];
 

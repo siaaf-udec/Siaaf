@@ -46,7 +46,48 @@
 
                                     {!! Field::text(
                                         'date_time',
-                                        ['class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
+                                        ['label' => 'Fecha y hora:', 'class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
+                                        ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar']) !!}
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Modal -->
+            <div aria-hidden="true" class="modal fade" id="modal_edit" role="dialog" tabindex="-1">
+                <div class="">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        {!! Form::open(['id' => 'form_edit', 'class' => '', 'url' => '/forms']) !!}
+                        <div class="modal-header modal-header-success">
+                            <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
+                            <h3>Editar Reunion</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    
+                                    {!! Field:: hidden ('idReunion')!!}
+                                    
+                                    {!! Field::select('Interesado:',['Equipo scrum'=>'Equipo scrum', 'Product owner'=>'Product owner', 'Stakeholder'=>'Stakeholder' ],null,['name' => 'Interesado_edit']) !!}
+                                    
+                                    {!! Field:: text('Lugar_edit',null,['label'=>'Lugar:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                        ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-map-marker'] ) !!}
+
+                                    {!! Field::text(
+                                        'date_time_edit',
+                                        ['label' => 'Fecha y hora:','class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
                                         ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar']) !!}
 
                                 </div>
@@ -65,6 +106,9 @@
     <div class="form-actions">
                 <div class="row">
                     <div class="col-md-12 col-md-offset-4">
+                    <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
+                        Cancelar
+                    </a>
                         <a href="javascript:;" class="btn btn-success guardarProceso">
                             Continuar <i class="fa fa-angle-right"></i>
                         </a>
@@ -102,7 +146,7 @@
                 name: 'CPGC_Fecha'
             },
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-success verEtapas"  title="Ver los procesos de este Proyecto" ><i class="fa fa-list-ul"></i></a>',
+                defaultContent: '<a href="javascript:;" class="btn btn-sm btn-success editar"  title="Editar esta reunion" ><i class="fa fa-pencil-square-o"></i></a> <a href="javascript:;" class="btn btn-sm btn-danger eliminar"  title="Eliminar esta reunion" ><i class="fa fa-trash-o"></i></a>',
                 data: 'action',
                 name: 'Etapas',
                 title: 'Etapas',
@@ -194,6 +238,116 @@
         };
         FormValidationMd.init(form_create_modal,rules_create_modal,false,createModal());
 
+        table.on('click', '.editar', function(e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            $('input:hidden[name="idReunion"]').val(dataTable.PK_CPGC_Id_Comunicacion);
+            $('select[name="Interesado_edit"]').val(dataTable.CPGC_Interesado);
+            $('select[name="Interesado_edit"]').trigger('change');
+            $("#Lugar_edit").val(dataTable.CPGC_Lugar);
+            $("#date_time_edit").val(dataTable.CPGC_Fecha);
+
+            $('#modal_edit').modal('toggle');
+        });
+
+        var EditModal = function () {
+            return{
+                init: function () {
+                    var route = "{{ route('calidadpcs.procesosCalidad.updateProceso7') }}";
+                    var type = 'POST';
+                    var async = async || false;
+                    var formData = new FormData();
+
+                    formData.append('idReunion',  $('input:hidden[name="idReunion"]').val());
+                    formData.append('interesado', $('select[name="Interesado_edit"]').val());
+                    formData.append('lugar', $('input:text[name="Lugar_edit"]').val());
+                    formData.append('fecha', $('input:text[name="date_time_edit"]').val());
+
+                    $.ajax({
+                        url: route,
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
+
+                        },
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
+                                // table.ajax.reload();
+                                table.ajax.reload();
+                                $('#modal_edit').modal('hide');
+                                $('#form_edit')[0].reset(); //Limpia formulario
+                                UIToastr.init(xhr , response.title , response.message  );
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 &&  xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+                }
+            }
+        };
+
+        var form_edit_modal = $('#form_edit');
+        var rules_edit_modal = {
+            // MC1_valor_ganado: { minlength: 1, required: true },
+            // MC1_costo_real: { minlength: 1, required: true },
+        };
+        FormValidationMd.init(form_edit_modal,rules_edit_modal,false,EditModal());
+
+        table.on('click', '.eliminar', function(e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            var route = "{{route('calidadpcs.procesosCalidad.deleteProceso7')}}"+"/"+ dataTable.PK_CPGC_Id_Comunicacion;
+            var type = 'DELETE';
+            var async = async || false;
+            swal({
+                    title: "¿Está seguro?",
+                    text: "¿Está seguro de eliminar esta reunion?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "De acuerdo",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: route,
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            cache: false,
+                            type: type,
+                            contentType: false,
+                            processData: false,
+                            async: async,
+                            success: function (response, xhr, request) {
+                                if (request.status === 200 && xhr === 'success') {
+                                    table.ajax.reload();
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            },
+                            error: function (response, xhr, request) {
+                                if (request.status === 422 && xhr === 'error') {
+                                    UIToastr.init(xhr, response.title, response.message);
+                                }
+                            }
+                        });
+                    } else {
+                        swal("Cancelado", "No se eliminó ninguna reunion", "error");
+                    }
+                });
+        });
+
         $(".guardarProceso").on('click', function(e) {
             e.preventDefault();
                 var route = '{{ route('calidadpcs.procesosCalidad.storeProceso7_1') }}';
@@ -232,27 +386,12 @@
                     });
             
         });
-        // $(".create").on('click', function(e) {
-        //     e.preventDefault();
-        //     var route = '{{ route('calidadpcs.proyectosCalidad.RegistrarProyecto') }}' + '/' +{{Auth::user()->id}};
-        //     $(".content-ajax").load(route);
-        // });
 
-        // table.on('click', '.verEtapas', function(e) {
-        //     e.preventDefault();
-        //     $tr = $(this).closest('tr');
-        //     var dataTable = table.row($tr).data(),
-        //         route_edit = '{{ route('calidadpcs.procesosCalidad.etapas')}}'+'/'+dataTable.PK_CP_Id_Proyecto;
-        //     $(".content-ajax").load(route_edit);
-        // });
-
-        // table.on('click', '.edit', function(e) {
-        //     e.preventDefault();
-        //     $tr = $(this).closest('tr');
-        //     var dataTable = table.row($tr).data(),
-        //         route_edit = '{{ route('calidadpcs.proyectosCalidad.edit')}}'+'/'+ dataTable.PK_CP_Id_Proyecto;
-        //     $(".content-ajax").load(route_edit);
-        // });
+        $('.button-cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('calidadpcs.proyectosCalidad.index.ajax') }}';
+            location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
+        });
 
     });
 </script> 

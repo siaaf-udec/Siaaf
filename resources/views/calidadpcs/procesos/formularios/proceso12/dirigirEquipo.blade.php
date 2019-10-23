@@ -59,6 +59,9 @@
     <div class="form-actions">
                 <div class="row">
                     <div class="col-md-12 col-md-offset-4">
+                    <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
+                            Cancelar
+                        </a>
                         <a href="javascript:;" class="btn btn-success guardarProceso">
                             Continuar <i class="fa fa-angle-right"></i>
                         </a>
@@ -202,8 +205,14 @@
                             }
                         }
                     });
-            
         });
+
+        $('.button-cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('calidadpcs.proyectosCalidad.index.ajax') }}';
+            location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
+        });
+
     });
     
 </script> 

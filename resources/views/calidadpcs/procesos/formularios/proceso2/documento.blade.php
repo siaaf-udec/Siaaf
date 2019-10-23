@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Desarrollar plan para la dirección del proyecto'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Etapa de planificacion:'])
         @slot('actions', [
             'link_cancel' => [
                 'link' => '',
@@ -8,6 +8,8 @@
         ])
         <div class="row">
         <div class="col-md-12 col-md-offset-0">
+        <h4 style="margin-top: 0px;">Proceso: Desarrollar plan para la dirección del proyecto.</h4>
+            <br>
                 <div class="panel-group accordion" id="date-range">
                     <!--Primer acordeon-->
                     <div class="panel panel-default">
@@ -86,8 +88,11 @@
 
                                     {!! Field::textArea('Alcance',['label' => 'Alcance:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '2'],
                                         ['help' => 'Escribe el alcance del proyecto.', 'icon' => 'fa fa-quote-right']) !!}
-                                </div><br><br><br>
+                                </div>
+                        </div><br>
+                        <div class="row">
                             <h3>Requerimientos</h3>
+                            <br>
                             <div class="col-md-12">
                                 @component('themes.bootstrap.elements.tables.datatables',['id' => 'tablaRequerimientos'])
                                     @slot('columns', [
@@ -315,7 +320,6 @@
             e.preventDefault();
             var route = '{{ route('calidadpcs.proyectosCalidad.index.ajax') }}';
             location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
-            //$(".content-ajax").load(route);
         });
 
         $("#link_cancel").on('click', function (e) {

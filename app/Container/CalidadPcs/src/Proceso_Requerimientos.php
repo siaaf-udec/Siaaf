@@ -14,6 +14,7 @@ class Proceso_Requerimientos extends Model
 
     protected $fillable = [
         'CPR_Nombre_Requerimiento',
+        'CPR_Estado',
         'FK_CPR_Id_Proyecto',
         'FK_CPR_Id_Proceso',
     ];
