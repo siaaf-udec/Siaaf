@@ -89,8 +89,12 @@
                         {!! Field:: text('Nombre_Proyecto',$infoProyecto[0]['CP_Nombre_Proyecto'],['label'=>'Nombre de proyecto:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                         ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
 
-                        {!! Field:: text('Duracion',null,['label'=>'Duracion en meses:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                        ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
+                    {{--     {!! Field:: text('Duracion',null,['label'=>'Duracion en meses:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                        ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!} --}}
+
+                        {!! Field::select('Duracion en meses:',['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5', '6'=>'6', '7'=>'7', '8'=>'8', '9'=>'9', '10'=>'10', '11'=>'11', '12'=>'12' ],null,
+                            ['name' => 'Duracion']) !!}
+
                       
                     </div>
                     <div class="col-md-6">
@@ -249,6 +253,7 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 
+
 <script type="text/javascript">
     jQuery(document).ready(function() {
 
@@ -296,7 +301,8 @@
                     formData.append('Fecha_Inicio', $('#Fecha_Inicio').val());
                     // formData.append('Tipo_Proyecto', $('input:text[name="Tipo_Proyecto"]').val());
                     // formData.append('Nombre_Proyecto', $('input:text[name="Nombre_Proyecto"]').val());
-                    formData.append('Duracion', $('input:text[name="Duracion"]').val());
+                    formData.append('Duracion', $('select[name="Duracion"]').val());
+                    // formData.append('Duracion', $('input:text[name="Duracion"]').val());
                     formData.append('Entidades', $('input:text[name="Entidades"]').val());
                     // Objetivo general
                     formData.append('Objetivo_General', $('input:text[name="Objetivo_General"]').val());
@@ -395,6 +401,11 @@
             },
         };
         FormValidationMd.init(form, formRules, formMessage, editarProyecto());
+
+        $(".pmd-select2").select2({
+                width: '100%',
+                placeholder: "Selecccionar",
+        });
 
         $('.button-cancel').on('click', function(e) {
             e.preventDefault();

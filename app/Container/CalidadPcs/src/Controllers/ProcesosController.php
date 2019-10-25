@@ -1129,6 +1129,34 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
+    /**
+     * Se realiza la actualización de los datos de un proyecto.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Container\Overall\Src\Facades\AjaxResponse
+     */
+    public function updateProceso3(Request $request)
+    {
+        if ($request->ajax() && $request->isMethod('POST')) {
+
+            $sprint = ProcesoCronograma::find($request['idSprint']);
+            $sprint->fill([
+                'CPC_Nombre_Sprint' => $request['CPC_Nombre_Sprint'],
+                'CPC_Requerimiento' => $request['CPC_Requerimiento'],
+                'CPC_Recurso' => $request['CPC_Recurso'],
+            ]);
+            $sprint->save();
+         
+            return AjaxResponse::success(
+                '¡Bien hecho!',
+                'Datos modificados correctamente.'
+            );
+        }
+        return AjaxResponse::fail(
+            '¡Lo sentimos!',
+            'No se pudo completar tu solicitud.'
+        );
+    }
 
     /**
      * Función que almacena en la base de datos un nuevo procesp.

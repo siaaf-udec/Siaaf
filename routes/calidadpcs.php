@@ -104,6 +104,12 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'calidadpcs.proyectosCalidad.edit'
         ]);
 
+         //ruta que conduce al controlador para ver el perfil de un proyecto.
+         Route::get('update', [
+            'uses' => $controller . 'ProyectosController@update',
+            'as' => 'calidadpcs.proyectosCalidad.update'
+        ]);
+
         //ruta que conduce al controlador para actulizar datos del proyecto
         Route::delete('delete/{id?}', [
             'uses' => $controller . 'ProyectosController@delete',
@@ -258,11 +264,14 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@storeProceso3',
             'as' => 'calidadpcs.procesosCalidad.storeProceso3'
         ]);
-
         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
         Route::post('storeProceso3_1', [
             'uses' => $controller . 'ProcesosController@storeProceso3_1',
             'as' => 'calidadpcs.procesosCalidad.storeProceso3_1'
+        ]);
+        Route::post('updateProceso3', [
+            'uses' => $controller . 'ProcesosController@updateProceso3',
+            'as' => 'calidadpcs.procesosCalidad.updateProceso3'
         ]);
 
         //

@@ -48,6 +48,7 @@
                 name: 'CP_Fecha_Inicio'
             },
             {
+                defaultContent:'<span class="label label-sm label-warning">Fecha pendiente</span>' ,
                 data: 'CP_Fecha_Final',
                 name: 'CP_Fecha_Final'
             },
@@ -93,7 +94,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('calidadpcs.procesosCalidad.etapas')}}'+'/'+dataTable.PK_CP_Id_Proyecto;
+                route_edit = "{{ route('calidadpcs.procesosCalidad.etapas')}}"+'/'+dataTable.PK_CP_Id_Proyecto;
             $(".content-ajax").load(route_edit);
         });
 
@@ -101,7 +102,7 @@
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data(),
-                route_edit = '{{ route('calidadpcs.proyectosCalidad.edit')}}'+'/'+ dataTable.PK_CP_Id_Proyecto;
+                route_edit = "{{ route('calidadpcs.proyectosCalidad.edit')}}"+'/'+ dataTable.PK_CP_Id_Proyecto;
             $(".content-ajax").load(route_edit);
         });
 

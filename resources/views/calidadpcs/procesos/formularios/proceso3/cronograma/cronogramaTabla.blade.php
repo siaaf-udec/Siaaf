@@ -146,7 +146,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            {{-- {!! Form::submit('Guardar', ['class' => 'btn blue']) !!} --}}
+                            {!! Form::submit('Actualizar', ['class' => 'btn blue']) !!}
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                         {!! Form::close() !!}
@@ -190,7 +190,6 @@
                     formData.append('FK_CPP_Id_Proyecto', $('input:hidden[name="FK_CPP_Id_Proyecto"]').val());
                     formData.append('CPC_Nombre_Sprint', $('input:text[name="CPC_Nombre_Sprint"]').val());
                     formData.append('CPC_Requerimiento', $('#lista_requerimientos').val());
-                    console.log($('#lista_requerimientos').val());
                     formData.append('CPC_Recurso', $('#lista_integrantes').val());
                     formData.append('CPC_Duracion', $('input:text[name="numero_semanas"]').val());
 
@@ -311,9 +310,12 @@
         ];
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
-
-        
       
+        $(".create").on('click', function(e) {
+            e.preventDefault();
+            $('#modal-create-permission').modal('toggle');
+        });
+
         $(".fin_proceso").on('click', function(e) {
             e.preventDefault();
             if(aux == 0){
@@ -354,15 +356,6 @@
             }else{
                 UIToastr.init('warning', "Acción no permitida", "Para poder pasar este proceso, no debe tener semanas disponibles");
             }
-            // $('#modal-create-permission').modal('toggle');
-            // actualizarSemanas();
-            // $tr = $(this).closest('tr');
-        });
-
-        $('.button-cancel').on('click', function (e) {
-            e.preventDefault();
-            var route = '{{ route('calidadpcs.proyectosCalidad.index.ajax') }}';
-            location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
         });
 
         table.on('click', '.edit', function(e) {
@@ -372,26 +365,73 @@
             $('input:hidden[name="idSprint"]').val(dataTable.PK_CPC_Id_Sprint);
             $("#Nombre_Sprint_Editar").val(dataTable.CPC_Nombre_Sprint);
             $("#Numero_Semanas_Editar").val(dataTable.CPC_Duracion);
-            /**
-             * revisar se recibe 11,12,13 y el selectpicker recibe "11","12","13"
-             */
-            // $('#lista_requerimientos_editar').selectpicker(dataTable.CPC_Requerimiento); 
-            // $('#lista_requerimientos_editar').selectpicker('val', ["11","12","13"]);;
-            $('#modal_edit').modal('toggle');
+            var requerimientos = dataTable.CPC_Requerimiento.split(",");
+             $('#lista_requerimientos_editar').selectpicker('val', requerimientos);
+             var integrantes = dataTable.CPC_Recurso.split(",");
+             $('#lista_integrantes_editar').selectpicker('val', integrantes);
+             $('#modal_edit').modal('toggle');
         });
 
-        $(".create").on('click', function(e) {
-            e.preventDefault();
-            $('#modal-create-permission').modal('toggle');
-            // actualizarSemanas();
-            // $tr = $(this).closest('tr');
-        });
+        var EditModal = function () {
+            return{
+                init: function () {
+                    var route = "{{ route('calidadpcs.procesosCalidad.updateProceso3') }}";
+                    var type = 'POST';
+                    var async = async || false;
+                    var formData = new FormData();
+                                        
+                    formData.append('idSprint', $('input:hidden[name="idSprint"]').val());
+                    formData.append('CPC_Nombre_Sprint', $('input:text[name="Nombre_Sprint_Editar"]').val());
+                    formData.append('CPC_Requerimiento', $('#lista_requerimientos_editar').val());
+                    formData.append('CPC_Recurso', $('#lista_integrantes_editar').val());
+
+                    $.ajax({
+                        url: route,
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        cache: false,
+                        type: type,
+                        contentType: false,
+                        data: formData,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
+
+                        },
+                        success: function (response, xhr, request) {
+                            if (request.status === 200 && xhr === 'success') {
+                                table.ajax.reload();
+                                $('#modal_edit').modal('hide');
+                                $('#from_edit')[0].reset(); //Limpia formulario
+                                UIToastr.init(xhr , response.title , response.message  );
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            if (request.status === 422 &&  xhr === 'success') {
+                                UIToastr.init(xhr, response.title, response.message);
+                            }
+                        }
+                    });
+                }
+            }
+        };
+        var form_edit_modal = $('#from_edit');
+        var rules_edit_modal = {
+            // MC1_valor_ganado: { minlength: 1, required: true },
+            // MC1_costo_real: { minlength: 1, required: true },
+        };
+        FormValidationMd.init(form_edit_modal,rules_edit_modal,false,EditModal());
 
         jQuery.validator.addMethod("letters", function(value, element) {
             return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
         });
         jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
             return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
+        });
+
+        $('.button-cancel').on('click', function (e) {
+            e.preventDefault();
+            var route = '{{ route('calidadpcs.proyectosCalidad.index.ajax') }}';
+            location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
         });
        
     });
