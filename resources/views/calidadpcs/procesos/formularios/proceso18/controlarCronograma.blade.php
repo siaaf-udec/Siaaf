@@ -8,7 +8,8 @@
             @component('themes.bootstrap.elements.tables.datatables', ['id' => 'listaProyectos'])
             @slot('columns', [
             '#',
-            'Actividad',
+            'Sprint',
+            'Requerimientos',
             'Semanas',
             'Estado',
             ''
@@ -45,6 +46,10 @@
             {
                 data: 'CPC_Nombre_Sprint',
                 name: 'CPC_Nombre_Sprint'
+            },
+            {
+                data: 'Requerimientos',
+                name: 'Requerimientos'
             },
             {
                 data: 'CPC_Duracion',

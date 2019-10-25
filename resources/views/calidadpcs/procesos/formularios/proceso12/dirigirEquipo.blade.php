@@ -13,7 +13,7 @@
             @slot('columns', [
             '#',
             'Equipo',
-            'Tiempo trabajo',
+            'Horas diarias trabajadas',
             ''
             ])
             @endcomponent
@@ -40,8 +40,9 @@
                                     {!! Field:: text('Nombre',null,['label'=>'Nombre:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off', 'readonly'],
                                     ['help' => 'Funcion que cumple.', 'icon' => 'fa fa-user'] ) !!}
 
-                                    {!! Field:: text('horasTrabajo',null,['label'=>'Tiempo de trabajo:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Escribe el numero de horas trabajadas por dia', 'icon' => 'fa fa-list-ol'] ) !!}
+                                    {!! Field::select('Tiempo de trabajo diario:',['1' => '1 hora', '2' => '2 horas', '3' => '3 horas', '4' => '4 horas', '5' => '5 horas', '6' => '6 horas'
+                                        , '7' => '7 horas', '8' => '8 horas', '9' => '9 horas', '10' => '10 horas', '11' => '11 horas', '12' => '12 horas'],null,
+                                    ['name'=> 'horasTrabajo']) !!}
 
                                 </div>
                             </div>
@@ -73,6 +74,8 @@
 
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+
 <script type="text/javascript">
     jQuery(document).ready(function() {
 
@@ -118,6 +121,11 @@
             $("#horasTrabajo").val(dataTable.CE_Horas_Trabajadas);
             $('#modal_create').modal('toggle');
         });
+        
+        $(".pmd-select2").select2({
+            width: '100%',
+            placeholder: "Selecccionar",
+        });
 
         var createModal = function () {
             return{
@@ -128,7 +136,7 @@
                     
                     var formData = new FormData();
                     formData.append('idEquipoScrum', $('input:hidden[name="idIntegrante"]').val());
-                    formData.append('tiempoTrabajo', $('input:text[name="horasTrabajo"]').val());
+                    formData.append('tiempoTrabajo', $('select[name="horasTrabajo"]').val() );
                     formData.append('FK_CPC_Id_Proyecto', {{$idProyecto}});
 
                     $.ajax({

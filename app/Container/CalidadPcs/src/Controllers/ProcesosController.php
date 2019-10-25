@@ -2610,6 +2610,17 @@ class ProcesosController extends Controller
                         return "<span class='label label-sm label-success'>Se cumplio</span>";
                     }
                 })
+                ->addColumn('Requerimientos', function ($cronograma) {
+                    $Nnombres = [];
+                    $item = $cronograma->CPC_Requerimiento;
+                    $nombres = explode(',', $item);
+                    $perfil = Proceso_Requerimientos::whereIn('PK_CPR_Id_Requerimientos', $nombres)->get();
+                    foreach ($perfil as $value) {
+                        array_push($Nnombres, $value['CPR_Nombre_Requerimiento']);
+                    }
+                    $valores = implode(", ", $Nnombres);
+                    return $valores;
+                })
                 ->rawColumns(['Estado'])
                 ->make(true);
         }

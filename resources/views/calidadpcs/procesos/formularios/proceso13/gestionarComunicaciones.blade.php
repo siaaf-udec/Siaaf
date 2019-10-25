@@ -17,12 +17,12 @@
                             {!! Field:: hidden ('Id_Proceso', $idProceso) !!}
 
                             {!! Field::select('Medio',
-                            ['Oral' => 'Oral', 'Escrita' => 'Escrita'],
+                            ['Oral' => 'Oral', 'Escrita' => 'Escrita', 'Virtual' => 'Virtual'],
                             null,
                             [ 'label' => 'Medio:', 'name'=> 'TipoMedio']) !!}
                             <div id="campo_adicional">
 
-                                {!! Field:: text('Redaccion',['label'=>'Tipo de redaccion:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('Redaccion',['label'=>'Especificaciones:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                 ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
                             </div>
                         </div>
@@ -56,7 +56,7 @@
 
         $('#campo_adicional').hide();
         $('select[name="TipoMedio"]').change(function() {
-            if ($('select[name="TipoMedio"]').val() == 'Escrita') {
+            if ($('select[name="TipoMedio"]').val() == 'Escrita' || $('select[name="TipoMedio"]').val() == 'Virtual') {
                 $('#campo_adicional').show();
             } else {
                 $('#campo_adicional').hide();
