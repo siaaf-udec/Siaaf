@@ -765,5 +765,27 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'calidadpcs.reportesCalidad.descargaReporteEtapaUno'
         ]);
 
+        //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+        Route::get('reporteEtapaPlanificacion/{idProyecto?}', [
+            'uses' => $controller . 'ReportesController@reporteEtapaPlanificacion',  
+            'as' => 'calidadpcs.reportesCalidad.reporteEtapaPlanificacion'
+        ]);
+        //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+        Route::get('descargaReporteEtapaPlanificacion/{idProyecto?}', [
+            'uses' => $controller . 'ReportesController@descargaReporteEtapaPlanificacion',  
+            'as' => 'calidadpcs.reportesCalidad.descargaReporteEtapaPlanificacion'
+        ]);
+
+          //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+          Route::get('reporteEtapaEjecucion/{idProyecto?}', [
+            'uses' => $controller . 'ReportesController@reporteEtapaEjecucion',  
+            'as' => 'calidadpcs.reportesCalidad.reporteEtapaEjecucion'
+        ]);
+        //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+        Route::get('descargaReporteEtapaEjecucion/{idProyecto?}', [
+            'uses' => $controller . 'ReportesController@descargaReporteEtapaEjecucion',  
+            'as' => 'calidadpcs.reportesCalidad.descargaReporteEtapaEjecucion'
+        ]);
+
     });
 });

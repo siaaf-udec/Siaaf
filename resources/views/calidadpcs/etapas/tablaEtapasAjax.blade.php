@@ -134,11 +134,11 @@
                 });
             }else if(dataTable.PK_CE_Id_Etapa == 2){
                 $.ajax({}).done(function () {
-                    window.open('{{ route('calidadpcs.reportesCalidad.reporteEtapaUno') }}' + '/' + {{$idProyecto}}, '_blank');
+                    window.open('{{ route('calidadpcs.reportesCalidad.reporteEtapaPlanificacion') }}' + '/' + {{$idProyecto}}, '_blank');
                 });
             }else if(dataTable.PK_CE_Id_Etapa == 3){
                 $.ajax({}).done(function () {
-                    window.open('{{ route('calidadpcs.reportesCalidad.reporteEtapaUno') }}' + '/' + {{$idProyecto}}, '_blank');
+                    window.open('{{ route('calidadpcs.reportesCalidad.reporteEtapaEjecucion') }}' + '/' + {{$idProyecto}}, '_blank');
                 });
             }else if(dataTable.PK_CE_Id_Etapa == 4){
                 $.ajax({}).done(function () {

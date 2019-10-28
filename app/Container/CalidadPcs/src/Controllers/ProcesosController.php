@@ -65,7 +65,7 @@ class ProcesosController extends Controller
                         }
                     }
                 }
-            } 
+            }
         }
         if ($aux <= 1) {
             $etapa1 = ($aux * 100) / 1;
@@ -74,25 +74,25 @@ class ProcesosController extends Controller
             $aux = $aux - 1;
             if ($aux < 8) {
                 $etapa2 = ($aux * 100) / 8;
-                $etapa2 = bcdiv($etapa2,'1',1);
+                $etapa2 = bcdiv($etapa2, '1', 1);
             } else {
                 $etapa2 = 100;
                 $aux = $aux - 8;
                 if ($aux < 6) {
                     $etapa3 = ($aux * 100) / 6;
-                    $etapa3 = bcdiv($etapa3,'1',1);
+                    $etapa3 = bcdiv($etapa3, '1', 1);
                 } else {
                     $etapa3 = 100;
                     $aux = $aux - 6;
                     if ($aux < 9) {
                         $etapa4 = ($aux * 100) / 9;
-                        $etapa4 = bcdiv($etapa4,'1',1);
+                        $etapa4 = bcdiv($etapa4, '1', 1);
                     } else {
                         $etapa4 = 100;
                         $aux = $aux - 9;
                         if ($aux <= 2) {
-                            if($aux == 2){
-                                $aux =1;
+                            if ($aux == 2) {
+                                $aux = 1;
                             }
                             $etapa5 = ($aux * 100) / 1;
                         }
@@ -334,7 +334,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                    ]);
+                    ]
+                );
             } elseif ($id == 8) {
                 return view(
                     'calidadpcs.procesos.formularios.proceso8.gestionRiesgos',
@@ -342,7 +343,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                    ]);
+                    ]
+                );
             } elseif ($id == 9) {
                 return view(
                     'calidadpcs.procesos.formularios.proceso9.gestionAdquisiciones',
@@ -350,7 +352,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                    ]);
+                    ]
+                );
             } elseif ($id == 10) {
                 $alcance = Proceso_Direccion::where('FK_CPC_Id_Proyecto', $idProyecto)->first();
                 return view(
@@ -360,7 +363,8 @@ class ProcesosController extends Controller
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
                         'alcance' => $alcance,
-                    ]);
+                    ]
+                );
             } elseif ($id == 11) {
                 return view(
                     'calidadpcs.procesos.formularios.proceso11.aseguramientoCalidad',
@@ -368,7 +372,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                    ]);
+                    ]
+                );
             } elseif ($id == 12) {
                 return view(
                     'calidadpcs.procesos.formularios.proceso12.dirigirEquipo',
@@ -376,7 +381,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                    ]);
+                    ]
+                );
             } elseif ($id == 13) {
                 return view(
                     'calidadpcs.procesos.formularios.proceso13.gestionarComunicaciones',
@@ -384,7 +390,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                    ]);
+                    ]
+                );
             } elseif ($id == 14) {
                 return view(
                     'calidadpcs.procesos.formularios.proceso14.EfectuarAdquisiciones',
@@ -392,7 +399,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                    ]);
+                    ]
+                );
             } elseif ($id == 15) {
                 return view(
                     'calidadpcs.procesos.formularios.proceso15.gestionarParticipacion',
@@ -400,7 +408,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                    ]);
+                    ]
+                );
             } elseif ($id == 16) {
                 return view(
                     'calidadpcs.procesos.formularios.proceso16.controlarTrabajo',
@@ -408,7 +417,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                    ]);
+                    ]
+                );
             } elseif ($id == 17) {
                 return view(
                     'calidadpcs.procesos.formularios.proceso17.controlarAlcance',
@@ -416,7 +426,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                    ]);
+                    ]
+                );
             } elseif ($id == 18) {
                 return view(
                     'calidadpcs.procesos.formularios.proceso18.controlarCronograma',
@@ -424,7 +435,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                    ]);
+                    ]
+                );
             } elseif ($id == 19) {
                 return view(
                     'calidadpcs.procesos.formularios.proceso19.controlarCostos',
@@ -432,7 +444,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                    ]);
+                    ]
+                );
             } elseif ($id == 20) {
                 $calidad = Proceso_Aseguramiento::where('FK_CPC_Id_Proyecto', $idProyecto)->first();
                 return view(
@@ -442,7 +455,8 @@ class ProcesosController extends Controller
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
                         'calidad' => $calidad
-                    ]);
+                    ]
+                );
             } elseif ($id == 21) {
                 return view(
                     'calidadpcs.procesos.formularios.proceso21.controlarComunicaciones',
@@ -450,7 +464,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                    ]);
+                    ]
+                );
             } elseif ($id == 22) {
                 return view(
                     'calidadpcs.procesos.formularios.proceso22.controlarRiesgos',
@@ -458,7 +473,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                    ]);
+                    ]
+                );
             } elseif ($id == 23) {
                 return view(
                     'calidadpcs.procesos.formularios.proceso23.controlarAdquisiciones',
@@ -466,7 +482,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                    ]);
+                    ]
+                );
             } elseif ($id == 24) {
                 $interesados = Proceso_Participacion::where('FK_CPC_Id_Proyecto', $idProyecto)->first();
                 return view(
@@ -476,7 +493,8 @@ class ProcesosController extends Controller
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
                         'interesados' => $interesados
-                    ]);
+                    ]
+                );
             } elseif ($id == 25) {
                 return view(
                     'calidadpcs.procesos.formularios.proceso25.cerrarProyecto',
@@ -484,7 +502,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                    ]);
+                    ]
+                );
             }
         } else {
             return AjaxResponse::fail(
@@ -512,20 +531,19 @@ class ProcesosController extends Controller
 
             $equipoScrum = EquipoScrum::where('FK_CE_Id_Proyecto', $idProyecto)->get();
             $infoProyecto = Proyectos::where('PK_CP_Id_Proyecto', $idProyecto)->get();
-            
+
             if ($id == 1) {
-                    return view(
-                        'calidadpcs.procesos.formularios.proceso1.actaInicioEditar',
-                        [
-                            'idProceso' => $id,
-                            'equipoScrum' => $equipoScrum,
-                            'infoProyecto' => $infoProyecto,
-                            'idProyecto' => $idProyecto
-                        ]
-                    );
-                
+                return view(
+                    'calidadpcs.procesos.formularios.proceso1.actaInicioEditar',
+                    [
+                        'idProceso' => $id,
+                        'equipoScrum' => $equipoScrum,
+                        'infoProyecto' => $infoProyecto,
+                        'idProyecto' => $idProyecto
+                    ]
+                );
             } elseif ($id == 2) {
-                $infoProceso = Proceso_Direccion::where('FK_CPC_Id_Proyecto',$idProyecto)->first();
+                $infoProceso = Proceso_Direccion::where('FK_CPC_Id_Proyecto', $idProyecto)->first();
                 return view(
                     'calidadpcs.procesos.formularios.proceso2.EditarDocumento',
                     [
@@ -536,16 +554,29 @@ class ProcesosController extends Controller
                     ]
                 );
             } elseif ($id == 3) {
-                return view('calidadpcs.procesos.formularios.cronogramaTabla');
+                $requerimientos = Proceso_Requerimientos::where('FK_CPR_Id_Proyecto', $idProyecto)->get()->pluck('CPR_Nombre_Requerimiento', 'PK_CPR_Id_Requerimientos')->toArray();
+                $integrantesScrum = EquipoScrum::where('FK_CE_Id_Proyecto', $idProyecto)->where('FK_CE_Id_Rol', 5)->get()->pluck('CE_Nombre_Persona', 'PK_CE_Id_Equipo_Scrum')->toArray();
+                return view(
+                    'calidadpcs.procesos.formularios.proceso3.cronograma.editarCronograma',
+                    [
+                        'idProceso' => $id,
+                        'idProyecto' => $idProyecto,
+                        'infoProyecto' => $infoProyecto,
+                        'requerimientos' => $requerimientos,
+                        'integrantes' => $integrantesScrum,
+                    ]
+                );
             } elseif ($id == 4) {
-                return view('calidadpcs.procesos.formularios.proceso4.EditarCostos',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso4.EditarCostos',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
                     ]
                 );
             } elseif ($id == 5) {
-                return view('calidadpcs.procesos.formularios.proceso5.editarGestionCalidad',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso5.editarGestionCalidad',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
@@ -554,7 +585,8 @@ class ProcesosController extends Controller
                 );
             } elseif ($id == 6) {
                 $integrantesScrum = EquipoScrum::where('FK_CE_Id_Proyecto', $idProyecto)->with('relacionDependenciaUsuario')->get()->pluck('CE_Nombre_Persona', 'PK_CE_Id_Equipo_Scrum')->toArray();
-                return view('calidadpcs.procesos.formularios.proceso6.editarGestionRecursosHumanos',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso6.editarGestionRecursosHumanos',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
@@ -563,15 +595,17 @@ class ProcesosController extends Controller
                     ]
                 );
             } elseif ($id == 7) {
-                return view('calidadpcs.procesos.formularios.proceso7.editarGestionComunicaciones',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso7.editarGestionComunicaciones',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                     ]
                 );
-            }  elseif ($id == 8) {
-                return view('calidadpcs.procesos.formularios.proceso8.editarGestionRiesgos',
+            } elseif ($id == 8) {
+                return view(
+                    'calidadpcs.procesos.formularios.proceso8.editarGestionRiesgos',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
@@ -579,34 +613,37 @@ class ProcesosController extends Controller
                     ]
                 );
             } elseif ($id == 9) {
-                return view('calidadpcs.procesos.formularios.proceso9.editarGestionAdquisiciones',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso9.editarGestionAdquisiciones',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                     ]
                 );
-            }  elseif ($id == 10) {
+            } elseif ($id == 10) {
                 $alcance = Proceso_Direccion::where('FK_CPC_Id_Proyecto', $idProyecto)->first();
-                return view('calidadpcs.procesos.formularios.proceso10.editarPlanDeDireccion',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso10.editarPlanDeDireccion',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'alcance' => $alcance,
-                       
+
                     ]
                 );
-            } 
-            elseif ($id == 11) {
+            } elseif ($id == 11) {
                 $practicas = Proceso_Aseguramiento::where('FK_CPC_Id_Proyecto', $idProyecto)->first();
-                return view('calidadpcs.procesos.formularios.proceso11.editarAseguramientoCalidad',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso11.editarAseguramientoCalidad',
                     [
                         'practicas' => $practicas,
                     ]
                 );
             } elseif ($id == 12) {
-                return view('calidadpcs.procesos.formularios.proceso12.editarDirigirEquipo',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso12.editarDirigirEquipo',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
@@ -615,7 +652,8 @@ class ProcesosController extends Controller
                 );
             } elseif ($id == 13) {
                 $comunicacion = Proceso_Gestionar_Comunicaciones::where('FK_CPC_Id_Proyecto', $idProyecto)->first();
-                return view('calidadpcs.procesos.formularios.proceso13.editarGestionComunicaciones',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso13.editarGestionComunicaciones',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
@@ -623,7 +661,8 @@ class ProcesosController extends Controller
                     ]
                 );
             } elseif ($id == 14) {
-                return view('calidadpcs.procesos.formularios.proceso14.editarEfectuarAdquisiciones',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso14.editarEfectuarAdquisiciones',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
@@ -631,7 +670,8 @@ class ProcesosController extends Controller
                 );
             } elseif ($id == 15) {
                 $participacion = Proceso_Participacion::where('FK_CPC_Id_Proyecto', $idProyecto)->first();
-                return view('calidadpcs.procesos.formularios.proceso15.editarGestionarParticipacion',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso15.editarGestionarParticipacion',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
@@ -639,28 +679,32 @@ class ProcesosController extends Controller
                     ]
                 );
             } elseif ($id == 16) {
-                return view('calidadpcs.procesos.formularios.proceso16.editarControlarTrabajo',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso16.editarControlarTrabajo',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
                     ]
                 );
             } elseif ($id == 17) {
-                return view('calidadpcs.procesos.formularios.proceso17.editarControlarAlcance',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso17.editarControlarAlcance',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
                     ]
                 );
             } elseif ($id == 18) {
-                return view('calidadpcs.procesos.formularios.proceso18.editarControlarCronograma',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso18.editarControlarCronograma',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
                     ]
                 );
             } elseif ($id == 19) {
-                return view('calidadpcs.procesos.formularios.proceso19.editarControlarCostos',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso19.editarControlarCostos',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
@@ -668,7 +712,8 @@ class ProcesosController extends Controller
                 );
             } elseif ($id == 20) {
                 $calidad = Proceso_Aseguramiento::where('FK_CPC_Id_Proyecto', $idProyecto)->first();
-                return view('calidadpcs.procesos.formularios.proceso20.editarControlarCalidad',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso20.editarControlarCalidad',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
@@ -676,21 +721,24 @@ class ProcesosController extends Controller
                     ]
                 );
             } elseif ($id == 21) {
-                return view('calidadpcs.procesos.formularios.proceso21.editarControlarComunicaciones',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso21.editarControlarComunicaciones',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
                     ]
                 );
             } elseif ($id == 22) {
-                return view('calidadpcs.procesos.formularios.proceso22.editarControlarRiesgos',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso22.editarControlarRiesgos',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
                     ]
                 );
             } elseif ($id == 23) {
-            return view('calidadpcs.procesos.formularios.proceso23.editarControlarAdquisiciones',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso23.editarControlarAdquisiciones',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
@@ -698,23 +746,24 @@ class ProcesosController extends Controller
                 );
             } elseif ($id == 24) {
                 $interesados = Proceso_Participacion::where('FK_CPC_Id_Proyecto', $idProyecto)->first();
-                return view('calidadpcs.procesos.formularios.proceso24.editarControlarInteresados',
-                        [
-                            'idProceso' => $id,
-                            'idProyecto' => $idProyecto,
-                            'interesados' => $interesados
+                return view(
+                    'calidadpcs.procesos.formularios.proceso24.editarControlarInteresados',
+                    [
+                        'idProceso' => $id,
+                        'idProyecto' => $idProyecto,
+                        'interesados' => $interesados
 
-                        ]
-                    );
+                    ]
+                );
             } elseif ($id == 25) {
-                return view('calidadpcs.procesos.formularios.proceso25.editarCerrarProyecto',
+                return view(
+                    'calidadpcs.procesos.formularios.proceso25.editarCerrarProyecto',
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
                     ]
                 );
-            } 
-
+            }
         } else {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
@@ -749,7 +798,7 @@ class ProcesosController extends Controller
             $proyecto->save();
 
             //Tabla Proyecto Proceso
-            if($request['Objetivo_General']){
+            if ($request['Objetivo_General']) {
                 Proceso_Objetivos::create([
                     'CO_Objetivo' => $request['Objetivo_General'],
                     'CO_Tipo_Objetivo' => 1,
@@ -757,17 +806,16 @@ class ProcesosController extends Controller
                 ]);
             }
 
-            for($i=1;$i<6;$i++){
-                if($request['Objetivo_Especifico_'.$i.''] == '' || $request['Objetivo_Especifico_'.$i.''] == 'undefined'){
-                }else{
+            for ($i = 1; $i < 6; $i++) {
+                if ($request['Objetivo_Especifico_' . $i . ''] == '' || $request['Objetivo_Especifico_' . $i . ''] == 'undefined') { } else {
                     Proceso_Objetivos::create([
-                        'CO_Objetivo' => $request['Objetivo_Especifico_'.$i.''],
+                        'CO_Objetivo' => $request['Objetivo_Especifico_' . $i . ''],
                         'CO_Tipo_Objetivo' => 2,
                         'FK_CPC_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
                     ]);
                 }
             }
-            
+
             // Tabla requerimientos
             for ($i = 1; $i < 16; $i++) {
                 if ($request['CPR_Nombre_Requerimiento_' . $i . ''] == '' || $request['CPR_Nombre_Requerimiento_' . $i . ''] == 'undefined') { } else {
@@ -780,7 +828,7 @@ class ProcesosController extends Controller
 
             //Tabla proyecto proceso
             Proceso_Proyecto::create([
-                'CPP_Info_Proceso' =>'El proceso Desarrollar acta de constitución del proyecto, se creo correctamente',
+                'CPP_Info_Proceso' => 'El proceso Desarrollar acta de constitución del proyecto, se creo correctamente',
                 'FK_CPP_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
                 'FK_CPP_Id_Proceso' => $request['FK_CPP_Id_Proceso']
             ]);
@@ -810,7 +858,7 @@ class ProcesosController extends Controller
                 'CP_Entidades' => $request['Entidades'],
             ]);
             $objetivo->save();
-         
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -822,7 +870,7 @@ class ProcesosController extends Controller
         );
     }
 
-     /**
+    /**
      * Función que almacena en la base de datos un nuevo procesp.
      *
      * @param  \Illuminate\Http\Request $request
@@ -847,7 +895,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
+
     /**
      * Se realiza la actualización de los datos de un proyecto.
      *
@@ -863,7 +911,7 @@ class ProcesosController extends Controller
                 'CO_Objetivo' => $request['Objetivo'],
             ]);
             $objetivo->save();
-         
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -916,7 +964,7 @@ class ProcesosController extends Controller
                 'FK_CPC_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
             ]);
             Proceso_Proyecto::create([
-                'CPP_Info_Proceso' =>'El proceso desarrollar plan para la dirección del proyecto, se creo correctamente',
+                'CPP_Info_Proceso' => 'El proceso desarrollar plan para la dirección del proyecto, se creo correctamente',
                 'FK_CPP_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
                 'FK_CPP_Id_Proceso' => $request['FK_CPP_Id_Proyecto']
             ]);
@@ -931,7 +979,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
- /**
+    /**
      * Se realiza la actualización de los datos de un proyecto.
      *
      * @param  \Illuminate\Http\Request $request
@@ -946,7 +994,7 @@ class ProcesosController extends Controller
                 'CPPD_Alcance' => $request['Alcance'],
             ]);
             $alcance->save();
-         
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -957,7 +1005,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-     /**
+    /**
      * Función que almacena en la base de datos un nuevo procesp.
      *
      * @param  \Illuminate\Http\Request $request
@@ -981,7 +1029,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
+
     /**
      * Se realiza la actualización de los datos de un proyecto.
      *
@@ -997,7 +1045,7 @@ class ProcesosController extends Controller
                 'CPR_Nombre_Requerimiento' => $request['Requerimiento'],
             ]);
             $requerimiento->save();
-         
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -1111,14 +1159,14 @@ class ProcesosController extends Controller
         if ($request->ajax() && $request->isMethod('POST')) {
             $sprint = ProcesoCronograma::where('FK_CPP_Id_Proyecto', $request['FK_CPP_Id_Proyecto'])->get();
             $infoProyecto = Proyectos::where('PK_CP_Id_Proyecto', $request['FK_CPP_Id_Proyecto'])->first();
-            if($sprint == '[]'){
+            if ($sprint == '[]') {
                 $fechaFin = Carbon::parse($infoProyecto['CP_Fecha_Inicio'])->addWeeks($request['CPC_Duracion']);
-            }else{
+            } else {
                 $sem = 0;
                 foreach ($sprint as $value) {
                     $sem += $value['CPC_Duracion'];
                 }
-                $fechaFin = Carbon::parse($infoProyecto['CP_Fecha_Inicio'])->addWeeks($request['CPC_Duracion']+$sem);
+                $fechaFin = Carbon::parse($infoProyecto['CP_Fecha_Inicio'])->addWeeks($request['CPC_Duracion'] + $sem);
             }
 
             ProcesoCronograma::create([
@@ -1157,7 +1205,7 @@ class ProcesosController extends Controller
                 'CPC_Recurso' => $request['CPC_Recurso'],
             ]);
             $sprint->save();
-         
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -1217,7 +1265,7 @@ class ProcesosController extends Controller
         );
     }
 
-     /**
+    /**
      * Función que almacena en la base de datos un nuevo procesp.
      *
      * @param  \Illuminate\Http\Request $request
@@ -1255,8 +1303,8 @@ class ProcesosController extends Controller
             $costos = Costos::where('FK_CPC_Id_Proyecto', $idProyecto);
             return Datatables::of($costos)
                 ->addIndexColumn()
-                ->addColumn('Formula', function ($costos){
-                    $perfil=Costos_Informacion::where('PK_CPCI_Id_Costos', $costos->FK_CPC_Id_Formula)->first();
+                ->addColumn('Formula', function ($costos) {
+                    $perfil = Costos_Informacion::where('PK_CPCI_Id_Costos', $costos->FK_CPC_Id_Formula)->first();
                     return $perfil['CPCI_Nombre'];
                 })
                 ->make(true);
@@ -1369,27 +1417,27 @@ class ProcesosController extends Controller
      */
     public function agregarEntrega(Request $request, $id)
     {
-        if($request->ajax() && $request->isMethod('GET')){
-           
+        if ($request->ajax() && $request->isMethod('GET')) {
+
             $info = ProcesoCronograma::find($id);
             $Nnombres = [];
             $item = $info->CPC_Recurso;
             $nombres = explode(',', $item);
             $perfil = EquipoScrum::whereIn('PK_CE_Id_Equipo_Scrum', $nombres)->get();
-                    foreach ($perfil as $value) {
-                        array_push($Nnombres, $value['CE_Nombre_Persona']);
-                    }
-                    $valores = implode(", ", $Nnombres);
+            foreach ($perfil as $value) {
+                array_push($Nnombres, $value['CE_Nombre_Persona']);
+            }
+            $valores = implode(", ", $Nnombres);
             $info->responsables = $valores;
 
             $Nnombres2 = [];
             $item2 = $info->CPC_Requerimiento;
-                    $nombres2 = explode(',', $item2);
-                    $perfil2 = Proceso_Requerimientos::whereIn('PK_CPR_Id_Requerimientos', $nombres2)->get();
-                    foreach ($perfil2 as $value2) {
-                        array_push($Nnombres2, $value2['CPR_Nombre_Requerimiento']);
-                    }
-                    $valores2 = implode(", ", $Nnombres2);
+            $nombres2 = explode(',', $item2);
+            $perfil2 = Proceso_Requerimientos::whereIn('PK_CPR_Id_Requerimientos', $nombres2)->get();
+            foreach ($perfil2 as $value2) {
+                array_push($Nnombres2, $value2['CPR_Nombre_Requerimiento']);
+            }
+            $valores2 = implode(", ", $Nnombres2);
             $info->requerimientos = $valores2;
 
             // dd($info);
@@ -1398,7 +1446,7 @@ class ProcesosController extends Controller
                 'Datos cargados correctamente.',
                 $info
             );
-        }else{
+        } else {
             return AjaxResponse::fail(
                 '¡Lo sentimos!',
                 'No se pudo completar tu solicitud.'
@@ -1421,7 +1469,7 @@ class ProcesosController extends Controller
                 'CPC_Entregable' => $request['CPC_Entregable'],
             ]);
             $sprint->save();
-         
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -1487,7 +1535,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-     /**
+    /**
      * Función que almacena en la base de datos un nuevo procesp.
      *
      * @param  \Illuminate\Http\Request $request
@@ -1528,7 +1576,7 @@ class ProcesosController extends Controller
                 'FK_CPGR_Id_Equipo' => $request['idEquipo'],
             ]);
             $funcion->save();
-         
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -1539,7 +1587,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-     /**
+    /**
      * Se realiza la eliminación de los registros de un vehículo.
      *
      * @param  int $id
@@ -1594,7 +1642,7 @@ class ProcesosController extends Controller
     // 
     // PROCESO #7
     // 
-     /**
+    /**
      * Función que consulta los procesos registrados y los envía al datatable correspondiente.
      *
      * @param  \Illuminate\Http\Request
@@ -1682,7 +1730,7 @@ class ProcesosController extends Controller
                 'CPGC_Fecha' => $fecha,
             ]);
             $funcion->save();
-         
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -1693,7 +1741,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-     /**
+    /**
      * Se realiza la eliminación de los registros de un vehículo.
      *
      * @param  int $id
@@ -1792,7 +1840,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-     /**
+    /**
      * Se realiza la actualización de los datos de un proyecto.
      *
      * @param  \Illuminate\Http\Request $request
@@ -1810,7 +1858,7 @@ class ProcesosController extends Controller
                 'CPGR_Accion' => $request['Accion'],
             ]);
             $riesgo->save();
-         
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -1821,7 +1869,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-     /**
+    /**
      * Se realiza la eliminación de los registros de un vehículo.
      *
      * @param  int $id
@@ -1920,7 +1968,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-     /**
+    /**
      * Se realiza la actualización de los datos de un proyecto.
      *
      * @param  \Illuminate\Http\Request $request
@@ -1937,7 +1985,7 @@ class ProcesosController extends Controller
                 'CPGA_Duracion' => $request['Duracion'],
             ]);
             $riesgo->save();
-         
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -1948,7 +1996,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-     /**
+    /**
      * Se realiza la eliminación de los registros de un vehículo.
      *
      * @param  int $id
@@ -1993,14 +2041,14 @@ class ProcesosController extends Controller
                 'CPPD_Metodologia' => $request['Metodologia'],
             ]);
             $metodologia->save();
-            
+
             Proceso_Proyecto::create([
                 'CPP_Info_Proceso' => "Proceso Plan para la Dirección del proyecto, se creo correctamente",
                 'FK_CPP_Id_Proyecto' => $request['Proyecto_id'],
                 'FK_CPP_Id_Proceso' => $request['Proceso_id'],
             ]);
 
-         
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -2026,7 +2074,7 @@ class ProcesosController extends Controller
                 'CPPD_Metodologia' => $request['Metodologia'],
             ]);
             $metodologia->save();
-           
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -2037,7 +2085,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-   
+
     /**
      * 
      * 
@@ -2059,14 +2107,14 @@ class ProcesosController extends Controller
             Proceso_Aseguramiento::create([
                 'CPA_Aseguramiento' => $request['Practicas'],
                 'FK_CPC_Id_Proyecto' => $request['Proyecto_id'],
-            ]);            
+            ]);
             Proceso_Proyecto::create([
                 'CPP_Info_Proceso' => "Proceso Aseguramiento de calidad, se creo correctamente",
                 'FK_CPP_Id_Proyecto' => $request['Proyecto_id'],
                 'FK_CPP_Id_Proceso' => $request['Proceso_id'],
             ]);
 
-         
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -2077,7 +2125,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-     /**
+    /**
      * Se realiza la actualización de los datos de un proyecto.
      *
      * @param  \Illuminate\Http\Request $request
@@ -2092,7 +2140,7 @@ class ProcesosController extends Controller
                 'CPA_Aseguramiento' => $request['Aseguramiento'],
             ]);
             $aseguramiento->save();
-           
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -2112,7 +2160,7 @@ class ProcesosController extends Controller
      * 
      * 
      */
-   /**
+    /**
      * Función que consulta los procesos registrados y los envía al datatable correspondiente.
      *
      * @param  \Illuminate\Http\Request
@@ -2131,7 +2179,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-     /**
+    /**
      * Se realiza la actualización de los datos de un proyecto.
      *
      * @param  \Illuminate\Http\Request $request
@@ -2146,7 +2194,7 @@ class ProcesosController extends Controller
                 'CE_Horas_Trabajadas' => $request['tiempoTrabajo'],
             ]);
             $integrante->save();
-            
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -2203,14 +2251,14 @@ class ProcesosController extends Controller
                 'CPC_Medio' => $request['Medio'],
                 'CPC_Redaccion' => $request['Redaccion'],
                 'FK_CPC_Id_Proyecto' => $request['Proyecto_id'],
-            ]);            
+            ]);
             Proceso_Proyecto::create([
                 'CPP_Info_Proceso' => "Proceso Gestionar las Comunicaciones, se creo correctamente",
                 'FK_CPP_Id_Proyecto' => $request['Proyecto_id'],
                 'FK_CPP_Id_Proceso' => $request['Proceso_id'],
             ]);
 
-         
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -2254,7 +2302,7 @@ class ProcesosController extends Controller
                 'CPC_Redaccion' => $request['Redaccion'],
             ]);
             $gestion->save();
-           
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -2290,7 +2338,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-     /**
+    /**
      * Se realiza la actualización de los datos de un proyecto.
      *
      * @param  \Illuminate\Http\Request $request
@@ -2306,7 +2354,7 @@ class ProcesosController extends Controller
                 'CPGA_Tipo_Contrato' => $request['TipoContrato'],
             ]);
             $adquisicion->save();
-            
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -2362,14 +2410,14 @@ class ProcesosController extends Controller
                 'CPI_Necesidades' => $request['Necesidades'],
                 'CPI_Expectativas' => $request['Expectativas'],
                 'FK_CPC_Id_Proyecto' => $request['Proyecto_id'],
-            ]);            
+            ]);
             Proceso_Proyecto::create([
                 'CPP_Info_Proceso' => "Proceso Gestionar la participación de los interesados, se creo correctamente",
                 'FK_CPP_Id_Proyecto' => $request['Proyecto_id'],
                 'FK_CPP_Id_Proceso' => $request['Proceso_id'],
             ]);
 
-         
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -2396,7 +2444,7 @@ class ProcesosController extends Controller
                 'CPI_Expectativas' => $request['Expectativas'],
             ]);
             $interesado->save();
-           
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -2408,7 +2456,7 @@ class ProcesosController extends Controller
         );
     }
 
-    
+
     /**
      * 
      * PROCESO #16
@@ -2426,22 +2474,22 @@ class ProcesosController extends Controller
             $recursos = Proceso_Objetivos::where('FK_CPC_Id_Proyecto', $idProyecto);
             return Datatables::of($recursos)
                 ->addIndexColumn()
-                ->addColumn('Tipo_Objetivo', function($recursos) {
-                    if($recursos->CO_Tipo_Objetivo === '1'){
+                ->addColumn('Tipo_Objetivo', function ($recursos) {
+                    if ($recursos->CO_Tipo_Objetivo === '1') {
                         return "<span class='label label-sm label-primary'>General</span>";
-                    }else{
+                    } else {
                         return '<span class="label label-sm label-info">Especifico</span>';
                     }
                 })
                 // ->rawColumns(['Tipo_Objetivo'])
                 ->addColumn('Estado', function ($recursos) {
-                    if($recursos->CO_Estado == 0){
+                    if ($recursos->CO_Estado == 0) {
                         return "<span class='label label-sm label-warning'>Pendiente</span>";
-                    }else{
+                    } else {
                         return "<span class='label label-sm label-success'>Realizado</span>";
                     }
                 })
-                ->rawColumns(['Tipo_Objetivo','Estado'])
+                ->rawColumns(['Tipo_Objetivo', 'Estado'])
                 ->make(true);
         }
         return AjaxResponse::fail(
@@ -2459,9 +2507,9 @@ class ProcesosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 
-            if($request['Estado'] == 0){
+            if ($request['Estado'] == 0) {
                 $nuevoEstado = 1;
-            }elseif($request['Estado'] == 1){
+            } elseif ($request['Estado'] == 1) {
                 $nuevoEstado = 0;
             }
 
@@ -2470,7 +2518,7 @@ class ProcesosController extends Controller
                 'CO_Estado' => $nuevoEstado,
             ]);
             $objetivo->save();
-            
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'El cambio de estado se modifico correctamente.'
@@ -2525,9 +2573,9 @@ class ProcesosController extends Controller
             return Datatables::of($requerimiento)
                 ->addIndexColumn()
                 ->addColumn('Estado', function ($requerimiento) {
-                    if($requerimiento->CPR_Estado == 0){
+                    if ($requerimiento->CPR_Estado == 0) {
                         return "<span class='label label-sm label-warning'>No se cumplio</span>";
-                    }else{
+                    } else {
                         return "<span class='label label-sm label-success'>Se cumplio</span>";
                     }
                 })
@@ -2549,9 +2597,9 @@ class ProcesosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 
-            if($request['Estado'] == 0){
+            if ($request['Estado'] == 0) {
                 $nuevoEstado = 1;
-            }elseif($request['Estado'] == 1){
+            } elseif ($request['Estado'] == 1) {
                 $nuevoEstado = 0;
             }
 
@@ -2560,7 +2608,7 @@ class ProcesosController extends Controller
                 'CPR_Estado' => $nuevoEstado,
             ]);
             $requerimiento->save();
-            
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'El cambio de estado se modifico correctamente.'
@@ -2615,9 +2663,9 @@ class ProcesosController extends Controller
             return Datatables::of($actividad)
                 ->addIndexColumn()
                 ->addColumn('Estado', function ($actividad) {
-                    if($actividad->CPC_Estado == 0){
+                    if ($actividad->CPC_Estado == 0) {
                         return "<span class='label label-sm label-warning'>No se cumplio</span>";
-                    }else{
+                    } else {
                         return "<span class='label label-sm label-success'>Se cumplio</span>";
                     }
                 })
@@ -2650,9 +2698,9 @@ class ProcesosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 
-            if($request['Estado'] == 0){
+            if ($request['Estado'] == 0) {
                 $nuevoEstado = 1;
-            }elseif($request['Estado'] == 1){
+            } elseif ($request['Estado'] == 1) {
                 $nuevoEstado = 0;
             }
 
@@ -2661,7 +2709,7 @@ class ProcesosController extends Controller
                 'CPC_Estado' => $nuevoEstado,
             ]);
             $actividad->save();
-            
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'El cambio de estado se modifico correctamente.'
@@ -2715,14 +2763,14 @@ class ProcesosController extends Controller
             $costo = Costos::where('FK_CPC_Id_Proyecto', $idProyecto);
             return Datatables::of($costo)
                 ->addIndexColumn()
-                ->addColumn('Costo', function ($costo){
-                    $perfil=Costos_Informacion::where('PK_CPCI_Id_Costos', $costo->FK_CPC_Id_Formula)->first();
+                ->addColumn('Costo', function ($costo) {
+                    $perfil = Costos_Informacion::where('PK_CPCI_Id_Costos', $costo->FK_CPC_Id_Formula)->first();
                     return $perfil['CPCI_Nombre'];
                 })
                 ->addColumn('Estado', function ($costo) {
-                    if($costo->CPC_Estado == 0){
+                    if ($costo->CPC_Estado == 0) {
                         return "<span class='label label-sm label-warning'>No se uso</span>";
-                    }else{
+                    } else {
                         return "<span class='label label-sm label-success'>Se uso</span>";
                     }
                 })
@@ -2744,9 +2792,9 @@ class ProcesosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 
-            if($request['Estado'] == 0){
+            if ($request['Estado'] == 0) {
                 $nuevoEstado = 1;
-            }elseif($request['Estado'] == 1){
+            } elseif ($request['Estado'] == 1) {
                 $nuevoEstado = 0;
             }
 
@@ -2755,7 +2803,7 @@ class ProcesosController extends Controller
                 'CPC_Estado' => $nuevoEstado,
             ]);
             $actividad->save();
-            
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'El cambio de estado se modifico correctamente.'
@@ -2814,7 +2862,7 @@ class ProcesosController extends Controller
                 'CPA_Recomendaciones' => $request['Recomendaciones'],
             ]);
             $actividad->save();
-            
+
             Proceso_Proyecto::create([
                 'CPP_Info_Proceso' => "Proceso Controlar la calidad, se creo correctamente",
                 'FK_CPP_Id_Proyecto' => $request['Proyecto_id'],
@@ -2864,7 +2912,7 @@ class ProcesosController extends Controller
                 'CPA_Recomendaciones' => $request['Recomendaciones'],
             ]);
             $gestion->save();
-           
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -2894,9 +2942,9 @@ class ProcesosController extends Controller
             return Datatables::of($reunion)
                 ->addIndexColumn()
                 ->addColumn('Estado', function ($reunion) {
-                    if($reunion->CPGC_Estado == 0){
+                    if ($reunion->CPGC_Estado == 0) {
                         return "<span class='label label-sm label-warning'>No se realizo</span>";
-                    }else{
+                    } else {
                         return "<span class='label label-sm label-success'>Se realizo</span>";
                     }
                 })
@@ -2918,9 +2966,9 @@ class ProcesosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 
-            if($request['Estado'] == 0){
+            if ($request['Estado'] == 0) {
                 $nuevoEstado = 1;
-            }elseif($request['Estado'] == 1){
+            } elseif ($request['Estado'] == 1) {
                 $nuevoEstado = 0;
             }
 
@@ -2929,7 +2977,7 @@ class ProcesosController extends Controller
                 'CPGC_Estado' => $nuevoEstado,
             ]);
             $reunion->save();
-            
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'El cambio de estado se modifico correctamente.'
@@ -2984,9 +3032,9 @@ class ProcesosController extends Controller
             return Datatables::of($riesgo)
                 ->addIndexColumn()
                 ->addColumn('Estado', function ($riesgo) {
-                    if($riesgo->CPGR_Estado == 0){
+                    if ($riesgo->CPGR_Estado == 0) {
                         return "<span class='label label-sm label-warning'>No ocurrio</span>";
-                    }else{
+                    } else {
                         return "<span class='label label-sm label-success'>Ocurrio</span>";
                     }
                 })
@@ -3008,9 +3056,9 @@ class ProcesosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 
-            if($request['Estado'] == 0){
+            if ($request['Estado'] == 0) {
                 $nuevoEstado = 1;
-            }elseif($request['Estado'] == 1){
+            } elseif ($request['Estado'] == 1) {
                 $nuevoEstado = 0;
             }
 
@@ -3019,7 +3067,7 @@ class ProcesosController extends Controller
                 'CPGR_Estado' => $nuevoEstado,
             ]);
             $reunion->save();
-            
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'El cambio de estado se modifico correctamente.'
@@ -3055,7 +3103,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-     /**
+    /**
      * 
      * PROCESO #23
      * 
@@ -3073,9 +3121,9 @@ class ProcesosController extends Controller
             return Datatables::of($adquisicion)
                 ->addIndexColumn()
                 ->addColumn('Estado', function ($adquisicion) {
-                    if($adquisicion->CPGA_Estado == 0){
+                    if ($adquisicion->CPGA_Estado == 0) {
                         return "<span class='label label-sm label-warning'>No se uso</span>";
-                    }else{
+                    } else {
                         return "<span class='label label-sm label-success'>Se uso</span>";
                     }
                 })
@@ -3097,9 +3145,9 @@ class ProcesosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 
-            if($request['Estado'] == 0){
+            if ($request['Estado'] == 0) {
                 $nuevoEstado = 1;
-            }elseif($request['Estado'] == 1){
+            } elseif ($request['Estado'] == 1) {
                 $nuevoEstado = 0;
             }
 
@@ -3108,7 +3156,7 @@ class ProcesosController extends Controller
                 'CPGA_Estado' => $nuevoEstado,
             ]);
             $reunion->save();
-            
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'El cambio de estado se modifico correctamente.'
@@ -3145,7 +3193,7 @@ class ProcesosController extends Controller
         );
     }
 
-     /**
+    /**
      * 
      * PROCESO #24
      * 
@@ -3167,7 +3215,7 @@ class ProcesosController extends Controller
                 'CPI_Observaciones' => $request['Observaciones'],
             ]);
             $actividad->save();
-            
+
             Proceso_Proyecto::create([
                 'CPP_Info_Proceso' => "Proceso Controlar la participación de los interesados, se creo correctamente",
                 'FK_CPP_Id_Proyecto' => $request['Proyecto_id'],
@@ -3217,7 +3265,7 @@ class ProcesosController extends Controller
                 'CPI_Observaciones' => $request['Observaciones'],
             ]);
             $gestion->save();
-           
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos modificados correctamente.'
@@ -3230,7 +3278,7 @@ class ProcesosController extends Controller
     }
 
 
-     /**
+    /**
      * 
      * PROCESO #25
      * 
@@ -3244,18 +3292,18 @@ class ProcesosController extends Controller
     public function tablaproceso25(Request $request, $idProyecto)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $integrantes = EquipoScrum::where('FK_CE_Id_Proyecto', $idProyecto)->whereIn('FK_CE_Id_Rol',['1','4']);
+            $integrantes = EquipoScrum::where('FK_CE_Id_Proyecto', $idProyecto)->whereIn('FK_CE_Id_Rol', ['1', '4']);
             return Datatables::of($integrantes)
                 ->addIndexColumn()
                 ->addColumn('Estado', function ($integrantes) {
-                    if($integrantes->CE_Estado == 0){
+                    if ($integrantes->CE_Estado == 0) {
                         return "<span class='label label-sm label-warning'>No aprobo</span>";
-                    }else{
+                    } else {
                         return "<span class='label label-sm label-success'>Aprobo</span>";
                     }
                 })
-                ->addColumn('Rol', function ($integrantes){
-                    $rol=Rol_Scrum::where('PK_CR_Id_Rol_Scrum', $integrantes->FK_CE_Id_Rol)->first();
+                ->addColumn('Rol', function ($integrantes) {
+                    $rol = Rol_Scrum::where('PK_CR_Id_Rol_Scrum', $integrantes->FK_CE_Id_Rol)->first();
                     return $rol['CR_Nombre_Rol_Scrum'];
                 })
                 ->rawColumns(['Estado'])
@@ -3276,9 +3324,9 @@ class ProcesosController extends Controller
     {
         if ($request->ajax() && $request->isMethod('POST')) {
 
-            if($request['Estado'] == 0){
+            if ($request['Estado'] == 0) {
                 $nuevoEstado = 1;
-            }elseif($request['Estado'] == 1){
+            } elseif ($request['Estado'] == 1) {
                 $nuevoEstado = 0;
             }
 
@@ -3287,7 +3335,7 @@ class ProcesosController extends Controller
                 'CE_Estado' => $nuevoEstado,
             ]);
             $integrante->save();
-            
+
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'El cambio de estado se modifico correctamente.'
@@ -3323,7 +3371,7 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-    
+
     /**
      * Función que almacena en la base de datos un nuevo procesp.
      *
@@ -3349,13 +3397,4 @@ class ProcesosController extends Controller
             'No se pudo completar tu solicitud.'
         );
     }
-
-   
-
-
-
-
-
-
-
 }
