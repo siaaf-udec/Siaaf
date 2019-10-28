@@ -11,7 +11,6 @@ use App\Container\CalidadPcs\src\Procesos;
 use App\Container\CalidadPcs\src\Proyectos;
 use App\Container\CalidadPcs\src\Proceso_Proyecto;
 use App\Container\CalidadPcs\src\Etapas;
-use App\Container\CalidadPcs\src\Usuarios;
 use App\Container\CalidadPcs\src\EquipoScrum;
 use App\Container\CalidadPcs\src\Proceso_Adquisiciones;
 use App\Container\CalidadPcs\src\Proceso_Aseguramiento;
@@ -1110,12 +1109,24 @@ class ProcesosController extends Controller
     public function storeProceso3(Request $request)
     {
         if ($request->ajax() && $request->isMethod('POST')) {
+            $sprint = ProcesoCronograma::where('FK_CPP_Id_Proyecto', $request['FK_CPP_Id_Proyecto'])->get();
+            $infoProyecto = Proyectos::where('PK_CP_Id_Proyecto', $request['FK_CPP_Id_Proyecto'])->first();
+            if($sprint == '[]'){
+                $fechaFin = Carbon::parse($infoProyecto['CP_Fecha_Inicio'])->addWeeks($request['CPC_Duracion']);
+            }else{
+                $sem = 0;
+                foreach ($sprint as $value) {
+                    $sem += $value['CPC_Duracion'];
+                }
+                $fechaFin = Carbon::parse($infoProyecto['CP_Fecha_Inicio'])->addWeeks($request['CPC_Duracion']+$sem);
+            }
 
             ProcesoCronograma::create([
                 'CPC_Nombre_Sprint' => $request['CPC_Nombre_Sprint'],
                 'CPC_Requerimiento' => $request['CPC_Requerimiento'],
                 'CPC_Duracion' => $request['CPC_Duracion'],
                 'CPC_Recurso' => $request['CPC_Recurso'],
+                'CPC_Fecha_Fin_Sprint' => $fechaFin,
                 'FK_CPP_Id_Proyecto' => $request['FK_CPP_Id_Proyecto'],
             ]);
 

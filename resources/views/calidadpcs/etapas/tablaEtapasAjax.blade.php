@@ -10,6 +10,7 @@
                         '#',
                         'Nombre Etapa',
                         '',
+                        '',
                         ''
                     ])
                 @endcomponent
@@ -77,7 +78,6 @@
                 responsivePriority: 2
             },
             {
-                //defaultContent: '<a href="javascript:;" class="btn btn-success verProcesos"  title="Ver los procesos de esta etapa"> <i class="fa fa-pencil-square-o"></i></a>',
                 defaultContent: false,
                 data: 'action',
                 name: 'Procesos',
@@ -92,10 +92,22 @@
                         return '<a href="javascript:;" class="btn btn-success verProcesos"  title="Ver los procesos de esta etapa"> <i class="fa fa-pencil-square-o"></i></a>';
                     }if(row.PK_CE_Id_Etapa > {{$conteoEtapa}}){
                         return '<span class="label label-sm label-warning">Pendiente</span>';
-                    }/*if(row.PK_CE_Id_Etapa > {{$numProcesos}}){
-                        return '<button type="button" class="btn btn-warning btn-sm" disabled>Pendiente</button>';
-                    }*/
+                    }
                 },
+                serverSide: false,
+                responsivePriority: 2
+            },
+            {
+                defaultContent: '<a href="javascript:;" class="btn btn-info reportes"  title="Ver reporte" ><i class="glyphicon glyphicon-list-alt"></i></a>',
+                data: 'action',
+                name: 'Reporte',
+                title: 'Reporte',
+                orderable: false,
+                searchable: false,
+                exportable: false,
+                printable: false,
+                className: 'text-center',
+                render: null,
                 serverSide: false,
                 responsivePriority: 2
             }
@@ -111,5 +123,34 @@
                 $(".content-ajax").load(route_edit);
             
         });
+
+        table.on('click', '.reportes', function (e) {
+            e.preventDefault();
+            $tr = $(this).closest('tr');
+            var dataTable = table.row($tr).data();
+            if(dataTable.PK_CE_Id_Etapa == 1){
+                $.ajax({}).done(function () {
+                    window.open('{{ route('calidadpcs.reportesCalidad.reporteEtapaUno') }}' + '/' + {{$idProyecto}}, '_blank');
+                });
+            }else if(dataTable.PK_CE_Id_Etapa == 2){
+                $.ajax({}).done(function () {
+                    window.open('{{ route('calidadpcs.reportesCalidad.reporteEtapaUno') }}' + '/' + {{$idProyecto}}, '_blank');
+                });
+            }else if(dataTable.PK_CE_Id_Etapa == 3){
+                $.ajax({}).done(function () {
+                    window.open('{{ route('calidadpcs.reportesCalidad.reporteEtapaUno') }}' + '/' + {{$idProyecto}}, '_blank');
+                });
+            }else if(dataTable.PK_CE_Id_Etapa == 4){
+                $.ajax({}).done(function () {
+                    window.open('{{ route('calidadpcs.reportesCalidad.reporteEtapaUno') }}' + '/' + {{$idProyecto}}, '_blank');
+                });
+            }else if(dataTable.PK_CE_Id_Etapa == 5){
+                $.ajax({}).done(function () {
+                    window.open('{{ route('calidadpcs.reportesCalidad.reporteEtapaUno') }}' + '/' + {{$idProyecto}}, '_blank');
+                });
+            }
+            
+        });
+
     });
 </script>

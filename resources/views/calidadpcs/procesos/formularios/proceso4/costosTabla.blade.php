@@ -1099,7 +1099,7 @@
         var createModal_8 = function () {
             return{
                 init: function () {
-                    let resultado = ($('input:text[name="MC8_costo_real"]').val() + $('input:text[name="MC8_estimacion"]').val());
+                    let resultado = (parseInt($('input:text[name="MC8_costo_real"]').val()) + parseInt($('input:text[name="MC8_estimacion"]').val()) );
                     console.log(resultado);
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';

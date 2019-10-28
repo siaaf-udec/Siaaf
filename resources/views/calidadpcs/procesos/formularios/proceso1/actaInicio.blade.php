@@ -79,7 +79,7 @@
             {!! Form::model ([[$idProceso],[$equipoScrum],[$infoProyecto]],['id'=>'form_create_proceso_1', 'url' => '/forms']) !!}
             <div class="form-body">
                 <div class="row">
-                    <h3><i class="fa fa-arrow-right"></i><strong> Informacion del proceso</strong></h3><br>
+                    <h3><i class="fa fa-arrow-right"></i><strong> Informacion del proyecto</strong></h3><br>
                     <div class="col-md-6">
 
                         {!! Field:: hidden ('FK_CPP_Id_Proyecto', $infoProyecto[0]['PK_CP_Id_Proyecto'])!!}
@@ -355,7 +355,7 @@
                                 $('#form_create_proceso_1')[0].reset(); //Limpia formulario
                                 UIToastr.init(xhr, response.title, response.message);
                                 App.unblockUI('.portlet-form');
-                                var route = '{{route('calidadpcs.proyectosCalidad.index.ajax')}}';
+                                var route = "{{route('calidadpcs.proyectosCalidad.index.ajax')}}";
                                 location.href = "{{route('calidadpcs.proyectosCalidad.index')}}";
                                 //$(".content-ajax").load(route);
                             }
@@ -409,12 +409,12 @@
 
         $('.button-cancel').on('click', function(e) {
             e.preventDefault();
-            var route = '{{route('calidadpcs.proyectosCalidad.index.ajax')}}';
+            var route = "{{route('calidadpcs.proyectosCalidad.index.ajax')}}";
             location.href = "{{route('calidadpcs.proyectosCalidad.index')}}";
         });
 
         $("#link_cancel").on('click', function(e) {
-            var route = '{{route('calidadpcs.proyectosCalidad.index.ajax')}}';
+            var route = "{{route('calidadpcs.proyectosCalidad.index.ajax')}}";
             location.href = "{{route('calidadpcs.proyectosCalidad.index')}}";
         });
 

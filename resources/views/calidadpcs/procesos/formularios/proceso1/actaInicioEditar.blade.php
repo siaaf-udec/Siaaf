@@ -66,7 +66,7 @@
                 {!! Form::model ([[$idProceso],[$equipoScrum],[$infoProyecto]],['id'=>'form_update_proyecto', 'url' => '/forms']) !!}
                     <div class="form-body">
                         <div class="row">
-                        <h3>Informacion del proceso</h3><br>
+                        <h3>Informacion del proyecto</h3><br>
                             <div class="col-md-6">
 
                                 {!! Field:: hidden ('FK_CPP_Id_Proyecto', $infoProyecto[0]['PK_CP_Id_Proyecto'])!!}

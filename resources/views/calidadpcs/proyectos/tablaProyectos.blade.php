@@ -49,8 +49,7 @@
                         <a href="javascript:;"
                             class="btn btn-simple btn-success btn-icon create"
                             title="Crear un nuevo proyecto"><i class="glyphicon glyphicon-plus"></i>Agregar Proyecto</a>
-                        <br>
-                        
+                        <br>                        
                     </div>
                     <br>
                 </div>

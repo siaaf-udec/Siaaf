@@ -749,4 +749,21 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
     });
+
+    Route::group(['prefix' => 'reportesCalidad', 'middleware' => ['permission:ADMIN_CALIDADPCS']], function () {
+
+        $controller = "\\App\\Container\\CalidadPcs\\src\\Controllers\\";
+
+        //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+        Route::get('reporteEtapaUno/{idProyecto?}', [
+            'uses' => $controller . 'ReportesController@reporteEtapaUno',  
+            'as' => 'calidadpcs.reportesCalidad.reporteEtapaUno'
+        ]);
+        //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+        Route::get('descargaReporteEtapaUno/{idProyecto?}', [
+            'uses' => $controller . 'ReportesController@descargaReporteEtapaUno',  
+            'as' => 'calidadpcs.reportesCalidad.descargaReporteEtapaUno'
+        ]);
+
+    });
 });

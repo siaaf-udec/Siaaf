@@ -18,7 +18,7 @@
             'Nombre Sprint',
             'Requerimientos',
             'Recurso',
-            'Duracion',
+            'Duracion en semanas',
             ''
             ])
             @endcomponent
@@ -212,16 +212,13 @@
                                 UIToastr.init(xhr, response.title, response.message);
                             } else {
                                 if (request.status === 200 && xhr === 'success') {
-                                    // var table = $('#listaActividades');
-                                    // table = table.DataTable();
-                                    // table.ajax.reload();
+                                    
                                     var route ='{{ route('calidadpcs.procesosCalidad.formularios') }}' + '/3/' + {{$idProyecto}};
                                     $(".content-ajax").load(route);
                                     $('#modal-create-permission').modal('hide');
                                     $('#from_permissions_update')[0].reset(); //Limpia formulario
                                     $('.selectpicker').selectpicker('deselectAll');
                                     UIToastr.init(xhr, response.title, response.message);
-                                    // formRules.numero_semanas.max = aux;
                                 }
                             }
                         },
@@ -256,10 +253,6 @@
         var formMessage = {
 
         };
-        // console.log(aux);
-        // formRules.numero_semanas.max = aux;
-        // console.log(formRules);
-        // console.log($('#from_permissions_update').validate().settings);
         $("#num").text(aux);
         
         // console.log(formRules.numero_semanas.max);
