@@ -42,7 +42,7 @@
                 <h2 class="name">Reporte de la Etapa de Planificacion</h2>
             </div>
             <div id="invoice">
-                <div><a class="noPrint" href="{{ route('calidadpcs.reportesCalidad.descargaReporteEtapaUno') }}/{{$infoProyecto->PK_CP_Id_Proyecto}}">
+                <div><a class="noPrint" href="{{ route('calidadpcs.reportesCalidad.descargaReporteEtapaPlanificacion') }}/{{$infoProyecto->PK_CP_Id_Proyecto}}">
                         <i class="fa fa-download">
                         </i>Descargar reporte
                     </a>

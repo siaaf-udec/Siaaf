@@ -142,7 +142,7 @@
                 });
             }else if(dataTable.PK_CE_Id_Etapa == 4){
                 $.ajax({}).done(function () {
-                    window.open('{{ route('calidadpcs.reportesCalidad.reporteEtapaUno') }}' + '/' + {{$idProyecto}}, '_blank');
+                    window.open('{{ route('calidadpcs.reportesCalidad.reporteEtapaMonitoreo') }}' + '/' + {{$idProyecto}}, '_blank');
                 });
             }else if(dataTable.PK_CE_Id_Etapa == 5){
                 $.ajax({}).done(function () {
