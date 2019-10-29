@@ -355,7 +355,47 @@ class ReportesController extends Controller
                     $crono->estado = "Se cumplio";
                 }
             };
-            dd($cronograma);
+            $costos = Costos::where('FK_CPC_Id_Proyecto', $id)->whereIn('FK_CPC_Id_Formula', [1,2,3,6,7,8,9,10])->get();
+            $valor= null;
+            foreach ($costos as $costo) {
+                $name = Costos_Informacion::where('PK_CPCI_Id_Costos', $costo->FK_CPC_Id_Formula)->first();
+                if($costo->CPC_Estado == 0){
+                    $costo->estado = "No se uso";
+                }else if($costo->CPC_Estado == 1){
+                    $costo->estado = "Se uso";
+                }
+                $valor += $costo->CPC_Valor;
+            }
+            $costos->valor = $valor;
+            $desempeño = Proceso_Aseguramiento::where('FK_CPC_Id_Proyecto', $id)->first();
+            $reuniones = Proceso_Comunicacion::where('FK_CPC_Id_Proyecto', $id)->get();
+            foreach($reuniones as $reunion){
+                if($reunion->CPGC_Estado == 0){
+                    $reunion->estado = "No se realizo";
+                }else if($reunion->CPGC_Estado == 1){
+                    $reunion->estado = "Se realizo";
+                }
+            }
+            $riesgos = Proceso_Riesgos::where('FK_CPC_Id_Proyecto', $id)->get();
+            foreach($riesgos as $riesgo){
+                if($riesgo->CPGR_Estado == 0){
+                    $riesgo->estado = "No ocurrio";
+                }else if($riesgo->CPGR_Estado == 1){
+                    $riesgo->estado = "Ocurrio";
+                }
+            }
+            $adquisiciones = Proceso_Adquisiciones::where('FK_CPC_Id_Proyecto', $id)->get();
+            foreach($adquisiciones as $adquisicion){
+                if($adquisicion->CPGA_Estado == 0){
+                    $adquisicion->estado = "No se uso";
+                }else if($adquisicion->CPGA_Estado == 1){
+                    $adquisicion->estado = "Se uso";
+                }
+            }
+
+
+            dd($costos);
+
             return view(
                 'calidadpcs.reportes.reporteEtapaMonitoreo',
                 compact('infoProyecto', 'objetivos', 'integrantes', 'objetivos', 'date', 'time', 'cont')
