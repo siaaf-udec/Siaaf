@@ -237,6 +237,7 @@
                 required: true,
                 minlength: 2,
                 maxlength: 50,
+                noSpecialCharacters:true,
             },
             numero_semanas: {
                 required: true,
@@ -251,11 +252,9 @@
             },
         };
         var formMessage = {
-
+            CPC_Nombre_Sprint: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
         };
         $("#num").text(aux);
-        
-        // console.log(formRules.numero_semanas.max);
         FormValidationMd.init(form, formRules, formMessage, createProyecto());
         });
     }
@@ -409,10 +408,23 @@
         };
         var form_edit_modal = $('#from_edit');
         var rules_edit_modal = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            Nombre_Sprint_Editar: {
+                required: true,
+                minlength: 2,
+                maxlength: 50,
+                noSpecialCharacters:true,
+            },
+            lista_requerimientos_editar: {
+                required: true,
+            },
+            lista_integrantes_editar: {
+                required: true,
+            },
         };
-        FormValidationMd.init(form_edit_modal,rules_edit_modal,false,EditModal());
+        var message_edit_modal = {
+            Nombre_Sprint_Editar: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+        };
+        FormValidationMd.init(form_edit_modal,rules_edit_modal,message_edit_modal,EditModal());
 
         jQuery.validator.addMethod("letters", function(value, element) {
             return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);

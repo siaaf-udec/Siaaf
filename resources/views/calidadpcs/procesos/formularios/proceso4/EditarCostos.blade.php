@@ -710,37 +710,18 @@
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
 
-        // $(".create").on('click', function(e) {
-        //     e.preventDefault();
-        //     var route = '{{ route('calidadpcs.proyectosCalidad.RegistrarProyecto') }}' + '/' +{{Auth::user()->id}};
-        //     $(".content-ajax").load(route);
-        // });
-
         table.on('click', '.verEtapas', function(e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
-            console.log(dataTable.PK_CPCI_Id_Costos)
             $('#modal_costos_'+dataTable.PK_CPCI_Id_Costos).modal('toggle');
-
-                // route_edit = '{{ route('calidadpcs.procesosCalidad.etapas')}}'+'/'+dataTable.PK_CP_Id_Proyecto;
-            // $(".content-ajax").load(route_edit);
         });
-
-        // table.on('click', '.edit', function(e) {
-        //     e.preventDefault();
-        //     $tr = $(this).closest('tr');
-        //     var dataTable = table.row($tr).data(),
-        //         route_edit = '{{ route('calidadpcs.proyectosCalidad.edit')}}'+'/'+ dataTable.PK_CP_Id_Proyecto;
-        //     $(".content-ajax").load(route_edit);
-        // });
 
         /* Inicio Modal #1*/
         var createModal_1 = function () {
             return{
                 init: function () {
-                    let resultado = ($('input:text[name="MC1_valor_ganado"]').val() - $('input:text[name="MC1_costo_real"]').val());
-                    console.log(resultado);
+                    let resultado = (parseInt($('input:text[name="MC1_valor_ganado"]').val()) - parseInt($('input:text[name="MC1_costo_real"]').val()));
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
                     var async = async || false;
@@ -764,7 +745,6 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table2.ajax.reload();
                                 $('#modal_costos_1').modal('hide');
                                 $('#form_costos_1')[0].reset(); //Limpia formulario
@@ -793,8 +773,7 @@
         var createModal_2 = function () {
             return{
                 init: function () {
-                    let resultado = ($('input:text[name="MC2_valor_ganado"]').val() - $('input:text[name="MC2_valor_planificado"]').val());
-                    console.log(resultado);
+                    let resultado = (parseInt($('input:text[name="MC2_valor_ganado"]').val()) - parseInt($('input:text[name="MC2_valor_planificado"]').val()));
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
                     var async = async || false;
@@ -817,7 +796,6 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table2.ajax.reload();
                                 $('#modal_costos_2').modal('hide');
                                 $('#form_costos_2')[0].reset(); //Limpia formulario
@@ -846,8 +824,7 @@
         var createModal_3 = function () {
             return{
                 init: function () {
-                    let resultado = ($('input:text[name="MC3_presupuesto"]').val() - $('input:text[name="MC3_estimacion"]').val());
-                    console.log(resultado);
+                    let resultado = (parseInt($('input:text[name="MC3_presupuesto"]').val()) - parseInt($('input:text[name="MC3_estimacion"]').val()));
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
                     var async = async || false;
@@ -870,7 +847,6 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table2.ajax.reload();
                                 $('#modal_costos_3').modal('hide');
                                 $('#form_costos_3')[0].reset(); //Limpia formulario
@@ -900,7 +876,6 @@
             return{
                 init: function () {
                     let resultado = ($('input:text[name="MC4_valor_ganado"]').val() / $('input:text[name="MC4_costo_real"]').val());
-                    console.log(resultado);
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
                     var async = async || false;
@@ -921,7 +896,6 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table2.ajax.reload();
                                 $('#modal_costos_4').modal('hide');
                                 $('#form_costos_4')[0].reset(); //Limpia formulario
@@ -950,7 +924,6 @@
             return{
                 init: function () {
                     let resultado = ($('input:text[name="MC5_valor_ganado"]').val() / $('input:text[name="MC5_valor_planificado"]').val());
-                    console.log(resultado);
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
                     var async = async || false;
@@ -971,7 +944,6 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table2.ajax.reload();
                                 $('#modal_costos_5').modal('hide');
                                 $('#form_costos_5')[0].reset(); //Limpia formulario
@@ -1000,7 +972,6 @@
             return{
                 init: function () {
                     let resultado = ($('input:text[name="MC6_presupuesto_conclucion"]').val() / $('input:text[name="MC6_indice_costo"]').val());
-                    console.log(resultado);
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
                     var async = async || false;
@@ -1021,7 +992,6 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table2.ajax.reload();
                                 $('#modal_costos_6').modal('hide');
                                 $('#form_costos_6')[0].reset(); //Limpia formulario
@@ -1049,8 +1019,7 @@
         var createModal_7 = function () {
             return{
                 init: function () {
-                    let resultado = ($('input:text[name="MC7_costo_real"]').val() + $('input:text[name="MC7_presupuesto"]').val() - $('input:text[name="MC7_valor_ganado"]').val());
-                    console.log(resultado);
+                    let resultado = (parseInt($('input:text[name="MC7_costo_real"]').val()) + parseInt($('input:text[name="MC7_presupuesto"]').val()) - parseInt($('input:text[name="MC7_valor_ganado"]').val()));
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
                     var async = async || false;
@@ -1071,7 +1040,6 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table2.ajax.reload();
                                 $('#modal_costos_7').modal('hide');
                                 $('#form_costos_7')[0].reset(); //Limpia formulario
@@ -1099,8 +1067,7 @@
         var createModal_8 = function () {
             return{
                 init: function () {
-                    let resultado = ($('input:text[name="MC8_costo_real"]').val() + $('input:text[name="MC8_estimacion"]').val());
-                    console.log(resultado);
+                    let resultado = (parseInt($('input:text[name="MC8_costo_real"]').val()) + parseInt($('input:text[name="MC8_estimacion"]').val()));
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
                     var async = async || false;
@@ -1121,7 +1088,6 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table2.ajax.reload();
                                 $('#modal_costos_8').modal('hide');
                                 $('#form_costos_8')[0].reset(); //Limpia formulario
@@ -1149,8 +1115,7 @@
         var createModal_9 = function () {
             return{
                 init: function () {
-                    let resultado = $('input:text[name="MC9_costo_real"]').val() + (($('input:text[name="MC9_presupuesto"]').val() - $('input:text[name="MC9_valor_ganado"]').val()) / ($('input:text[name="MC9_indice_costo"]').val() * $('input:text[name="MC9_indice_cronograma"]').val())) ;
-                    console.log(resultado);
+                    let resultado = parseInt($('input:text[name="MC9_costo_real"]').val()) + ((parseInt($('input:text[name="MC9_presupuesto"]').val()) - parseInt($('input:text[name="MC9_valor_ganado"]').val())) / (parseInt($('input:text[name="MC9_indice_costo"]').val()) * parseInt($('input:text[name="MC9_indice_cronograma"]').val()))) ;
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
                     var async = async || false;
@@ -1171,7 +1136,6 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table2.ajax.reload();
                                 $('#modal_costos_9').modal('hide');
                                 $('#form_costos_9')[0].reset(); //Limpia formulario
@@ -1200,7 +1164,6 @@
             return{
                 init: function () {
                     let resultado = ($('input:text[name="MC10_estimacion"]').val() - $('input:text[name="MC10_costo_real"]').val());
-                    console.log(resultado);
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
                     var async = async || false;
@@ -1221,7 +1184,6 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table2.ajax.reload();
                                 $('#modal_costos_10').modal('hide');
                                 $('#form_costos_10')[0].reset(); //Limpia formulario
@@ -1249,11 +1211,7 @@
         var createModal_11 = function () {
             return{
                 init: function () {
-                    // console.log($('input:text[name="MC11_presupuesto"]').val());
-                    // console.log( $('input:text[name="MC11_valor_ganado"]').val());
-                    // console.log();
                     let resultado = (($('input:text[name="MC11_presupuesto"]').val() - $('input:text[name="MC11_valor_ganado"]').val()) / ($('input:text[name="MC11_presupuesto"]').val() - $('input:text[name="MC11_costo_real"]').val()));
-                    console.log(resultado);
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
                     var async = async || false;
@@ -1274,7 +1232,6 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table2.ajax.reload();
                                 $('#modal_costos_11').modal('hide');
                                 $('#form_costos_11')[0].reset(); //Limpia formulario
@@ -1304,7 +1261,6 @@
                 init: function () {
                     let resultado = (($('input:text[name="MC12_presupuesto"]').val() - $('input:text[name="MC12_valor"]').val()) / ($('input:text[name="MC12_estimacion"]').val() - $('input:text[name="MC12_costo"]').val()));
 
-                    console.log(resultado);
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
                     var async = async || false;
@@ -1325,7 +1281,6 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table2.ajax.reload();
                                 $('#modal_costos_12').modal('hide');
                                 $('#form_costos_12')[0].reset(); //Limpia formulario

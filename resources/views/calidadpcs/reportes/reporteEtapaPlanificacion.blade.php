@@ -58,7 +58,7 @@
             <table border="0" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
-                        <th class="no">#</th>
+                        <th class="no" style="width: 30px;">#</th>
                         <th class="unit"><b>Requerimiento</b></th>
                     </tr>
                 </thead>

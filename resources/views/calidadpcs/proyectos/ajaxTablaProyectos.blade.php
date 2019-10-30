@@ -107,7 +107,6 @@
         });
 
         table.on('click', '.delete', function(e) {
-            console.log("enteroooo");
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();

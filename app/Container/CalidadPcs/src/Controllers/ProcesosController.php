@@ -3292,7 +3292,7 @@ class ProcesosController extends Controller
     public function tablaproceso25(Request $request, $idProyecto)
     {
         if ($request->ajax() && $request->isMethod('GET')) {
-            $integrantes = EquipoScrum::where('FK_CE_Id_Proyecto', $idProyecto)->whereIn('FK_CE_Id_Rol', ['1', '4']);
+            $integrantes = EquipoScrum::where('FK_CE_Id_Proyecto', $idProyecto)->whereIn('FK_CE_Id_Rol', ['1','2','4']);
             return Datatables::of($integrantes)
                 ->addIndexColumn()
                 ->addColumn('Estado', function ($integrantes) {

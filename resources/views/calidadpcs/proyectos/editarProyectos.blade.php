@@ -18,14 +18,10 @@
 
                                 {!! Field:: hidden ('PK_CP_Id_Proyecto', $infoProyecto['PK_CP_Id_Proyecto'])!!}
 
-                                {!! Field:: text('CP_Nombre_Proyecto',$infoProyecto['CP_Nombre_Proyecto'],['label'=>'Nombre del Proyecto:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('CP_Nombre_Proyecto',$infoProyecto['CP_Nombre_Proyecto'],['label'=>'Nombre del Proyecto:', 'max' => '190', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-                                
                             </div>
                             <div class="col-md-6">
-
-                                {{-- {!! Field::date('CP_Fecha_Inicio',$infoProyecto['CP_Fecha_Inicio'],['label' => 'Fecha de inicio del proyecto',  'class'=> 'form-control','auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d"],['help' => 'Digite la fecha de inicio del proyecto', 'icon' => 'fa fa-calendar']) !!}
-                                --}}
                                 {!! Field::date('CP_Fecha_Inicio',$infoProyecto['CP_Fecha_Inicio'],['label' => 'Fecha de inicio del proyecto',  'class'=> 'form-control datepicker','auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d", "readonly"],['help' => 'Digite la fecha de inicio del proyecto', 'icon' => 'fa fa-calendar']) !!}
                             </div>
                         </div>
@@ -33,21 +29,21 @@
                         <h3>Informacion de los roles Scrum </h3><br>
                             <div class="col-md-6">
 
-                                {!! Field:: text('CE_Nombre_1',$infoEquipoScrum[0]['CE_Nombre_Persona'],['label'=>'Scrum Master:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('CE_Nombre_1',$infoEquipoScrum[0]['CE_Nombre_Persona'],['label'=>'Scrum Master:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => '','icon'=>'fa fa-user'] ) !!}
 
-                                {!! Field:: text('CE_Nombre_4',$infoEquipoScrum[3]['CE_Nombre_Persona'],['label'=>'Lider del Equipo Scrum:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('CE_Nombre_4',$infoEquipoScrum[3]['CE_Nombre_Persona'],['label'=>'Lider del Equipo Scrum:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => '','icon'=>'fa fa-users'] ) !!}
 
                             </div>
                             <div class="col-md-6">
-                                {!! Field:: text('CE_Nombre_2',$infoEquipoScrum[1]['CE_Nombre_Persona'],['label'=>'Product Owner:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('CE_Nombre_2',$infoEquipoScrum[1]['CE_Nombre_Persona'],['label'=>'Product Owner:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => '','icon'=>'fa fa-user'] ) !!}
                                 @if(empty($infoEquipoScrum[2]['CE_Nombre_Persona']))                            
-                                    {!! Field:: text('CE_Nombre_3',null,['label'=>'Stakeholder:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    {!! Field:: text('CE_Nombre_3',null,['label'=>'Stakeholder:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => '','icon'=>'fa fa-user'] ) !!}
                                 @else
-                                    {!! Field:: text('CE_Nombre_3',$infoEquipoScrum[2]['CE_Nombre_Persona'],['label'=>'Stakeholder:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    {!! Field:: text('CE_Nombre_3',$infoEquipoScrum[2]['CE_Nombre_Persona'],['label'=>'Stakeholder:',  'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => '','icon'=>'fa fa-user'] ) !!}
                                 @endif
                             </div>
@@ -55,10 +51,10 @@
                             <div class="col-md-12">
                                 <h3>Integrantes del equipo </h3>
                                 <hr>
-                                {!! Field:: text('CE_Nombre_5',$infoEquipoScrum[4]['CE_Nombre_Persona'],['label'=>'Integrante del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('CE_Nombre_5',$infoEquipoScrum[4]['CE_Nombre_Persona'],['label'=>'Integrante del equipo:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => '','icon'=>'fa fa-user-o'] ) !!}
 
-                                {!! Field:: text('CE_Nombre_6',$infoEquipoScrum[5]['CE_Nombre_Persona'],['label'=>'Integrante del equipo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                {!! Field:: text('CE_Nombre_6',$infoEquipoScrum[5]['CE_Nombre_Persona'],['label'=>'Integrante del equipo:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => '','icon'=>'fa fa-user-o'] ) !!}
                                 
                             </div>
@@ -67,7 +63,7 @@
                                     
                                 @else
                                 <div id="campo7">
-                                    {!! Field:: text('CE_Nombre_7',$infoEquipoScrum[6]['CE_Nombre_Persona'],['label'=>'Integrante del equipo (opcional):', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    {!! Field:: text('CE_Nombre_7',$infoEquipoScrum[6]['CE_Nombre_Persona'],['label'=>'Integrante del equipo (opcional):', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => '','icon'=>'fa fa-user-o'] ) !!}
                                 </div>
                                 @endif
@@ -75,7 +71,7 @@
                                     
                                 @else
                                 <div id="campo8">
-                                    {!! Field:: text('CE_Nombre_8',$infoEquipoScrum[7]['CE_Nombre_Persona'],['label'=>'Integrante del equipo (opcional):', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    {!! Field:: text('CE_Nombre_8',$infoEquipoScrum[7]['CE_Nombre_Persona'],['label'=>'Integrante del equipo (opcional):', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => '','icon'=>'fa fa-user-o'] ) !!}           
                                 </div>                 
                                 @endif
@@ -83,7 +79,7 @@
                                     
                                 @else
                                 <div id="campo9">
-                                    {!! Field:: text('CE_Nombre_9',$infoEquipoScrum[8]['CE_Nombre_Persona'],['label'=>'Integrante del equipo (opcional):', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    {!! Field:: text('CE_Nombre_9',$infoEquipoScrum[8]['CE_Nombre_Persona'],['label'=>'Integrante del equipo (opcional):', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => '','icon'=>'fa fa-user-o'] ) !!}    
                                 </div>                          
                                 @endif
@@ -117,7 +113,6 @@
 </div>
 
 <!-- file script -->
-    <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
     <script src = "{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type = "text/javascript" > </script>
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
@@ -126,38 +121,16 @@
 
     jQuery(document).ready(function () {
 
-        /*Configuracion de input tipo fecha*/
-        $('.datepicker').datepicker({
-            //rtl: App.isRTL(),
-            orientation: "left",
-            autoclose: true,
-            language: 'es',
-            closeText: 'Cerrar',
-            prevText: '<Ant',
-            nextText: 'Sig>',
-            currentText: 'Hoy',
-            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
-            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-            weekHeader: 'Sm',
-            dateFormat: 'yyyy-mm-dd',
-            firstDay: 1,
-            showMonthAfterYear: false,
-            yearSuffix: ''
-        });
-        /*FIN Configuracion de input tipo fecha*/
         jQuery.validator.addMethod("letters", function(value, element) {
-            return this.optional(element) || /^[a-z," "]+$/i.test(value);
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
         });
         jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
-            return this.optional(element) || /^[-a-z," ",$,0-9,.,#]+$/i.test(value);
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
         });
         var editarProyecto = function () {
             return {
                 init: function () {
-                    var route = "{{ route('calidadpcs.proyectosCalidad.update') }}";
+                    var route = '{{ route('calidadpcs.proyectosCalidad.update') }}';
                     var type = 'POST';
                     var async = async || false;
                     var formData = new FormData();
@@ -191,7 +164,6 @@
                             App.blockUI({target: '.portlet-form', animate: true});
                         },
                         success: function (response, xhr, request) {
-                            console.log(response);
                             if (request.status === 200 && xhr === 'success') {
                                 $('#form_update_proyecto')[0].reset(); //Limpia formulario
                                 UIToastr.init(xhr, response.title, response.message);
@@ -212,17 +184,18 @@
         };
         var form = $('#form_update_proyecto');
         var formRules = {
-            CP_Nombre_Proyecto: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
+            CP_Nombre_Proyecto: {required: true, minlength: 3, maxlength: 190, noSpecialCharacters:true, letters:true},
             CP_Fecha_Inicio: {required: true, minlength: 3, maxlength: 20},
-            CP_Fecha_Final: {required: true, minlength: 3, maxlength: 20},
-            CE_Nombre_1: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_2: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_3: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_4: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_5: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_6: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_7: {maxlength: 50, required: false, noSpecialCharacters:true, letters:true},
-            CE_Nombre_8: {maxlength: 50, required: false, noSpecialCharacters:true, letters:true},
+            CE_Nombre_1: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+            CE_Nombre_2: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+            CE_Nombre_3: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+            CE_Nombre_4: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+            CE_Nombre_5: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+            CE_Nombre_6: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+
+            integrante_0: {required: false, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+            integrante_1: {required: false, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+            integrante_2: {required: false, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
         };
         var formMessage = {
             CP_Nombre_Proyecto: {noSpecialCharacters: 'Existen caracteres que no son válidos'},

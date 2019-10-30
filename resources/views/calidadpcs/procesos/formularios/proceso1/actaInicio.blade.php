@@ -87,22 +87,18 @@
                         {!! Field:: hidden ('FK_CPP_Id_Proceso', $idProceso) !!}
 
                         {!! Field:: text('Nombre_Proyecto',$infoProyecto[0]['CP_Nombre_Proyecto'],['label'=>'Nombre de proyecto:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
-                        ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
-
-                    {{--     {!! Field:: text('Duracion',null,['label'=>'Duracion en meses:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                        ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!} --}}
+                            ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
 
                         {!! Field::select('Duracion en meses:',['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5', '6'=>'6', '7'=>'7', '8'=>'8', '9'=>'9', '10'=>'10', '11'=>'11', '12'=>'12' ],null,
                             ['name' => 'Duracion']) !!}
 
-                      
                     </div>
                     <div class="col-md-6">
 
                         {!! Field::date('Fecha_Inicio',$infoProyecto[0]['CP_Fecha_Inicio'],['label' => 'Fecha de inicio', 'class'=> '','auto' => 'off', 'data-date-format' => "yyyy-mm-dd", 'data-date-start-date' => "+0d",'readonly'],['help' => 'Digite la fecha de inicio del proyecto', 'icon' => 'fa fa-calendar']) !!}
 
-                        {!! Field:: text('Entidades',null,['label'=>'Entidades participantes:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                        ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
+                        {!! Field:: text('Entidades',null,['label'=>'Entidades participantes:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                        ['help' => 'Digite las entidades participantes.','icon'=>'fa fa-file-text-o'] ) !!}
                         
                     </div>
                 </div>
@@ -110,7 +106,7 @@
                     <div class="row">
                         <h3><i class="fa fa-arrow-right"></i><strong> Objetivos</strong></h3><br>
                         <div class="col-md-12">
-                            {!! Field:: text('Objetivo_General',null,['label'=>'Objetivo General:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('Objetivo_General',null,['label'=>'Objetivo General:',  'max' => '100', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                             ['help' => 'Digite el objetivo general.','icon'=>'fa fa-file-text-o'] ) !!}
                         </div>
                         <div class="col-md-12">
@@ -257,34 +253,13 @@
 <script type="text/javascript">
     jQuery(document).ready(function() {
 
-        /*Configuracion de input tipo fecha*/
-        $('.datepicker').datepicker({
-            //rtl: App.isRTL(),
-            orientation: "left",
-            autoclose: true,
-            language: 'es',
-            closeText: 'Cerrar',
-            prevText: '<Ant',
-            nextText: 'Sig>',
-            currentText: 'Hoy',
-            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
-            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-            weekHeader: 'Sm',
-            dateFormat: 'yyyy-mm-dd',
-            firstDay: 1,
-            showMonthAfterYear: false,
-            yearSuffix: ''
-        });
-        /*FIN Configuracion de input tipo fecha*/
         jQuery.validator.addMethod("letters", function(value, element) {
-            return this.optional(element) || /^[a-z," "]+$/i.test(value);
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
         });
         jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
-            return this.optional(element) || /^[-a-z," ",$,0-9,.,#]+$/i.test(value);
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
         });
+       
         var editarProyecto = function() {
             return {
                 init: function() {
@@ -297,12 +272,8 @@
                     formData.append('FK_CPP_Id_Proyecto', $('input:hidden[name="FK_CPP_Id_Proyecto"]').val());
                     formData.append('FK_CPP_Id_Proceso', $('input:hidden[name="FK_CPP_Id_Proceso"]').val());
                     //Info del proceso
-                    // formData.append('Numero_acta', $('input:text[name="Numero_acta"]').val());
                     formData.append('Fecha_Inicio', $('#Fecha_Inicio').val());
-                    // formData.append('Tipo_Proyecto', $('input:text[name="Tipo_Proyecto"]').val());
-                    // formData.append('Nombre_Proyecto', $('input:text[name="Nombre_Proyecto"]').val());
                     formData.append('Duracion', $('select[name="Duracion"]').val());
-                    // formData.append('Duracion', $('input:text[name="Duracion"]').val());
                     formData.append('Entidades', $('input:text[name="Entidades"]').val());
                     // Objetivo general
                     formData.append('Objetivo_General', $('input:text[name="Objetivo_General"]').val());
@@ -357,7 +328,6 @@
                                 App.unblockUI('.portlet-form');
                                 var route = "{{route('calidadpcs.proyectosCalidad.index.ajax')}}";
                                 location.href = "{{route('calidadpcs.proyectosCalidad.index')}}";
-                                //$(".content-ajax").load(route);
                             }
                         },
                         error: function(response, xhr, request) {
@@ -371,34 +341,53 @@
         };
         var form = $('#form_create_proceso_1');
         var formRules = {
-            //CM_UrlFoto: {required: false, extension: "jpg|png"},
-            Numero_acta: {
-                minlength: 2,
-                maxlength: 20,
-                required: true,
-                noSpecialCharacters: true
-            },
-            Duracion: {
-                minlength: 1,
-                maxlength: 2,
-                required: true,
-                noSpecialCharacters: true
-            },
-            CP_Fecha_Inicio: {
-                required: true,
-                minlength: 3,
-                maxlength: 20
-            },
-            CP_Fecha_Final: {
-                required: true,
-                minlength: 3,
-                maxlength: 20
-            },
+            Duracion: {required: true},
+            Entidades: {required: false, minlength: 3, maxlength: 50, noSpecialCharacters:true, letters:false},
+            Objetivo_General:{required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            Objetivo_Especifico_1:{required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            Objetivo_Especifico_2:{required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            Objetivo_Especifico_3:{required: false, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            Objetivo_Especifico_4:{required: false, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            Objetivo_Especifico_5:{required: false, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_1:{required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_2:{required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_3:{required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_4:{required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_5:{required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_6:{required: false, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_7:{required: false, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_8:{required: false, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_9:{required: false, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_10:{required: false, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_11:{required: false, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_12:{required: false, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_13:{required: false, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_14:{required: false, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            CPR_Nombre_Requerimiento_15:{required: false, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
         };
         var formMessage = {
-            Numero_acta: {
-                noSpecialCharacters: 'Existen caracteres que no son válidos'
-            },
+            Entidades: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            Objetivo_General: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            Objetivo_Especifico_1: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            Objetivo_Especifico_2: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            Objetivo_Especifico_3: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            Objetivo_Especifico_4: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            Objetivo_Especifico_5: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CPR_Nombre_Requerimiento_1: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CPR_Nombre_Requerimiento_2: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CPR_Nombre_Requerimiento_3: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CPR_Nombre_Requerimiento_4: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CPR_Nombre_Requerimiento_5: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CPR_Nombre_Requerimiento_6: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CPR_Nombre_Requerimiento_7: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CPR_Nombre_Requerimiento_8: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CPR_Nombre_Requerimiento_9: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CPR_Nombre_Requerimiento_10: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CPR_Nombre_Requerimiento_11: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CPR_Nombre_Requerimiento_12: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CPR_Nombre_Requerimiento_13: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CPR_Nombre_Requerimiento_14: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            CPR_Nombre_Requerimiento_15: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
         };
         FormValidationMd.init(form, formRules, formMessage, editarProyecto());
 
@@ -470,10 +459,6 @@
                 UIToastr.init(xhr, "¡Lo sentimos!", "Maximo puede agregar más requisitos adicionales.");
             }
         });
-        // $(".pmd-select2").select2({
-        //         width: '100%',
-        //         placeholder: "Selecccionar",
-        //     });
         $('#eliminarRequisito').click(function(e) {
             e.preventDefault();
             if (x_requisitos == 6) {

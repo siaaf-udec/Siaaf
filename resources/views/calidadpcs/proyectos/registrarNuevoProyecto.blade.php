@@ -145,7 +145,6 @@
         </div>
     @endcomponent
 </div>
-    <!-- <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script> -->
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type = "text/javascript" > </script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
@@ -174,12 +173,14 @@
             yearSuffix: ''
         });
         /*FIN Configuracion de input tipo fecha*/
+
         jQuery.validator.addMethod("letters", function(value, element) {
             return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
         });
         jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
             return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
         });
+
         var createProyecto = function () {
             return {
                 init: function () {
@@ -259,7 +260,7 @@
             CP_Fecha_Inicio: {required: true, minlength: 3, maxlength: 20},
             CE_Nombre_1: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
             CE_Nombre_2: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
-            CE_Nombre_3: {required: false, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
+            CE_Nombre_3: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
             CE_Nombre_4: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
             CE_Nombre_5: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
             CE_Nombre_6: {required: true, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
@@ -268,22 +269,22 @@
             integrante_1: {required: false, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
             integrante_2: {required: false, minlength: 3, maxlength: 40, noSpecialCharacters:true, letters:true},
 
-            CPR_Nombre_Requerimiento_1: {required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
-            CPR_Nombre_Requerimiento_2: {required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
-            CPR_Nombre_Requerimiento_3: {required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
-            CPR_Nombre_Requerimiento_4: {required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
-            CPR_Nombre_Requerimiento_5: {required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            // CPR_Nombre_Requerimiento_1: {required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            // CPR_Nombre_Requerimiento_2: {required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            // CPR_Nombre_Requerimiento_3: {required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            // CPR_Nombre_Requerimiento_4: {required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            // CPR_Nombre_Requerimiento_5: {required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
 
-            requisito_0: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
-            requisito_1: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
-            requisito_2: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
-            requisito_3: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
-            requisito_4: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
-            requisito_5: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
-            requisito_6: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
-            requisito_7: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
-            requisito_8: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
-            requisito_9: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            // requisito_0: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            // requisito_1: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            // requisito_2: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            // requisito_3: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            // requisito_4: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            // requisito_5: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            // requisito_6: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            // requisito_7: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            // requisito_8: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
+            // requisito_9: {required: false, minlength: 3, maxlength: 40, maxlength: 100, noSpecialCharacters:true, letters:false},
         };
         var formMessage = {
             CP_Nombre_Proyecto: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
@@ -298,22 +299,22 @@
             integrante_1: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
             integrante_2: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
 
-            CPR_Nombre_Requerimiento_1: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CPR_Nombre_Requerimiento_2: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CPR_Nombre_Requerimiento_3: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CPR_Nombre_Requerimiento_4: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CPR_Nombre_Requerimiento_5: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            // CPR_Nombre_Requerimiento_1: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            // CPR_Nombre_Requerimiento_2: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            // CPR_Nombre_Requerimiento_3: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            // CPR_Nombre_Requerimiento_4: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            // CPR_Nombre_Requerimiento_5: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
 
-            requisito_0: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            requisito_1: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            requisito_2: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            requisito_3: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            requisito_4: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            requisito_5: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            requisito_6: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            requisito_7: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            requisito_8: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            requisito_9: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            // requisito_0: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            // requisito_1: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            // requisito_2: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            // requisito_3: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            // requisito_4: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            // requisito_5: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            // requisito_6: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            // requisito_7: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            // requisito_8: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
+            // requisito_9: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
         };
         FormValidationMd.init(form, formRules, formMessage, createProyecto());
 
@@ -360,37 +361,7 @@
             }
         });
         
-        // Requisitos
-        var requisitos_max = 10;   //maximo de campos
-        var x_requisitos = 0;
-        $('#agregarRequisito').click (function(e) {
-                e.preventDefault();     //prevenir novos clicks
-                if (x_requisitos < requisitos_max) {
-                    $('<div id="requisito'+x_requisitos+'" class="form-group form-md-line-input">\
-                    <div class="input-icon">\
-                    <input class="form-control form-control" autofocus="" autocomplete="off" maxlength="100" id="requisito_'+x_requisitos+'" name="requisito_'+x_requisitos+'" type="text">\
-                    <label for="requisito_'+x_requisitos+'" class="control-label">Nombre del requisito (adicional):</label>\
-                    <span class="help-block"> Digite el requisito</span>\
-                    <i class=" fa fa-angle-right "></i>\
-                    </div>\
-                    </div>').appendTo($('#ListaRequisitos')).hide().slideDown(600);
-                    x_requisitos++;
-                }else{
-                    xhr = "warning"
-                    UIToastr.init(xhr, "¡Lo sentimos!", "Maximo puede agregar "+requisitos_max+" requisitos adicionales.");
-                }
-        });
-
-        $('#eliminarRequisito').click (function(e) {
-            e.preventDefault();
-            if(x_requisitos==0){
-                xhr = "warning"
-                UIToastr.init(xhr, "¡Lo sentimos!", "No es posible eliminar mas requisitos.");
-            }else{
-                x_requisitos--;
-                $("#requisito"+x_requisitos).slideUp(400, function(){$("#requisito"+x_requisitos).remove();});
-            }
-        });
+      
     });
 </script>
 

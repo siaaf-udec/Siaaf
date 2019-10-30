@@ -39,10 +39,10 @@
     <main>
         <div id="details" class="clearfix">
             <div id="client">
-                <h2 class="name">Reporte de la Etapa de Ejecucion</h2>
+                <h2 class="name">Reporte de la Etapa de Cierre</h2>
             </div>
             <div id="invoice">
-                <div><a class="noPrint" href="{{ route('calidadpcs.reportesCalidad.descargaReporteEtapaEjecucion') }}/{{$infoProyecto->PK_CP_Id_Proyecto}}">
+                <div><a class="noPrint" href="{{ route('calidadpcs.reportesCalidad.descargaReporteEtapaCierre') }}/{{$infoProyecto->PK_CP_Id_Proyecto}}">
                         <i class="fa fa-download">
                         </i>Descargar reporte
                     </a>
@@ -50,74 +50,42 @@
             </div>
         </div>
         <div class="col-md-12">
-            <h3>Metodologia de trabajo</h3>
-            <p>{{$Metodologia->CPPD_Metodologia}}</p>
+            <h3>Informacion del proyecto</h3>
+            <div class="col-md-6" style="padding: 10px; float: left; width: 45%; text-align: justify;">
+                <div class="form-group form-md-line-input">
+                    <label>Nombre del proyecto: {{$infoProyecto->CP_Nombre_Proyecto}}</label>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding: 10px; float: right; width: 45%; text-align: justify;">
+                <div class="form-group form-md-line-input">
+                    <label>Fecha: {{$infoProyecto->CP_Fecha_Inicio.' a '. $infoProyecto->CP_Fecha_Final}}</label>
+                </div>
+            </div>
         </div>
+        <br><br><br>
         <div class="col-md-12">
-            <h3>Buenas practicas</h3>
-            <p>{{$Aseguramiento->CPA_Aseguramiento}}</p>
-        </div>
-        
-        <div class="col-md-12">
-            <h3>Tabla carga horaria</h3>
+            <h3>Tabla de aprobacion</h3>
             <table border="0" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
                         <th class="no" style="width: 30px;">#</th>
                         <th class="unit"><b>Nombre</b></th>
-                        <th class="unit"><b>Tiempo</b></th>
+                        <th class="unit"><b>Rol</b></th>
+                        <th class="unit"><b>Estado</b></th>
                     </tr>
                 </thead>
-                @foreach($horas as $hora)
+                @foreach($integrantes as $integrante)
                 <tbody>
                     <tr>
-                        <td class="no" style="width: 30px;">{{$cont++}}</td>
-                        <td class="unit">{{$hora->CE_Nombre_Persona}}</td>
-                        <td class="unit">{{$hora->CE_Horas_Trabajadas . ' horas'}}</td>
+                        <td class="no">{{$cont++}}</td>
+                        <td class="unit">{{$integrante->CE_Nombre_Persona}}</td>
+                        <td class="desc">{{$integrante->Rol}}</td>
+                        <td class="desc">{{$integrante->estado}}</td>
                     </tr>
-                    @endforeach 
+                    @endforeach
                 </tbody>
             </table>
         </div>
-
-        <div class="col-md-12">
-            <h3>Gestion Comunicaciones</h3>
-            <p>{{'Medio: '.$comunicacion->CPC_Medio}}</p>
-            <p>{{'Especificaciones: '.$comunicacion->CPC_Redaccion}}</p>
-        </div>
-       
-        <div class="col-md-12">
-            <h3>Tabla Adquisiciones</h3>
-            <table border="0" cellspacing="0" cellpadding="0">
-                <thead>
-                    <tr>
-                        <th class="no" style="width: 30px;">#</th>
-                        <th class="unit"><b>Adquisicion</b></th>
-                        <th class="unit"><b>Proveedor</b></th>
-                        <th class="unit"><b>Tipo de contrato</b></th>
-                    </tr>
-                </thead>
-                @foreach($adquisiciones as $adquisicion)
-                <tbody>
-                    <tr>
-                        <td class="no">{{$cont_2++}}</td>
-                        <td class="unit">{{$adquisicion->CPGA_Adquisicion}}</td>
-                        <td class="unit">{{$adquisicion->CPGA_Proveedor}}</td>
-                        <td class="unit">{{$adquisicion->CPGA_Tipo_Contrato}}</td>
-                    </tr>
-                    @endforeach 
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-12">
-            <h3>Participacion Interesados</h3>
-            <p>{{'Necesidades: '.$participacion->CPI_Necesidades}}</p>
-            <p>{{'Expectativas: '.$participacion->CPI_Expectativas}}</p>
-        </div>
-          
-       <br>
-       <br>
-       <br>
     </main>
 </body>
 <!-- <footer>

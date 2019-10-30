@@ -203,34 +203,14 @@
                 });
 
         });
-        /*Configuracion de input tipo fecha*/
-        // $('.datepicker').datepicker({
-        //     //rtl: App.isRTL(),
-        //     orientation: "left",
-        //     autoclose: true,
-        //     language: 'es',
-        //     closeText: 'Cerrar',
-        //     prevText: '<Ant',
-        //     nextText: 'Sig>',
-        //     currentText: 'Hoy',
-        //     monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-        //     monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-        //     dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-        //     dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
-        //     dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-        //     weekHeader: 'Sm',
-        //     dateFormat: 'yyyy-mm-dd',
-        //     firstDay: 1,
-        //     showMonthAfterYear: false,
-        //     yearSuffix: ''
-        // });
-        /*FIN Configuracion de input tipo fecha*/
+      
         jQuery.validator.addMethod("letters", function(value, element) {
-            return this.optional(element) || /^[a-z," "]+$/i.test(value);
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
         });
         jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
-            return this.optional(element) || /^[-a-z," ",$,0-9,.,#]+$/i.test(value);
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
         });
+
         var editarProyecto = function () {
             return {
                 init: function () {
@@ -263,7 +243,6 @@
                                 App.unblockUI('.portlet-form');
                                 var route = '{{ route('calidadpcs.proyectosCalidad.index.ajax') }}';
                                 location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
-                                //$(".content-ajax").load(route);
                             }
                         },
                         error: function (response, xhr, request) {
@@ -278,41 +257,10 @@
         };
         var form = $('#form_update_proyecto');
         var formRules = {
-            //CM_UrlFoto: {required: false, extension: "jpg|png"},
-            CP_Nombre_Proyecto: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CP_Fecha_Inicio: {required: true, minlength: 3, maxlength: 20},
-            CP_Fecha_Final: {required: true, minlength: 3, maxlength: 20},
-            CE_Nombre_1: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_2: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_3: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_4: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_5: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_6: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CE_Nombre_7: {maxlength: 50, required: false, noSpecialCharacters:true, letters:true},
-            CE_Nombre_8: {maxlength: 50, required: false, noSpecialCharacters:true, letters:true},
-            // CM_NuSoat: {required: true, minlength: 5, maxlength: 20, noSpecialCharacters:true},
-            
+            Alcance:{required: true, minlength: 3, maxlength: 300, noSpecialCharacters:true, letters:false},
         };
         var formMessage = {
-            CP_Nombre_Proyecto: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CP_Nombre_Proyecto: {letters: 'Los numeros no son válidos'},
-            CE_Nombre_1: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CE_Nombre_1: {letters: 'Los numeros no son válidos'},
-            CE_Nombre_2: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CE_Nombre_2: {letters: 'Los numeros no son válidos'},
-            CE_Nombre_3: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CE_Nombre_3: {letters: 'Los numeros no son válidos'},
-            CE_Nombre_4: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CE_Nombre_4: {letters: 'Los numeros no son válidos'},
-            CE_Nombre_5: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CE_Nombre_5: {letters: 'Los numeros no son válidos'},
-            CE_Nombre_6: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CE_Nombre_6: {letters: 'Los numeros no son válidos'},
-            CE_Nombre_7: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CE_Nombre_7: {letters: 'Los numeros no son válidos'},
-            CE_Nombre_8: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CE_Nombre_8: {letters: 'Los numeros no son válidos'},
-            
+            Alcance: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
         };
         FormValidationMd.init(form, formRules, formMessage, editarProyecto());
 

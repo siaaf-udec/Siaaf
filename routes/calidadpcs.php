@@ -104,8 +104,8 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'calidadpcs.proyectosCalidad.edit'
         ]);
 
-         //ruta que conduce al controlador para ver el perfil de un proyecto.
-         Route::get('update', [
+        //ruta que conduce al controlador para ver el perfil de un proyecto.
+        Route::post('update', [
             'uses' => $controller . 'ProyectosController@update',
             'as' => 'calidadpcs.proyectosCalidad.update'
         ]);
@@ -173,9 +173,9 @@ Route::group(['middleware' => ['auth']], function () {
             'as' => 'calidadpcs.procesosCalidad.editarFormularios'
         ]);
 
-        
 
-        
+
+
 
         //ruta que realiza la consulta de los procesos registrados
         Route::get('registrarActividad/{id?}/{idProyecto?}', [
@@ -249,7 +249,7 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@tablaRequerimientos',
             'as' => 'calidadpcs.procesosCalidad.tablaRequermientos'
         ]);
-        
+
 
         // 
         //PROCESO #3
@@ -374,8 +374,8 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@storeProceso7_1',
             'as' => 'calidadpcs.procesosCalidad.storeProceso7_1'
         ]);
-         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
-         Route::post('updateProceso7', [
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::post('updateProceso7', [
             'uses' => $controller . 'ProcesosController@updateProceso7',
             'as' => 'calidadpcs.procesosCalidad.updateProceso7'
         ]);
@@ -404,8 +404,8 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@storeProceso8_1',
             'as' => 'calidadpcs.procesosCalidad.storeProceso8_1'
         ]);
-         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
-         Route::post('updateProceso8', [
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::post('updateProceso8', [
             'uses' => $controller . 'ProcesosController@updateProceso8',
             'as' => 'calidadpcs.procesosCalidad.updateProceso8'
         ]);
@@ -435,8 +435,8 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@storeProceso9_1',
             'as' => 'calidadpcs.procesosCalidad.storeProceso9_1'
         ]);
-         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
-         Route::post('updateProceso9', [
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::post('updateProceso9', [
             'uses' => $controller . 'ProcesosController@updateProceso9',
             'as' => 'calidadpcs.procesosCalidad.updateProceso9'
         ]);
@@ -513,8 +513,8 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@info13',
             'as' => 'calidadpcs.procesosCalidad.info13'
         ]);
-         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
-         Route::post('updateProceso13', [
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::post('updateProceso13', [
             'uses' => $controller . 'ProcesosController@updateProceso13',
             'as' => 'calidadpcs.procesosCalidad.updateProceso13'
         ]);
@@ -546,8 +546,8 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@storeProceso15',
             'as' => 'calidadpcs.procesosCalidad.storeProceso15'
         ]);
-         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
-         Route::post('updateProceso15', [
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::post('updateProceso15', [
             'uses' => $controller . 'ProcesosController@updateProceso15',
             'as' => 'calidadpcs.procesosCalidad.updateProceso15'
         ]);
@@ -570,7 +570,7 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@storeProceso16_1',
             'as' => 'calidadpcs.procesosCalidad.storeProceso16_1'
         ]);
-        
+
         /**
          * 
          * PROCESO #17
@@ -608,7 +608,7 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@storeProceso18_1',
             'as' => 'calidadpcs.procesosCalidad.storeProceso18_1'
         ]);
-        
+
         /**
          * 
          * PROCESO #19
@@ -642,8 +642,8 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@info20',
             'as' => 'calidadpcs.procesosCalidad.info20'
         ]);
-         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
-         Route::post('updateProceso20', [
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::post('updateProceso20', [
             'uses' => $controller . 'ProcesosController@updateProceso20',
             'as' => 'calidadpcs.procesosCalidad.updateProceso20'
         ]);
@@ -719,8 +719,8 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@info24',
             'as' => 'calidadpcs.procesosCalidad.info24'
         ]);
-         //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
-         Route::post('updateProceso24', [
+        //ruta que conduce al controlador para alamacenar los datos del proceso en la base de datos
+        Route::post('updateProceso24', [
             'uses' => $controller . 'ProcesosController@updateProceso24',
             'as' => 'calidadpcs.procesosCalidad.updateProceso24'
         ]);
@@ -747,7 +747,6 @@ Route::group(['middleware' => ['auth']], function () {
             'uses' => $controller . 'ProcesosController@finalizarProyecto',
             'as' => 'calidadpcs.procesosCalidad.finalizarProyecto'
         ]);
-
     });
 
     Route::group(['prefix' => 'reportesCalidad', 'middleware' => ['permission:ADMIN_CALIDADPCS']], function () {
@@ -756,48 +755,57 @@ Route::group(['middleware' => ['auth']], function () {
 
         //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
         Route::get('reporteEtapaUno/{idProyecto?}', [
-            'uses' => $controller . 'ReportesController@reporteEtapaUno',  
+            'uses' => $controller . 'ReportesController@reporteEtapaUno',
             'as' => 'calidadpcs.reportesCalidad.reporteEtapaUno'
         ]);
         //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
         Route::get('descargaReporteEtapaUno/{idProyecto?}', [
-            'uses' => $controller . 'ReportesController@descargaReporteEtapaUno',  
+            'uses' => $controller . 'ReportesController@descargaReporteEtapaUno',
             'as' => 'calidadpcs.reportesCalidad.descargaReporteEtapaUno'
         ]);
 
         //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
         Route::get('reporteEtapaPlanificacion/{idProyecto?}', [
-            'uses' => $controller . 'ReportesController@reporteEtapaPlanificacion',  
+            'uses' => $controller . 'ReportesController@reporteEtapaPlanificacion',
             'as' => 'calidadpcs.reportesCalidad.reporteEtapaPlanificacion'
         ]);
         //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
         Route::get('descargaReporteEtapaPlanificacion/{idProyecto?}', [
-            'uses' => $controller . 'ReportesController@descargaReporteEtapaPlanificacion',  
+            'uses' => $controller . 'ReportesController@descargaReporteEtapaPlanificacion',
             'as' => 'calidadpcs.reportesCalidad.descargaReporteEtapaPlanificacion'
         ]);
 
-          //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
-          Route::get('reporteEtapaEjecucion/{idProyecto?}', [
-            'uses' => $controller . 'ReportesController@reporteEtapaEjecucion',  
+        //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+        Route::get('reporteEtapaEjecucion/{idProyecto?}', [
+            'uses' => $controller . 'ReportesController@reporteEtapaEjecucion',
             'as' => 'calidadpcs.reportesCalidad.reporteEtapaEjecucion'
         ]);
         //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
         Route::get('descargaReporteEtapaEjecucion/{idProyecto?}', [
-            'uses' => $controller . 'ReportesController@descargaReporteEtapaEjecucion',  
+            'uses' => $controller . 'ReportesController@descargaReporteEtapaEjecucion',
             'as' => 'calidadpcs.reportesCalidad.descargaReporteEtapaEjecucion'
         ]);
 
-          //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
-          Route::get('reporteEtapaMonitoreo/{idProyecto?}', [
-            'uses' => $controller . 'ReportesController@reporteEtapaMonitoreo',  
+        //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+        Route::get('reporteEtapaMonitoreo/{idProyecto?}', [
+            'uses' => $controller . 'ReportesController@reporteEtapaMonitoreo',
             'as' => 'calidadpcs.reportesCalidad.reporteEtapaMonitoreo'
         ]);
         //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
         Route::get('descargaReporteEtapaMonitoreo/{idProyecto?}', [
-            'uses' => $controller . 'ReportesController@descargaReporteEtapaMonitoreo',  
+            'uses' => $controller . 'ReportesController@descargaReporteEtapaMonitoreo',
             'as' => 'calidadpcs.reportesCalidad.descargaReporteEtapaMonitoreo'
         ]);
 
-
+        //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+        Route::get('reporteEtapaCierre/{idProyecto?}', [
+            'uses' => $controller . 'ReportesController@reporteEtapaCierre',
+            'as' => 'calidadpcs.reportesCalidad.reporteEtapaCierre'
+        ]);
+        //ruta que conduce al controlador para mostrar el reporte de los usuarios registrados
+        Route::get('descargaReporteEtapaCierre/{idProyecto?}', [
+            'uses' => $controller . 'ReportesController@descargaReporteEtapaCierre',
+            'as' => 'calidadpcs.reportesCalidad.descargaReporteEtapaCierre'
+        ]);
     });
 });
