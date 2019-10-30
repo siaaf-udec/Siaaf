@@ -41,16 +41,16 @@
 
                                     {!! Field:: hidden ('PK_CPC_Id_Sprint', null)!!}
 
-                                    {!! Field:: text('CPC_Nombre_Sprint',null,['label'=>'Nombre del sprint:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off', 'readonly'],
+                                    {!! Field:: text('CPC_Nombre_Sprint',null,['label'=>'Nombre del sprint:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off', 'readonly'],
                                     ['help' => 'Digite el nombre del sprint.', 'icon' => 'fa fa-tag'] ) !!}
 
-                                    {!! Field:: text('Requerimientos',null,['label'=>'Requerimientos:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off', 'readonly'],
+                                    {!! Field:: text('Requerimientos',null,['label'=>'Requerimientos:','class'=> 'form-control', 'autofocus','autocomplete'=>'off', 'readonly'],
                                     ['help' => 'Digite el nombre del sprint.', 'icon' => 'fa fa-sliders'] ) !!}
 
-                                    {!! Field:: text('Responsables',null,['label'=>'Responsables:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off', 'readonly'],
+                                    {!! Field:: text('Responsables',null,['label'=>'Responsables:',  'class'=> 'form-control', 'autofocus','autocomplete'=>'off', 'readonly'],
                                     ['help' => 'Digite el nombre del sprint.', 'icon' => 'fa fa-users'] ) !!}
                                     
-                                    {!! Field:: text('CPC_Entregable',null,['label'=>'Tareas a realizar :', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
+                                    {!! Field:: text('CPC_Entregable',null,['label'=>'Tareas a realizar :', 'max' => '300', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
                                         ['help' => 'Digite las tareas que se van a cumplir en el sprint.', 'icon' => 'fa fa-file-text-o']) !!}
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                     <a href="javascript:;" class="btn btn-outline red button-cancel"><i class="fa fa-angle-left"></i>
                         Cancelar
                     </a>
-                        <a href="javascript:;" class="btn btn-success guardarCosto">
+                        <a href="javascript:;" class="btn btn-success guardarProceso">
                             Continuar <i class="fa fa-angle-right"></i>
                         </a>
                     </div>
@@ -84,6 +84,13 @@
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
+
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
+        });
 
         var table, url, columns;
         table = $('#listaProyectos');
@@ -185,13 +192,15 @@
 
         var form_create_modal = $('#form_permissions_update');
         var rules_create_modal = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            CPC_Entregable: { required: true, minlength: 3, maxlength: 300, noSpecialCharacters:true, letters:false },
         };
-        FormValidationMd.init(form_create_modal,rules_create_modal,false,createModal());
+        var formMessage = {
+            CPC_Entregable: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+        };
+        FormValidationMd.init(form_create_modal,rules_create_modal,formMessage,createModal());
     });
 
-    $(".guardarCosto").on('click', function(e) {
+    $(".guardarProceso").on('click', function(e) {
             e.preventDefault();
                 var route = '{{ route('calidadpcs.procesosCalidad.storeProceso5') }}';
                     var type = 'POST';

@@ -17,10 +17,10 @@
                         {!! Field:: hidden ('idProyecto', $idProyecto) !!}  
                         {!! Field:: hidden ('idProceso', $idProceso) !!}  
 
-                        {!! Field::textArea('Necesidades',['label' => 'Necesidades:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '2'],
+                        {!! Field::textArea('Necesidades',['label' => 'Necesidades:', 'required', 'auto' => 'off', 'max' => '500', "rows" => '2'],
                                         ['help' => 'Escribe el alcance del proyecto.', 'icon' => 'fa fa-quote-right']) !!}
 
-                        {!! Field::textArea('Expectativas',['label' => 'Expectativas:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '2'],
+                        {!! Field::textArea('Expectativas',['label' => 'Expectativas:', 'required', 'auto' => 'off', 'max' => '500', "rows" => '2'],
                                         ['help' => 'Escribe el alcance del proyecto.', 'icon' => 'fa fa-quote-right']) !!}
                     </div>
                 </div>

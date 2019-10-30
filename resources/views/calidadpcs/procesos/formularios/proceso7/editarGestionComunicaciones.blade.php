@@ -165,8 +165,6 @@
         $(".create").on('click', function(e) {
             e.preventDefault();
             $('#modal_create').modal('toggle');
-            // actualizarSemanas();
-            // $tr = $(this).closest('tr');
         });
 
         $(".date-time-picker").datetimepicker({
@@ -232,10 +230,14 @@
 
         var form_create_modal = $('#form_permissions_update');
         var rules_create_modal = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            Interesado: {required: true },
+            Lugar: { required: true, minlength: 2, maxlength: 50, noSpecialCharacters:true, letters:false},
+            date_time: { required: true },
         };
-        FormValidationMd.init(form_create_modal,rules_create_modal,false,createModal());
+        var formMessage = {
+            funcion: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+        };
+        FormValidationMd.init(form_create_modal,rules_create_modal,formMessage,createModal());
 
         table.on('click', '.editar', function(e) {
             e.preventDefault();
@@ -296,10 +298,14 @@
 
         var form_edit_modal = $('#form_edit');
         var rules_edit_modal = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            Interesado_edit: {required: true },
+            date_time_edit: {required: true },
+            Lugar_edit: { required: true, minlength: 3, maxlength: 300, noSpecialCharacters:true, letters:false },
         };
-        FormValidationMd.init(form_edit_modal,rules_edit_modal,false,EditModal());
+        var message_edit_modal = {
+            Lugar_edit: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+        };
+        FormValidationMd.init(form_edit_modal,rules_edit_modal,message_edit_modal,EditModal());
 
         table.on('click', '.eliminar', function(e) {
             e.preventDefault();

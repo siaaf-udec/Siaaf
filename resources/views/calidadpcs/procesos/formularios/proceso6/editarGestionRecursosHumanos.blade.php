@@ -40,7 +40,7 @@
  
                                     {!! Field::select('integrantes:',$integrantes,null,['name' => 'module_create']) !!}
                                     
-                                    {!! Field:: text('funcion',null,['label'=>'Funcion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    {!! Field:: text('funcion',null,['label'=>'Funcion:', 'max' => '300', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Funcion que cumple.', 'icon' => 'fa fa-list-ol'] ) !!}
 
                                 </div>
@@ -148,8 +148,6 @@
         $(".create").on('click', function(e) {
             e.preventDefault();
             $('#modal_create').modal('toggle');
-            // actualizarSemanas();
-            // $tr = $(this).closest('tr');
         });
         $(".pmd-select2").select2({
                 width: '100%',
@@ -160,7 +158,6 @@
         var createModal = function () {
             return{
                 init: function () {
-                    // console.log($('select[name="module_create"]').val());
                     var route = "{{ route('calidadpcs.procesosCalidad.storeProceso6') }}";
                     var type = 'POST';
                     var async = async || false;
@@ -203,10 +200,12 @@
 
         var form_create_modal = $('#form_permissions_update');
         var rules_create_modal = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            funcion: { required: true, minlength: 3, maxlength: 300, noSpecialCharacters:true, letters:false },
         };
-        FormValidationMd.init(form_create_modal,rules_create_modal,false,createModal());
+        var formMessage = {
+            funcion: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+        };
+        FormValidationMd.init(form_create_modal,rules_create_modal,formMessage,createModal());
 
 
         $(".guardarProceso").on('click', function(e) {
@@ -306,10 +305,12 @@
 
         var form_edit_modal = $('#form_edit');
         var rules_edit_modal = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            CPC_Entregable: { required: true, minlength: 3, maxlength: 300, noSpecialCharacters:true, letters:false },
         };
-        FormValidationMd.init(form_edit_modal,rules_edit_modal,false,EditModal());
+        var message_edit_modal = {
+            CPC_Entregable: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+        };
+        FormValidationMd.init(form_edit_modal,rules_edit_modal,message_edit_modal,EditModal());
 
         table.on('click', '.eliminar', function(e) {
             e.preventDefault();

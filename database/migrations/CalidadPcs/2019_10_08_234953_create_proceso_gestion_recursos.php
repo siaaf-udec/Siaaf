@@ -15,7 +15,7 @@ class CreateProcesoGestionRecursos extends Migration
     {
         Schema::connection('calidadpcs')->create('TBL_Calidadpcs_proceso_recursos', function (Blueprint $table) {
             $table->increments('PK_CPGR_Id_Gestion');
-            $table->string('CPGR_Funcion');
+            $table->text('CPGR_Funcion');
             $table->integer('FK_CPGR_Id_Equipo')->unsigned();
             $table->foreign('FK_CPGR_Id_Equipo')->references('PK_CE_Id_Equipo_Scrum')->on('TBL_Calidadpcs_equipo_scrum')->onDelete("cascade");
             $table->integer('FK_CPC_Id_Proyecto')->unsigned();

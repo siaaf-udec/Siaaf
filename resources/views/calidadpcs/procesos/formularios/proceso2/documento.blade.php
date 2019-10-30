@@ -86,7 +86,7 @@
 
                                     {!! Field:: hidden ('PK_CP_Id_Proceso', $idProceso)!!}
 
-                                    {!! Field::textArea('Alcance',['label' => 'Alcance:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '2'],
+                                    {!! Field::textArea('Alcance',['label' => 'Alcance:', 'required', 'auto' => 'off', 'max' => '500', "rows" => '2'],
                                         ['help' => 'Escribe el alcance del proyecto.', 'icon' => 'fa fa-quote-right']) !!}
                                 </div>
                         </div><br>
@@ -257,7 +257,7 @@
         };
         var form = $('#form_update_proyecto');
         var formRules = {
-            Alcance:{required: true, minlength: 3, maxlength: 300, noSpecialCharacters:true, letters:false},
+            Alcance:{required: true, minlength: 3, maxlength: 500, noSpecialCharacters:true, letters:false},
         };
         var formMessage = {
             Alcance: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},

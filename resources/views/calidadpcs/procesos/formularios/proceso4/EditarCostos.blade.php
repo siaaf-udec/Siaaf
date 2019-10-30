@@ -62,7 +62,15 @@
                                 <div id="collapse_1" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <div class="alert alert-primary">
-                                        <strong>Variables:</strong> 
+                                        <strong>Valor ganado:</strong>El valor ganado (EV) es la medida del trabajo realizado en términos de presupuesto autorizado para dicho trabajo. 
+                                        Es el presupuesto asociado con el trabajo autorizado que se ha completado. El EV medido debe corresponderse con la PMB y no puede ser mayor que el presupuesto
+                                        aprobado del PV para un componente. El EV se utiliza a menudo para calcular el porcentaje completado de un proyecto. Deben establecerse criterios de medición 
+                                        del avance para cada componente de la EDT/WBS, con objeto de medir el trabajo en curso. Los directores de proyecto monitorean el EV, tanto sus incrementos para 
+                                        determinar el estado actual, como el total acumulado, para establecer las tendencias de desempeño a largo plazo.<br><strong>Costo real:</strong>. El costo real 
+                                        (AC) es el costo incurrido por el trabajo llevado a cabo en una actividad durante un período de tiempo específico. Es el costo total en el que se ha incurrido 
+                                        para llevar a cabo el trabajo medido por el EV. El AC debe corresponderse, en cuanto a definición, con lo que haya sido presupuestado para el PV y medido por el 
+                                        EV (p.ej., sólo horas directas, sólo costos directos o todos los costos, incluidos los costos indirectos). El AC no tiene límite superior; se medirán todos los 
+                                        costos en los que se incurra para obtener el EV. 
                                         </div>
                                     </div>
                                 </div>
@@ -71,10 +79,10 @@
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC1_valor_ganado',null,['label'=>'Valor Ganado:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del sprint.', 'icon' => 'fa fa-usd'] ) !!}
+                                    ['help' => 'Digite el valor ganado.', 'icon' => 'fa fa-usd'] ) !!}
                                   
                                     {!! Field:: text('MC1_costo_real',null,['label'=>'Costo Real:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
-                                        ['help' => 'Digite el numero de semanas.', 'icon' => 'fa fa-usd']) !!} 
+                                        ['help' => 'Digite el costo real.', 'icon' => 'fa fa-usd']) !!} 
                                 </div>
                             </div>
                         </div>
@@ -107,13 +115,21 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#modal_2" href="#collapse_2"><strong>CMMI:</strong></a>
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#modal_2" href="#collapse_2"><strong>Variables:</strong></a>
                             </h4>
                         </div>
                         <div id="collapse_2" class="panel-collapse collapse">
                             <div class="panel-body">
                                 <div class="alert alert-primary">
-                                <strong>Variables:</strong> 
+                                <strong>Valor ganado:</strong>El valor ganado (EV) es la medida del trabajo realizado en términos de presupuesto autorizado para dicho trabajo. Es el presupuesto 
+                                asociado con el trabajo autorizado que se ha completado. El EV medido debe corresponderse con la PMB y no puede ser mayor que el presupuesto aprobado del PV para 
+                                un componente. El EV se utiliza a menudo para calcular el porcentaje completado de un proyecto. Deben establecerse criterios de medición del avance para cada componente 
+                                de la EDT/WBS, con objeto de medir el trabajo en curso. Los directores de proyecto monitorean el EV, tanto sus incrementos para determinar el estado actual, como el total 
+                                acumulado, para establecer las tendencias de desempeño a largo plazo.<br><strong>Valor planificado:</strong>El valor planificado (PV) es el presupuesto autorizado que se 
+                                ha asignado al trabajo programado. Es el presupuesto autorizado asignado al trabajo que debe ejecutarse para completar una actividad o un componente de la estructura de 
+                                desglose del trabajo, sin contar con la reserva de gestión. Este presupuesto se adjudica por fase a lo largo del proyecto, pero para un momento determinado, el valor planificado 
+                                establece el trabajo físico que se debería haber llevado a cabo hasta ese momento. El PV total se conoce en ocasiones como la línea base para la medición del desempeño (PMB). 
+                                El valor planificado total para el proyecto también se conoce como presupuesto hasta la conclusión (BAC).
                                 </div>
                             </div>
                         </div>
@@ -121,11 +137,11 @@
                 </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: text('MC2_valor_ganado',null,['label'=>'Valor Ganado:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del sprint.', 'icon' => 'fa fa-usd'] ) !!}
+                                   {!! Field:: text('MC2_valor_ganado',null,['label'=>'Valor Ganado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Digite el valor ganado.', 'icon' => 'fa fa-usd'] ) !!}
                                   
                                     {!! Field:: text('MC2_valor_planificado',null,['label'=>'Valor Planificado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
-                                    ['help' => 'Digite el numero de semanas.', 'icon' => 'fa fa-usd']) !!}
+                                    ['help' => 'Digite el valor planificado.', 'icon' => 'fa fa-usd']) !!}
                                 </div>
                             </div>
                         </div>
@@ -163,7 +179,8 @@
                                 <div id="collapse_3" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <div class="alert alert-primary">
-                                        <strong>Variables:</strong> 
+                                        <strong>Presupuesto hasta la Conclusión:</strong> (BAC) Es la suma de todos los presupuestos establecidos para el trabajo a realizar.<br><strong>Estimación a la 
+                                            Conclusión:</strong> (EAC) El costo total previsto de completar todo el trabajo, expresado como la suma del costo real a la fecha y la estimación hasta la conclusión.
                                         </div>
                                     </div>
                                 </div>
@@ -172,10 +189,10 @@
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC3_presupuesto',null,['label'=>'Presupuesto hasta la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    ['help' => 'Digite el presupuesto hasta la Conclusión.'] ) !!}
                                   
                                     {!! Field:: text('MC3_estimacion',null,['label'=>'Estimación a la Conclusión:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
-                                        ['help' => 'Digite el numero de semanas.']) !!}
+                                        ['help' => 'Digite la estimación a la Conclusión.']) !!}
                                 </div>
                             </div>
                         </div>
@@ -213,7 +230,14 @@
                                 <div id="collapse_4" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <div class="alert alert-primary">
-                                        <strong>Variables:</strong> 
+                                        <strong>Valor ganado:</strong> El valor ganado (EV) es la medida del trabajo realizado en términos de presupuesto autorizado para dicho trabajo. Es el presupuesto 
+                                        asociado con el trabajo autorizado que se ha completado. El EV medido debe corresponderse con la PMB y no puede ser mayor que el presupuesto aprobado del PV para 
+                                        un componente. El EV se utiliza a menudo para calcular el porcentaje completado de un proyecto. Deben establecerse criterios de medición del avance para cada componente
+                                        de la EDT/WBS, con objeto de medir el trabajo en curso. Los directores de proyecto monitorean el EV, tanto sus incrementos para determinar el estado actual, como el total
+                                        acumulado, para establecer las tendencias de desempeño a largo plazo.<br><strong>Costo real:</strong>El costo real (AC) es el costo incurrido por el trabajo llevado a cabo 
+                                        en una actividad durante un período de tiempo específico. Es el costo total en el que se ha incurrido para llevar a cabo el trabajo medido por el EV. El AC debe corresponderse, 
+                                        en cuanto a definición, con lo que haya sido presupuestado para el PV y medido por el EV (p.ej., sólo horas directas, sólo costos directos o todos los costos, incluidos los costos 
+                                        indirectos). El AC no tiene límite superior; se medirán todos los costos en los que se incurra para obtener el EV
                                         </div>
                                     </div>
                                 </div>
@@ -222,9 +246,10 @@
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC4_valor_ganado',null,['label'=>'Valor Ganado:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    ['help' => 'Digite el valor ganado.'] ) !!}
                                   
-                                    {!! Field:: text('MC4_costo_real',null,['label'=>'Costo Real:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC4_costo_real',null,['label'=>'Costo Real:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
+                                        ['help' => 'Digite el costo real.']) !!}
                                 </div>
                             </div>
                         </div>
@@ -262,7 +287,15 @@
                                 <div id="collapse_5" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <div class="alert alert-primary">
-                                        <strong>Variables:</strong> 
+                                        <strong>Valor ganado:</strong>  El valor ganado (EV) es la medida del trabajo realizado en términos de presupuesto autorizado para dicho trabajo. Es el presupuesto 
+                                        asociado con el trabajo autorizado que se ha completado. El EV medido debe corresponderse con la PMB y no puede ser mayor que el presupuesto aprobado del PV para un 
+                                        componente. El EV se utiliza a menudo para calcular el porcentaje completado de un proyecto. Deben establecerse criterios de medición del avance para cada componente 
+                                        de la EDT/WBS, con objeto de medir el trabajo en curso. Los directores de proyecto monitorean el EV, tanto sus incrementos para determinar el estado actual, como el 
+                                        total acumulado, para establecer las tendencias de desempeño a largo plazo.<br><strong>Valor planificado:</strong> El valor planificado (PV) es el presupuesto autorizado 
+                                        que se ha asignado al trabajo programado. Es el presupuesto autorizado asignado al trabajo que debe ejecutarse para completar una actividad o un componente de la estructura 
+                                        de desglose del trabajo, sin contar con la reserva de gestión. Este presupuesto se adjudica por fase a lo largo del proyecto, pero para un momento determinado, el valor 
+                                        planificado establece el trabajo físico que se debería haber llevado a cabo hasta ese momento. El PV total se conoce en ocasiones como la línea base para la medición del 
+                                        desempeño (PMB). El valor planificado total para el proyecto también se conoce como presupuesto hasta la conclusión (BAC).
                                         </div>
                                     </div>
                                 </div>
@@ -271,10 +304,10 @@
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC5_valor_ganado',null,['label'=>'Valor Ganado:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    ['help' => 'Digite el valor ganado.'] ) !!}
                                   
                                     {!! Field:: text('MC5_valor_planificado',null,['label'=>'Valor Planificado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
-                                        ['help' => 'Digite el numero de semanas.']) !!}
+                                        ['help' => 'Digite el valor planificado.']) !!}
                                 </div>
                             </div>
                         </div>
@@ -312,7 +345,12 @@
                                 <div id="collapse_6" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <div class="alert alert-primary">
-                                        <strong>Variables:</strong> 
+                                        <strong>Presupuesto hasta la Conclusión:</strong> (BAC) Es la suma de todos los presupuestos establecidos para el trabajo a realizar.<br><strong>Índice de desempeño 
+                                            del costo: </strong>El índice de desempeño del costo (CPI) es una medida de eficiencia del costo de los recursos presupuestados, expresado como la razón entre el 
+                                            valor ganado y el costo real. Se considera la métrica más crítica del EVM y mide la eficiencia del costo para el trabajo completado. Un valor de CPI inferior a 1,0 
+                                            indica un costo superior al planificado con respecto al trabajo completado. Un valor de CPI superior a 1,0 indica un costo inferior con respecto al desempeño hasta 
+                                            la fecha. El CPI es igual a la razón entre el EV y el AC. Los índices son útiles para determinar el estado de un proyecto y proporcionar una base para la estimación 
+                                            del costo y del cronograma al final del proyecto.
                                         </div>
                                     </div>
                                 </div>
@@ -321,10 +359,10 @@
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC6_presupuesto_conclucion',null,['label'=>'Presupuesto hasta la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    ['help' => 'Digite el presupuesto hasta la Conclusión.'] ) !!}
                                   
                                     {!! Field:: text('MC6_indice_costo',null,['label'=>'Índice de Desempeño del Costo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                        ['help' => 'Digite el numero de semanas.']) !!}
+                                        ['help' => 'Digite el índice de desempeño del costo.']) !!}
                                 </div>
                             </div>
                         </div>
@@ -362,7 +400,15 @@
                                 <div id="collapse_7" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <div class="alert alert-primary">
-                                        <strong>Variables:</strong> 
+                                        <strong>Costo real: </strong>. El costo real (AC) es el costo incurrido por el trabajo llevado a cabo en una actividad durante un período de tiempo específico.
+                                        Es el costo total en el que se ha incurrido para llevar a cabo el trabajo medido por el EV. El AC debe corresponderse, en cuanto a definición, con lo que haya
+                                        sido presupuestado para el PV y medido por el EV (p.ej., sólo horas directas, sólo costos directos o todos los costos, incluidos los costos indirectos). El AC 
+                                        no tiene límite superior; se medirán todos los costos en los que se incurra para obtener el EV.<br><strong>Presupuesto hasta la Conclusión:</strong> (BAC) Es 
+                                        la suma de todos los presupuestos establecidos para el trabajo a realizar.<br> <strong>Valor ganado: </strong>El valor ganado (EV) es la medida del trabajo realizado 
+                                        en términos de presupuesto autorizado para dicho trabajo. Es el presupuesto asociado con el trabajo autorizado que se ha completado. El EV medido debe corresponderse 
+                                        con la PMB y no puede ser mayor que el presupuesto aprobado del PV para un componente. El EV se utiliza a menudo para calcular el porcentaje completado de un proyecto. 
+                                        Deben establecerse criterios de medición del avance para cada componente de la EDT/WBS, con objeto de medir el trabajo en curso. Los directores de proyecto monitorean 
+                                        el EV, tanto sus incrementos para determinar el estado actual, como el total acumulado, para establecer las tendencias de desempeño a largo plazo. 
                                         </div>
                                     </div>
                                 </div>
@@ -371,12 +417,13 @@
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC7_costo_real',null,['label'=>'Costo Real:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    ['help' => 'Digite el costo real.'] ) !!}
 
                                     {!! Field:: text('MC7_presupuesto',null,['label'=>'Presupuesto hasta la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    ['help' => 'Digite el presupuesto hasta la conclusión.'] ) !!}
                                   
-                                    {!! Field:: text('MC7_valor_ganado',null,['label'=>'Valor Ganado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC7_valor_ganado',null,['label'=>'Valor Ganado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
+                                        ['help' => 'Digite el valor ganado.']) !!}
                                 </div>
                             </div>
                         </div>
@@ -414,7 +461,11 @@
                                 <div id="collapse_8" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <div class="alert alert-primary">
-                                        <strong>Variables:</strong> 
+                                        <strong>Costo real:</strong>El costo real (AC) es el costo incurrido por el trabajo llevado a cabo en una actividad durante un período de tiempo específico. Es el 
+                                        costo total en el que se ha incurrido para llevar a cabo el trabajo medido por el EV. El AC debe corresponderse, en cuanto a definición, con lo que haya sido presupuestado 
+                                        para el PV y medido por el EV (p.ej., sólo horas directas, sólo costos directos o todos los costos, incluidos los costos indirectos). El AC no tiene límite superior; se 
+                                        medirán todos los costos en los que se incurra para obtener el EV.<br><strong>Estimación hasta la Conclusión: </strong> (ETC) El costo previsto para terminar todo el 
+                                        trabajo restante del proyecto.
                                         </div>
                                     </div>
                                 </div>
@@ -423,10 +474,10 @@
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC8_costo_real',null,['label'=>'Costo Real:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    ['help' => 'Digite el costo real.'] ) !!}
                                   
                                     {!! Field:: text('MC8_estimacion',null,['label'=>'Estimación hasta la Conclusión (ascendente):', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
-                                        ['help' => 'Digite el numero de semanas.']) !!}
+                                        ['help' => 'Digite la estimación hasta la conclusión.']) !!}
                                 </div>
                             </div>
                         </div>
@@ -464,7 +515,25 @@
                                 <div id="collapse_9" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <div class="alert alert-primary">
-                                        <strong>Variables:</strong> 
+                                        <strong>Costo real:</strong> El costo real (AC) es el costo incurrido por el trabajo llevado a cabo en una actividad durante un período de tiempo específico. Es el 
+                                        costo total en el que se ha incurrido para llevar a cabo el trabajo medido por el EV. El AC debe corresponderse, en cuanto a definición, con lo que haya sido 
+                                        presupuestado para el PV y medido por el EV (p.ej., sólo horas directas, sólo costos directos o todos los costos, incluidos los costos indirectos). El AC no tiene 
+                                        límite superior; se medirán todos los costos en los que se incurra para obtener el EV.<br><strong>Presupuesto hasta la Conclusión:</strong> (BAC) La suma de todos 
+                                        los presupuestos establecidos para el trabajo a realizar.<br><strong>Valor ganado:</strong> El valor ganado (EV) es la medida del trabajo realizado en términos 
+                                        de presupuesto autorizado para dicho trabajo. Es el presupuesto asociado con el trabajo autorizado que se ha completado. El EV medido debe corresponderse con la 
+                                        PMB y no puede ser mayor que el presupuesto aprobado del PV para un componente. El EV se utiliza a menudo para calcular el porcentaje completado de un proyecto. 
+                                        Deben establecerse criterios de medición del avance para cada componente de la EDT/WBS, con objeto de medir el trabajo en curso. Los directores de proyecto monitorean 
+                                        el EV, tanto sus incrementos para determinar el estado actual, como el total acumulado, para establecer las tendencias de desempeño a largo plazo.<br><strong>Índice 
+                                        de desempeño del costo:</strong> El índice de desempeño del costo (CPI) es una medida de eficiencia del costo de los recursos presupuestados, expresado como la razón 
+                                        entre el valor ganado y el costo real. Se considera la métrica más crítica del EVM y mide la eficiencia del costo para el trabajo completado. Un valor de CPI inferior 
+                                        a 1,0 indica un costo superior al planificado con respecto al trabajo completado. Un valor de CPI superior a 1,0 indica un costo inferior con respecto al desempeño 
+                                        hasta la fecha. El CPI es igual a la razón entre el EV y el AC. Los índices son útiles para determinar el estado de un proyecto y proporcionar una base para la estimación 
+                                        del costo y del cronograma al final del proyecto. <br><strong>Índice de desempeño del cronograma:</strong> El índice de desempeño del cronograma (SPI) es una medida de 
+                                        eficiencia del cronograma que se expresa como la razón entre el valor ganado y el valor planificado. Refleja la medida de la eficiencia con que el equipo del proyecto está 
+                                        utilizando su tiempo. En ocasiones se utiliza en combinación con el índice de desempeño del costo (CPI) para proyectar las estimaciones finales a la conclusión del proyecto. 
+                                        Un valor de SPI inferior a 1,0 indica que la cantidad de trabajo llevada a cabo es menor que la prevista. Un valor de SPI superior a 1,0 indica que la cantidad de trabajo 
+                                        efectuada es mayor a la prevista. Puesto que el SPI mide todo el trabajo del proyecto, se debe analizar asimismo el desempeño en la ruta crítica, para así determinar si el 
+                                        proyecto terminará antes o después de la fecha de finalización programada. El SPI es igual a la razón entre el EV y el PV.
                                         </div>
                                     </div>
                                 </div>
@@ -473,19 +542,19 @@
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC9_costo_real',null,['label'=>'Costo Real:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    ['help' => 'Digite el costo real.'] ) !!}
                                   
                                     {!! Field:: text('MC9_presupuesto',null,['label'=>'Presupuesto hasta la Conclusión:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
-                                        ['help' => 'Digite el numero de semanas.']) !!}
+                                        ['help' => 'Digite el presupuesto hasta la conclusión.']) !!}
 
                                     {!! Field:: text('MC9_valor_ganado',null,['label'=>'Valor Ganado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
-                                        ['help' => 'Digite el numero de semanas.']) !!}
+                                        ['help' => 'Digite el valor ganado.']) !!}
 
                                     {!! Field:: text('MC9_indice_costo',null,['label'=>'Índice de Desempeño del Costo:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
-                                        ['help' => 'Digite el numero de semanas.']) !!}
+                                        ['help' => 'Digite el índice de desempeño del costo.']) !!}
 
                                     {!! Field:: text('MC9_indice_cronograma',null,['label'=>'Índice de Desempeño del Cronograma:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                         ['help' => 'Digite el numero de semanas.']) !!}
+                                         ['help' => 'Digite el índice de desempeño del cronograma.']) !!}
 
                                 </div>
                             </div>
@@ -524,7 +593,11 @@
                                 <div id="collapse_10" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <div class="alert alert-primary">
-                                        <strong>Variables:</strong> 
+                                        <strong>Estimación a la Conclusión: </strong> (EAC) El costo total previsto de completar todo el trabajo, expresado como la suma del costo real a la fecha y la 
+                                        estimación hasta la conclusión.<br> <strong>Costo real: </strong>El costo real (AC) es el costo incurrido por el trabajo llevado a cabo en una actividad durante 
+                                        un período de tiempo específico. Es el costo total en el que se ha incurrido para llevar a cabo el trabajo medido por el EV. El AC debe corresponderse, en cuanto 
+                                        a definición, con lo que haya sido presupuestado para el PV y medido por el EV (p.ej., sólo horas directas, sólo costos directos o todos los costos, incluidos los 
+                                        costos indirectos). El AC no tiene límite superior; se medirán todos los costos en los que se incurra para obtener el EV.
                                         </div>
                                     </div>
                                 </div>
@@ -533,9 +606,10 @@
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC10_estimacion',null,['label'=>'Estimación a la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    ['help' => 'Digite la estimación a la conclusión.'] ) !!}
                                   
-                                    {!! Field:: text('MC10_costo_real',null,['label'=>'Costo Real:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC10_costo_real',null,['label'=>'Costo Real:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
+                                        ['help' => 'Digite el costo real.']) !!}
                                 </div>
                             </div>
                         </div>
@@ -573,7 +647,16 @@
                                 <div id="collapse_11" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <div class="alert alert-primary">
-                                        <strong>Variables:</strong> 
+                                        <strong>Presupuesto hasta la Conclusión:</strong> (BAC) La suma de todos los presupuestos establecidos para el trabajo a realizar.<br>
+                                        <strong>Valor ganado:</strong> El valor ganado (EV) es la medida del trabajo realizado en términos de presupuesto autorizado para dicho trabajo. Es el presupuesto 
+                                        asociado con el trabajo autorizado que se ha completado. El EV medido debe corresponderse con la PMB y no puede ser mayor que el presupuesto aprobado del PV para un 
+                                        componente. El EV se utiliza a menudo para calcular el porcentaje completado de un proyecto. Deben establecerse criterios de medición del avance para cada componente 
+                                        de la EDT/WBS, con objeto de medir el trabajo en curso. Los directores de proyecto monitorean el EV, tanto sus incrementos para determinar el estado actual, como el 
+                                        total acumulado, para establecer las tendencias de desempeño a largo plazo. <br>
+                                        <strong>Costo real:</strong> El costo real (AC) es el costo incurrido por el trabajo llevado a cabo en una actividad durante un período de tiempo específico. Es el 
+                                        costo total en el que se ha incurrido para llevar a cabo el trabajo medido por el EV. El AC debe corresponderse, en cuanto a definición, con lo que haya sido 
+                                        presupuestado para el PV y medido por el EV (p.ej., sólo horas directas, sólo costos directos o todos los costos, incluidos los costos indirectos). El AC no tiene 
+                                        límite superior; se medirán todos los costos en los que se incurra para obtener el EV. 
                                         </div>
                                     </div>
                                 </div>
@@ -582,11 +665,13 @@
                             <div class="row">
                                 <div class="col-md-12">
                                    {!! Field:: text('MC11_presupuesto',null,['label'=>'Presupuesto hasta la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    ['help' => 'Digite el presupuesto hasta la conclusión.'] ) !!}
                                   
-                                    {!! Field:: text('MC11_valor_ganado',null,['label'=>'Valor Ganado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC11_valor_ganado',null,['label'=>'Valor Ganado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
+                                        ['help' => 'Digite el valor ganado.']) !!}
 
-                                    {!! Field:: text('MC11_costo_real',null,['label'=>'Costo Real:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC11_costo_real',null,['label'=>'Costo Real:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
+                                        ['help' => 'Digite el costo real.']) !!}
                                 </div>
                             </div>
                         </div>
@@ -624,7 +709,18 @@
                                 <div id="collapse_12" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <div class="alert alert-primary">
-                                        <strong>Variables:</strong> 
+                                        <strong>Presupuesto hasta la Conclusión:</strong> (BAC) La suma de todos los presupuestos establecidos para el trabajo a realizar.<br>
+                                        <strong>Valor ganado:</strong> El valor ganado (EV) es la medida del trabajo realizado en términos de presupuesto autorizado para dicho trabajo. Es el presupuesto 
+                                        asociado con el trabajo autorizado que se ha completado. El EV medido debe corresponderse con la PMB y no puede ser mayor que el presupuesto aprobado del PV para un 
+                                        componente. El EV se utiliza a menudo para calcular el porcentaje completado de un proyecto. Deben establecerse criterios de medición del avance para cada componente 
+                                        de la EDT/WBS, con objeto de medir el trabajo en curso. Los directores de proyecto monitorean el EV, tanto sus incrementos para determinar el estado actual, como el 
+                                        total acumulado, para establecer las tendencias de desempeño a largo plazo. <br>
+                                        <strong>Estimación a la Conclusión: </strong>(EAC) El costo total previsto de completar todo el trabajo, expresado como la suma del costo real a la fecha y la 
+                                        estimación hasta la conclusión. <br>
+                                        <strong>Costo real:</strong> El costo real (AC) es el costo incurrido por el trabajo llevado a cabo en una actividad durante un período de tiempo específico. Es el 
+                                        costo total en el que se ha incurrido para llevar a cabo el trabajo medido por el EV. El AC debe corresponderse, en cuanto a definición, con lo que haya sido 
+                                        presupuestado para el PV y medido por el EV (p.ej., sólo horas directas, sólo costos directos o todos los costos, incluidos los costos indirectos). El AC no tiene 
+                                        límite superior; se medirán todos los costos en los que se incurra para obtener el EV. 
                                         </div>
                                     </div>
                                 </div>
@@ -633,13 +729,16 @@
                             <div class="row">
                                 <div class="col-md-12">
                                 {!! Field:: text('MC12_presupuesto',null,['label'=>'Presupuesto hasta la Conclusión:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del sprint.'] ) !!}
+                                    ['help' => 'Digite el presupuesto hasta la conclusión.'] ) !!}
                                   
-                                    {!! Field:: text('MC12_valor',null,['label'=>'Valor Ganado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC12_valor',null,['label'=>'Valor Ganado:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
+                                        ['help' => 'Digite el valor ganado.']) !!}
 
-                                    {!! Field:: text('MC12_estimacion',null,['label'=>'Estimación a la Conclusión:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC12_estimacion',null,['label'=>'Estimación a la Conclusión:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
+                                        ['help' => 'Digite la estimación a la conclusión.']) !!}
 
-                                    {!! Field:: text('MC12_costo',null,['label'=>'Costo Real:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], ['help' => 'Digite el numero de semanas.']) !!}
+                                    {!! Field:: text('MC12_costo',null,['label'=>'Costo Real:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'], 
+                                        ['help' => 'Digite el costo real.']) !!}
                                 </div>
                             </div>
                         </div>
@@ -661,7 +760,7 @@
                     </a>
                         <a href="javascript:;" class="btn btn-success button-cancel">
                             Continuar <i class="fa fa-angle-right"></i>
-                        </a>                        
+                        </a>
                     </div>
                 </div>
             </div>
@@ -717,6 +816,13 @@
             $('#modal_costos_'+dataTable.PK_CPCI_Id_Costos).modal('toggle');
         });
 
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
+        });
+
         /* Inicio Modal #1*/
         var createModal_1 = function () {
             return{
@@ -763,8 +869,8 @@
 
         var form_create_modal_1 = $('#form_costos_1');
         var rules_create_modal_1 = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            MC1_valor_ganado: { min: 1, required: true },
+            MC1_costo_real: { min: 1, required: true },
         };
         FormValidationMd.init(form_create_modal_1,rules_create_modal_1,false,createModal_1());
         /*Fin modal #1 */
@@ -814,8 +920,8 @@
 
         var form_create_modal_2 = $('#form_costos_2');
         var rules_create_modal_2 = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            MC2_valor_ganado: { min: 1, required: true },
+            MC2_valor_planificado: { min: 1, required: true },
         };
         FormValidationMd.init(form_create_modal_2,rules_create_modal_2,false,createModal_2());
         /*Fin modal #2 */
@@ -865,8 +971,8 @@
 
         var form_create_modal_3 = $('#form_costos_3');
         var rules_create_modal_3 = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            MC3_presupuesto: { min: 1, required: true },
+            MC3_estimacion: { min: 1, required: true },
         };
         FormValidationMd.init(form_create_modal_3,rules_create_modal_3,false,createModal_3());
         /*Fin modal #3 */
@@ -875,7 +981,7 @@
         var createModal_4 = function () {
             return{
                 init: function () {
-                    let resultado = ($('input:text[name="MC4_valor_ganado"]').val() / $('input:text[name="MC4_costo_real"]').val());
+                    let resultado = (parseInt($('input:text[name="MC4_valor_ganado"]').val()) / parseInt($('input:text[name="MC4_costo_real"]').val()));
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
                     var async = async || false;
@@ -913,8 +1019,8 @@
         };
         var form_create_modal_4 = $('#form_costos_4');
         var rules_create_modal_4 = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            MC4_valor_ganado: { min: 1, required: true },
+            MC4_costo_real: { min: 1, required: true },
         };
         FormValidationMd.init(form_create_modal_4,rules_create_modal_4,false,createModal_4());
         /*Fin modal #4 */
@@ -923,7 +1029,7 @@
         var createModal_5 = function () {
             return{
                 init: function () {
-                    let resultado = ($('input:text[name="MC5_valor_ganado"]').val() / $('input:text[name="MC5_valor_planificado"]').val());
+                    let resultado = (parseInt($('input:text[name="MC5_valor_ganado"]').val()) / parseInt($('input:text[name="MC5_valor_planificado"]').val()));
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
                     var async = async || false;
@@ -961,8 +1067,8 @@
         };
         var form_create_modal_5 = $('#form_costos_5');
         var rules_create_modal_5 = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            MC5_valor_ganado: { min: 1, required: true },
+            MC5_valor_planificado: { min: 1, required: true },
         };
         FormValidationMd.init(form_create_modal_5,rules_create_modal_5,false,createModal_5());
         /*Fin modal #5 */
@@ -971,7 +1077,7 @@
         var createModal_6 = function () {
             return{
                 init: function () {
-                    let resultado = ($('input:text[name="MC6_presupuesto_conclucion"]').val() / $('input:text[name="MC6_indice_costo"]').val());
+                    let resultado = (parseInt($('input:text[name="MC6_presupuesto_conclucion"]').val())/ parseInt($('input:text[name="MC6_indice_costo"]').val()));
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
                     var async = async || false;
@@ -1009,8 +1115,8 @@
         };
         var form_create_modal_6 = $('#form_costos_6');
         var rules_create_modal_6 = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            MC6_presupuesto_conclucion: { min: 1, required: true },
+            MC6_indice_costo: { min: 1, required: true },
         };
         FormValidationMd.init(form_create_modal_6,rules_create_modal_6,false,createModal_6());
         /*Fin modal #6 */
@@ -1057,8 +1163,9 @@
         };
         var form_create_modal_7 = $('#form_costos_7');
         var rules_create_modal_7 = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            MC7_costo_real: { min: 1, required: true },
+            MC7_presupuesto: { min: 1, required: true },
+            MC7_valor_ganado: { min: 1, required: true },
         };
         FormValidationMd.init(form_create_modal_7,rules_create_modal_7,false,createModal_7());
         /*Fin modal #7 */
@@ -1067,7 +1174,7 @@
         var createModal_8 = function () {
             return{
                 init: function () {
-                    let resultado = (parseInt($('input:text[name="MC8_costo_real"]').val()) + parseInt($('input:text[name="MC8_estimacion"]').val()));
+                    let resultado = (parseInt($('input:text[name="MC8_costo_real"]').val()) + parseInt($('input:text[name="MC8_estimacion"]').val()) );
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
                     var async = async || false;
@@ -1105,8 +1212,8 @@
         };
         var form_create_modal_8 = $('#form_costos_8');
         var rules_create_modal_8 = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            MC8_costo_real: { min: 1, required: true },
+            MC8_estimacion: { min: 1, required: true },
         };
         FormValidationMd.init(form_create_modal_8,rules_create_modal_8,false,createModal_8());
         /*Fin modal #8 */
@@ -1153,8 +1260,11 @@
         };
         var form_create_modal_9 = $('#form_costos_9');
         var rules_create_modal_9 = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            MC9_costo_real: { min: 1, required: true },
+            MC9_presupuesto: { min: 1, required: true },
+            MC9_valor_ganado: { min: 1, required: true },
+            MC9_indice_costo: { min: 1, required: true },
+            MC9_indice_cronograma: { min: 1, required: true },
         };
         FormValidationMd.init(form_create_modal_9,rules_create_modal_9,false,createModal_9());
         /*Fin modal #9 */
@@ -1163,7 +1273,7 @@
         var createModal_10 = function () {
             return{
                 init: function () {
-                    let resultado = ($('input:text[name="MC10_estimacion"]').val() - $('input:text[name="MC10_costo_real"]').val());
+                    let resultado = (parseInt($('input:text[name="MC10_estimacion"]').val()) - parseInt($('input:text[name="MC10_costo_real"]').val()));
                     var route = '{{ route('calidadpcs.procesosCalidad.storeProceso4') }}';
                     var type = 'POST';
                     var async = async || false;
@@ -1201,8 +1311,8 @@
         };
         var form_create_modal_10 = $('#form_costos_10');
         var rules_create_modal_10 = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            MC10_estimacion: { min: 1, required: true },
+            MC10_costo_real: { min: 1, required: true },
         };
         FormValidationMd.init(form_create_modal_10,rules_create_modal_10,false,createModal_10());
         /*Fin modal #10 */
@@ -1249,8 +1359,9 @@
         };
         var form_create_modal_11 = $('#form_costos_11');
         var rules_create_modal_11 = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            MC11_presupuesto: { min: 1, required: true },
+            MC11_valor_ganado: { min: 1, required: true },
+            MC11_costo_real: { min: 1, required: true },
         };
         FormValidationMd.init(form_create_modal_11,rules_create_modal_11,false,createModal_11());
         /*Fin modal #11 */
@@ -1298,8 +1409,10 @@
         };
         var form_create_modal_12 = $('#form_costos_12');
         var rules_create_modal_12 = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            MC12_presupuesto: { min: 1, required: true },
+            MC12_valor: { min: 1, required: true },
+            MC12_estimacion: { min: 1, required: true },
+            MC12_costo: { min: 1, required: true },
         };
         FormValidationMd.init(form_create_modal_12,rules_create_modal_12,false,createModal_12());
         /*Fin modal #12 */

@@ -106,16 +106,16 @@
                     <div class="row">
                         <h3><i class="fa fa-arrow-right"></i><strong> Objetivos</strong></h3><br>
                         <div class="col-md-12">
-                            {!! Field:: text('Objetivo_General',null,['label'=>'Objetivo General:',  'max' => '100', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('Objetivo_General',null,['label'=>'Objetivo General:',  'max' => '300', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                             ['help' => 'Digite el objetivo general.','icon'=>'fa fa-file-text-o'] ) !!}
                         </div>
                         <div class="col-md-12">
                             <h4>Objetivos especificos </h4><br>
 
-                            {!! Field:: text('Objetivo_Especifico_1',['label'=>'Objetivo especifico:', 'max' => '100', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('Objetivo_Especifico_1',['label'=>'Objetivo especifico:', 'max' => '300', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                             ['help' => 'Digite el objetivo especifico','icon'=>'fa fa-angle-right'] ) !!}
 
-                            {!! Field:: text('Objetivo_Especifico_2',['label'=>'Objetivo especifico:', 'max' => '100', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            {!! Field:: text('Objetivo_Especifico_2',['label'=>'Objetivo especifico:', 'max' => '300', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                             ['help' => 'Digite el objetivo especifico','icon'=>'fa fa-angle-right'] ) !!}
                         </div>
                         <div class="col-md-12" id="objetivos">
@@ -343,12 +343,12 @@
         var formRules = {
             Duracion: {required: true},
             Entidades: {required: false, minlength: 3, maxlength: 50, noSpecialCharacters:true, letters:false},
-            Objetivo_General:{required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
-            Objetivo_Especifico_1:{required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
-            Objetivo_Especifico_2:{required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
-            Objetivo_Especifico_3:{required: false, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
-            Objetivo_Especifico_4:{required: false, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
-            Objetivo_Especifico_5:{required: false, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
+            Objetivo_General:{required: true, minlength: 3, maxlength: 300, noSpecialCharacters:true, letters:false},
+            Objetivo_Especifico_1:{required: true, minlength: 3, maxlength: 300, noSpecialCharacters:true, letters:false},
+            Objetivo_Especifico_2:{required: true, minlength: 3, maxlength: 300, noSpecialCharacters:true, letters:false},
+            Objetivo_Especifico_3:{required: false, minlength: 3, maxlength: 300, noSpecialCharacters:true, letters:false},
+            Objetivo_Especifico_4:{required: false, minlength: 3, maxlength: 300, noSpecialCharacters:true, letters:false},
+            Objetivo_Especifico_5:{required: false, minlength: 3, maxlength: 300, noSpecialCharacters:true, letters:false},
             CPR_Nombre_Requerimiento_1:{required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
             CPR_Nombre_Requerimiento_2:{required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
             CPR_Nombre_Requerimiento_3:{required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},

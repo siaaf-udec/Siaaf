@@ -43,7 +43,7 @@
                                     {!! Field:: text('Riesgo',null,['label'=>'Riesgo:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-warning '] ) !!}
 
-                                    {!! Field:: text('Caracteristicas',null,['label'=>'Caracteristicas:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    {!! Field:: text('Caracteristicas',null,['label'=>'Caracteristicas:', 'max' => '100', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-list-alt'] ) !!}
 
                                     {!! Field::select('Importancia:',['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5' ],null,['name' => 'Importancia']) !!}
@@ -224,10 +224,19 @@
 
         var form_create_modal = $('#form_permissions_update');
         var rules_create_modal = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            Riesgo: { required: true, minlength: 2, maxlength: 50, noSpecialCharacters:true, letters:false},
+            Caracteristicas: { required: true, minlength: 2, maxlength: 100, noSpecialCharacters:true, letters:false},
+            Importancia: { required: true },
+            Accion: { required: true, minlength: 2, maxlength: 50, noSpecialCharacters:true, letters:false},
+
         };
-        FormValidationMd.init(form_create_modal,rules_create_modal,false,createModal());
+        var formMessage = {
+            Riesgo: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            Caracteristicas: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            Accion: { required: true, minlength: 2, maxlength: 50, noSpecialCharacters:true, letters:false},
+
+        };
+        FormValidationMd.init(form_create_modal,rules_create_modal,formMessage,createModal());
         
         $(".guardarProceso").on('click', function(e) {
             e.preventDefault();
@@ -329,10 +338,17 @@
 
         var form_edit_modal = $('#form_edit');
         var rules_edit_modal = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            Riesgo_Edit: { required: true, minlength: 3, maxlength: 50, noSpecialCharacters:true, letters:false },
+            Caracteristicas_Edit: { required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false },
+            Importancia_Edit: {required: true },
+            Accion_Edit: { required: true, minlength: 3, maxlength: 50, noSpecialCharacters:true, letters:false },
         };
-        FormValidationMd.init(form_edit_modal,rules_edit_modal,false,EditModal());
+        var message_edit_modal = {
+            Riesgo_Edit: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            Caracteristicas_Edit: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            Accion_Edit: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+        };
+        FormValidationMd.init(form_edit_modal,rules_edit_modal,message_edit_modal,EditModal());
 
         table.on('click', '.eliminar', function(e) {
             e.preventDefault();

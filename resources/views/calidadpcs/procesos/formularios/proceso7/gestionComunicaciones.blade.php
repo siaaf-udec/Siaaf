@@ -39,9 +39,9 @@
                             <div class="row">
                                 <div class="col-md-12">
  
-                                    {!! Field::select('Interesado:',['Equipo scrum'=>'Equipo scrum', 'Product owner'=>'Product owner', 'Stakeholder'=>'Stakeholder' ],null,['name' => 'Interesado']) !!}
+                                    {!! Field::select('Interesado:',['Equipo scrum'=>'Equipo scrum', 'Product owner'=>'Product owner', 'Stakeholder'=>'Stakeholder' ],null,['name' => 'Interesado' ,'required']) !!}
                                     
-                                    {!! Field:: text('Lugar',null,['label'=>'Lugar:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    {!! Field:: text('Lugar',null,['label'=>'Lugar:', 'max' => '50', 'required', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-map-marker'] ) !!}
 
                                     {!! Field::text(
@@ -80,9 +80,9 @@
                                     
                                     {!! Field:: hidden ('idReunion')!!}
                                     
-                                    {!! Field::select('Interesado:',['Equipo scrum'=>'Equipo scrum', 'Product owner'=>'Product owner', 'Stakeholder'=>'Stakeholder' ],null,['name' => 'Interesado_edit']) !!}
+                                    {!! Field::select('Interesado:',['Equipo scrum'=>'Equipo scrum', 'Product owner'=>'Product owner', 'Stakeholder'=>'Stakeholder' ],null,['name' => 'Interesado_edit','required']) !!}
                                     
-                                    {!! Field:: text('Lugar_edit',null,['label'=>'Lugar:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    {!! Field:: text('Lugar_edit',null,['label'=>'Lugar:', 'max' => '50','required', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                         ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-map-marker'] ) !!}
 
                                     {!! Field::text(
@@ -233,10 +233,14 @@
 
         var form_create_modal = $('#form_permissions_update');
         var rules_create_modal = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            Interesado: {required: true },
+            Lugar: { required: true, minlength: 2, maxlength: 50, noSpecialCharacters:true, letters:false},
+            date_time: { required: true },
         };
-        FormValidationMd.init(form_create_modal,rules_create_modal,false,createModal());
+        var formMessage = {
+            funcion: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+        };
+        FormValidationMd.init(form_create_modal,rules_create_modal,formMessage,createModal());
 
         table.on('click', '.editar', function(e) {
             e.preventDefault();
@@ -297,10 +301,14 @@
 
         var form_edit_modal = $('#form_edit');
         var rules_edit_modal = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            Interesado_edit: {required: true },
+            date_time_edit: {required: true },
+            Lugar_edit: { required: true, minlength: 3, maxlength: 50, noSpecialCharacters:true, letters:false },
         };
-        FormValidationMd.init(form_edit_modal,rules_edit_modal,false,EditModal());
+        var message_edit_modal = {
+            Lugar_edit: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+        };
+        FormValidationMd.init(form_edit_modal,rules_edit_modal,message_edit_modal,EditModal());
 
         table.on('click', '.eliminar', function(e) {
             e.preventDefault();

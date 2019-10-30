@@ -17,10 +17,10 @@
                         {!! Field:: hidden ('idProyecto',$idProyecto) !!}
 
 
-                        {!! Field::textArea('Alcance',$alcance->CPPD_Alcance,['label' => 'Alcance:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '2','readonly'],
+                        {!! Field::textArea('Alcance',$alcance->CPPD_Alcance,['label' => 'Alcance:', 'required', 'auto' => 'off', "rows" => '2','readonly'],
                                         ['help' => 'Escribe el alcance del proyecto.', 'icon' => 'fa fa-quote-right']) !!}
 
-                        {!! Field::textArea('Metodologia',['label' => 'Metodologia de trabajo:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '2'],
+                        {!! Field::textArea('Metodologia',['label' => 'Metodologia de trabajo:', 'required', 'auto' => 'off', 'max' => '500', "rows" => '2'],
                                         ['help' => 'Escribe el alcance del proyecto.', 'icon' => 'fa fa-commenting-o']) !!}
                     </div>
                 </div>

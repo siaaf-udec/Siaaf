@@ -15,7 +15,7 @@ class CreateObjetivosTable extends Migration
     {
         Schema::connection('calidadpcs')->create('TBL_Calidadpcs_Objetivos', function (Blueprint $table) {
             $table->increments('PK_CO_Id_Objetivo');
-            $table->string('CO_Objetivo');
+            $table->text('CO_Objetivo');
             $table->string('CO_Tipo_Objetivo');
             $table->integer('CO_Estado')->default(0);
             $table->integer('FK_CPC_Id_Proyecto')->unsigned();

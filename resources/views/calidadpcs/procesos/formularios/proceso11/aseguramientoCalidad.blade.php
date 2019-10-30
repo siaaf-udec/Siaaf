@@ -15,7 +15,7 @@
                         {!! Field:: hidden ('idProyecto', $idProyecto) !!} 
                         {!! Field:: hidden ('idProceso', $idProceso) !!} 
 
-                        {!! Field::textArea('Practicas',['label' => 'Buenas practicas a realizar para asegurar la calidad del proyecto:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '2'],
+                        {!! Field::textArea('Practicas',['label' => 'Buenas practicas a realizar para asegurar la calidad del proyecto:', 'required', 'auto' => 'off', 'max' => '500', "rows" => '2'],
                                         ['help' => 'Escribe el alcance del proyecto.', 'icon' => 'fa fa-quote-right']) !!}
                     </div>
                 </div>

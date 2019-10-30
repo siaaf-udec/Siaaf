@@ -204,7 +204,7 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: text('Objetivo',null,['label'=>'Objetivo:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                   {!! Field:: text('Objetivo',null,['label'=>'Objetivo:', 'max' => '300', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Digite el nombre del objetivo.', 'icon' => 'fa fa-tag'] ) !!}
                                   
                                 </div>

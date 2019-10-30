@@ -21,7 +21,7 @@
                                           null,
                                           [ 'label' => 'Como fue la participacion de los interesados:','name' => 'Participacion']) !!}
 
-                        {!! Field::textArea('Observaciones',['label' => 'Observaciones:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '2'],
+                        {!! Field::textArea('Observaciones',['label' => 'Observaciones:', 'required', 'auto' => 'off', 'max' => '500', "rows" => '2'],
                                         ['help' => 'Escribe el alcance del proyecto.', 'icon' => 'fa fa-quote-right']) !!}
                     </div>
                 </div>

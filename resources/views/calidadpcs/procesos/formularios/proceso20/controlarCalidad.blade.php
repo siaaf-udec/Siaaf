@@ -19,7 +19,7 @@
                             null,
                             [ 'label' => 'Desempeño del equipo:', 'name' => 'Desempeño']) !!}
 
-                            {!! Field::textArea('Recomendaciones',['label' => 'Recomendaciones:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '2'],
+                            {!! Field::textArea('Recomendaciones',['label' => 'Recomendaciones:', 'required', 'auto' => 'off', 'max' => '500', "rows" => '2'],
                             ['help' => 'Escribe el alcance del proyecto.', 'icon' => 'fa fa-quote-right']) !!}
                         </div>
                     </div>
