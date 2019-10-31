@@ -10,7 +10,7 @@
         <div class="col-md-12 col-md-offset-0">
         <h4 style="margin-top: 0px;">Editar proceso: Desarrollar plan para la dirección del proyecto.</h4>
             <br>
-                <div class="panel-group accordion" id="date-range">
+            <div class="panel-group accordion" id="date-range">
                     <!--Primer acordeon-->
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -21,13 +21,22 @@
                         <div id="collapse_3_1" class="panel-collapse collapse">
                             <div class="panel-body">
                                 <div class="alert alert-primary">
-                                <strong>Nivel de madurez:</strong> 2. <br><br><strong>Meta especifica:</strong> Gestionar los requisitos.<br><br><strong>Propósito:</strong> El propósito de la Gestión de Requisitos (REQM) es gestionar los requisitos de los productos y los componentes de producto del proyecto, y asegurar la alineación entre esos requisitos, y los planes y los productos de trabajo del proyecto.
-                                <br><br><strong>Notas introductorias: </strong> Los procesos de gestión de requisitos gestionan todos los requisitos recibidos o generados por el proyecto, incluyendo tanto los requisitos técnicos como los no técnicos, así como los requisitos impuestos al proyecto por la organización. En particular, si se implementa el área de proceso 
-                                Desarrollo de Requisitos, sus procesos generarán requisitos de producto y de componente de producto que también serán gestionados por los procesos de gestión de requisitos. En todas las áreas de proceso, cuando se utilizan los términos “producto” y “componente de producto”, sus significados previstos también incluyen los servicios, 
-                                los sistemas de servicio y sus componentes. Cuando las áreas de proceso Gestión de Requisitos, Desarrollo de Requisitos y Solución Técnica están implementadas, sus procesos asociados pueden estar estrechamente relacionados y realizarse de manera concurrente. El proyecto realiza los pasos apropiados para asegurar que el conjunto de 
-                                requisitos aprobados se gestiona para dar soporte a las necesidades de planificación y de ejecución del proyecto. Cuando un proyecto recibe requisitos de un proveedor de requisitos aprobado, éstos se revisan con dicho proveedor para resolver las cuestiones y para prevenir malentendidos antes de que los requisitos se incorporen en 
-                                los planes del proyecto. Una vez que el proveedor y el receptor de los requisitos alcanzan un acuerdo, se obtiene un compromiso sobre los requisitos por parte de los participantes en el proyecto. El proyecto gestiona los cambios a los requisitos a medida que evolucionan e identifica inconsistencias que ocurren entre los planes, los 
-                                productos de trabajo y los requisitos.
+                                <strong>Nivel de madurez:</strong> 2. <br><br><strong>Meta especifica:</strong> Medición y análisis. <br><br><strong>Propósito:</strong>El propósito de Medición y Análisis (MA) 
+                                es desarrollar y mantener la capacidad de medición utilizada para dar soporte a las necesidades de información de la gerencia.<br><br><strong>Notas introductorias: </strong>
+                                El área de proceso Medición y Análisis implica las siguientes actividades:<br> Especificar los objetivos de medición y análisis para alinearlos con las necesidades de información 
+                                y con los objetivos del proyecto, de la organización o del negocio.<br>Especificar las medidas, las técnicas de análisis y los mecanismos, para la recogida de datos, almacenamiento 
+                                de datos, difusión y realimentación. <br>Implementar las técnicas de análisis y los mecanismos para la recogida de datos, difusión de datos y realimentación.<br>Proporcionar 
+                                resultados objetivos que puedan utilizarse en la toma de decisiones informadas y en la toma de acciones correctivas apropiadas.<br><br><h4>DESARROLLO DE REQUISITOS</h4><br>
+                                <strong>Nivel de madurez:</strong> 3. <br><br><strong>Propósito:</strong> El propósito del Desarrollo de Requisitos (RD) es educir, analizar y establecer los requisitos de cliente,
+                                de producto y de componente de producto.<br><br><strong>Notas introductorias</strong>Éste área de proceso describe tres tipos de requisitos: de cliente, de producto y de componente 
+                                de producto. Tomados en conjunto, estos requisitos tratan las necesidades de las partes interesadas relevantes, incluyendo las necesidades pertinentes a las diferentes fases del 
+                                ciclo de vida del producto (p. ej., criterios de pruebas de aceptación) y a los atributos del producto (p. ej., capacidad de respuesta, protección, fiabilidad, capacidad de mantenimiento). 
+                                Los requisitos también tratan las restricciones causadas por la selección de soluciones de diseño (p. ej., integración de productos disponibles comercialmente (COTS), o uso de un patrón 
+                                particular de arquitectura). Todos los proyectos de desarrollo tienen requisitos. Los requisitos son la base para el diseño. El desarrollo de los requisitos incluye las siguientes 
+                                actividades:<br>•	Educción, análisis, validación y comunicación de las necesidades, las expectativas y las restricciones del cliente para obtener los requisitos priorizados de cliente 
+                                que constituyen una comprensión de lo que satisfará a las partes interesadas. <br>•	Recopilación y coordinación de las necesidades de las partes interesadas.<br>•	Desarrollo de los 
+                                requisitos del ciclo de vida del producto.<br>•	Establecimiento de los requisitos funcionales de cliente y de los requisitos de los atributos de calidad.<br>•	Establecimiento de los 
+                                requisitos iniciales de producto y de componente de producto consistentes con los requisitos de cliente.
                                 </div>
                             </div>
                         </div>
@@ -42,7 +51,11 @@
                         <div id="collapse_3_2" class="panel-collapse collapse">
                             <div class="panel-body">
                                 <div class="alert alert-primary">
-                                    Roles Scrum que son necesarios para este proceso:<br><strong>Stakeholder: </strong>{{ $equipoScrum[2]['CE_Nombre_Persona'] }}<br><strong>Product Owner: </strong>{{ $equipoScrum[1]['CE_Nombre_Persona'] }}<br><strong>Scrum Master: </strong>{{ $equipoScrum[0]['CE_Nombre_Persona'] }}.
+                                    Roles Scrum que son necesarios para este proceso:<br><strong>Product Owner: </strong>{{ $equipoScrum[1]['CE_Nombre_Persona'] }}<br><strong>Scrum Master:</strong> 
+                                    {{$equipoScrum[0]['CE_Nombre_Persona'] }}.<br><br><strong>Equipo desarrollo</strong>
+                                    @foreach ($integrantes as $integrante)
+                                    <br><strong>Integrante: </strong> {{$integrante->CE_Nombre_Persona}}
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -57,17 +70,13 @@
                         <div id="collapse_3_3" class="panel-collapse collapse">
                             <div class="panel-body">
                                 <div class="alert alert-primary">
-                                    <strong>Gestión de la Integración del Proyecto: </strong>La Gestión de la Integración del Proyecto incluye los procesos y actividades necesarios para identificar, definir, combinar, unificar y coordinar los diversos procesos y actividades de dirección del proyecto dentro de los Grupos de Procesos de la Dirección de Proyectos. 
-                                    En el contexto de la dirección de proyectos, la integración incluye características de unificación, consolidación, comunicación y acciones integradoras cruciales para que el proyecto se lleve a cabo de manera controlada, de modo que se complete, que se manejen con éxito las expectativas de los interesados y se cumpla con los 
-                                    requisitos. La Gestión de la Integración del Proyecto implica tomar decisiones en cuanto a la asignación de recursos, equilibrar objetivos y alternativas contrapuestas y manejar las interdependencias entre las Áreas de Conocimiento de la dirección de proyectos. Los procesos de la dirección de proyectos se presentan normalmente 
-                                    como procesos diferenciados con interfaces definidas, aunque en la práctica se superponen e interactúan entre ellos de formas que no pueden detallarse en su totalidad dentro de la Guía del PMBOK®.<br><br>
-                                    <strong>Desarrollar el Acta de Constitución del Proyecto: </strong>Es el proceso de desarrollar un documento que autoriza formalmente la existencia de un proyecto y confiere al director del proyecto la autoridad para asignar los recursos de la organización a las actividades del proyecto.<br><br>
-                                    <strong>Gestión de los interesados del proyecto: </strong>La Gestión de los Interesados del Proyecto incluye los procesos necesarios para identificar a las personas, grupos u organizaciones que pueden afectar o ser afectados por el proyecto, para analizar las expectativas de los interesados y su impacto en el proyecto, y para 
-                                    desarrollar estrategias de gestión adecuadas a fin de lograr la participación eficaz de los interesados en las decisiones y en la ejecución del proyecto. La gestión de los interesados también se centra en la comunicación continua con los interesados para comprender sus necesidades y expectativas, abordando los incidentes en el 
-                                    momento en que ocurren, gestionando conflictos de intereses y fomentando una adecuada participación de los interesados en las decisiones y actividades del proyecto. La satisfacción de los interesados debe gestionarse como uno de los objetivos clave del proyecto.<br><br>
-                                    <strong>Identificar a los Interesados: </strong>El proceso de identificar las personas, grupos u organizaciones que podrían afectar o ser afectados por una decisión, actividad o resultado del proyecto, así como de analizar y documentar información relevante relativa a sus intereses, participación, interdependencias, influencia 
-                                    y posible impacto en el éxito del proyecto.<br><br>
-                                    <strong>Planificar la Gestión de los Interesados: </strong>El proceso de desarrollar estrategias de gestión adecuadas para lograr la participación eficaz de los interesados a lo largo del ciclo de vida del proyecto, con base en el análisis de sus necesidades, intereses y el posible impacto en el éxito del proyecto.
+                                    <strong>Proceso:</strong> Desarrollar plan para la dirección del proyecto.<br><br>Es el proceso de definir, preparar y coordinar todos los planes secundarios e incorporarlos 
+                                    en un plan integral para la dirección del proyecto. Las líneas base y planes secundarios integrados del proyecto pueden incluirse dentro del plan para la dirección del proyecto.
+                                    <br><br><strong>Procesos:</strong> Planificar la gestión del alcance, recopilar requisitos, definir el alcance, crear la estructura de división de trabajo EDT/WBS<br><br>
+                                    <strong>Planificar la Gestión del Alcance:</strong>Es el proceso de crear un plan de gestión del alcance que documente cómo se va a definir, validar y controlar el alcance del proyecto.<br>
+                                    <strong>Recopilar Requisitos: </strong>Es el proceso de determinar, documentar y gestionar las necesidades y los requisitos de los interesados para cumplir con los objetivos del proyecto.<br>
+                                    <strong>Definir el Alcance:</strong> Es el proceso de desarrollar una descripción detallada del proyecto y del producto.<br><strong>Crear la EDT/WBS:</strong>Es el proceso de subdividir los 
+                                    entregables y el trabajo del proyecto en componentes más pequeños y más fáciles de manejar.
                                 </div>
                             </div>
                         </div>
@@ -76,7 +85,7 @@
             </div>
 
             <div class="col-md-10 col-md-offset-1">
-                {!! Form::model([[$idProceso],[$infoProceso],[$idProyecto]],['id'=>'form_update_proyecto', 'url' => '/forms']) !!}
+                {!! Form::model([[$idProceso],[$infoProceso],[$idProyecto],[$integrantes]],['id'=>'form_update_proyecto', 'url' => '/forms']) !!}
                     <div class="form-body">
                         <div class="row">
                             <h3>Informacion del proceso</h3><br>
@@ -88,7 +97,7 @@
 
                                     {!! Field:: hidden ('idAlcance', $infoProceso['PK_CPPD_Id_Direccion'])!!}
 
-                                    {!! Field::textArea('Alcance',$infoProceso['CPPD_Alcance'],['label' => 'Alcance:', 'required', 'auto' => 'off', 'max' => '300', "rows" => '2'],
+                                    {!! Field::textArea('Alcance',$infoProceso['CPPD_Alcance'],['label' => 'Alcance:', 'required', 'auto' => 'off', 'max' => '500', "rows" => '2'],
                                         ['help' => 'Escribe el alcance del proyecto.', 'icon' => 'fa fa-quote-right']) !!}
                                 </div>
                         </div><br>
@@ -135,8 +144,8 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                   {!! Field:: text('Requerimiento',null,['label'=>'Requerimiento:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del objetivo.', 'icon' => 'fa fa-tag'] ) !!}
+                                   {!! Field:: text('Requerimiento',null,['label'=>'Requerimiento:','required', 'max' => '100', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Digite el nombre del requerimiento.', 'icon' => 'fa fa-tag'] ) !!}
                                 </div>
                             </div>
                         </div>
@@ -167,8 +176,8 @@
                                 <div class="col-md-12">
                                 {!! Field:: hidden ('idRequerimiento') !!}
 
-                                   {!! Field:: text('Requerimiento_edit',null,['label'=>'Requerimiento:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Digite el nombre del objetivo.', 'icon' => 'fa fa-tag'] ) !!}
+                                   {!! Field:: text('Requerimiento_edit',null,['label'=>'Requerimiento:', 'required', 'max' => '100', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Digite el nombre del requerimiento.', 'icon' => 'fa fa-tag'] ) !!}
                                   
                                 </div>
                             </div>
@@ -268,10 +277,10 @@
         });
         
         jQuery.validator.addMethod("letters", function(value, element) {
-            return this.optional(element) || /^[a-z," "]+$/i.test(value);
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
         });
         jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
-            return this.optional(element) || /^[-a-z," ",$,0-9,.,#]+$/i.test(value);
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
         });
 
         var editarProyecto = function () {
@@ -320,16 +329,10 @@
         };
         var form = $('#form_update_proyecto');
         var formRules = {
-            CP_Nombre_Proyecto: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
-            CP_Fecha_Inicio: {required: true, minlength: 3, maxlength: 20},
-            CP_Fecha_Final: {required: true, minlength: 3, maxlength: 20},
-            CE_Nombre_2: {minlength: 3, maxlength: 50, required: true, noSpecialCharacters:true, letters:true},
+            Alcance:{required: true, minlength: 3, maxlength: 500, noSpecialCharacters:true, letters:false},
         };
         var formMessage = {
-            CP_Nombre_Proyecto: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CP_Nombre_Proyecto: {letters: 'Los numeros no son válidos'},
-            CE_Nombre_1: {noSpecialCharacters: 'Existen caracteres que no son válidos'},
-            CE_Nombre_1: {letters: 'Los numeros no son válidos'},
+            Alcance: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
         };
         FormValidationMd.init(form, formRules, formMessage, editarProyecto());
 
@@ -363,7 +366,6 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table.ajax.reload();
                                 $('#modal_create').modal('hide');
                                 $('#form_create')[0].reset(); //Limpia formulario
@@ -381,10 +383,12 @@
         };
         var form_create_modal = $('#form_create');
         var rules_create_modal = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            Requerimiento:{required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
         };
-        FormValidationMd.init(form_create_modal,rules_create_modal,false,createModal());
+        var message_create_modal = {
+            Requerimiento: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+        };
+        FormValidationMd.init(form_create_modal,rules_create_modal,message_create_modal,createModal());
         
         table.on('click', '.editar', function(e) {
             e.preventDefault();
@@ -435,12 +439,12 @@
         };
         var form_edit_modal = $('#form_edit');
         var rules_edit_modal = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            Requerimiento_edit:{required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false},
         };
-        FormValidationMd.init(form_edit_modal,rules_edit_modal,false,EditModal());
-
-
+        var message_edit_modal = {
+            Requerimiento_edit: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+        };
+        FormValidationMd.init(form_edit_modal,rules_edit_modal,message_edit_modal,EditModal());
 
         $('.button-cancel').on('click', function (e) {
             e.preventDefault();
@@ -451,7 +455,6 @@
         $("#link_cancel").on('click', function (e) {
             var route = '{{ route('calidadpcs.proyectosCalidad.index.ajax') }}';
             location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
-            //$(".content-ajax").load(route);
         });
 
     });

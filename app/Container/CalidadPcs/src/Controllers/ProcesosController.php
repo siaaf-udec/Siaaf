@@ -250,6 +250,7 @@ class ProcesosController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
 
             $equipoScrum = EquipoScrum::where('FK_CE_Id_Proyecto', $idProyecto)->get();
+            $integrantes_equipo = EquipoScrum::where('FK_CE_Id_Proyecto', $idProyecto)->where('FK_CE_Id_Rol', 5)->get();
             $infoProyecto = Proyectos::where('PK_CP_Id_Proyecto', $idProyecto)->get();
             if ($id == 1) {
                 $existeProceso = Proceso_Proyecto::where('FK_CPP_Id_Proyecto', $idProyecto)->where('FK_CPP_Id_Proceso', $id)->get();
@@ -278,6 +279,7 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'idProceso' => $id,
                         'equipoScrum' => $equipoScrum,
+                        'integrantes' => $integrantes_equipo,
                     ]
                 );
             } elseif ($id == 3) {
@@ -291,6 +293,8 @@ class ProcesosController extends Controller
                         'idProceso' => $id,
                         'requerimientos' => $requerimientos,
                         'integrantes' => $integrantesScrum,
+                        'equipoScrum' => $equipoScrum,
+                        'integrantes_equipo' => $integrantes_equipo,
                     ]
                 );
             } elseif ($id == 4) {
@@ -298,7 +302,9 @@ class ProcesosController extends Controller
                     'calidadpcs.procesos.formularios.proceso4.costosTabla',
                     [
                         'idProyecto' => $idProyecto,
-                        'idProceso' => $id
+                        'idProceso' => $id,
+                        'equipoScrum' => $equipoScrum,
+                        'integrantes' => $integrantes_equipo,
                     ]
                 );
             } elseif ($id == 5) {
@@ -312,6 +318,8 @@ class ProcesosController extends Controller
                         'idProceso' => $id,
                         'requerimientos' => $requerimientos,
                         'integrantes' => $integrantesScrum,
+                        'equipoScrum' => $equipoScrum,
+                        'integrantes_equipo' => $integrantes_equipo,
                     ]
                 );
             } elseif ($id == 6) {
@@ -530,6 +538,7 @@ class ProcesosController extends Controller
         if ($request->ajax() && $request->isMethod('GET')) {
 
             $equipoScrum = EquipoScrum::where('FK_CE_Id_Proyecto', $idProyecto)->get();
+            $integrantes_equipo = EquipoScrum::where('FK_CE_Id_Proyecto', $idProyecto)->where('FK_CE_Id_Rol', 5)->get();
             $infoProyecto = Proyectos::where('PK_CP_Id_Proyecto', $idProyecto)->get();
 
             if ($id == 1) {
@@ -551,6 +560,7 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProceso' => $infoProceso,
                         'equipoScrum' => $equipoScrum,
+                        'integrantes' => $integrantes_equipo,
                     ]
                 );
             } elseif ($id == 3) {
@@ -564,6 +574,9 @@ class ProcesosController extends Controller
                         'infoProyecto' => $infoProyecto,
                         'requerimientos' => $requerimientos,
                         'integrantes' => $integrantesScrum,
+                        'equipoScrum' => $equipoScrum,
+                        'integrantes_equipo' => $integrantes_equipo,
+
                     ]
                 );
             } elseif ($id == 4) {
@@ -572,6 +585,8 @@ class ProcesosController extends Controller
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
+                        'equipoScrum' => $equipoScrum,
+                        'integrantes' => $integrantes_equipo,
                     ]
                 );
             } elseif ($id == 5) {

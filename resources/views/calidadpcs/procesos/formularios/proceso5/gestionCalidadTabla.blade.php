@@ -3,8 +3,83 @@
     <div class="row">
         <div class="col-md-12">
         <h4 style="margin-top: 0px;">Proceso: Planificar la gestión de la calidad.</h4>
+        <br>
+        <div class="panel-group accordion" id="date-range">
+                    <!--Primer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_1"><strong>CMMI:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Nivel de madurez:</strong> 2. <br><br><strong>Meta especifica:</strong> Medición y análisis. <br><br><strong>Propósito:</strong>El propósito de Medición y Análisis (MA) 
+                                es desarrollar y mantener la capacidad de medición utilizada para dar soporte a las necesidades de información de la gerencia.<br><br><strong>Notas introductorias: </strong>
+                                El área de proceso Medición y Análisis implica las siguientes actividades:<br> Especificar los objetivos de medición y análisis para alinearlos con las necesidades de información 
+                                y con los objetivos del proyecto, de la organización o del negocio.<br>Especificar las medidas, las técnicas de análisis y los mecanismos, para la recogida de datos, almacenamiento 
+                                de datos, difusión y realimentación. <br>Implementar las técnicas de análisis y los mecanismos para la recogida de datos, difusión de datos y realimentación.<br>Proporcionar 
+                                resultados objetivos que puedan utilizarse en la toma de decisiones informadas y en la toma de acciones correctivas apropiadas.<br><br><h4>DESARROLLO DE REQUISITOS</h4><br>
+                                <strong>Nivel de madurez:</strong> 3. <br><br><strong>Propósito:</strong> El propósito del Desarrollo de Requisitos (RD) es educir, analizar y establecer los requisitos de cliente,
+                                de producto y de componente de producto.<br><br><strong>Notas introductorias</strong>Éste área de proceso describe tres tipos de requisitos: de cliente, de producto y de componente 
+                                de producto. Tomados en conjunto, estos requisitos tratan las necesidades de las partes interesadas relevantes, incluyendo las necesidades pertinentes a las diferentes fases del 
+                                ciclo de vida del producto (p. ej., criterios de pruebas de aceptación) y a los atributos del producto (p. ej., capacidad de respuesta, protección, fiabilidad, capacidad de mantenimiento). 
+                                Los requisitos también tratan las restricciones causadas por la selección de soluciones de diseño (p. ej., integración de productos disponibles comercialmente (COTS), o uso de un patrón 
+                                particular de arquitectura). Todos los proyectos de desarrollo tienen requisitos. Los requisitos son la base para el diseño. El desarrollo de los requisitos incluye las siguientes 
+                                actividades:<br>•	Educción, análisis, validación y comunicación de las necesidades, las expectativas y las restricciones del cliente para obtener los requisitos priorizados de cliente 
+                                que constituyen una comprensión de lo que satisfará a las partes interesadas. <br>•	Recopilación y coordinación de las necesidades de las partes interesadas.<br>•	Desarrollo de los 
+                                requisitos del ciclo de vida del producto.<br>•	Establecimiento de los requisitos funcionales de cliente y de los requisitos de los atributos de calidad.<br>•	Establecimiento de los 
+                                requisitos iniciales de producto y de componente de producto consistentes con los requisitos de cliente.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Segundo acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_2"><strong>SCRUM:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    Roles Scrum que son necesarios para este proceso:<br><strong>Product Owner: </strong>{{ $equipoScrum[1]['CE_Nombre_Persona'] }}<br><strong>Scrum Master:</strong> 
+                                    {{$equipoScrum[0]['CE_Nombre_Persona'] }}.<br><br><strong>Equipo desarrollo</strong>
+                                    @foreach ($integrantes_equipo as $integrante)
+                                    <br><strong>Integrante: </strong> {{$integrante->CE_Nombre_Persona}}
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Tercer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_3"><strong>PMBOK:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    <strong>Proceso:</strong> Desarrollar plan para la dirección del proyecto.<br><br>Es el proceso de definir, preparar y coordinar todos los planes secundarios e incorporarlos 
+                                    en un plan integral para la dirección del proyecto. Las líneas base y planes secundarios integrados del proyecto pueden incluirse dentro del plan para la dirección del proyecto.
+                                    <br><br><strong>Procesos:</strong> Planificar la gestión del alcance, recopilar requisitos, definir el alcance, crear la estructura de división de trabajo EDT/WBS<br><br>
+                                    <strong>Planificar la Gestión del Alcance:</strong>Es el proceso de crear un plan de gestión del alcance que documente cómo se va a definir, validar y controlar el alcance del proyecto.<br>
+                                    <strong>Recopilar Requisitos: </strong>Es el proceso de determinar, documentar y gestionar las necesidades y los requisitos de los interesados para cumplir con los objetivos del proyecto.<br>
+                                    <strong>Definir el Alcance:</strong> Es el proceso de desarrollar una descripción detallada del proyecto y del producto.<br><strong>Crear la EDT/WBS:</strong>Es el proceso de subdividir los 
+                                    entregables y el trabajo del proyecto en componentes más pequeños y más fáciles de manejar.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
+        <br><br>
     </div>
+    <br>
     <br>
     <br>
     <div class="row">

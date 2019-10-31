@@ -4,9 +4,75 @@
         <div class="col-md-12">
         <h4 style="margin-top: 0px;">Editar proceso: Gestión del tiempo del proyecto.</h4>
         <br>
-            <!-- <div class="actions">
+        <div class="panel-group accordion" id="date-range">
+                    <!--Primer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_1"><strong>CMMI:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    <strong>Nivel de madurez:</strong> 2. <br><br><strong>Meta especifica:</strong> Planificación del proyecto. <br><br><strong>Propósito:</strong> El propósito 
+                                    de la Planificación del Proyecto (PP) es establecer y mantener planes que definan las actividades del proyecto.<br><br><strong>Notas introductorias: </strong>
+                                    Una de las claves para gestionar eficazmente un proyecto es la planificación del proyecto. El área de proceso Planificación del Proyecto implica las siguientes 
+                                    actividades:<br><br>Desarrollar el plan de proyecto.<br>Interactuar de forma apropiada con las partes interesadas relevantes.<br>Obtener el compromiso con el 
+                                    plan.<br>Mantener el plan.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Segundo acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_2"><strong>SCRUM:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    Roles Scrum que son necesarios para este proceso:<br><strong>Product Owner: </strong>{{ $equipoScrum[1]['CE_Nombre_Persona'] }}<br><strong>Scrum Master:</strong> 
+                                    {{$equipoScrum[0]['CE_Nombre_Persona'] }}.<br><br><strong>Equipo desarrollo</strong>
+                                    @foreach ($integrantes_equipo as $integrante)
+                                    <br><strong>Integrante: </strong> {{$integrante->CE_Nombre_Persona}}
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Tercer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_3"><strong>PMBOK:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    <strong>Proceso:</strong> Gestión del tiempo del proyecto.<br><br>La Gestión del Tiempo del Proyecto incluye los procesos requeridos para gestionar la terminación en
+                                    plazo del proyecto. <br><br><strong>Planificar la Gestión del Cronograma: </strong>Proceso por medio del cual se establecen las políticas, los procedimientos y la 
+                                    documentación para planificar, desarrollar, gestionar, ejecutar y controlar el cronograma del proyecto.<br><br><strong>Definir las Actividades: </strong>Proceso de 
+                                    identificar y documentar las acciones específicas que se deben realizar para generar los entregables del proyecto. <br><br><strong>Secuenciar las Actividades: </strong>
+                                    Proceso de identificar y documentar las relaciones existentes entre las actividades del proyecto.<br><br><strong>Estimar los Recursos de las Actividades: </strong>
+                                    Proceso de estimar el tipo y las cantidades de materiales, recursos humanos, equipos o suministros requeridos para ejecutar cada una de las actividades.<br><br>
+                                    <strong>Estimar la Duración de las Actividades: </strong>Proceso de estimar la cantidad de períodos de trabajo necesarios para finalizar las actividades individuales 
+                                    con los recursos estimados.<br><br><strong>Desarrollar el Cronograma: </strong> Proceso de analizar secuencias de actividades, duraciones, requisitos de recursos y 
+                                    restricciones del cronograma para crear el modelo de programación del proyecto.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            <div class="actions">
             <a href="javascript:;" class="btn btn-simple btn-success btn-icon create" title="Crear un nuevo proyecto"><i class="glyphicon glyphicon-plus"></i>Agregar sprint</a>
-            </div> -->
+            </div>
+        </div>
+        <br>
         </div>
     </div>
     <br>
@@ -409,10 +475,23 @@
         };
         var form_edit_modal = $('#from_edit');
         var rules_edit_modal = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            Nombre_Sprint_Editar: {
+                required: true,
+                minlength: 2,
+                maxlength: 50,
+                noSpecialCharacters:true,
+            },
+            lista_requerimientos_editar: {
+                required: true,
+            },
+            lista_integrantes_editar: {
+                required: true,
+            },
         };
-        FormValidationMd.init(form_edit_modal,rules_edit_modal,false,EditModal());
+        var message_edit_modal = {
+            Nombre_Sprint_Editar: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+        };
+        FormValidationMd.init(form_edit_modal,rules_edit_modal,message_edit_modal,EditModal());
 
         jQuery.validator.addMethod("letters", function(value, element) {
             return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);

@@ -4,6 +4,71 @@
         <div class="col-md-12">
         <h4 style="margin-top: 0px;">Proceso: Gestión del tiempo del proyecto.</h4>
             <br>
+            <div class="panel-group accordion" id="date-range">
+                    <!--Primer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_1"><strong>CMMI:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Nivel de madurez:</strong> 2. <br><br><strong>Meta especifica:</strong> Gestión de Acuerdos con Proveedores.<br><br><strong>Propósito:</strong>El propósito 
+                                de la Gestión de Acuerdos con Proveedores (SAM) es gestionar la adquisición de productos y servicios de proveedores.<br><br><strong>Notas introductorias:</strong>
+                                El alcance de esta área de proceso aborda la adquisición de productos, servicios y componentes de producto y de servicio que pueden ser entregados al cliente del 
+                                proyecto o incluidos en un producto o sistema de servicios. Estas prácticas del área de proceso también pueden ser utilizadas para otros propósitos que beneficien 
+                                al proyecto (p.ej., compra de consumibles). Esta área de proceso no se aplica en todos los contextos en los que se adquieren los componentes comerciales (COTS), 
+                                sino que se aplica en los casos donde hay modificaciones a los componentes (COTS), en componentes comerciales de gobierno, o en software libre, que son un valor 
+                                importante para el proyecto o que representan un riesgo importante para el proyecto. En las áreas de proceso, donde se utilizan los términos “producto” y “componente 
+                                de producto”, sus significados también abarcan servicios, sistemas de servicio y sus componentes. El área de proceso Gestión de Acuerdos con proveedores implica las 
+                                siguientes actividades:<br>Determinar el tipo de adquisición.<br>Seleccionar los proveedores.<br>Establecer y mantener acuerdos con los proveedores.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Segundo acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_2"><strong>SCRUM:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    Roles Scrum que son necesarios para este proceso:<br><strong>Product Owner: </strong>{{ $equipoScrum[1]['CE_Nombre_Persona'] }}<br><strong>Scrum Master:</strong> 
+                                    {{$equipoScrum[0]['CE_Nombre_Persona'] }}.<br><br><strong>Equipo desarrollo</strong>
+                                    @foreach ($integrantes as $integrante)
+                                    <br><strong>Integrante: </strong> {{$integrante->CE_Nombre_Persona}}
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Tercer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_3"><strong>PMBOK:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    <strong>Proceso:</strong> Gestion de los costos del proyecto.<br>La Gestión de los Costos del Proyecto incluye los procesos relacionados con planificar, estimar, 
+                                    presupuestar, financiar, obtener financiamiento, gestionar y controlar los costos de modo que se complete el proyecto dentro del presupuesto aprobado.<br><br>
+                                    <strong>Planificar la Gestión de los Costos: </strong>Es el proceso que establece las políticas, los procedimientos y la documentación necesarios para planificar, 
+                                    gestionar, ejecutar el gasto y controlar los costos del proyecto.<br><strong>Estimar los Costos:</strong>Es el proceso que consiste en desarrollar una aproximación 
+                                    de los recursos financieros necesarios para completar las actividades del proyecto.<br><strong>Determinar el Presupuesto:</strong> Es el proceso que consiste en 
+                                    sumar los costos estimados de las actividades individuales o de los paquetes de trabajo para establecer una línea base de costo autorizada.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
             <h3>Tabla informativa</h3><br>
         </div>
     </div>
