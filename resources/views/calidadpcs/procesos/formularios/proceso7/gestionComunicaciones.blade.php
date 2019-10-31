@@ -1,12 +1,12 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Etapa de planificación:'])
         <div class="row">
-        <div class="col-md-12">
-        <h4 style="margin-top: 0px;">Proceso: Planificar la gestión de comunicaciones</h4>
-        <br>
-        <div class="actions">
-                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="glyphicon glyphicon-plus"></i>Agregar</a>
-                </div>
+            <div class="col-md-12">
+            <h4 style="margin-top: 0px;">Proceso: Planificar la gestión de comunicaciones</h4>
+            <br>
+            <div class="actions">
+                <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="glyphicon glyphicon-plus"></i>Agregar</a>
+            </div>
         </div>
     </div>
     <br>
@@ -127,6 +127,13 @@
 <script type="text/javascript">
     jQuery(document).ready(function() {
 
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
+        });
+
         var table, url, columns;
         table = $('#listaProyectos');
         url = "{{ route('calidadpcs.procesosCalidad.tablaGestionComunicacion')}}"+"/"+ {{$idProyecto}};
@@ -166,8 +173,6 @@
         $(".create").on('click', function(e) {
             e.preventDefault();
             $('#modal_create').modal('toggle');
-            // actualizarSemanas();
-            // $tr = $(this).closest('tr');
         });
 
         $(".date-time-picker").datetimepicker({
@@ -187,9 +192,6 @@
             var createModal = function () {
             return{
                 init: function () {
-                    console.log($('select[name="module_create"]').val());
-                    console.log($('input:text[name="Lugar"]').val());
-                    console.log($('input:text[name="date_time"]').val());
                     var route = "{{ route('calidadpcs.procesosCalidad.storeProceso7') }}";
                     var type = 'POST';
                     var async = async || false;
@@ -214,7 +216,6 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table.ajax.reload();
                                 $('#modal_create').modal('hide');
                                 $('#form_permissions_update')[0].reset(); //Limpia formulario
@@ -238,7 +239,7 @@
             date_time: { required: true },
         };
         var formMessage = {
-            funcion: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            Lugar: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
         };
         FormValidationMd.init(form_create_modal,rules_create_modal,formMessage,createModal());
 
@@ -251,7 +252,6 @@
             $('select[name="Interesado_edit"]').trigger('change');
             $("#Lugar_edit").val(dataTable.CPGC_Lugar);
             $("#date_time_edit").val(dataTable.CPGC_Fecha);
-
             $('#modal_edit').modal('toggle');
         });
 
@@ -278,11 +278,9 @@
                         processData: false,
                         async: async,
                         beforeSend: function () {
-
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table.ajax.reload();
                                 $('#modal_edit').modal('hide');
                                 $('#form_edit')[0].reset(); //Limpia formulario
@@ -392,7 +390,6 @@
                             }
                         }
                     });
-            
         });
 
         $('.button-cancel').on('click', function (e) {
@@ -400,6 +397,5 @@
             var route = '{{ route('calidadpcs.proyectosCalidad.index.ajax') }}';
             location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
         });
-
     });
 </script> 

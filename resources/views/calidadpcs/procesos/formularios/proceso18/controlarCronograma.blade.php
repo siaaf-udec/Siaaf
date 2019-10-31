@@ -11,6 +11,7 @@
             'Sprint',
             'Requerimientos',
             'Semanas',
+            'Fecha entrega',
             'Estado',
             ''
             ])
@@ -54,6 +55,10 @@
             {
                 data: 'CPC_Duracion',
                 name: 'CPC_Duracion'
+            },
+            {
+                data: 'CPC_Fecha_Fin_Sprint',
+                name: 'CPC_Fecha_Fin_Sprint'
             },
             {
                 data: 'Estado',

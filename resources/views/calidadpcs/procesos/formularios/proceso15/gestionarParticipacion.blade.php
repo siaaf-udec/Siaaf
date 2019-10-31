@@ -18,10 +18,10 @@
                         {!! Field:: hidden ('idProceso', $idProceso) !!}  
 
                         {!! Field::textArea('Necesidades',['label' => 'Necesidades:', 'required', 'auto' => 'off', 'max' => '500', "rows" => '2'],
-                                        ['help' => 'Escribe el alcance del proyecto.', 'icon' => 'fa fa-quote-right']) !!}
+                                        ['help' => 'Escribe las necesidades del proyecto.', 'icon' => 'fa fa-quote-right']) !!}
 
                         {!! Field::textArea('Expectativas',['label' => 'Expectativas:', 'required', 'auto' => 'off', 'max' => '500', "rows" => '2'],
-                                        ['help' => 'Escribe el alcance del proyecto.', 'icon' => 'fa fa-quote-right']) !!}
+                                        ['help' => 'Escribe las expextativas del proyecto.', 'icon' => 'fa fa-quote-right']) !!}
                     </div>
                 </div>
             </div>
@@ -45,8 +45,17 @@
 
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+
 <script type="text/javascript">
     jQuery(document).ready(function() {
+
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
+        });
 
         var enviarFormulario = function() {
             return {
@@ -79,7 +88,6 @@
                             });
                         },
                         success: function(response, xhr, request) {
-                            console.log(response);
                             if (request.status === 200 && xhr === 'success') {
                                 $('#form_create_proceso_15')[0].reset(); //Limpia formulario
                                 UIToastr.init(xhr, response.title, response.message);
@@ -99,23 +107,12 @@
         };
         var form = $('#form_create_proceso_15');
         var formRules = {
-            // Numero_acta: {
-            //     minlength: 2,
-            //     maxlength: 20,
-            //     required: true,
-            //     noSpecialCharacters: true
-            // },
-            // Duracion: {
-            //     minlength: 1,
-            //     maxlength: 2,
-            //     required: true,
-            //     noSpecialCharacters: true
-            // },
+            Necesidades:{ required: true, minlength: 2, maxlength: 500, noSpecialCharacters:true, letters:false },
+            Expectativas:{ required: true, minlength: 2, maxlength: 500, noSpecialCharacters:true, letters:false },
         };
         var formMessage = {
-            // Numero_acta: {
-            //     noSpecialCharacters: 'Existen caracteres que no son válidos'
-            // },
+            Necesidades: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            Expectativas: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
         };
         FormValidationMd.init(form, formRules, formMessage, enviarFormulario());
 
@@ -124,7 +121,5 @@
             var route = '{{ route('calidadpcs.proyectosCalidad.index.ajax') }}';
             location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
         });
-        
-
     });
 </script> 

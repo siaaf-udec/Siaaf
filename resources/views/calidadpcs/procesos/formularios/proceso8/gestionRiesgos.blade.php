@@ -41,15 +41,15 @@
                                 <div class="col-md-12">
 
                                     {!! Field:: text('Riesgo',null,['label'=>'Riesgo:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-warning '] ) !!}
+                                    ['help' => 'Digite el riesgo.', 'icon' => 'fa fa-warning '] ) !!}
 
                                     {!! Field:: text('Caracteristicas',null,['label'=>'Caracteristicas:', 'max' => '100', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-list-alt'] ) !!}
+                                    ['help' => 'Digite las caracteristicas del riesgo.', 'icon' => 'fa fa-list-alt'] ) !!}
 
                                     {!! Field::select('Importancia:',['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5' ],null,['name' => 'Importancia']) !!}
                                     
                                     {!! Field:: text('Accion',null,['label'=>'Accion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-bolt'] ) !!}
+                                    ['help' => 'Digite la accion.', 'icon' => 'fa fa-bolt'] ) !!}
                                     
                                 </div>
                             </div>
@@ -82,21 +82,21 @@
                                     {!! Field:: hidden ('idRiesgo')!!}
 
                                     {!! Field:: text('Riesgo_Edit',null,['label'=>'Riesgo:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-warning '] ) !!}
+                                    ['help' => 'Digite el riesgo.', 'icon' => 'fa fa-warning '] ) !!}
 
-                                    {!! Field:: text('Caracteristicas_Edit',null,['label'=>'Caracteristicas:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-list-alt'] ) !!}
+                                    {!! Field:: text('Caracteristicas_Edit',null,['label'=>'Caracteristicas:', 'max' => '100', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Digite las caracteristicas del riesgo.', 'icon' => 'fa fa-list-alt'] ) !!}
 
                                     {!! Field::select('Importancia:',['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5' ],null,['name' => 'Importancia_Edit']) !!}
                                     
                                     {!! Field:: text('Accion_Edit',null,['label'=>'Accion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-bolt'] ) !!}
+                                    ['help' => 'Digite la accion.', 'icon' => 'fa fa-bolt'] ) !!}
                                     
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            {!! Form::submit('Guardar', ['class' => 'btn blue']) !!}
+                            {!! Form::submit('Actualizar', ['class' => 'btn blue']) !!}
                             {!! Form::button('Cancelar', ['class' => 'btn red', 'data-dismiss' => 'modal' ]) !!}
                         </div>
                         {!! Form::close() !!}
@@ -125,6 +125,13 @@
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
+
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
+        });
 
         var table, url, columns;
         table = $('#listaProyectos');
@@ -228,13 +235,11 @@
             Caracteristicas: { required: true, minlength: 2, maxlength: 100, noSpecialCharacters:true, letters:false},
             Importancia: { required: true },
             Accion: { required: true, minlength: 2, maxlength: 50, noSpecialCharacters:true, letters:false},
-
         };
         var formMessage = {
             Riesgo: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
             Caracteristicas: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
-            Accion: { required: true, minlength: 2, maxlength: 50, noSpecialCharacters:true, letters:false},
-
+            Accion: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
         };
         FormValidationMd.init(form_create_modal,rules_create_modal,formMessage,createModal());
         
@@ -287,7 +292,6 @@
             $('select[name="Importancia_Edit"]').val(dataTable.CPGR_Importancia);
             $('select[name="Importancia_Edit"]').trigger('change');
             $("#Accion_Edit").val(dataTable.CPGR_Accion);
-
             $('#modal_edit').modal('toggle');
         });
 
@@ -319,7 +323,6 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table.ajax.reload();
                                 $('#modal_edit').modal('hide');
                                 $('#form_edit')[0].reset(); //Limpia formulario
@@ -338,10 +341,10 @@
 
         var form_edit_modal = $('#form_edit');
         var rules_edit_modal = {
-            Riesgo_Edit: { required: true, minlength: 3, maxlength: 50, noSpecialCharacters:true, letters:false },
+            Riesgo_Edit: { required: true, minlength: 2, maxlength: 50, noSpecialCharacters:true, letters:false },
             Caracteristicas_Edit: { required: true, minlength: 3, maxlength: 100, noSpecialCharacters:true, letters:false },
             Importancia_Edit: {required: true },
-            Accion_Edit: { required: true, minlength: 3, maxlength: 50, noSpecialCharacters:true, letters:false },
+            Accion_Edit: { required: true, minlength: 2, maxlength: 50, noSpecialCharacters:true, letters:false },
         };
         var message_edit_modal = {
             Riesgo_Edit: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
@@ -401,6 +404,5 @@
             var route = '{{ route('calidadpcs.proyectosCalidad.index.ajax') }}';
             location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
         });
-
     });
 </script> 

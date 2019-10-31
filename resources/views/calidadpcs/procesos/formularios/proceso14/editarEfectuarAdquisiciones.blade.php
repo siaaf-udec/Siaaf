@@ -42,10 +42,10 @@
                                     ['help' => 'Funcion que cumple.', 'icon' => 'fa fa-tag'] ) !!}
 
                                     {!! Field:: text('Proveedor',null,['label'=>'Proveedor:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Escribe el numero de horas trabajadas por dia', 'icon' => 'fa fa-user'] ) !!}
+                                    ['help' => 'Digite el proveedor', 'icon' => 'fa fa-user'] ) !!}
 
                                     {!! Field:: text('TipoContrato',null,['label'=>'Tipo de contrato:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Escribe el numero de horas trabajadas por dia', 'icon' => 'fa fa-file-o'] ) !!}
+                                    ['help' => 'Digite el tipo de contrato', 'icon' => 'fa fa-file-o'] ) !!}
 
                                 </div>
                             </div>
@@ -77,8 +77,17 @@
 
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+
 <script type="text/javascript">
     jQuery(document).ready(function() {
+
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
+        });
 
         var table, url, columns;
         table = $('#listaProyectos');
@@ -152,11 +161,9 @@
                         processData: false,
                         async: async,
                         beforeSend: function () {
-
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table.ajax.reload();
                                 $('#modal_create').modal('hide');
                                 $('#form_create')[0].reset(); //Limpia formulario
@@ -173,12 +180,16 @@
             }
         };
 
-        var form_create_modal_1 = $('#form_create');
-        var rules_create_modal_1 = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+        var form = $('#form_create');
+        var formRules = {
+            Proveedor:{ required: true, minlength: 2, maxlength: 50, noSpecialCharacters:true, letters:false },
+            TipoContrato:{ required: true, minlength: 2, maxlength: 50, noSpecialCharacters:true, letters:false },
         };
-        FormValidationMd.init(form_create_modal_1,rules_create_modal_1,false,createModal());
+        var formMessage = {
+            Proveedor: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            TipoContrato: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+        };
+        FormValidationMd.init(form,formRules,formMessage,createModal());
 
         $(".guardarProceso").on('click', function(e) {
             e.preventDefault();

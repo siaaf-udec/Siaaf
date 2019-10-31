@@ -37,12 +37,12 @@
  
                                     {!! Field:: hidden ('idIntegrante') !!} 
 
-                                    {!! Field:: text('Nombre',null,['label'=>'Nombre:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off', 'readonly'],
+                                    {!! Field:: text('Nombre',null,['label'=>'Nombre:','class'=> 'form-control', 'autofocus','autocomplete'=>'off', 'readonly'],
                                     ['help' => 'Funcion que cumple.', 'icon' => 'fa fa-user'] ) !!}
 
                                     {!! Field::select('Tiempo de trabajo diario:',['1' => '1 hora', '2' => '2 horas', '3' => '3 horas', '4' => '4 horas', '5' => '5 horas', '6' => '6 horas'
                                         , '7' => '7 horas', '8' => '8 horas', '9' => '9 horas', '10' => '10 horas', '11' => '11 horas', '12' => '12 horas'],null,
-                                    ['name'=> 'horasTrabajo']) !!}
+                                    ['name'=> 'horasTrabajo', 'required']) !!}
 
                                 </div>
                             </div>
@@ -75,9 +75,16 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
+
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
+        });
 
         var table, url, columns;
         table = $('#listaProyectos');
@@ -95,7 +102,7 @@
                 name: 'CE_Horas_Trabajadas',
             },
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-success verEtapas"  title="Ver los procesos de este Proyecto" ><i class="fa fa-share-square-o"></i></a>',
+                defaultContent: '<a href="javascript:;" class="btn btn-success editar"  title="Agregar horas de trabajo" ><i class="fa fa-share-square-o"></i></a>',
                 data: 'action',
                 name: 'Acciones',
                 title: 'Acciones',
@@ -112,13 +119,15 @@
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
 
-        table.on('click', '.verEtapas', function(e) {
+        table.on('click', '.editar', function(e) {
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();
             $('input:hidden[name="idIntegrante"]').val(''+dataTable.PK_CE_Id_Equipo_Scrum+'');
             $("#Nombre").val(dataTable.CE_Nombre_Persona);
-            $("#horasTrabajo").val(dataTable.CE_Horas_Trabajadas);
+            $('select[name="horasTrabajo"]').val(dataTable.CE_Horas_Trabajadas);
+            $('select[name="horasTrabajo"]').trigger('change');
+
             $('#modal_create').modal('toggle');
         });
         
@@ -149,11 +158,9 @@
                         processData: false,
                         async: async,
                         beforeSend: function () {
-
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table.ajax.reload();
                                 $('#modal_create').modal('hide');
                                 $('#form_create')[0].reset(); //Limpia formulario
@@ -170,12 +177,11 @@
             }
         };
 
-        var form_create_modal_1 = $('#form_create');
-        var rules_create_modal_1 = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+        var form_create_modal = $('#form_create');
+        var rules_create_modal = {
+            horasTrabajo: { required: true },
         };
-        FormValidationMd.init(form_create_modal_1,rules_create_modal_1,false,createModal());
+        FormValidationMd.init(form_create_modal,rules_create_modal,false,createModal());
 
         $(".guardarProceso").on('click', function(e) {
             e.preventDefault();

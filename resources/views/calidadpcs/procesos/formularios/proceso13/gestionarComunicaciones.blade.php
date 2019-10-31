@@ -19,9 +19,8 @@
                             {!! Field::select('Medio',
                             ['Oral' => 'Oral', 'Escrita' => 'Escrita', 'Virtual' => 'Virtual'],
                             null,
-                            [ 'label' => 'Medio:', 'name'=> 'TipoMedio']) !!}
+                            [ 'label' => 'Medio:', 'name'=> 'TipoMedio', 'required']) !!}
                             <div id="campo_adicional">
-
                                 {!! Field:: text('Redaccion',['label'=>'Especificaciones:', 'max' => '500', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                 ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
                             </div>
@@ -50,9 +49,16 @@
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
+
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
+        });
 
         $('#campo_adicional').hide();
         $('select[name="TipoMedio"]').change(function() {
@@ -119,23 +125,11 @@
         };
         var form = $('#form_create_proceso_13');
         var formRules = {
-            // Numero_acta: {
-            //     minlength: 2,
-            //     maxlength: 20,
-            //     required: true,
-            //     noSpecialCharacters: true
-            // },
-            // Duracion: {
-            //     minlength: 1,
-            //     maxlength: 2,
-            //     required: true,
-            //     noSpecialCharacters: true
-            // },
+            TipoMedio:{ required: true},
+            Redaccion:{ required: false,  maxlength: 500, noSpecialCharacters:true, letters:false },
         };
         var formMessage = {
-            // Numero_acta: {
-            //     noSpecialCharacters: 'Existen caracteres que no son válidos'
-            // },
+            Redaccion: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
         };
         FormValidationMd.init(form, formRules, formMessage, enviarFormulario());
 

@@ -40,13 +40,13 @@
                                 <div class="col-md-12">
 
                                     {!! Field:: text('Adquisicion',null,['label'=>'Adquisicion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-ticket'] ) !!}
+                                    ['help' => 'Digite la adquisicion.', 'icon' => 'fa fa-ticket'] ) !!}
 
                                     {!! Field:: text('Costo',null,['label'=>'Costo:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-usd'] ) !!} 
+                                    ['help' => 'Digite el costo.', 'icon' => 'fa fa-usd'] ) !!} 
 
                                     {!! Field:: text('Duracion',null,['label'=>'Duracion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-clock-o']) !!}
+                                    ['help' => 'Digite la duracion. Ej. 2 semanas.', 'icon' => 'fa fa-clock-o']) !!}
                                     
                                 </div>
                             </div>
@@ -80,13 +80,13 @@
                                 {!! Field:: hidden ('idAdquisicion')!!}
 
                                     {!! Field:: text('Adquisicion_edit',null,['label'=>'Adquisicion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-ticket'] ) !!}
+                                    ['help' => 'Digite la adquisicion.', 'icon' => 'fa fa-ticket'] ) !!}
 
                                     {!! Field:: text('Costo_edit',null,['label'=>'Costo:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-usd'] ) !!} 
+                                    ['help' => 'Digite el costo.', 'icon' => 'fa fa-usd'] ) !!} 
 
                                     {!! Field:: text('Duracion_edit',null,['label'=>'Duracion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-clock-o']) !!}
+                                    ['help' => 'Digite la duracion. Ej. 2 semanas.', 'icon' => 'fa fa-clock-o']) !!}
                                     
                                 </div>
                             </div>
@@ -120,6 +120,13 @@
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
+
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
+        });
 
         var table, url, columns;
         table = $('#listaProyectos');
@@ -173,7 +180,6 @@
 
                     formData.append('Adquisicion', $('input:text[name="Adquisicion"]').val());
                     formData.append('Costo', $('input:text[name="Costo"]').val());
-                    // formData.append('Importancia', $('select[name="Importancia"]').val());
                     formData.append('Duracion', $('input:text[name="Duracion"]').val());
                     formData.append('FK_CPC_Id_Proyecto', {{$idProyecto}});
 
@@ -191,7 +197,6 @@
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table.ajax.reload();
                                 $('#modal_create').modal('hide');
                                 $('#form_permissions_update')[0].reset(); //Limpia formulario
@@ -210,10 +215,15 @@
 
         var form_create_modal = $('#form_permissions_update');
         var rules_create_modal = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            Adquisicion: { required: true, minlength: 2, maxlength: 50, noSpecialCharacters:true, letters:false},
+            Costo: { required: true, min: 1},
+            Duracion: { required: true, minlength: 2, maxlength: 50, noSpecialCharacters:true, letters:false},
         };
-        FormValidationMd.init(form_create_modal,rules_create_modal,false,createModal());
+        var formMessage = {
+            Adquisicion: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            Duracion: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+        };
+        FormValidationMd.init(form_create_modal,rules_create_modal,formMessage,createModal());
         
         $(".guardarProceso").on('click', function(e) {
             e.preventDefault();
@@ -312,10 +322,15 @@
 
         var form_edit_modal = $('#form_edit');
         var rules_edit_modal = {
-            // MC1_valor_ganado: { minlength: 1, required: true },
-            // MC1_costo_real: { minlength: 1, required: true },
+            Adquisicion_edit: { required: true, minlength: 2, maxlength: 50, noSpecialCharacters:true, letters:false},
+            Costo_edit: { required: true, min: 1},
+            Duracion_edit: { required: true, minlength: 2, maxlength: 50, noSpecialCharacters:true, letters:false},
         };
-        FormValidationMd.init(form_edit_modal,rules_edit_modal,false,EditModal());
+        var messages_edit_modal = {
+            Adquisicion_edit: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            Duracion_edit: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+        };
+        FormValidationMd.init(form_edit_modal,rules_edit_modal,messages_edit_modal,EditModal());
 
         table.on('click', '.eliminar', function(e) {
             e.preventDefault();

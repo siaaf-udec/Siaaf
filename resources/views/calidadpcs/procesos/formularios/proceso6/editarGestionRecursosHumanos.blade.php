@@ -38,7 +38,7 @@
                             <div class="row">
                                 <div class="col-md-12">
  
-                                    {!! Field::select('integrantes:',$integrantes,null,['name' => 'module_create']) !!}
+                                    {!! Field::select('integrantes:',$integrantes,null,['name' => 'select_integrantes']) !!}
                                     
                                     {!! Field:: text('funcion',null,['label'=>'Funcion:', 'max' => '300', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Funcion que cumple.', 'icon' => 'fa fa-list-ol'] ) !!}
@@ -112,6 +112,13 @@
 <script type="text/javascript">
     jQuery(document).ready(function() {
 
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
+        });
+
         var table, url, columns;
         table = $('#listaProyectos');
         url = "{{ route('calidadpcs.procesosCalidad.tablaGestionRecursos')}}"+"/"+ {{$idProyecto}};
@@ -144,7 +151,6 @@
         dataTableServer.init(table, url, columns);
         table = table.DataTable();
 
-
         $(".create").on('click', function(e) {
             e.preventDefault();
             $('#modal_create').modal('toggle');
@@ -152,8 +158,7 @@
         $(".pmd-select2").select2({
                 width: '100%',
                 placeholder: "Selecccionar",
-            });
-
+        });
 
         var createModal = function () {
             return{
@@ -163,7 +168,7 @@
                     var async = async || false;
                     var formData = new FormData();
 
-                    formData.append('FK_CPGR_Id_Equipo', $('select[name="module_create"]').val());
+                    formData.append('FK_CPGR_Id_Equipo', $('select[name="select_integrantes"]').val());
                     formData.append('CPGR_Funcion', $('input:text[name="funcion"]').val());
                     formData.append('FK_CPC_Id_Proyecto', {{$idProyecto}});
 
@@ -200,13 +205,13 @@
 
         var form_create_modal = $('#form_permissions_update');
         var rules_create_modal = {
+            select_integrantes: {required:true},
             funcion: { required: true, minlength: 3, maxlength: 300, noSpecialCharacters:true, letters:false },
         };
         var formMessage = {
             funcion: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
         };
         FormValidationMd.init(form_create_modal,rules_create_modal,formMessage,createModal());
-
 
         $(".guardarProceso").on('click', function(e) {
             e.preventDefault();
@@ -244,10 +249,7 @@
                             }
                         }
                     });
-            
         });
-
-        
 
         table.on('click', '.editar', function(e) {
             e.preventDefault();
@@ -282,11 +284,9 @@
                         processData: false,
                         async: async,
                         beforeSend: function () {
-
                         },
                         success: function (response, xhr, request) {
                             if (request.status === 200 && xhr === 'success') {
-                                // table.ajax.reload();
                                 table.ajax.reload();
                                 $('#modal_edit').modal('hide');
                                 $('#form_edit')[0].reset(); //Limpia formulario
@@ -305,10 +305,11 @@
 
         var form_edit_modal = $('#form_edit');
         var rules_edit_modal = {
-            CPC_Entregable: { required: true, minlength: 3, maxlength: 300, noSpecialCharacters:true, letters:false },
+            select_edit:{ required: true},
+            funcion_edit: { required: true, minlength: 3, maxlength: 300, noSpecialCharacters:true, letters:false },
         };
         var message_edit_modal = {
-            CPC_Entregable: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
+            funcion_edit: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
         };
         FormValidationMd.init(form_edit_modal,rules_edit_modal,message_edit_modal,EditModal());
 
@@ -363,6 +364,5 @@
             var route = '{{ route('calidadpcs.proyectosCalidad.index.ajax') }}';
             location.href="{{route('calidadpcs.proyectosCalidad.index')}}";
         });
-
     });
 </script> 

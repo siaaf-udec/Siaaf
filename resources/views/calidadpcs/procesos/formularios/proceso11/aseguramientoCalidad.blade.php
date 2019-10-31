@@ -16,7 +16,7 @@
                         {!! Field:: hidden ('idProceso', $idProceso) !!} 
 
                         {!! Field::textArea('Practicas',['label' => 'Buenas practicas a realizar para asegurar la calidad del proyecto:', 'required', 'auto' => 'off', 'max' => '500', "rows" => '2'],
-                                        ['help' => 'Escribe el alcance del proyecto.', 'icon' => 'fa fa-quote-right']) !!}
+                                        ['help' => 'Escribe las buenas practicas.', 'icon' => 'fa fa-quote-right']) !!}
                     </div>
                 </div>
             </div>
@@ -40,9 +40,17 @@
 
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+
 <script type="text/javascript">
     jQuery(document).ready(function() {
 
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
+        });
        
         var enviarFormulario = function() {
             return {
@@ -81,7 +89,6 @@
                                 App.unblockUI('.portlet-form');
                                 var route = '{{route('calidadpcs.proyectosCalidad.index.ajax')}}';
                                 location.href = "{{route('calidadpcs.proyectosCalidad.index')}}";
-                                //$(".content-ajax").load(route);
                             }
                         },
                         error: function(response, xhr, request) {
@@ -95,23 +102,10 @@
         };
         var form = $('#form_create_proceso_11');
         var formRules = {
-            // Numero_acta: {
-            //     minlength: 2,
-            //     maxlength: 20,
-            //     required: true,
-            //     noSpecialCharacters: true
-            // },
-            // Duracion: {
-            //     minlength: 1,
-            //     maxlength: 2,
-            //     required: true,
-            //     noSpecialCharacters: true
-            // },
+            Practicas: { required: true, minlength: 2, maxlength: 500, noSpecialCharacters:true, letters:false },
         };
         var formMessage = {
-            // Numero_acta: {
-            //     noSpecialCharacters: 'Existen caracteres que no son válidos'
-            // },
+            Practicas: {noSpecialCharacters: 'Existen caracteres que no son válidos', letters: 'Los numeros no son válidos'},
         };
         FormValidationMd.init(form, formRules, formMessage, enviarFormulario());
 
