@@ -4,6 +4,49 @@
     
     <div class="row">
         <div class="col-md-12">
+            <br>
+            <div class="panel-group accordion" id="date-range">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_2"><strong>SCRUM:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                Roles Scrum que son necesarios para este proceso:<br><strong>Product Owner: </strong>{{ $equipoScrum[1]['CE_Nombre_Persona'] }}<br><strong>Scrum Master:</strong> 
+                                    {{$equipoScrum[0]['CE_Nombre_Persona'] }}.<br><br><strong>Equipo desarrollo</strong>
+                                    @foreach ($integrantes_equipo as $integrante)
+                                    <br><strong>Integrante: </strong> {{$integrante->CE_Nombre_Persona}}
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_3"><strong>PMBOK:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Proceso: </strong>Controlar la Participación de los Interesados.<br><br><strong> Controlar la Participación de los Interesados: </strong> El proceso de 
+                                monitorear globalmente las relaciones de los interesados del proyecto y ajustar las estrategias y los planes para involucrar a los interesados.<br><br>
+                                La Gestión de los Interesados del Proyecto incluye los procesos necesarios para identificar a las personas, grupos u organizaciones que pueden afectar o ser afectados 
+                                por el proyecto, para analizar las expectativas de los interesados y su impacto en el proyecto, y para desarrollar estrategias de gestión adecuadas a fin de lograr la 
+                                participación eficaz de los interesados en las decisiones y en la ejecución del proyecto. La gestión de los interesados también se centra en la comunicación continua con 
+                                los interesados para comprender sus necesidades y expectativas, abordando los incidentes en el momento en que ocurren, gestionando conflictos de intereses y fomentando 
+                                una adecuada participación de los interesados en las decisiones y actividades del proyecto. La satisfacción de los interesados debe gestionarse como uno de los objetivos 
+                                clave del proyecto.
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
         <div class="col-md-10 col-md-offset-1">
             {!! Form::model ([[$interesados],[$idProceso],[$infoProyecto]],['id'=>'form_create_proceso_24', 'url' => '/forms']) !!}
             <div class="form-body">

@@ -249,7 +249,7 @@
                                 <div class="col-md-12">
                                     {!! Field:: hidden ('idObjetivo') !!}
 
-                                    {!! Field:: text('Objetivo_editar',null,['label'=>'Objetivo:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    {!! Field:: text('Objetivo_editar',null,['label'=>'Objetivo:', 'max' => '300', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Digite el nombre del objetivo.', 'icon' => 'fa fa-tag'] ) !!}
 
                                 </div>

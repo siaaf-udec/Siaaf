@@ -3,6 +3,70 @@
         <div class="row">
         <div class="col-md-12">
         <h4 style="margin-top: 0px;">Editar proceso: Adquirir, desarrollar y dirigir equipo del proyecto.</h4>
+        <br>
+        <div class="panel-group accordion" id="date-range">
+                    <!--Primer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_1"><strong>CMMI:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Nivel de madurez:</strong> 3. <br><strong>Meta especifica:</strong> Enfoque en procesos de la organización.<br><strong>Propósito: </strong>El propósito de
+                                Enfoque en Procesos de la Organización (OPF) es planificar, implementar y desplegar las mejoras de proceso de la organización, basadas en una comprensión completa de 
+                                las fortalezas y debilidades actuales de los procesos y de los activos de proceso de la organización.<br><strong>Notas introductorias: </strong>Los procesos de la 
+                                organización incluyen todos los procesos utilizados por la organización y sus proyectos. Las mejoras candidatas a los procesos y a los activos de proceso de la organización 
+                                se obtienen de diferentes fuentes, incluyendo la medición de procesos, las lecciones aprendidas en la implementación de procesos, los resultados de las evaluaciones 
+                                de proceso, los resultados de las actividades de evaluación de productos y servicios, los resultados de las evaluaciones de satisfacción del cliente, los resultados 
+                                de benchmarking frente a procesos de otras organizaciones, y las recomendaciones de otras iniciativas de mejora en la organización.<br>Desplegar los activos de proceso 
+                                de la organización e incorporar las experiencias.<br>Desplegar los activos de proceso de la organización.<br>Desplegar los procesos estándar.<br>Monitorizar la implementación.
+                                <br>Incorporar las experiencias en los activos de proceso de la organización.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Segundo acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_2"><strong>SCRUM:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    Roles Scrum que son necesarios para este proceso:<br><strong>Scrum Master:</strong>{{$equipoScrum[0]['CE_Nombre_Persona'] }}.<br><strong>Equipo desarrollo</strong>
+                                    @foreach ($integrantes_equipo as $integrante)
+                                    <br><strong>Integrante: </strong> {{$integrante->CE_Nombre_Persona}}
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Tercer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_3"><strong>PMBOK:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Proceso:</strong> Adquirir, desarrollar y dirigir equipo del proyecto.<br><br><strong>Adquirir el Equipo del Proyecto: </strong> proceso de confirmar la disponibilidad 
+                                de los recursos humanos y conseguir el equipo necesario para completar las actividades del proyecto.<br><strong>Desarrollar el Equipo del Proyecto: </strong>El proceso de mejorar 
+                                las competencias, la interacción entre los miembros del equipo y el ambiente general del equipo para lograr un mejor desempeño del proyecto.<br><strong>Dirigir el Equipo del 
+                                Proyecto: </strong>El proceso de realizar el seguimiento del desempeño de los miembros del equipo, proporcionar retroalimentación, resolver problemas y gestionar cambios a fin 
+                                de optimizar el desempeño del proyecto.
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
         </div>
     </div>
     <br>

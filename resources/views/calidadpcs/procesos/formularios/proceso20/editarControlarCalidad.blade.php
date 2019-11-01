@@ -1,6 +1,71 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Etapa de monitoreo y control:'])
     <h4 style="margin-top: 0px;">Editar proceso: Controlar la calidad.</h4>
+    <br>
+    <div class="panel-group accordion" id="date-range">
+                    <!--Primer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_1"><strong>CMMI:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Nivel de madurez:</strong> 2. <br><strong>Meta especifica:</strong>  Aseguramiento de la calidad del proceso y del producto.<br><strong>Propósito: </strong>El propósito 
+                                del Aseguramiento de la Calidad del Proceso y del Producto (PPQA) es proporcionar al personal y a la gerencia una visión objetiva de los procesos y de los productos de trabajo 
+                                asociados.<br><br><strong>Notas introductorias: </strong>El área de proceso de Aseguramiento de la Calidad del Proceso y del Producto implica las siguientes actividades: y Evaluar 
+                                objetivamente los procesos realizados y los productos de trabajo frente a las descripciones de proceso, los estándares y los procedimientos aplicables. y Identificar y documentar 
+                                las no conformidades. y Proporcionar realimentación al personal del proyecto y a los gerentes sobre los resultados de las actividades de aseguramiento de la calidad. y Asegurar que 
+                                se tratan las no conformidades.<br><br>Evaluar objetivamente los procesos y los productos de trabajo.<br>- Evaluar objetivamente los procesos.<br>- Evaluar objetivamente los productos 
+                                de trabajo.<br>Proporcionar una visión objetiva.<br>- Comunicar y resolver las no conformidades.<br>- Establecer los registros.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Segundo acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_2"><strong>SCRUM:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                Roles Scrum que son necesarios para este proceso:<br><strong>Product Owner: </strong>{{ $equipoScrum[1]['CE_Nombre_Persona'] }}<br><strong>Scrum Master:</strong> 
+                                    {{$equipoScrum[0]['CE_Nombre_Persona'] }}.<br><br><strong>Equipo desarrollo</strong>
+                                    @foreach ($integrantes_equipo as $integrante)
+                                    <br><strong>Integrante: </strong> {{$integrante->CE_Nombre_Persona}}
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Tercer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_3"><strong>PMBOK:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Proceso: </strong>Controlar la Calidad.<br><br><strong>Controlar la Calidad: </strong>Es el proceso por el que se monitorea y se registran los resultados de 
+                                la ejecución de las actividades de control de calidad, a fin de evaluar el desempeño y recomendar los cambios necesarios.<br><br>La Gestión de la Calidad del Proyecto 
+                                incluye los procesos y actividades de la organización ejecutora que establecen las políticas de calidad, los objetivos y las responsabilidades de calidad para que el 
+                                proyecto satisfaga las necesidades para las que fue acometido. La Gestión de la Calidad del Proyecto utiliza políticas y procedimientos para implementar el sistema de 
+                                gestión de la calidad de la organización en el contexto del proyecto, y, en la forma que resulte adecuada, apoya las actividades de mejora continua del proceso, tal y 
+                                como las lleva a cabo la organización ejecutora. La Gestión de la Calidad del Proyecto trabaja para asegurar que se alcancen y se validen los requisitos del proyecto, 
+                                incluidos los del producto.
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-10 col-md-offset-1">

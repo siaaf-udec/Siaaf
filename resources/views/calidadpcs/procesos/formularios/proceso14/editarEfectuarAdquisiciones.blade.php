@@ -3,6 +3,72 @@
         <div class="row">
         <div class="col-md-12">
         <h4 style="margin-top: 0px;">Editar proceso: Efectuar las adquisiciones.</h4>
+        <br>
+        <div class="panel-group accordion" id="date-range">
+                    <!--Primer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_1"><strong>CMMI:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Nivel de madurez:</strong> 3. <br><strong>Meta especifica:</strong> Validación.<br><strong>Propósito: </strong>El propósito de la Validación (VAL) es demostrar que 
+                                un producto o componente de producto cumple con su uso previsto cuando se ubica en el entorno previsto.<br><strong>	Notas introductorias: </strong>Las actividades de validación 
+                                se pueden aplicar a todos los aspectos del producto en cualquiera de sus entornos previstos, tales como operación, formación, fabricación, mantenimiento y servicios de soporte. 
+                                Los métodos empleados para lograr la validación se pueden aplicar a productos de trabajo, así como al producto y los componentes de producto (en la totalidad de las áreas de proceso, 
+                                cuando se utilizan los términos “producto” y “componente de producto”, los significados también abarcan los servicios, sistemas de servicios y sus componentes). Los productos de trabajo 
+                                (p. ej., requisitos, diseños, prototipos) se deberían seleccionar sobre la base de cuáles son los que mejor predicen cómo el producto y el componente de producto satisfarán las necesidades 
+                                del usuario final, y de esta manera la validación se realiza de forma temprana (fases de concepto/exploración) e incremental a lo largo del ciclo de vida del producto (incluyendo la 
+                                transición a operaciones y soporte). El entorno de validación debería representar el entorno previsto para el producto y los componentes de producto, así como el entorno previsto adecuado 
+                                para las actividades de validación con los productos de trabajo.<br><br>Preparar la validación.<br>- Seleccionar los productos para la validación.<br>-	Establecer el entorno de validación.
+                                <br>- Establecer los procedimientos y los criterios de validación.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Segundo acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_2"><strong>SCRUM:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    Roles Scrum que son necesarios para este proceso:<br><strong>Scrum Master:</strong>{{$equipoScrum[0]['CE_Nombre_Persona'] }}.<br><strong>Equipo desarrollo</strong>
+                                    @foreach ($integrantes_equipo as $integrante)
+                                    <br><strong>Integrante: </strong> {{$integrante->CE_Nombre_Persona}}
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Tercer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_3"><strong>PMBOK:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Proceso:</strong> Efectuar las Adquisiciones.<br><br><strong>Efectuar las Adquisiciones: </strong>El proceso de obtener respuestas de los proveedores, seleccionarlos 
+                                y adjudicarles un contrato.<br><br>La Gestión de las Adquisiciones del Proyecto incluye los procesos necesarios para comprar o adquirir productos, servicios o resultados que es preciso 
+                                obtener fuera del equipo del proyecto. La organización puede ser la compradora o vendedora de los productos, servicios o resultados de un proyecto.<br>La Gestión de las Adquisiciones del 
+                                Proyecto incluye los procesos de gestión del contrato y de control de cambios requeridos para desarrollar y administrar contratos u órdenes de compra emitidos por miembros autorizados del 
+                                equipo del proyecto.<br>La Gestión de las Adquisiciones del Proyecto también incluye el control de cualquier contrato emitido por una organización externa (el comprador) que esté adquiriendo 
+                                ntregables del proyecto a la organización ejecutora (el vendedor), así como la administración de las obligaciones contractuales contraídas por el equipo del proyecto en virtud del contrato.
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
         </div>
     </div>
     <br>

@@ -415,7 +415,7 @@
             if (x_objetivo < objetivos_max) {
                 $('<div id="objetivo' + x_objetivo + '" class="form-group form-md-line-input">\
                     <div class="input-icon">\
-                    <input class="form-control form-control" autofocus="" autocomplete="off" maxlength="100" id="Objetivo_Especifico_' + x_objetivo + '" name="Objetivo_Especifico_' + x_objetivo + '" type="text">\
+                    <input class="form-control form-control" autofocus="" autocomplete="off" maxlength="300" id="Objetivo_Especifico_' + x_objetivo + '" name="Objetivo_Especifico_' + x_objetivo + '" type="text">\
                     <label for="Objetivo_Especifico_' + x_objetivo + '" class="control-label">Objetivo especifico (adicional):</label>\
                     <span class="help-block"> Digite el requisito</span>\
                     <i class=" fa fa-angle-right "></i>\

@@ -58,7 +58,7 @@
                         <div id="collapse_3_3" class="panel-collapse collapse">
                             <div class="panel-body">
                                 <div class="alert alert-primary">
-                                <strong>Proceso:</strong> Aseguramiento de calidad.<br><br><strong>Desarrollar el Plan para la Dirección del Proyecto: </strong>Es el proceso que consiste en auditar 
+                                <strong>Proceso:</strong> Aseguramiento de calidad.<br><br><strong>Realizar el Aseguramiento de Calidad: </strong>Es el proceso que consiste en auditar 
                                 los requisitos de calidad y los resultados de las mediciones de control de calidad, para asegurar que se utilicen las normas de calidad y las definiciones operacionales 
                                 adecuadas.
                             </div>

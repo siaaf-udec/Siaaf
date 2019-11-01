@@ -12,7 +12,7 @@
 <!-- File Styles -->
 <link href="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css"/>
 <!-- bootstrap -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+<link href="{{ asset('assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css"/>
 <!-- select2 -->
 <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -38,9 +38,11 @@
                 <div class="col-md-12">
 
                     <div class="actions">
+                    @permission('CALIDADPCS_CREATE_PROJECT')
                         <a href="javascript:;"
                             class="btn btn-simple btn-success btn-icon create"
                             title="Crear un nuevo proyecto"><i class="glyphicon glyphicon-plus"></i>Agregar Proyecto</a>
+                            @endpermission
                         <br>                        
                     </div>
                     <br>
@@ -86,7 +88,7 @@
 <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
 
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
@@ -105,7 +107,7 @@
             {data: 'CP_Fecha_Inicio', name: 'CP_Fecha_Inicio'},
             {defaultContent:'<span class="label label-sm label-warning">Fecha pendiente</span>' ,data: 'CP_Fecha_Final', name: 'CP_Fecha_Final'},
             {
-                defaultContent: '<a href="javascript:;" class="btn btn-success verEtapas"  title="Ver los procesos de este Proyecto" ><i class="fa fa-list-ul"></i></a>',
+                defaultContent: '@permission('CALIDADPCS_SEE_PROJECT')<a href="javascript:;" class="btn btn-success verEtapas"  title="Ver los procesos de este Proyecto" ><i class="fa fa-list-ul"></i></a>@endpermission',
                 data: 'action',
                 name: 'Etapas',
                 title: 'Etapas',
@@ -119,7 +121,7 @@
                 responsivePriority: 2
             },
             {
-                defaultContent: '<a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a><a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon delete"><i class="icon-trash"></i></a> ',
+                defaultContent: '@permission('CALIDADPCS_UPDATE_PROJECT')<a href="javascript:;" title="Editar" class="btn btn-primary edit" ><i class="icon-pencil"></i></a>@endpermission @permission('CALIDADPCS_DELETE_PROJECT') <a href="javascript:;" title="Eliminar" class="btn btn-simple btn-danger btn-icon delete"><i class="icon-trash"></i></a>@endpermission ',
                 data: 'action',
                 name: 'action',
                 title: 'Acciones',

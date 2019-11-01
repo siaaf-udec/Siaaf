@@ -185,7 +185,7 @@
                                    
                                     <div class="form-group form-md-line-input" style="padding-top: 0px;">
                                         <div class="input-icon">
-                                            <select id="lista_requerimientos_editar" name="lista_requerimientos_editar" class="selectpicker form-control" multiple data-size="5" title="Seleccione por lo menos un requerimiento" data-width="100%" style="padding-left: 0px;">
+                                            <select id="lista_requerimientos_editar" name="lista_requerimientos_editar" class="selectpicker form-control" multiple data-size="5" title="Seleccione por lo menos un requerimiento" data-selected-text-format="count" data-width="100%" style="padding-left: 0px;">
                                                 @foreach($requerimientos as $key => $name)
                                                 <option value="{{$key}}">{{$name}}</option>
                                                 @endforeach

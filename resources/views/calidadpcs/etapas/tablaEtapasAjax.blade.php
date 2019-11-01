@@ -109,7 +109,7 @@
                 className: 'text-center',
                 render: function (data, type, row) {
                     if(row.PK_CE_Id_Etapa <= {{$conteoEtapa}}){
-                        return '<a href="javascript:;" class="btn btn-info reportes"  title="Ver reporte" ><i class="glyphicon glyphicon-list-alt"></i></a>';
+                        return '@permission('CALIDADPCS_REPORT_PROJECT')<a href="javascript:;" class="btn btn-info reportes"  title="Ver reporte" ><i class="glyphicon glyphicon-list-alt"></i></a>@endpermission';
                     }if(row.PK_CE_Id_Etapa > {{$conteoEtapa}}){
                         return '<span class="label label-sm label-warning">Pendiente</span>';
                     }

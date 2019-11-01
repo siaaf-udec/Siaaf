@@ -421,6 +421,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
+                        'equipoScrum' => $equipoScrum,
+                        'integrantes_equipo' => $integrantes_equipo,
                     ]
                 );
             } elseif ($id == 15) {
@@ -430,6 +432,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
+                        'equipoScrum' => $equipoScrum,
+                        'integrantes_equipo' => $integrantes_equipo,
                     ]
                 );
             } elseif ($id == 16) {
@@ -476,7 +480,9 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                        'calidad' => $calidad
+                        'calidad' => $calidad,
+                        'equipoScrum' => $equipoScrum,
+                        'integrantes_equipo' => $integrantes_equipo,
                     ]
                 );
             } elseif ($id == 21) {
@@ -514,7 +520,9 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
-                        'interesados' => $interesados
+                        'interesados' => $interesados,
+                        'equipoScrum' => $equipoScrum,
+                        'integrantes_equipo' => $integrantes_equipo,
                     ]
                 );
             } elseif ($id == 25) {
@@ -524,6 +532,8 @@ class ProcesosController extends Controller
                         'idProyecto' => $idProyecto,
                         'infoProyecto' => $infoProyecto,
                         'idProceso' => $id,
+                        'equipoScrum' => $equipoScrum,
+                        'integrantes_equipo' => $integrantes_equipo,
                     ]
                 );
             }
@@ -702,6 +712,8 @@ class ProcesosController extends Controller
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
                         'comunicacion' => $comunicacion,
+                        'equipoScrum' => $equipoScrum,
+                        'integrantes_equipo' => $integrantes_equipo,
                     ]
                 );
             } elseif ($id == 14) {
@@ -710,6 +722,8 @@ class ProcesosController extends Controller
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
+                        'equipoScrum' => $equipoScrum,
+                        'integrantes_equipo' => $integrantes_equipo,
                     ]
                 );
             } elseif ($id == 15) {
@@ -719,7 +733,9 @@ class ProcesosController extends Controller
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
-                        'participacion' => $participacion
+                        'participacion' => $participacion,
+                        'equipoScrum' => $equipoScrum,
+                        'integrantes_equipo' => $integrantes_equipo,
                     ]
                 );
             } elseif ($id == 16) {
@@ -762,6 +778,8 @@ class ProcesosController extends Controller
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
                         'calidad' => $calidad,
+                        'equipoScrum' => $equipoScrum,
+                        'integrantes_equipo' => $integrantes_equipo,
                     ]
                 );
             } elseif ($id == 21) {
@@ -795,8 +813,9 @@ class ProcesosController extends Controller
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
-                        'interesados' => $interesados
-
+                        'interesados' => $interesados,
+                        'equipoScrum' => $equipoScrum,
+                        'integrantes_equipo' => $integrantes_equipo,
                     ]
                 );
             } elseif ($id == 25) {
@@ -805,6 +824,8 @@ class ProcesosController extends Controller
                     [
                         'idProceso' => $id,
                         'idProyecto' => $idProyecto,
+                        'equipoScrum' => $equipoScrum,
+                        'integrantes_equipo' => $integrantes_equipo,
                     ]
                 );
             }

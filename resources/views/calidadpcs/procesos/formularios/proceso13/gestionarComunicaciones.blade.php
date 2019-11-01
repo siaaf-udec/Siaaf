@@ -3,6 +3,71 @@
     <div class="row">
         <div class="col-md-12">
             <h4 style="margin-top: 0px;">Proceso: Gestionar las Comunicaciones.</h4>
+            <br>
+            <div class="panel-group accordion" id="date-range">
+                    <!--Primer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_1"><strong>CMMI:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Nivel de madurez:</strong> 3. <br><strong>Meta especifica:</strong> Integración del producto.<br><strong>Propósito: </strong>El propósito de la Integración del Producto 
+                                (PI) es ensamblar el producto a partir de sus componentes, asegurar que el producto, una vez integrado, se comporta correctamente (es decir, posee la funcionalidad y los atributos 
+                                de calidad requeridos) y entregar el producto.<br><br><strong>Notas introductorias: </strong>Esta área de proceso trata la integración de componentes de producto dentro de componentes 
+                                de producto más complejos o dentro de productos completos. El alcance de esta área de proceso es lograr la integración del producto completo a través de un ensamblaje progresivo de los 
+                                componentes de producto, en una etapa o en etapas incrementales, de acuerdo a una estrategia y procedimientos de integración definidos. En todas las áreas de procesos donde se utilizan 
+                                los términos “producto” y “componente de producto”, sus significados pretenden también englobar servicios, sistemas de servicios y sus componentes. Un aspecto crítico de la integración 
+                                del producto es la gestión de las interfaces, internas y externas, de los productos y de los componentes de producto para asegurar la compatibilidad entre las interfaces. Estas interfaces 
+                                no se restringen a las interfaces de usuario, sino que también se aplican a las interfaces entre componentes del producto, incluyendo fuentes de datos internas y externas, middleware y 
+                                otros componentes que pueden o no estar dentro del control de la organización de desarrollo, pero de las que depende el producto. Debería prestarse atención a la gestión de la interfaz a 
+                                lo largo del proyecto.<br>Prepararse para la integración del producto.<br>- Establecer una estrategia de integración.<br>- Establecer el entorno de integración del producto.<br>- Establecer 
+                                los procedimientos y los criterios de integración del producto.<br>Asegurar la compatibilidad de las interfaces.<br>- Revisar la completitud de las descripciones de las interfaces.<br>
+                                - Gestionar las interfaces. SG 3.<br>Ensamblar los componentes de producto y entregar el producto.<br>-	Confirmar la disponibilidad de los componentes de producto para la integración.<br>
+                                - Ensamblar los componentes de producto.<br>- Evaluar los componentes de producto ensamblados.<br>-	Empaquetar y entregar el producto o componente de producto.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Segundo acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_2"><strong>SCRUM:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    Roles Scrum que son necesarios para este proceso:<br><strong>Scrum Master:</strong>{{$equipoScrum[0]['CE_Nombre_Persona'] }}.<br><strong>Equipo desarrollo</strong>
+                                    @foreach ($integrantes_equipo as $integrante)
+                                    <br><strong>Integrante: </strong> {{$integrante->CE_Nombre_Persona}}
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Tercer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_3"><strong>PMBOK:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Proceso:</strong> Adquirir, desarrollar y dirigir equipo del proyecto.<br><br><strong>Gestionar las Comunicaciones: </strong>El proceso de crear, recopilar, 
+                                distribuir, almacenar, recuperar y realizar la disposición final de la información del proyecto de acuerdo con el plan de gestión de las comunicaciones.
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
         </div>
     </div>
     <div class="row">
