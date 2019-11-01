@@ -15,22 +15,18 @@
                         <div id="collapse_3_1" class="panel-collapse collapse">
                             <div class="panel-body">
                                 <div class="alert alert-primary">
-                                <strong>Nivel de madurez:</strong> 2. <br><br><strong>Meta especifica:</strong> Medición y análisis. <br><br><strong>Propósito:</strong>El propósito de Medición y Análisis (MA) 
-                                es desarrollar y mantener la capacidad de medición utilizada para dar soporte a las necesidades de información de la gerencia.<br><br><strong>Notas introductorias: </strong>
-                                El área de proceso Medición y Análisis implica las siguientes actividades:<br> Especificar los objetivos de medición y análisis para alinearlos con las necesidades de información 
-                                y con los objetivos del proyecto, de la organización o del negocio.<br>Especificar las medidas, las técnicas de análisis y los mecanismos, para la recogida de datos, almacenamiento 
-                                de datos, difusión y realimentación. <br>Implementar las técnicas de análisis y los mecanismos para la recogida de datos, difusión de datos y realimentación.<br>Proporcionar 
-                                resultados objetivos que puedan utilizarse en la toma de decisiones informadas y en la toma de acciones correctivas apropiadas.<br><br><h4>DESARROLLO DE REQUISITOS</h4><br>
-                                <strong>Nivel de madurez:</strong> 3. <br><br><strong>Propósito:</strong> El propósito del Desarrollo de Requisitos (RD) es educir, analizar y establecer los requisitos de cliente,
-                                de producto y de componente de producto.<br><br><strong>Notas introductorias</strong>Éste área de proceso describe tres tipos de requisitos: de cliente, de producto y de componente 
-                                de producto. Tomados en conjunto, estos requisitos tratan las necesidades de las partes interesadas relevantes, incluyendo las necesidades pertinentes a las diferentes fases del 
-                                ciclo de vida del producto (p. ej., criterios de pruebas de aceptación) y a los atributos del producto (p. ej., capacidad de respuesta, protección, fiabilidad, capacidad de mantenimiento). 
-                                Los requisitos también tratan las restricciones causadas por la selección de soluciones de diseño (p. ej., integración de productos disponibles comercialmente (COTS), o uso de un patrón 
-                                particular de arquitectura). Todos los proyectos de desarrollo tienen requisitos. Los requisitos son la base para el diseño. El desarrollo de los requisitos incluye las siguientes 
-                                actividades:<br>•	Educción, análisis, validación y comunicación de las necesidades, las expectativas y las restricciones del cliente para obtener los requisitos priorizados de cliente 
-                                que constituyen una comprensión de lo que satisfará a las partes interesadas. <br>•	Recopilación y coordinación de las necesidades de las partes interesadas.<br>•	Desarrollo de los 
-                                requisitos del ciclo de vida del producto.<br>•	Establecimiento de los requisitos funcionales de cliente y de los requisitos de los atributos de calidad.<br>•	Establecimiento de los 
-                                requisitos iniciales de producto y de componente de producto consistentes con los requisitos de cliente.
+                                <strong>Nivel de madurez:</strong> 3. <br><strong>Meta especifica:</strong> Gestion integrada del proyecto. <br><strong>Propósito:</strong>El propósito 
+                                de la Gestión Integrada del Proyecto (IPM) es establecer y gestionar el proyecto y la involucración de las partes interesadas relevantes de acuerdo a un proceso 
+                                integrado y definido, que se adapta a partir del conjunto de procesos estándar de la organización.<br><strong>Notas introductorias:</strong> La Gestión Integrada 
+                                del Proyecto implica las siguientes actividades:<br> Establecer el proceso definido del proyecto al inicio del mismo, mediante la adaptación del conjunto de 
+                                procesos estándar de la organización. <br>Gestionar el proyecto utilizando el proceso definido del proyecto.<br> Establecer el entorno de trabajo para el proyecto, 
+                                basándose en los estándares del entorno de trabajo de la organización.<br>Establecer los equipos que tienen la tarea de conseguir los objetivos del proyecto.<br>
+                                Utilizar y contribuir a los activos de proceso de la organización.<br>Posibilitar que los intereses de las partes interesadas relevantes se identifiquen, se 
+                                consideren y, cuando sea apropiado, se traten durante el proyecto.<br>Asegurar que las partes interesadas relevantes (1) realizan sus tareas de forma coordinada y 
+                                oportuna; (2) tratan los requisitos, los planes, los objetivos, los problemas y los riesgos del proyecto; (3) cumplen sus compromisos; (4) e identifican, siguen y 
+                                resuelven las cuestiones de coordinación.<br>Utilizar el proceso definido del proyecto.<br>Establecer el proceso definido del proyecto.<br>Utilizar los activos de 
+                                proceso de la organización para planificar las actividades del proyecto.<br>Establecer el entorno de trabajo del proyecto.<br>Integrar los planes.<br>Gestionar el 
+                                proyecto utilizando planes integrados.<br>Establecer los equipos.<br>Contribuir a los activos de proceso de la organización.                
                                 </div>
                             </div>
                         </div>
@@ -64,13 +60,13 @@
                         <div id="collapse_3_3" class="panel-collapse collapse">
                             <div class="panel-body">
                                 <div class="alert alert-primary">
-                                    <strong>Proceso:</strong> Desarrollar plan para la dirección del proyecto.<br><br>Es el proceso de definir, preparar y coordinar todos los planes secundarios e incorporarlos 
-                                    en un plan integral para la dirección del proyecto. Las líneas base y planes secundarios integrados del proyecto pueden incluirse dentro del plan para la dirección del proyecto.
-                                    <br><br><strong>Procesos:</strong> Planificar la gestión del alcance, recopilar requisitos, definir el alcance, crear la estructura de división de trabajo EDT/WBS<br><br>
-                                    <strong>Planificar la Gestión del Alcance:</strong>Es el proceso de crear un plan de gestión del alcance que documente cómo se va a definir, validar y controlar el alcance del proyecto.<br>
-                                    <strong>Recopilar Requisitos: </strong>Es el proceso de determinar, documentar y gestionar las necesidades y los requisitos de los interesados para cumplir con los objetivos del proyecto.<br>
-                                    <strong>Definir el Alcance:</strong> Es el proceso de desarrollar una descripción detallada del proyecto y del producto.<br><strong>Crear la EDT/WBS:</strong>Es el proceso de subdividir los 
-                                    entregables y el trabajo del proyecto en componentes más pequeños y más fáciles de manejar.
+                                <strong>Proceso:</strong> Planificar la gestión de la calidad.<br>La Gestión de la Calidad del Proyecto incluye los procesos y actividades de la organización 
+                                ejecutora que establecen las políticas de calidad, los objetivos y las responsabilidades de calidad para que el proyecto satisfaga las necesidades para las que fue 
+                                acometido. La Gestión de la Calidad del Proyecto utiliza políticas y procedimientos para implementar el sistema de gestión de la calidad de la organización en el 
+                                contexto del proyecto, y, en la forma que resulte adecuada, apoya las actividades de mejora continua del proceso, tal y como las lleva a cabo la organización ejecutora. 
+                                La Gestión de la Calidad del Proyecto trabaja para asegurar que se alcancen y se validen los requisitos del proyecto, incluidos los del producto.<br><br><strong>
+                                Planificar la Gestión de la Calidad:</strong><br>Es el proceso de identificar los requisitos y/o estándares de calidad para el proyecto y sus entregables, así como de 
+                                documentar cómo el proyecto demostrará el cumplimiento con los mismos.
                                 </div>
                             </div>
                         </div>

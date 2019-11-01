@@ -3,6 +3,69 @@
         <div class="row">
         <div class="col-md-12">
         <h4 style="margin-top: 0px;">Editar proceso: Plan para la Dirección del proyecto.</h4>
+        <br>
+        <div class="panel-group accordion" id="date-range">
+                    <!--Primer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_1"><strong>CMMI:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Nivel de madurez:</strong> 2. <br><strong>Meta especifica:</strong> Gestión de Acuerdos con Proveedores.<br><strong>Propósito: </strong>El propósito de 
+                                la Gestión de Acuerdos con Proveedores (SAM) es gestionar la adquisición de productos y servicios de proveedores.<strong>Notas introductorias: </strong>El alcance
+                                de esta área de proceso aborda la adquisición de productos, servicios y componentes de producto y de servicio que pueden ser entregados al cliente del proyecto o 
+                                incluidos en un producto o sistema de servicios. Estas prácticas del área de proceso también pueden ser utilizadas para otros propósitos que beneficien al proyecto 
+                                (p.ej., compra de consumibles). Esta área de proceso no se aplica en todos los contextos en los que se adquieren los componentes comerciales (COTS), sino que se 
+                                aplica en los casos donde hay modificaciones a los componentes (COTS), en componentes comerciales de gobierno, o en software libre, que son un valor importante 
+                                para el proyecto o que representan un riesgo importante para el proyecto. En las áreas de proceso, donde se utilizan los términos “producto” y “componente de 
+                                producto”, sus significados también abarcan servicios, sistemas de servicio y sus componentes. El área de proceso Gestión de Acuerdos con proveedores implica las 
+                                siguientes actividades:<br>Ejecutar los acuerdos del proveedor.<br>Aceptar la entrega de los productos adquiridos.<br>Asegurar una transición satisfactoria de los 
+                                productos adquiridos.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Segundo acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_2"><strong>SCRUM:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    Roles Scrum que son necesarios para este proceso:<br><strong>Scrum Master:</strong>{{$equipoScrum[0]['CE_Nombre_Persona'] }}.<br><strong>Equipo desarrollo</strong>
+                                    @foreach ($integrantes_equipo as $integrante)
+                                    <br><strong>Integrante: </strong> {{$integrante->CE_Nombre_Persona}}
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Tercer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_3"><strong>PMBOK:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Proceso:</strong> Plan para la Dirección del Proyecto.<br><br><strong>Desarrollar el Plan para la Dirección del Proyecto: </strong> Es el proceso de definir, 
+                                preparar y coordinar todos los planes secundarios e incorporarlos en un plan integral para la dirección del proyecto. Las líneas base y planes secundarios integrados 
+                                del proyecto pueden incluirse dentro del plan para la dirección del proyecto.
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
         </div>
     </div>
     <div class="row">
@@ -44,6 +107,8 @@
 
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
+
 <script type="text/javascript">
     jQuery(document).ready(function() {
 

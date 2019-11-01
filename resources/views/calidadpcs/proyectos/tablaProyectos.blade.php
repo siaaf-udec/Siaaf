@@ -26,7 +26,7 @@
 
 @endpush
 
-@section('title', '| Proyectos Calidad')
+@section('title', '| SIGDEP')
 
 @section('page-title', 'SIGDEP - Sistema de Informacion para la Gestion de Desarrollo de Proyectos:')
 

@@ -4,6 +4,73 @@
     <div class="col-md-12">
         <h4 style="margin-top: 0px;">Proceso: Planificar la gestión de adquisiciones.</h4>
         <br>
+        <div class="panel-group accordion" id="date-range">
+                    <!--Primer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_1"><strong>CMMI:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Nivel de madurez:</strong> 3. <br><strong>Meta especifica:</strong> Definición de procesos de la organización.<br><strong>Propósito: </strong>El propósito 
+                                de la Definición de Procesos de la Organización (OPD) es establecer y mantener un conjunto utilizable de activos de proceso de la organización, estándares del entorno 
+                                de trabajo, y reglas y guías para los equipos. <br><strong>Notas Introductorias: </strong>Los activos de proceso de la organización permiten una ejecución consistente 
+                                de los procesos en toda la organización y proporcionan una base para obtener beneficios acumulados a largo plazo para la organización (véase la definición de “activos 
+                                de proceso de la organización” en el glosario). La biblioteca de activos de proceso de la organización da soporte al aprendizaje y a la mejora de procesos, al permitir 
+                                compartir las buenas prácticas y las lecciones aprendidas en toda la organización (véase la definición de “activos de proceso de la organización” en el glosario). El 
+                                conjunto de procesos estándar de la organización también describe las interacciones estándar con los proveedores. Las interacciones del proveedor se caracterizan por 
+                                los siguientes elementos típicos: entregables esperados de los proveedores, criterios de aceptación aplicables a estos entregables, estándares (p. ej., estándares de 
+                                arquitectura y de tecnología), e hitos estándar y revisiones de progreso.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Segundo acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_2"><strong>SCRUM:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    Roles Scrum que son necesarios para este proceso:<br><strong>Product Owner: </strong>{{ $equipoScrum[1]['CE_Nombre_Persona'] }}<br><strong>Scrum Master:</strong> 
+                                    {{$equipoScrum[0]['CE_Nombre_Persona'] }}.<br><br><strong>Equipo desarrollo</strong>
+                                    @foreach ($integrantes_equipo as $integrante)
+                                    <br><strong>Integrante: </strong> {{$integrante->CE_Nombre_Persona}}
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Tercer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_3"><strong>PMBOK:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Proceso:</strong> Planificar la gestión de adquisiciones.<br>La Gestión de las Adquisiciones del Proyecto incluye los procesos necesarios para comprar o 
+                                adquirir productos, servicios o resultados que es preciso obtener fuera del equipo del proyecto. La organización puede ser la compradora o vendedora de los productos, 
+                                servicios o resultados de un proyecto.<br>La Gestión de las Adquisiciones del Proyecto incluye los procesos de gestión del contrato y de control de cambios requeridos 
+                                para desarrollar y administrar contratos u órdenes de compra emitidos por miembros autorizados del equipo del proyecto.<br>La Gestión de las Adquisiciones del Proyecto 
+                                también incluye el control de cualquier contrato emitido por una organización externa (el comprador) que esté adquiriendo entregables del proyecto a la organización 
+                                ejecutora (el vendedor), así como la administración de las obligaciones contractuales contraídas por el equipo del proyecto en virtud del contrato.<br>
+                                <strong>Planificar la Gestión de las Adquisiciones: </strong>El proceso de documentar las decisiones de adquisiciones del proyecto, especificar el enfoque e identificar 
+                                a los proveedores potenciales.
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
         <div class="actions">
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="glyphicon glyphicon-plus"></i>Agregar</a>
                 </div>

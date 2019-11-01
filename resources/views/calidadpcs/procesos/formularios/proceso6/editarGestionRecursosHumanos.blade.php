@@ -4,6 +4,73 @@
             <div class="col-md-12">
                 <h4 style="margin-top: 0px;">Editar proceso: Planificar la gestión de los recursos humanos.</h4>
                 <br>
+                <div class="panel-group accordion" id="date-range">
+                    <!--Primer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_1"><strong>CMMI:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Nivel de madurez:</strong> 3. <br><strong>Meta especifica:</strong> Formación en la organización. <br><strong>Propósito:</strong>El propósito de la Formación 
+                                en la Organización (OT) es desarrollar las habilidades y los conocimientos de las personas para que puedan desempeñar sus roles eficaz y eficientemente.<br><br>
+                                <strong>Notas introductorias</strong><br>La Formación de la organización trata la formación proporcionada para dar soporte a los objetivos estratégicos del negocio 
+                                de la organización y para cumplir las necesidades tácticas de formación que son comunes a los proyectos y grupos de soporte. Las necesidades de formación para cumplir 
+                                las necesidades especificas, identificadas por los proyectos individuales y grupos de soporte, se tratan a nivel de proyecto y de grupo de soporte, y están fuera del 
+                                alcance del área de proceso Formación de la Organización. Para más información sobre cómo planificar los conocimientos y habilidades necesarios, consúltese el área de 
+                                proceso Planificación del Proyecto. El programa de formación de la organización implica las siguientes actividades:<br>Identificar las necesidades de formación de la 
+                                organización.<br>Obtener y proporcionar formación para tratar esas necesidades.<br>Establecer y mantener la capacidad de formación.<br>Establecer y mantener registros 
+                                de formación.<br>Evaluar la eficacia de la formación.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Segundo acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_2"><strong>SCRUM:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    Roles Scrum que son necesarios para este proceso:<br><strong>Product Owner: </strong>{{ $equipoScrum[1]['CE_Nombre_Persona'] }}<br><strong>Scrum Master:</strong> 
+                                    {{$equipoScrum[0]['CE_Nombre_Persona'] }}.<br><br><strong>Equipo desarrollo</strong>
+                                    @foreach ($integrantes_equipo as $integrante)
+                                    <br><strong>Integrante: </strong> {{$integrante->CE_Nombre_Persona}}
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Tercer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_3"><strong>PMBOK:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Proceso:</strong> Planificar la gestión de los recursos humanos.<br>La Gestión de los Recursos Humanos del Proyecto incluye los procesos que organizan, 
+                                gestionan y conducen al equipo del proyecto. El equipo del proyecto está compuesto por las personas a las que se han asignado roles y responsabilidades para completar 
+                                el proyecto. Los miembros del equipo del proyecto pueden tener diferentes conjuntos de habilidades, pueden estar asignados a tiempo completo o a tiempo parcial y se 
+                                pueden incorporar o retirar del equipo conforme avanza el proyecto. También se puede referir a los miembros del equipo del proyecto como personal del proyecto. Si 
+                                bien se asignan roles y responsabilidades específicos a cada miembro del equipo del proyecto, la participación de todos los miembros en la toma de decisiones y en la 
+                                planificación del proyecto es beneficiosa. La participación de los miembros del equipo en la planificación aporta su experiencia al proceso y fortalece su compromiso 
+                                con el proyecto.<br><br><strong>Planificar la Gestión de los Recursos Humanos: </strong>El proceso de identificar y documentar los roles dentro de un proyecto, las 
+                                responsabilidades, las habilidades requeridas y las relaciones de comunicación, así como de crear un plan para la gestión de personal.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
                 <div class="actions">
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="glyphicon glyphicon-plus"></i>Agregar</a>
                 </div>

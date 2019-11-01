@@ -30,21 +30,21 @@
                             <div class="col-md-6">
 
                                 {!! Field:: text('CE_Nombre_1',$infoEquipoScrum[0]['CE_Nombre_Persona'],['label'=>'Scrum Master:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user'] ) !!}
+                                                            ['help' => 'Digite el nombre del scrum master','icon'=>'fa fa-user'] ) !!}
 
                                 {!! Field:: text('CE_Nombre_4',$infoEquipoScrum[3]['CE_Nombre_Persona'],['label'=>'Lider del Equipo Scrum:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-users'] ) !!}
+                                                            ['help' => 'Digite el nombre del lider','icon'=>'fa fa-users'] ) !!}
 
                             </div>
                             <div class="col-md-6">
                                 {!! Field:: text('CE_Nombre_2',$infoEquipoScrum[1]['CE_Nombre_Persona'],['label'=>'Product Owner:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user'] ) !!}
+                                                            ['help' => 'Digite el nombre del product owner','icon'=>'fa fa-user'] ) !!}
                                 @if(empty($infoEquipoScrum[2]['CE_Nombre_Persona']))                            
                                     {!! Field:: text('CE_Nombre_3',null,['label'=>'Stakeholder:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user'] ) !!}
+                                                            ['help' => 'Digite el nombre del stakeholder','icon'=>'fa fa-user'] ) !!}
                                 @else
                                     {!! Field:: text('CE_Nombre_3',$infoEquipoScrum[2]['CE_Nombre_Persona'],['label'=>'Stakeholder:',  'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user'] ) !!}
+                                                            ['help' => 'Digite el nombre del stakeholder','icon'=>'fa fa-user'] ) !!}
                                 @endif
                             </div>
 
@@ -52,10 +52,10 @@
                                 <h3>Integrantes del equipo </h3>
                                 <hr>
                                 {!! Field:: text('CE_Nombre_5',$infoEquipoScrum[4]['CE_Nombre_Persona'],['label'=>'Integrante del equipo:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user-o'] ) !!}
+                                                            ['help' => 'Digite el nombre del integrante','icon'=>'fa fa-user-o'] ) !!}
 
                                 {!! Field:: text('CE_Nombre_6',$infoEquipoScrum[5]['CE_Nombre_Persona'],['label'=>'Integrante del equipo:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user-o'] ) !!}
+                                                            ['help' => 'Digite el nombre del integrante','icon'=>'fa fa-user-o'] ) !!}
                                 
                             </div>
                             <div class="col-md-12" id="ListaIntegrantes">
@@ -64,7 +64,7 @@
                                 @else
                                 <div id="campo7">
                                     {!! Field:: text('CE_Nombre_7',$infoEquipoScrum[6]['CE_Nombre_Persona'],['label'=>'Integrante del equipo (opcional):', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user-o'] ) !!}
+                                                            ['help' => 'Digite el nombre del integrante','icon'=>'fa fa-user-o'] ) !!}
                                 </div>
                                 @endif
                                 @if(empty($infoEquipoScrum[7]))
@@ -72,7 +72,7 @@
                                 @else
                                 <div id="campo8">
                                     {!! Field:: text('CE_Nombre_8',$infoEquipoScrum[7]['CE_Nombre_Persona'],['label'=>'Integrante del equipo (opcional):', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user-o'] ) !!}           
+                                                            ['help' => 'Digite el nombre del integrante','icon'=>'fa fa-user-o'] ) !!}           
                                 </div>                 
                                 @endif
                                 @if(empty($infoEquipoScrum[8]))
@@ -80,7 +80,7 @@
                                 @else
                                 <div id="campo9">
                                     {!! Field:: text('CE_Nombre_9',$infoEquipoScrum[8]['CE_Nombre_Persona'],['label'=>'Integrante del equipo (opcional):', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => '','icon'=>'fa fa-user-o'] ) !!}    
+                                                            ['help' => 'Digite el nombre del integrante','icon'=>'fa fa-user-o'] ) !!}    
                                 </div>                          
                                 @endif
                             </div>

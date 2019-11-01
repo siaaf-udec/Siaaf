@@ -4,6 +4,72 @@
         <div class="col-md-12">
         <h4 style="margin-top: 0px;">Editar proceso: Planificar la gestión de comunicaciones</h4>
         <br>
+        <div class="panel-group accordion" id="date-range">
+                    <!--Primer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_1"><strong>CMMI:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Nivel de madurez:</strong> 3. <br><strong>Meta especifica:</strong> Análisis de decisiones y resolución. <br><strong>Propósito:</strong>El propósito del Análisis 
+                                de Decisiones y Resolución (DAR) es analizar las posibles decisiones utilizando un proceso de evaluación formal que evalúa las alternativas identificadas, frente a unos 
+                                criterios establecidos.<br><br><strong>Notas introductorias </strong><br>El área de proceso Análisis de Decisiones y Resolución implica establecer guías, para determinar 
+                                qué cuestiones deberían estar sujetas a un proceso de evaluación formal y aplicar los procesos de evaluación formal a estas cuestiones. Un proceso de evaluación formal es 
+                                un enfoque estructurado para evaluar soluciones alternativas frente a criterios establecidos con el fin de determinar una solución recomendada. Un proceso de evaluación 
+                                formal implica las siguientes acciones:<br>Establecer los criterios para evaluar alternativas.<br>Identificar soluciones alternativas. y Seleccionar métodos para evaluar 
+                                alternativas.<br>Evaluar soluciones alternativas utilizando los criterios y los métodos establecidos.<br>Seleccionar soluciones recomendadas a partir de las alternativas 
+                                identificadas en base a los criterios de evaluación.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Segundo acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_2"><strong>SCRUM:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                    Roles Scrum que son necesarios para este proceso:<br><strong>Product Owner: </strong>{{ $equipoScrum[1]['CE_Nombre_Persona'] }}<br><strong>Scrum Master:</strong> 
+                                    {{$equipoScrum[0]['CE_Nombre_Persona'] }}.<br><br><strong>Equipo desarrollo</strong>
+                                    @foreach ($integrantes_equipo as $integrante)
+                                    <br><strong>Integrante: </strong> {{$integrante->CE_Nombre_Persona}}
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Tercer acordeon-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_3"><strong>PMBOK:</strong></a>
+                            </h4>
+                        </div>
+                        <div id="collapse_3_3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="alert alert-primary">
+                                <strong>Proceso:</strong> Planificar la gestión de comunicaciones.<br>La Gestión de las Comunicaciones del Proyecto incluye los procesos requeridos para asegurar 
+                                que la planificación, recopilación, creación, distribución, almacenamiento, recuperación, gestión, control, monitoreo y disposición final de la información del 
+                                proyecto sean oportunos y adecuados. Los directores de proyecto emplean la mayor parte de su tiempo comunicándose con los miembros del equipo y otros interesados 
+                                en el proyecto, tanto si son internos (en todos los niveles de la organización) como externos a la misma. Una comunicación eficaz crea un puente entre diferentes 
+                                interesados que pueden tener diferentes antecedentes culturales y organizacionales, diferentes niveles de experiencia, y diferentes perspectivas e intereses, lo 
+                                cual impacta o influye en la ejecución o resultado del proyecto.<br><br><strong>Planificar la Gestión de las Comunicaciones:</strong><br>El proceso de desarrollar
+                                un enfoque y un plan adecuados para las comunicaciones del proyecto sobre la base de las necesidades y requisitos de información de los interesados y de los activos 
+                                de la organización disponibles.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
         <div class="actions">
                     <a href="javascript:;" class="btn btn-simple btn-success btn-icon create"><i class="glyphicon glyphicon-plus"></i>Agregar</a>
                 </div>
