@@ -93,7 +93,7 @@
         <div class="col-md-12">
             <!-- Modal -->
             <div aria-hidden="true" class="modal fade" id="modal_create" role="dialog" tabindex="-1">
-                <div class="">
+                <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         {!! Form::open(['id' => 'form_permissions_update', 'class' => '', 'url' => '/forms']) !!}
@@ -131,7 +131,7 @@
         <div class="col-md-12">
             <!-- Modal -->
             <div aria-hidden="true" class="modal fade" id="modal_edit" role="dialog" tabindex="-1">
-                <div class="">
+                <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         {!! Form::open(['id' => 'form_edit', 'class' => '', 'url' => '/forms']) !!}

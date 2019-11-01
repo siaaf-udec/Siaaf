@@ -87,6 +87,8 @@
             ])
             @endcomponent
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-12">
             <div class="note note-success">
                 <h4 class="block">Tener en cuenta!</h4>
@@ -108,8 +110,8 @@
     <div class="row">
         <div class="col-md-12">
             <!-- Modal -->
-            <div aria-hidden="true" class="modal fade " id="modal_edit" role="dialog" tabindex="-1" style="width: 900px;">
-                <div class="">
+            <div aria-hidden="true" class="modal fade" id="modal_edit" role="dialog" tabindex="-1" >
+                <div class="modal-dialog modal-lg">
                     <!-- Modal content-->
                     <div class="modal-content">
                         {!! Form::open(['id' => 'from_edit', 'class' => '', 'url' => '/forms']) !!}

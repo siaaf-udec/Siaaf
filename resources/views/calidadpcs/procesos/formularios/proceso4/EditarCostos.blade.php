@@ -107,7 +107,7 @@
         <div class="col-md-12">
             <!-- Modal -->
             <div aria-hidden="true" class="modal fade" id="modal_costos_1" role="dialog" tabindex="-1">
-                <div class="">
+                <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         {!! Form::open(['id' => 'form_costos_1', 'class' => '', 'url' => '/forms']) !!}
@@ -165,7 +165,7 @@
         <div class="col-md-12">
             <!-- Modal -->
             <div aria-hidden="true" class="modal fade" id="modal_costos_2" role="dialog" tabindex="-1">
-                <div class="">
+                <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         {!! Form::open(['id' => 'form_costos_2', 'class' => '', 'url' => '/forms']) !!}
@@ -224,7 +224,7 @@
         <div class="col-md-12">
             <!-- Modal -->
             <div aria-hidden="true" class="modal fade" id="modal_costos_3" role="dialog" tabindex="-1">
-                <div class="">
+                <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         {!! Form::open(['id' => 'form_costos_3', 'class' => '', 'url' => '/forms']) !!}
@@ -275,7 +275,7 @@
         <div class="col-md-12">
             <!-- Modal -->
             <div aria-hidden="true" class="modal fade" id="modal_costos_4" role="dialog" tabindex="-1">
-                <div class="">
+                <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         {!! Form::open(['id' => 'form_costos_4', 'class' => '', 'url' => '/forms']) !!}
@@ -332,7 +332,7 @@
         <div class="col-md-12">
             <!-- Modal -->
             <div aria-hidden="true" class="modal fade" id="modal_costos_5" role="dialog" tabindex="-1">
-                <div class="">
+                <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         {!! Form::open(['id' => 'form_costos_5', 'class' => '', 'url' => '/forms']) !!}
@@ -390,7 +390,7 @@
         <div class="col-md-12">
             <!-- Modal -->
             <div aria-hidden="true" class="modal fade" id="modal_costos_6" role="dialog" tabindex="-1">
-                <div class="">
+                <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         {!! Form::open(['id' => 'form_costos_6', 'class' => '', 'url' => '/forms']) !!}
@@ -445,7 +445,7 @@
         <div class="col-md-12">
             <!-- Modal -->
             <div aria-hidden="true" class="modal fade" id="modal_costos_7" role="dialog" tabindex="-1">
-                <div class="">
+                <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         {!! Form::open(['id' => 'form_costos_7', 'class' => '', 'url' => '/forms']) !!}
@@ -506,7 +506,7 @@
         <div class="col-md-12">
             <!-- Modal -->
             <div aria-hidden="true" class="modal fade" id="modal_costos_8" role="dialog" tabindex="-1">
-                <div class="">
+                <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         {!! Form::open(['id' => 'form_costos_8', 'class' => '', 'url' => '/forms']) !!}
@@ -560,7 +560,7 @@
         <div class="col-md-12">
             <!-- Modal -->
             <div aria-hidden="true" class="modal fade" id="modal_costos_9" role="dialog" tabindex="-1">
-                <div class="">
+                <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         {!! Form::open(['id' => 'form_costos_9', 'class' => '', 'url' => '/forms']) !!}
@@ -638,7 +638,7 @@
         <div class="col-md-12">
             <!-- Modal -->
             <div aria-hidden="true" class="modal fade" id="modal_costos_10" role="dialog" tabindex="-1">
-                <div class="">
+                <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         {!! Form::open(['id' => 'form_costos_10', 'class' => '', 'url' => '/forms']) !!}
@@ -692,7 +692,7 @@
         <div class="col-md-12">
             <!-- Modal -->
             <div aria-hidden="true" class="modal fade" id="modal_costos_11" role="dialog" tabindex="-1">
-                <div class="">
+                <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         {!! Form::open(['id' => 'form_costos_11', 'class' => '', 'url' => '/forms']) !!}
@@ -754,7 +754,7 @@
         <div class="col-md-12">
             <!-- Modal -->
             <div aria-hidden="true" class="modal fade" id="modal_costos_12" role="dialog" tabindex="-1">
-                <div class="">
+                <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         {!! Form::open(['id' => 'form_costos_12', 'class' => '', 'url' => '/forms']) !!}

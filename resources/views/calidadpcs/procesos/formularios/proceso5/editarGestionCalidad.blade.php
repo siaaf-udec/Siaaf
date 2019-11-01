@@ -95,7 +95,7 @@
         <div class="col-md-12">
             <!-- Modal -->
             <div aria-hidden="true" class="modal fade" id="modal-create-permission" role="dialog" tabindex="-1">
-                <div class="">
+                <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         {!! Form::open(['id' => 'form_permissions_update', 'class' => '', 'url' => '/forms']) !!}
