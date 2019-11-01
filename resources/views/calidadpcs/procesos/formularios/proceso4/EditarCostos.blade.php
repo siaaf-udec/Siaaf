@@ -2,7 +2,7 @@
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Etapa de planificación:'])
     <div class="row">
         <div class="col-md-12">
-        <h4 style="margin-top: 0px;">Editar proceso: Gestión del tiempo del proyecto.</h4>
+        <h4 style="margin-top: 0px;">Editar proceso: Gestión de los Costos del proyecto.</h4>
             <br>
             <div class="panel-group accordion" id="date-range">
                     <!--Primer acordeon-->

@@ -257,6 +257,10 @@
                                 table.ajax.reload();
                                 $('#modal_create').modal('hide');
                                 $('#form_permissions_update')[0].reset(); //Limpia formulario
+                                $(".pmd-select2").select2({
+                                    width: '100%',
+                                    placeholder: "Selecccionar",
+                                });
                                 UIToastr.init(xhr , response.title , response.message  );
                             }
                         },

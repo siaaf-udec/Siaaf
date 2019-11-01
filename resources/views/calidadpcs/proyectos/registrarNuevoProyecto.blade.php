@@ -1,53 +1,6 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Formulario de registro de proyectos'])
         <div class="row">
-       <!--  <div class="col-md-12 col-md-offset-0">
-                <div class="panel-group accordion" id="date-range">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_1"><strong>CMMI:</strong></a>
-                            </h4>
-                        </div>
-                        <div id="collapse_3_1" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <div class="alert alert-primary">
-                                <strong>Nivel de madurez:</strong> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_2"><strong>SCRUM:</strong></a>
-                            </h4>
-                        </div>
-                        <div id="collapse_3_2" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <div class="alert alert-primary">
-                                    Roles Scrum que son necesarios para este proceso:
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#date-range" href="#collapse_3_3"><strong>PMBOK:</strong></a>
-                            </h4>
-                        </div>
-                        <div id="collapse_3_3" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <div class="alert alert-primary">
-                                    <strong>Gestión de la Integración del Proyecto:</strong>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> 
-            </div>-->
-
             <div class="col-md-10 col-md-offset-1">
                 {!! Form::model ($codigoUsuario ,['id'=>'form_proyecto_create', 'url' => '/forms']) !!}
                     <div class="form-body">

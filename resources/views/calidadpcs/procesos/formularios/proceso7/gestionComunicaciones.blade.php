@@ -112,7 +112,7 @@
 
                                     {!! Field::text(
                                         'date_time',
-                                        ['label' => 'Fecha y hora:', 'class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
+                                        ['label' => 'Fecha y hora:', 'class' => 'input-append date form_datetime','data-date'=>"21-02-2018T15:25Z", 'readonly', 'auto' => 'off'],
                                         ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar']) !!}
 
                                 </div>
@@ -153,7 +153,7 @@
 
                                     {!! Field::text(
                                         'date_time_edit',
-                                        ['label' => 'Fecha y hora:','class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
+                                        ['label' => 'Fecha y hora:','class' => 'input-append date form_datetime', 'data-date'=>"+0", 'required', 'auto' => 'off'],
                                         ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar']) !!}
 
                                 </div>
@@ -241,14 +241,16 @@
             $('#modal_create').modal('toggle');
         });
 
-        $(".date-time-picker").datetimepicker({
+        var mindate = new Date();
+        $(".form_datetime").datetimepicker({
+                language: 'es',
                 autoclose: true,
-                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                isRTL: App.isRTL(),
+                months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                 format: "dd-mm-yyyy hh:ii",
-                fontAwesome: true,
-                pickerPosition: (App.isRTL() ? "bottom-left" : "bottom-left")
+                startDate: mindate,
             });
+
+            
 
             $(".pmd-select2").select2({
                 width: '100%',
