@@ -112,7 +112,7 @@
 
                                     {!! Field::text(
                                         'date_time',
-                                        ['label' => 'Fecha y hora:', 'class' => 'input-append date form_datetime','data-date'=>"21-02-2018T15:25Z", 'readonly', 'auto' => 'off'],
+                                        ['label' => 'Fecha y hora:', 'class' => 'input-append date form_datetime','data-date'=>"2018-02-22T15:25Z", 'readonly', 'auto' => 'off'],
                                         ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar']) !!}
 
                                 </div>
@@ -153,7 +153,7 @@
 
                                     {!! Field::text(
                                         'date_time_edit',
-                                        ['label' => 'Fecha y hora:','class' => 'input-append date form_datetime', 'data-date'=>"+0", 'required', 'auto' => 'off'],
+                                        ['label' => 'Fecha y hora:','class' => 'input-append date form_datetime', 'data-date'=>"2018-02-22T15:25Z", 'required', 'auto' => 'off'],
                                         ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar']) !!}
 
                                 </div>
@@ -185,7 +185,7 @@
 </div>
 
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script src = "{{ asset('assets/main/calidadpcs/table-datatable.js') }}" type = "text/javascript" ></script>
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
@@ -246,11 +246,9 @@
                 language: 'es',
                 autoclose: true,
                 months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                format: "dd-mm-yyyy hh:ii",
+                format: "yyyy-mm-dd hh:ii",
                 startDate: mindate,
             });
-
-            
 
             $(".pmd-select2").select2({
                 width: '100%',

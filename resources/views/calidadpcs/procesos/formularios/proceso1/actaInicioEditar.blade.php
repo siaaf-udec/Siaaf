@@ -91,7 +91,7 @@
                     {!! Field:: text('Nombre_Proyecto',$infoProyecto[0]['CP_Nombre_Proyecto'],['label'=>'Nombre de proyecto:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                     ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
 
-                    {!! Field:: text('Duracion',$infoProyecto[0]['CP_Duracion'],['label'=>'Duracion en meses:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
+                    {!! Field:: text('Duracion',$infoProyecto[0]['CP_Duracion'],['label'=>'Duración en meses:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                     ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
 
                 </div>
@@ -125,14 +125,14 @@
 
 
             <div class="row">
-                <h3><i class="fa fa-arrow-right"></i><strong> Informacion de los roles Scrum</strong></h3><br>
+                <h3><i class="fa fa-arrow-right"></i><strong> Información de los roles Scrum</strong></h3><br>
 
                 <div class="col-md-6">
 
                     {!! Field:: text('CE_Nombre_1',$equipoScrum[0]['CE_Nombre_Persona'],['label'=>'Scrum Master:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                     ['help' => '','icon'=>'fa fa-user'] ) !!}
 
-                    {!! Field:: text('CE_Nombre_4',$equipoScrum[3]['CE_Nombre_Persona'],['label'=>'Lider del Equipo Scrum:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
+                    {!! Field:: text('CE_Nombre_4',$equipoScrum[3]['CE_Nombre_Persona'],['label'=>'Líder del Equipo Scrum:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                     ['help' => '','icon'=>'fa fa-users'] ) !!}
 
                 </div>
@@ -274,6 +274,9 @@
 <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"> </script>
 <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+<script src = "{{ asset('assets/main/calidadpcs/table-datatable.js') }}" type = "text/javascript" ></script>
+
+
 <script type="text/javascript">
     jQuery(document).ready(function() {
 

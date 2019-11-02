@@ -17,14 +17,14 @@
 <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/global/plugins/select2material/css/pmd-select2.css') }}" rel="stylesheet" type="text/css" />
 
-<!-- <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css"/> -->
+<link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
 
 @endpush
 
 @section('title', '| SIGDEP')
 
-@section('page-title', 'SIGDEP - Sistema de Informacion para la Gestion de Desarrollo de Proyectos:')
+@section('page-title', 'SIGDEP - Sistema de Información para la Gestión de Desarrollo de Proyectos')
 
 @section('content')
     @permission('ADMIN_CALIDADPCS')
@@ -66,7 +66,7 @@
 
 @push('plugins')
     <!-- Datatables Scripts -->
-<script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+<!-- <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script> -->
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 
@@ -90,9 +90,10 @@
 @endpush
 @push('functions')
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-    <script src = "{{ asset('assets/main/scripts/table-datatable.js') }}" type = "text/javascript" ></script>
+    <script src = "{{ asset('assets/main/calidadpcs/table-datatable.js') }}" type = "text/javascript" ></script>
     <script type="text/javascript">
     jQuery(document).ready(function () {
+        $('.pull-right').hide();
         var table, url, columns;
         table = $('#listaProyectos');
         url = "{{ route('calidadpcs.proyectosCalidad.tablaProyectos')}}";
@@ -156,7 +157,6 @@
         });
 
         table.on('click', '.delete', function(e) {
-            console.log("enteroooo");
             e.preventDefault();
             $tr = $(this).closest('tr');
             var dataTable = table.row($tr).data();

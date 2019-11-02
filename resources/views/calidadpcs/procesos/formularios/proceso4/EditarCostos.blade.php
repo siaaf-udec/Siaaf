@@ -96,7 +96,7 @@
         @component('themes.bootstrap.elements.tables.datatables', ['id' => 'tablaCostos'])
             @slot('columns', [
             '#',
-            'Formula',
+            'Fórmula',
             'Valor',
             ''
             ])
@@ -833,7 +833,8 @@
 </div>
 
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script src = "{{ asset('assets/main/calidadpcs/table-datatable.js') }}" type = "text/javascript" ></script>
+
 <script type="text/javascript">
     jQuery(document).ready(function() {
 

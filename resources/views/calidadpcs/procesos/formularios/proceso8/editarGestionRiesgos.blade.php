@@ -121,7 +121,7 @@
                                     {!! Field:: text('Caracteristicas',null,['label'=>'Caracteristicas:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-list-alt'] ) !!}
 
-                                    {!! Field::select('Importancia:',['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5' ],null,['name' => 'Importancia']) !!}
+                                    {!! Field::select('Importancia:',['1'=>'1 - Más bajo', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5 - Más alto' ],null,['name' => 'Importancia']) !!}
                                     
                                     {!! Field:: text('Accion',null,['label'=>'Accion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-bolt'] ) !!}
@@ -162,7 +162,7 @@
                                     {!! Field:: text('Caracteristicas_Edit',null,['label'=>'Caracteristicas:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-list-alt'] ) !!}
 
-                                    {!! Field::select('Importancia:',['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5' ],null,['name' => 'Importancia_Edit']) !!}
+                                    {!! Field::select('Importancia:',['1'=>'1 - Más bajo', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5 - Más alto' ],null,['name' => 'Importancia_Edit']) !!}
                                     
                                     {!! Field:: text('Accion_Edit',null,['label'=>'Accion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                     ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-bolt'] ) !!}
@@ -196,7 +196,7 @@
 </div>
 
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script src = "{{ asset('assets/main/calidadpcs/table-datatable.js') }}" type = "text/javascript" ></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {

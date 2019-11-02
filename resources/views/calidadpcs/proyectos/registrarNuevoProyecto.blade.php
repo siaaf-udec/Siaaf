@@ -28,7 +28,7 @@
                             </div>
                         </div>
                         <div class="row">
-                        <h3><i class="fa fa-arrow-right"></i><strong>  Informacion de los roles Scrum</strong></h3><br>
+                        <h3><i class="fa fa-arrow-right"></i><strong>  Información de los roles Scrum</strong></h3><br>
                             <div class="col-md-6">
 
                                 {!! Field:: text('CE_Nombre_1',['label'=>'Scrum Master:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
@@ -169,8 +169,6 @@
                             App.blockUI({target: '.portlet-form', animate: true});
                         },
                         success: function (response, xhr, request) {
-                            console.log(response);
-                            //alert(reponse.data);
                             if (response.data == 422) {
                                     xhr = "warning"
                                     UIToastr.init(xhr, response.title, response.message);
@@ -257,7 +255,7 @@
                     x_integrante++;
                 }else{
                     xhr = "warning"
-                    UIToastr.init(xhr, "¡Lo sentimos!", "Maximo puede agregar "+integrantes_max+" integrantes adicionales.");
+                    UIToastr.init(xhr, "¡Lo sentimos!", "Máximo puede agregar "+integrantes_max+" integrantes adicionales.");
                 }
         });
 
@@ -265,7 +263,7 @@
             e.preventDefault();
             if(x_integrante==0){
                 xhr = "warning"
-                UIToastr.init(xhr, "¡Lo sentimos!", "No es posible eliminar mas integrantes.");
+                UIToastr.init(xhr, "¡Lo sentimos!", "No es posible eliminar más integrantes.");
             }else{
                 x_integrante--;
                 $("#campo"+x_integrante).slideUp(400, function(){$("#campo"+x_integrante).remove();});

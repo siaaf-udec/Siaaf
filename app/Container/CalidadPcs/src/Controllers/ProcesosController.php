@@ -49,8 +49,26 @@ class ProcesosController extends Controller
         $etapa4 = 0;
         $etapa5 = 0;
         $conteoEtapa = 0;
+        $validadorReportes = 0;
         $procesos = Proceso_Proyecto::where('FK_CPP_Id_Proyecto', $id);
         $aux = $procesos->count();
+
+        if($aux >=1){
+            $validadorReportes = 1;
+            if($aux >= 9){
+                $validadorReportes = 2;   
+                if($aux >= 15){
+                    $validadorReportes = 3;
+                    if($aux >= 24){
+                        $validadorReportes = 4;
+                        if($aux >= 25){
+                            $validadorReportes = 5;
+                        }
+                    }
+                } 
+            }
+        }
+        //valida los botones de las etapas
         if ($aux == 0) {
             $conteoEtapa = 1;
         } else {
@@ -67,6 +85,7 @@ class ProcesosController extends Controller
                 }
             }
         }
+        //valida los porcentajes
         if ($aux <= 1) {
             $etapa1 = ($aux * 100) / 1;
         } else {
@@ -110,6 +129,7 @@ class ProcesosController extends Controller
                     'numProcesos' => $numProcesos,
                     'porcentajes' => $porcentajesEtapas,
                     'conteoEtapa' => $conteoEtapa,
+                    'reporte' => $validadorReportes,
                 ]
             );
         }

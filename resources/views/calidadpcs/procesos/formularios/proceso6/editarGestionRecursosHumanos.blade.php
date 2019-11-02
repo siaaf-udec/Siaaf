@@ -83,7 +83,7 @@
             @slot('columns', [
             '#',
             'Persona',
-            'Funcion',
+            'Función',
             ''
             ])
             @endcomponent
@@ -107,8 +107,8 @@
  
                                     {!! Field::select('integrantes:',$integrantes,null,['name' => 'select_integrantes']) !!}
                                     
-                                    {!! Field:: text('funcion',null,['label'=>'Funcion:', 'max' => '300', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Funcion que cumple.', 'icon' => 'fa fa-list-ol'] ) !!}
+                                    {!! Field:: text('funcion',null,['label'=>'Función:', 'max' => '300', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Función que cumple.', 'icon' => 'fa fa-list-ol'] ) !!}
 
                                 </div>
                             </div>
@@ -133,7 +133,7 @@
                         {!! Form::open(['id' => 'form_edit', 'class' => '', 'url' => '/forms']) !!}
                         <div class="modal-header modal-header-success">
                             <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
-                            <h3>Editar Funcion</h3>
+                            <h3>Editar Función</h3>
                         </div>
                         <div class="modal-body">
                             <div class="row">
@@ -142,8 +142,8 @@
  
                                     {!! Field::select('integrantes:',$integrantes,null,['name' => 'select_edit']) !!}
                                     
-                                    {!! Field:: text('funcion_edit',null,['label'=>'Funcion:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                    ['help' => 'Funcion que cumple.', 'icon' => 'fa fa-list-ol'] ) !!}
+                                    {!! Field:: text('funcion_edit',null,['label'=>'Función:', 'max' => '50', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                    ['help' => 'Función que cumple.', 'icon' => 'fa fa-list-ol'] ) !!}
 
                                 </div>
                             </div>
@@ -174,7 +174,7 @@
 </div>
 
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script src = "{{ asset('assets/main/calidadpcs/table-datatable.js') }}" type = "text/javascript" ></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {

@@ -1,8 +1,6 @@
 <div class="col-md-12">
     @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'fa fa-tasks', 'title' => 'Etapas:'])
-        <br>
-        <br>
-        <br>
+        
         <div class="row">
             <div class="col-md-12">
                 @component('themes.bootstrap.elements.tables.datatables',['id' => 'listaEtapas'])
@@ -20,7 +18,7 @@
 </div>
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script src = "{{ asset('assets/main/calidadpcs/table-datatable.js') }}" type = "text/javascript" ></script>
 <script type="text/javascript">
 
     jQuery(document).ready(function () {
@@ -108,9 +106,9 @@
                 printable: false,
                 className: 'text-center',
                 render: function (data, type, row) {
-                    if(row.PK_CE_Id_Etapa <= {{$conteoEtapa}}){
+                    if(row.PK_CE_Id_Etapa <= {{$reporte}}){
                         return '@permission('CALIDADPCS_REPORT_PROJECT')<a href="javascript:;" class="btn btn-info reportes"  title="Ver reporte" ><i class="glyphicon glyphicon-list-alt"></i></a>@endpermission';
-                    }if(row.PK_CE_Id_Etapa > {{$conteoEtapa}}){
+                    }if(row.PK_CE_Id_Etapa > {{$reporte}}){
                         return '<span class="label label-sm label-warning">Pendiente</span>';
                     }
                 },

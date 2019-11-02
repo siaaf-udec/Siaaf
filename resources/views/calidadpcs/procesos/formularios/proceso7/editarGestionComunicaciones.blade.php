@@ -111,7 +111,7 @@
                                     ['help' => 'Lugar donde va hacer la reunion.', 'icon' => 'fa fa-map-marker'] ) !!}
 
                                     {!! Field::text('date_time',
-                                        ['label' => 'Fecha y hora:','class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
+                                        ['label' => 'Fecha y hora:','class' => 'input-append date form_datetime','data-date'=>"2018-02-22T15:25Z", 'readonly', 'auto' => 'off'],
                                         ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar']) !!}
 
                                 </div>
@@ -152,7 +152,7 @@
 
                                     {!! Field::text(
                                         'date_time_edit',
-                                        ['label' => 'Fecha y hora:','class' => 'timepicker date-time-picker', 'required', 'auto' => 'off'],
+                                        ['label' => 'Fecha y hora:','class' => 'input-append date form_datetime','data-date'=>"2018-02-22T15:25Z", 'readonly','auto' => 'off'],
                                         ['help' => 'Selecciona la fecha y hora.', 'icon' => 'fa fa-calendar']) !!}
 
                                 </div>
@@ -184,13 +184,20 @@
 </div>
 
 <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/main/scripts/table-datatable.js') }}" type="text/javascript"></script>
+<script src = "{{ asset('assets/main/calidadpcs/table-datatable.js') }}" type = "text/javascript" ></script>
 <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
     jQuery(document).ready(function() {
+
+        jQuery.validator.addMethod("letters", function(value, element) {
+            return this.optional(element) || /^[a-zñÑ," "]+$/i.test(value);
+        });
+        jQuery.validator.addMethod("noSpecialCharacters", function(value, element) {
+            return this.optional(element) || /^[A-Za-zñÑ0-9\d ]+$/i.test(value);
+        });
 
         var table, url, columns;
         table = $('#listaProyectos');
@@ -233,14 +240,14 @@
             $('#modal_create').modal('toggle');
         });
 
-        $(".date-time-picker").datetimepicker({
+        var mindate = new Date();
+        $(".form_datetime").datetimepicker({
+                language: 'es',
                 autoclose: true,
-                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                isRTL: App.isRTL(),
-                format: "dd-mm-yyyy hh:ii",
-                fontAwesome: true,
-                pickerPosition: (App.isRTL() ? "bottom-left" : "bottom-left")
-            });
+                months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                format: "yyyy-mm-dd hh:ii",
+                startDate: mindate,
+        });
 
             $(".pmd-select2").select2({
                 width: '100%',
@@ -250,9 +257,6 @@
             var createModal = function () {
             return{
                 init: function () {
-                    console.log($('select[name="module_create"]').val());
-                    console.log($('input:text[name="Lugar"]').val());
-                    console.log($('input:text[name="date_time"]').val());
                     var route = "{{ route('calidadpcs.procesosCalidad.storeProceso7') }}";
                     var type = 'POST';
                     var async = async || false;

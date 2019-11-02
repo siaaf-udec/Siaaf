@@ -26,14 +26,14 @@
                             </div>
                         </div>
                         <div class="row">
-                        <h3>Informacion de los roles Scrum </h3><br>
+                        <h3>Información de los roles Scrum </h3><br>
                             <div class="col-md-6">
 
                                 {!! Field:: text('CE_Nombre_1',$infoEquipoScrum[0]['CE_Nombre_Persona'],['label'=>'Scrum Master:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
                                                             ['help' => 'Digite el nombre del scrum master','icon'=>'fa fa-user'] ) !!}
 
-                                {!! Field:: text('CE_Nombre_4',$infoEquipoScrum[3]['CE_Nombre_Persona'],['label'=>'Lider del Equipo Scrum:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                                                            ['help' => 'Digite el nombre del lider','icon'=>'fa fa-users'] ) !!}
+                                {!! Field:: text('CE_Nombre_4',$infoEquipoScrum[3]['CE_Nombre_Persona'],['label'=>'Líder del Equipo Scrum:', 'max' => '40', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                                                            ['help' => 'Digite el nombre del líder','icon'=>'fa fa-users'] ) !!}
 
                             </div>
                             <div class="col-md-6">
@@ -247,7 +247,7 @@
                     x_integrante++;
                 }else{
                     xhr = "warning"
-                    UIToastr.init(xhr, "¡Lo sentimos!", "Maximo puede agregar tres integrantes adicionales.");
+                    UIToastr.init(xhr, "¡Lo sentimos!", "Máximo puede agregar tres integrantes adicionales.");
                 }
         });
 
@@ -255,7 +255,7 @@
             e.preventDefault();
             if(x_integrante==6){
                 xhr = "warning"
-                UIToastr.init(xhr, "¡Lo sentimos!", "No es posible eliminar mas integrantes.");
+                UIToastr.init(xhr, "¡Lo sentimos!", "No es posible eliminar más integrantes.");
             }else{
                 x_integrante--;
                 $("#campo"+x_integrante).slideUp(400, function(){$("#campo"+x_integrante).remove();});

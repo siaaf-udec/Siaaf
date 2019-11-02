@@ -79,7 +79,7 @@
             {!! Form::model ([[$idProceso],[$equipoScrum],[$infoProyecto]],['id'=>'form_create_proceso_1', 'url' => '/forms']) !!}
             <div class="form-body">
                 <div class="row">
-                    <h3><i class="fa fa-arrow-right"></i><strong> Informacion del proyecto</strong></h3><br>
+                    <h3><i class="fa fa-arrow-right"></i><strong> Información del proyecto</strong></h3><br>
                     <div class="col-md-6">
 
                         {!! Field:: hidden ('FK_CPP_Id_Proyecto', $infoProyecto[0]['PK_CP_Id_Proyecto'])!!}
@@ -89,7 +89,7 @@
                         {!! Field:: text('Nombre_Proyecto',$infoProyecto[0]['CP_Nombre_Proyecto'],['label'=>'Nombre de proyecto:', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off','readonly'],
                             ['help' => 'Digite el nombre del proyecto.','icon'=>'fa fa-file-text-o'] ) !!}
 
-                        {!! Field::select('Duracion en meses:',['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5', '6'=>'6', '7'=>'7', '8'=>'8', '9'=>'9', '10'=>'10', '11'=>'11', '12'=>'12' ],null,
+                        {!! Field::select('Duración en meses:',['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5', '6'=>'6', '7'=>'7', '8'=>'8', '9'=>'9', '10'=>'10', '11'=>'11', '12'=>'12' ],null,
                             ['name' => 'Duracion']) !!}
 
                     </div>
@@ -110,13 +110,13 @@
                             ['help' => 'Digite el objetivo general.','icon'=>'fa fa-file-text-o'] ) !!}
                         </div>
                         <div class="col-md-12">
-                            <h4>Objetivos especificos </h4><br>
+                            <h4>Objetivos específicos </h4><br>
 
-                            {!! Field:: text('Objetivo_Especifico_1',['label'=>'Objetivo especifico:', 'max' => '300', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                            ['help' => 'Digite el objetivo especifico','icon'=>'fa fa-angle-right'] ) !!}
+                            {!! Field:: text('Objetivo_Especifico_1',['label'=>'Objetivo específico:', 'max' => '300', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            ['help' => 'Digite el objetivo específico','icon'=>'fa fa-angle-right'] ) !!}
 
-                            {!! Field:: text('Objetivo_Especifico_2',['label'=>'Objetivo especifico:', 'max' => '300', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
-                            ['help' => 'Digite el objetivo especifico','icon'=>'fa fa-angle-right'] ) !!}
+                            {!! Field:: text('Objetivo_Especifico_2',['label'=>'Objetivo específico:', 'max' => '300', 'class'=> 'form-control', 'autofocus','autocomplete'=>'off'],
+                            ['help' => 'Digite el objetivo específico','icon'=>'fa fa-angle-right'] ) !!}
                         </div>
                         <div class="col-md-12" id="objetivos">
 
@@ -161,7 +161,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <h3><i class="fa fa-arrow-right"></i><strong> Informacion de los roles Scrum</strong></h3><br>
+                    <h3><i class="fa fa-arrow-right"></i><strong> Información de los roles Scrum</strong></h3><br>
 
                     <div class="col-md-6">
 

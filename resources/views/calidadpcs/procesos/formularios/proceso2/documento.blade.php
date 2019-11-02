@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Etapa de planificacion:'])
+    @component('themes.bootstrap.elements.portlets.portlet', ['icon' => 'icon-book-open', 'title' => 'Etapa de planificación:'])
         @slot('actions', [
             'link_cancel' => [
                 'link' => '',
@@ -88,7 +88,7 @@
                 {!! Form::model([[$idProceso],[$equipoScrum],[$idProyecto],[$integrantes]],['id'=>'form_update_proyecto', 'url' => '/forms']) !!}
                     <div class="form-body">
                         <div class="row">
-                            <h3>Informacion del proceso</h3><br>
+                            <h3>Información del proceso</h3><br>
                                 <div class="col-md-12">
 
                                     {!! Field:: hidden ('PK_CP_Id_Proyecto', $idProyecto)!!}
@@ -98,7 +98,7 @@
                                     {!! Field::textArea('Alcance',['label' => 'Alcance:', 'required', 'auto' => 'off', 'max' => '500', "rows" => '2'],
                                         ['help' => 'Escribe el alcance del proyecto.', 'icon' => 'fa fa-quote-right']) !!}
                                 </div>
-                        </div><br>
+                        </div>
                         <div class="row">
                             <h3>Requerimientos</h3>
                             <br>
@@ -138,6 +138,7 @@
     <script src = "{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type = "text/javascript" > </script>
     <script src="{{ asset('assets/main/scripts/form-validation-md.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/main/scripts/ui-toastr.js') }}" type="text/javascript"></script>
+    <script src = "{{ asset('assets/main/calidadpcs/table-datatable.js') }}" type = "text/javascript" ></script>
     <script type="text/javascript">
 
     jQuery(document).ready(function () {

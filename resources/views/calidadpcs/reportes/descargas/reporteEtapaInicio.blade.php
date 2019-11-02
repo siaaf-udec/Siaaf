@@ -271,9 +271,12 @@
                 <label>Scrum Master: {{$infoEquipo[0]->CE_Nombre_Persona}}</label>
             </div>
             <div class="form-group form-md-line-input">
-                <label>Lider del equipo: {{$infoEquipo[3]->CE_Nombre_Persona}}</label>
+                <label>Product Owner: {{$infoEquipo[1]->CE_Nombre_Persona}}</label>
             </div>
             <h4>Integrantes</h4>
+            <div class="form-group form-md-line-input">
+                <label>Lider del equipo: {{$infoEquipo[3]->CE_Nombre_Persona}}</label>
+            </div>
             @foreach($integrantes as $integrante)
             <div class="form-group form-md-line-input">
                 <label>Integrante: {{$integrante->CE_Nombre_Persona}}</label>
@@ -282,15 +285,12 @@
         </div>
         <div class="col-md-6" style="padding: 10px; float: right; width: 45%; text-align: justify;">
             <div class="form-group form-md-line-input">
-                <label>Product Owner: {{$infoEquipo[1]->CE_Nombre_Persona}}</label>
-            </div>
-            <div class="form-group form-md-line-input">
                 <label>Stakeholder: {{$infoEquipo[2]->CE_Nombre_Persona}}</label>
             </div>
         </div>
     </div>
 </body>
-<!-- <footer>
+<!-- <footer> 
     <h3 >SIAAF - Sistema de Información para el Apoyo Administrativo UdeC Facatativá </h3>
 </footer> -->
 
