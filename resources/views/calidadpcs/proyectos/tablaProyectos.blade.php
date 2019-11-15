@@ -22,9 +22,9 @@
 
 @endpush
 
-@section('title', '| SIGDEP')
+@section('title', '| SIGEPSOFT')
 
-@section('page-title', 'SIGDEP - Sistema de Información para la Gestión de Desarrollo de Proyectos')
+@section('page-title', 'SIGEPSOFT - Sistema de Informatico para la Gestión de Proyectos de Software')
 
 @section('content')
     @permission('ADMIN_CALIDADPCS')
