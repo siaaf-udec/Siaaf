@@ -24,7 +24,7 @@
 
 @section('title', '| SIGEPSOFT')
 
-@section('page-title', 'SIGEPSOFT - Sistema de Informatico para la Gestión de Proyectos de Software')
+@section('page-title', 'SIGEPSOFT - Sistema Informático para la Gestión de Proyectos de Software')
 
 @section('content')
     @permission('ADMIN_CALIDADPCS')

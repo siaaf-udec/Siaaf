@@ -417,7 +417,7 @@
                     <div class="input-icon">\
                     <input class="form-control form-control" autofocus="" autocomplete="off" maxlength="300" id="Objetivo_Especifico_' + x_objetivo + '" name="Objetivo_Especifico_' + x_objetivo + '" type="text">\
                     <label for="Objetivo_Especifico_' + x_objetivo + '" class="control-label">Objetivo especifico (adicional):</label>\
-                    <span class="help-block"> Digite el requisito</span>\
+                    <span class="help-block"> Digite el objetivo especifico</span>\
                     <i class=" fa fa-angle-right "></i>\
                     </div>\
                     </div>').appendTo($('#objetivos')).hide().slideDown(600);
