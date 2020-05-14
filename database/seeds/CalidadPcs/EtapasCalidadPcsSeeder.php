@@ -14,8 +14,8 @@ class EtapasCalidadPcsSeeder extends Seeder
     {
          $etapas = [
             [ 'PK_CE_Id_Etapa' => '1','CE_Etapa' => 'Etapa de inicio' ],
-            [ 'PK_CE_Id_Etapa' => '2','CE_Etapa' => 'Etapa de planificacion' ],
-            [ 'PK_CE_Id_Etapa' => '3','CE_Etapa' => 'Etapa de ejecucion' ],
+            [ 'PK_CE_Id_Etapa' => '2','CE_Etapa' => 'Etapa de planificación' ],
+            [ 'PK_CE_Id_Etapa' => '3','CE_Etapa' => 'Etapa de ejecución' ],
             [ 'PK_CE_Id_Etapa' => '4','CE_Etapa' => 'Etapa de monitoreo y control' ],
             [ 'PK_CE_Id_Etapa' => '5','CE_Etapa' => 'Etapa de cierre' ],
             //[ 'PK_CD_IdDependencia' => '5','CD_Dependencia' => 'Ingeniería Agronómica' ],

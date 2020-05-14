@@ -18,6 +18,8 @@ class Proyectos extends Model
         , 'CP_Nombre_Proyecto'
         , 'CP_Fecha_Inicio'
         , 'CP_Fecha_Final'
+        , 'CP_Duracion'
+        , 'CP_Entidades'
         , 'FK_CP_Id_Usuario',
     ];
     

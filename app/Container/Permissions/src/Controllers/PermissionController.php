@@ -48,6 +48,7 @@ class PermissionController extends Controller
     {
         if($request->ajax() && $request->isMethod('GET')){
             $permission = $this->permissionRepository->show($id);
+            dd($permission);
             return AjaxResponse::success(
                 '¡Bien hecho!',
                 'Datos cargados correctamente.',
